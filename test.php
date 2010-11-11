@@ -14,4 +14,3 @@
  * @link      http://devoirminute.com
  */
 
-var_dump(is_file('lol/lol/lol/xd.tct'));
