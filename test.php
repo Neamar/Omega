@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://monsite.fr
+ * @link      http://devoirminute.com
  */
 
 var_dump(is_file('lol/lol/lol/xd.tct'));

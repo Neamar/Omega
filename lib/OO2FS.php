@@ -13,7 +13,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://monsite.fr
+ * @link      http://devoirminute.com
  */
 
 /**
@@ -23,7 +23,7 @@
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://monsite.fr
+ * @link     http://devoirminute.com
  *
  */
 class OO2FS
