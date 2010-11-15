@@ -49,6 +49,7 @@ if(!empty($_GET['data']))
 		$_GET['data'][$Component[0]] = $Component[1];	
 	}
 	unset($Components,$Component);
+	var_dump('lol');
 }
 /**
  * Définition de l'autoload
