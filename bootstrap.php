@@ -33,7 +33,23 @@ $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
 $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
 $ViewPath = OO2FS::viewPath($_GET['view'], $_GET['controller'], $_GET['module']);
 $ViewName = $_GET['view'] . 'Action' . (empty($_GET['data'])?'':'_wd');
-
+//Traiter les données si existantes
+if(!empty($_GET['data']))
+{
+	$Components = explode('/',$_GET['data']);
+	if(count($Components) % 2 == 1)
+	{
+		array_unshift($Components, 'data');
+	}
+	$Components = array_chunk($Components,2);
+	
+	$_GET['data']=array();
+	foreach($Components as $Component)
+	{
+		$_GET['data'][$Component[0]] = $Component[1];	
+	}
+	unset($Components,$Component);
+}
 /**
  * Définition de l'autoload
  * 
