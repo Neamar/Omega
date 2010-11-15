@@ -37,6 +37,7 @@ class Eleve_IndexController extends AbstractController
 	public function __construct($module,$controller,$view,$data)
 	{
 		parent::__construct($module, $controller, $view, $data);
+		var_dump($this);
 	}
 	
 	/**
