@@ -36,36 +36,36 @@ $ViewName = $_GET['view'] . 'Action' . (empty($_GET['data'])?'':'_wd');
 //Traiter les données si existantes
 if(!empty($_GET['data']))
 {
-	$Components = explode('/',$_GET['data']);
+	$Components = explode('/', $_GET['data']);
 	if(count($Components) % 2 == 1)
 	{
 		array_unshift($Components, 'data');
 	}
-	$Components = array_chunk($Components,2);
+	$Components = array_chunk($Components, 2);
 	
 	$_GET['data']=array();
 	foreach($Components as $Component)
 	{
 		$_GET['data'][$Component[0]] = $Component[1];	
 	}
-	unset($Components,$Component);
+	unset($Components, $Component);
 }
 /**
  * Définition de l'autoload
  * 
- * @param string $className la classe à charger dynamiquement.
+ * @param string $ClassName la classe à charger dynamiquement.
  * 
  * @return string le code retour de l'inclusion du fichier contenant la classe
  */
-function __autoload($className)
+function __autoload($ClassName)
 {
-	$fileName = $className . '.php';
-	if(substr($className, -18)=='AbstractController')
+	$FileName = $ClassName . '.php';
+	if(substr($ClassName, -18)=='AbstractController')
 	{
-		return include LIB_PATH . '/AbstractController/' . $fileName;
+		return include LIB_PATH . '/AbstractController/' . $FileName;
 	}
 	
-	return include LIB_PATH . '/' . $fileName;
+	return include LIB_PATH . '/' . $FileName;
 }
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);

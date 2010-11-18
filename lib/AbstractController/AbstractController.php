@@ -30,37 +30,37 @@ abstract class AbstractController
 	 * Le nom du contrôleur ; exemple : 'points'
 	 * @var string
 	 */
-	protected $controller;
+	protected $Controller;
 
 	/**
 	 * Le nom du module ; exemple : 'eleve'
 	 * @var string
 	 */
-	protected $module;
+	protected $Module;
 
 	/**
 	 * La vue associée au contrôleur.
 	 * @var View
 	 */
-	protected $view;
+	protected $View;
 
 	/**
 	 * Les données associées.
 	 * @var string
 	 */
-	protected $data;
+	protected $Data;
 
 	/**
 	 * La page actuelle doit-elle renvoyer des données au format AJAX ?
 	 * @var bool
 	 */
-	protected $isAjax;
+	protected $IsAjax;
 
 	/**
 	 * La page actuelle doit-elle être renvoyée dans le template ?
 	 * @var bool
 	 */
-	protected $isTemplate;
+	protected $IsTemplate;
 
 	/**
 	 * Contrôleur par défaut, prenant en paramètres les différentes composantes de l'URL.
@@ -70,24 +70,24 @@ abstract class AbstractController
 	 * @param string $view
 	 * @param string $data
 	 */
-	public function __construct($module,$controller,$view,$data)
+	public function __construct($Module,$Controller,$View,$Data)
 	{
-		$this->module= $module;
-		$this->controller= $controller;
-		$this->data = $data;
+		$this->Module= $Module;
+		$this->Controller= $Controller;
+		$this->Data = $Data;
 
-		$this->view = new View($view, $this);
+		$this->View = new View($View, $this);
 
 		//Si format Ajax, la vue commence par un underscore par convention.
-		if(substr($view, 0, 1)=='_')
+		if(substr($View, 0, 1)=='_')
 		{
-			$this->isAjax = true;
-			$this->isTemplate = false;
+			$this->IsAjax = true;
+			$this->IsTemplate = false;
 		}
 		else
 		{
-			$this->isAjax = false;
-			$this->isTemplate = true;
+			$this->IsAjax = false;
+			$this->IsTemplate = true;
 		}
 	}
 
@@ -97,7 +97,7 @@ abstract class AbstractController
 	 */
 	public function getView()
 	{
-		return $this->view();
+		return $this->View();
 	}
 
 	/**
@@ -121,23 +121,24 @@ abstract class AbstractController
 	 * Concatène un autre contrôleur avec l'actuel.
 	 * En cas de conflits, les données du nouveau contrôleur remplacent celles de l'ancien.
 	 * Attention, ne fais pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
-	 * @param string $vue
-	 * @param string $data
-	 * @param string $controleur
-	 * @param string $module
+	 * @param string $View la vue
+	 * @param string $Data les données
+	 * @param string $Controller le contrôleur
+	 * @param string $Module le module
 	 */
-	public function concat($view,$data=null, $controller=null, $module=null)
+	public function concat($View,$Data=null, $Controller=null, $Module=null)
 	{
-		$ControllerPath = APPLICATION_PATH . '/' . $_GET['module'] . '/' . $_GET['controller'] . '/' . $_GET['controller'] . 'Controller.php';
-		$ControllerName = $_GET['controller'] . 'Controller';
-		$ViewName = $_GET['view'] . 'Action' . (empty($_GET['data'])?'':'_wd');
+		$ControllerPath = OO2FS::controllerPath($Controller, $Module);
+		$ControllerName = OO2FS::controllerClass($Controller, $Module);
+		$ViewName = OO2FS::viewFunction($View, $Data, $Controller, $Module);
 
 		include $ControllerPath;
 
 		$ConcatController = new $ControllerName();
 		$ConcatController->$ViewName();
 
-		$this->view = array_merge($this->view, $ConcatController->getView());
+		//TODO : View n'est plus un array.
+		$this->View = array_merge($this->View, $ConcatController->getView());
 	}
 
 	/**
@@ -146,15 +147,15 @@ abstract class AbstractController
 	public function renderView()
 	{
 		//La vue
-		$V = $this->view;
+		$V = $this->View;
 
-		if($this->isAjax)
+		if($this->IsAjax)
 		{
 			echo json_encode($V->toArray());
 		}
 		else
 		{
-			include OO2FS::viewPath($this->view->getMeta('name'), $this->controller, $this->module);
+			include OO2FS::viewPath($V->getMeta('Name'), $this->Controller, $this->Module);
 		}
 	}
 
@@ -211,54 +212,54 @@ abstract class AbstractController
 	 * @param string $module
 	 * @return string $URL
 	 */
-	public static function build($view,$data=null, $controller=null, $module=null)
+	public static function build($View,$Data=null, $Controller=null, $Module=null)
 	{
 		if(is_null($controller))
 		{
-			$controller = $this->controller;
+			$Controller = $this->Controller;
 		}
-		if(is_null($module))
+		if(is_null($Module))
 		{
-			$module = $this->module;
+			$Module = $this->Module;
 		}
 
 		//Simplification des URLS.
-		if(!is_null($data))
+		if(!is_null($Data))
 		{
-			$data = '/' . $data;
+			$Data = '/' . $Data;
 		}
 		else
 		{
-			$data = '';
+			$Data = '';
 		}
 
-		if($controller!='index')
+		if($Controller!='index')
 		{
-			$controller = '/' . $controller;
+			$Controller = '/' . $Controller;
 		}
-		else if($view=='index')
+		else if($View=='index')
 		{
-			$controller = '/';
+			$Controller = '/';
 		}
 		else
 		{
-			$controller = '';
+			$Controller = '';
 		}
 
 
-		if($view!='index')
+		if($View!='index')
 		{
-			$view = '/' . $view;
+			$View = '/' . $View;
 		}
-		else if($controller!='/')
+		else if($Controller!='/')
 		{
-			$view = '/';
+			$View = '/';
 		}
 		else
 		{
-			$view = '';
+			$View = '';
 		}
 			
-		return '/' . $module . $controller . $view . $data;
+		return '/' . $Module . $Controller . $View . $Data;
 	}
 }

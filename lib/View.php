@@ -46,10 +46,10 @@ class View
 	 * @param string $name le nom de la vue.
 	 * @param AbstractController $controller le contrôleur parent.
 	 */
-	public function __construct($name, AbstractController $controller)
+	public function __construct($Name, AbstractController $Controller)
 	{
 		$this->_Datas = array();
-		$this->_Metas = array('name'=>$name, 'controller'=>$controller);
+		$this->_Metas = array('Name'=>$Name, 'Controller'=>$Controller);
 	}
 
 	/**
@@ -132,8 +132,8 @@ class View
 	/**
 	 * Gestion des ViewHelper.
 	 *
-	 * @param string $func
-	 * @param array $arg
+	 * @param string $func la fonction à appeler
+	 * @param array $arg les paramètres de la fonction
 	 */
 	public function __call($func,array $args)
 	{
