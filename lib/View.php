@@ -35,10 +35,10 @@ class View
 	private $_Datas;
 	
 	/**
-	 * Les méta données de la vue : le contrôleur parent, le nom...
+	 * Les méta données de la vue : le contrôleur parent, le nom, le titre de la page...
 	 * @var array
 	 */
-	private $_Meta;
+	private $_Metas;
 
 	/**
 	 * Initialise une nouvelle vue.
@@ -49,7 +49,7 @@ class View
 	public function __construct($name, AbstractController $controller)
 	{
 		$this->_Datas = array();
-		$this->_Meta = array('name'=>$name, 'controller'=>$controller);
+		$this->_Metas = array('name'=>$name, 'controller'=>$controller);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class View
 	 */
 	public function getMeta($Key)
 	{
-		return $this->_Meta[$Key];
+		return $this->_Metas[$Key];
 	}
 
 	/**
@@ -96,7 +96,17 @@ class View
 	{
 		$this->_Datas[$Key] = $Value;
 	}
-
+	
+	/**
+	 * Règle une nouvelle méta donnée
+	 *
+	 * @param string $Key le nom de la valeur
+	 * @param string $Value la valeur
+	 */
+	public function setMeta($Key,$Value)
+	{
+		$this->_Metas[$Key] = $Value;
+	}
 	/**
 	 * Teste l'existence d'une clé.
 	 *
