@@ -40,7 +40,7 @@ abstract class AbstractController
 
 	/**
 	 * La vue associée au contrôleur.
-	 * @var array
+	 * @var View
 	 */
 	protected $view;
 
@@ -76,7 +76,7 @@ abstract class AbstractController
 		$this->controller= $controller;
 		$this->data = $data;
 
-		$this->view = array('name'=> $view, 'controller'=>$this);
+		$this->view = new View($view, $this);
 
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($view, 0, 1)=='_')
@@ -93,7 +93,7 @@ abstract class AbstractController
 
 	/**
 	 * Récupère la vue associée au contrôleur.
-	 * @return array
+	 * @return View la vue associée.
 	 */
 	public function getView()
 	{
@@ -145,19 +145,16 @@ abstract class AbstractController
 	 */
 	public function renderView()
 	{
-		//La vue (array)
+		//La vue
 		$V = $this->view;
-		//Le helper (objet)
-		$VH = new ViewHelper();
 
 		if($this->isAjax)
 		{
-			unset($V['name'],$V['controller']);
-			echo json_encode($V);
+			echo json_encode($V->toArray());
 		}
 		else
 		{
-			include PATH . '/application/' . $this->module . '/' . $this->controller . '/views/' . $this->view['name'] . '.phtml';
+			include OO2FS::viewPath($this->view->getMeta('name'), $this->controller, $this->module);
 		}
 	}
 
