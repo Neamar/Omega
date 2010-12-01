@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Bienvenue sur eDevoir !</title>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<!-- Logo -->
+<header role="banner" id="banner"> <a href="/">
+<hgroup id="logo">
+	<h1>eDevoir.com</h1>
+	<h2>PUNCHLINE <!-- TODO : puchline --></h2>
+</hgroup>
+</a> </header>
+
+<!-- Présentation du site -->
+<section id="content">
+<p>Bienvenue sur <strong>eDevoir</strong> !<br />
+Un devoir à réaliser ? Une équipe de gens compétents se tient à votre
+disposition pour vous fournir – dans les délais que vous fixez – un
+rendu de qualité et un suivi personnalisé adapté à vos besoins.</p>
+
+<nav>
+<ul>
+	<li><a href="/fonctionnement.htm">Fonctionnement du site</a></li>
+	<li><a href="/faq.htm">FAQ</a></li>
+	<li><a href="/exemples.htm">Exemples de corrigé</a></li>
+	<li><a href="/eleve.htm">Vous êtes élève ?</a></li>
+	<li><a href="/parent.htm">Vous êtes parent ?</a></li>
+</ul>
+</nav>
+</section>
+
+<!-- Formulaire de connexion élève -->
+<section id="eleve_form">
+<h1>Connexion élève</h1>
+<form method="post" action="/eleve/">
+	<label for="eleve_email">E-mail :</label>
+	<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
+	<label for="eleve_password">E-mail :</label>
+	<input type="password" name="password" id="eleve_password" /><br />
+	<input type="submit" value="Connexion" />
+</form>
+<p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
+</section>
+
+<!-- Formulaire de connexion correcteur -->
+<section id="correcteur_form">
+<h1>Connexion correcteur</h1>
+<form method="post" action="/eleve/">
+	<label for="correcteur_email">E-mail :</label>
+	<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
+	<label for="correcteur_password">E-mail :</label>
+	<input type="password" name="password" id="correcteur_password" /><br />
+	<input type="submit" value="Connexion" />
+</form>
+<p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
+</section>
+
+<footer>
+<ul>
+	<li><a href="/contact.htm">Nous contacter</a></li>
+	<li><a href="/legal.htm">Mentions légales</a></li>
+	<li><a href="/cgu.htm">CGU</a></li>
+	<li><a href="/cgv.htm">CGV</a></li>
+	<li><a href="/confidentialite.htm">Confidentialité</a></li>
+</ul>
+</footer>
+</body>
+</html>

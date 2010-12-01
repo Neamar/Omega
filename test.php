@@ -14,4 +14,18 @@
  * @link      http://devoirminute.com
  */
 
-var_dump(is_file('lol/lol/lol/xd.tct'));
+class Mere
+{
+	protected  static $var = 'Mere';
+	public static function func()
+	{
+		echo static::$var;
+	}
+}
+
+class Fille extends Mere
+{
+	protected static $var = 'Fille';
+}
+
+Fille::func();

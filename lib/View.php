@@ -1,6 +1,6 @@
 <?php
 /**
- * ViewHelper.php - 10 nov. 2010
+ * View.php - 10 nov. 2010
  *
  * Gestion des vues.
  *
