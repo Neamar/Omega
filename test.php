@@ -18,15 +18,16 @@
 class Mere
 {
 	protected  static $var = 'Mere';
-	public static function func()
+	public static function func($i)
 	{
-		echo static::$var;
+		return static::$var;
 	}
 }
 
 class Fille extends Mere
 {
 	protected static $var = 'Fille';
-}*/
+}
 
-Fille::func();
+echo Fille::func(5);
+*/

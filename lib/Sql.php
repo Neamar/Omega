@@ -26,13 +26,12 @@
  */
 class Sql
 {
-	private $Instance;
 	/**
 	 * Ouvrir une connexion à la base de données.
 	 */
 	public static function connect()
 	{
-		mysql_connect('localhost','root','');
+		mysql_connect('localhost', 'root', '');
 		mysql_select_db('work');
 	}
 
