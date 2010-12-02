@@ -14,6 +14,7 @@
  * @link      http://devoirminute.com
  */
 
+/*
 class Mere
 {
 	protected  static $var = 'Mere';
@@ -26,6 +27,6 @@ class Mere
 class Fille extends Mere
 {
 	protected static $var = 'Fille';
-}
+}*/
 
 Fille::func();

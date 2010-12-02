@@ -27,11 +27,24 @@
 class Sql
 {
 	/**
+	 * 
+	 * L'instance PDO utilisée
+	 * @var PDO
+	 */
+	private static $_Instance = null;
+	/**
 	 * Ouvrir une connexion à la base de données.
 	 */
 	public static function connect()
 	{
-		include PATH . '/../../ConnectBDD.php';
+		try
+		{
+			self::$_Instance = new PDO('mysql:host=localhost;dbname=work', 'root', '');
+		}
+		catch (Exception $e)
+		{
+        	Debug::fail('Erreur : ' . $e->getMessage());
+		}
 	}
 
 	/**
@@ -39,59 +52,68 @@ class Sql
 	 */
 	public static function disconnect()
 	{
-		mysql_close();
+		self::$_Instance = null;
 	}
 
 	/**
 	 * Exécute une requête sur la base
 	 *
-	 * @param Query:String la requête à effectuer
+	 * @param string $Query la requête à effectuer
+	 * @param array $Datas les données à injecter
 	 *
-	 * @return :SQLResource le résultat de la requête.
+	 * @return PDOStatement le résultat de la requête.
 	 */
-	public static function query($Query)
+	public static function query($Query, array $Datas)
 	{
-		$R = mysql_query($Query) or Debug::sqlFail();
-		return $R;
+		$Req = self::$_Instance->prepare($Query);
+		$Req->execute($Datas) or Debug::fail('Erreur SQL : ' . $Req->errorInfo());
+		return $Req;
 	}
 
 	/**
 	 * Exécute une requête sur la base. En cas d'erreur, le script n'est pas interrompu et la fonction appelante peut traiter l'exception.
-	 * @param Query:String la requête à effectuer
-	 * @return :SQLResource le résultat de la requête.
+	 * @param string $Query la requête à effectuer
+	 * @param array $Datas les données à utiliser
+	 * @return PDOStatement le résultat de la requête.
 	 */
-	public static function queryNoFail($Query)
+	public static function queryNoFail($Query, array $Datas)
 	{
-		return mysql_query($Query);
+		$Req = self::$_Instance->prepare($Query);
+		$Req->execute($Datas);
+		return $Req;
 	}
 
 	/**
 	 * Exécute une requête sur la base et ne renvoie que le premier résultat
 	 * @param Query:String la requête à effectuer
 	 * @param Type:String le type de l'objet de retour. Si null (par défaut), on renvoie un tableau.
-	 * @return :(Object|array) le premier résultat de la requête. Si aucun résultat, la fonction renvoie null.
+	 * @return (Object|array) le premier résultat de la requête. Si aucun résultat, la fonction renvoie null.
 	 */
-	public static function singleQuery($Query,$Type=null)
+	public static function singleQuery($Query,array $Datas, $Type=null)
 	{
-		$R = self::query($Query);
-		if(mysql_num_rows($R)==0)
+		$Req = self::query($Query,$Datas);
+		
+		if(is_null($Type))
+		{
+			$Req->setFetchMode(PDO::FETCH_ASSOC); 
+		}
+		else 
+		{
+			$Req->setFetchMode(PDO::FETCH_CLASS, $Type); 
+		}
+		if(!$Rep=$Req->fetch())
 		{
 			return null;
 		}
-		if(is_null($Type))
+		else 
 		{
-			return mysql_fetch_array($R);
-		}
-		else
-		{
-			return mysql_fetch_object($R, $Type);
+			return $Rep;
 		}
 	}
 
 	/**
 	 * Insère un tuple dans une table de la base de données.
 	 * En cas d'erreurs (duplicate), l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
-	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
 	 * @param Table:String la table dans laquelle insérer les données.
 	 * @param Datas:array un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
 	 * @return :SQLResource le résultat de la requête.
@@ -101,23 +123,8 @@ class Sql
 	 */
 	public static function insert($Table,array $Valeurs)
 	{
-		//On ne peut pas simplement utiliser array_keys, car on peut avoir à modifier les clés (règle de l'underscore)
-		$Keys=array();
-		foreach($Valeurs as $K=>&$V)
-		{
-			if($K[0]=='_')
-			{
-				$Keys[] = substr($K, 1);
-			}
-			else
-			{
-				$Keys[] = $K;
-				$V = '"' . $V . '"';
-			}
-		}
-
 		return self::queryNoFail(
-			'INSERT INTO ' . $Table . '(' . implode(',', $Keys) . ')
+			'INSERT INTO ' . $Table . '(' . implode(',', array_keys($Valeurs)) . ')
 			VALUES (' . implode(',', $Valeurs) . ')'
 		);
 	}
