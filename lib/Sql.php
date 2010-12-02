@@ -46,9 +46,9 @@ class Sql
 	/**
 	 * Exécute une requête sur la base
 	 *
-	 * @param Query:String la requête à effectuer
+	 * @param string $Query la requête à effectuer
 	 *
-	 * @return :SQLResource le résultat de la requête.
+	 * @return SQLResource le résultat de la requête.
 	 */
 	public static function query($Query)
 	{
@@ -58,8 +58,8 @@ class Sql
 
 	/**
 	 * Exécute une requête sur la base. En cas d'erreur, le script n'est pas interrompu et la fonction appelante peut traiter l'exception.
-	 * @param Query:String la requête à effectuer
-	 * @return :SQLResource le résultat de la requête.
+	 * @param string $Query la requête à effectuer
+	 * @return SQLResource le résultat de la requête.
 	 */
 	public static function queryNoFail($Query)
 	{
@@ -68,9 +68,9 @@ class Sql
 
 	/**
 	 * Exécute une requête sur la base et ne renvoie que le premier résultat
-	 * @param Query:String la requête à effectuer
-	 * @param Type:String le type de l'objet de retour. Si null (par défaut), on renvoie un tableau.
-	 * @return :(Object|array) le premier résultat de la requête. Si aucun résultat, la fonction renvoie null.
+	 * @param string $Query la requête à effectuer
+	 * @param string $Type le type de l'objet de retour. Si null (par défaut), on renvoie un tableau.
+	 * @return (Object|array) le premier résultat de la requête. Si aucun résultat, la fonction renvoie null.
 	 */
 	public static function singleQuery($Query,$Type=null)
 	{
@@ -93,9 +93,9 @@ class Sql
 	 * Insère un tuple dans une table de la base de données.
 	 * En cas d'erreurs (duplicate), l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
 	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
-	 * @param Table:String la table dans laquelle insérer les données.
-	 * @param Datas:array un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
-	 * @return :SQLResource le résultat de la requête.
+	 * @param string $Table la table dans laquelle insérer les données.
+	 * @param array $Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
+	 * @return SQLResource le résultat de la requête.
 	 * @example
 	 *	$ToInsert = array('Reference'=>$ArticleID,'URL'=>'http://neamar.fr');
 	 *	SQL::insert('More',$ToInsert);
@@ -127,12 +127,12 @@ class Sql
 	 * Met à jour un tuple dans une table de la base de données selon l'identifiant spécifié.
 	 * En cas d'erreurs, l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
 	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
-	 * @param Table:String la table dans laquelle insérer les données.
-	 * @param ID:int l'identifiant du tuple à mettre à jour. Forcément l'ID.
-	 * @param Datas:array un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
-	 * @param And:String des contraintes supplémentaires permettant de valider la mise à jour (exemple : "AND Auteur.ID=2" pour empêcher la modification de n'importe quoi)
-	 * @param Limit:int nombre maximal d'enregistrements à modifier
-	 * @return :SQLResource le résultat de la requête.
+	 * @param string Table la table dans laquelle insérer les données.
+	 * @param int ID l'identifiant du tuple à mettre à jour. Forcément l'ID.
+	 * @param array Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
+	 * @param string And des contraintes supplémentaires permettant de valider la mise à jour (exemple : "AND Auteur.ID=2" pour empêcher la modification de n'importe quoi)
+	 * @param int Limit nombre maximal d'enregistrements à modifier
+	 * @return SQLResource le résultat de la requête.
 	 * @example
 	 * //Notez la réalisation de la proposition si nécessaire :
 	 *	if(is_numeric($_POST['proposition']))

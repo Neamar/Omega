@@ -31,7 +31,36 @@ class Exercice extends DbObject
 	const OBJECT_NAME = 'Exercice';
 	
 	protected $Foreign = array(
-		'Createur'=>'Membre');
+		'Createur'=>'Eleve',
+		'Matiere'=>'Matiere',
+		'Classe'=>'Classe',
+		'Type'=>'Type',
+		'Statut'=>'Statut',
+		'Correcteur'=>'Correcteur'
+	);
+	
+	public $Hash;
+	public $Createur;
+	public $Creation;
+	public $TimeoutEleve;
+	public $Expiration;
+	public $Matiere;
+	public $Classe;
+	public $Section;
+	public $Type;
+	public $Demande;
+	public $InfosEleve;
+	public $Autoaccept;
+	public $Majoration;
+	public $Statut;
+	public $Correcteur;
+	public $TimeoutCorrecteur;
+	public $InfosCorrecteur;
+	public $Enchere;
+	public $NbRefus;
+	public $Remboursement;
+	public $Notation;
+	public $Retard;
 	
 	public function __construct()
 	{

@@ -26,6 +26,15 @@
 class Debug
 {
 	/**
+	* Appelé quand une requête SQL produit une erreur.
+	* Affiche l'erreur SQL et la pile d'appel.
+	*/
+	public static function sqlFail()
+	{
+		self::fail(mysql_error());
+	}
+
+	/**
 	* Appelé quand une erreur se produit / est déclenchée par le code et nécessite l'affichage d'un message d'erreur.
 	* Note : cette fonction est préférable à exit() car elle facilite le débuggage et le trace des erreurs en production.
 	* @param Msg:String Le message à afficher
@@ -34,7 +43,7 @@ class Debug
 	public static function fail($Msg)
 	{
 
-		echo '<p style="border:1px dashed red;"><strong>Désolé, une erreur critique s\'est produite. Nous tenterons de la corriger dans les plus brefs délais</strong></p>';
+		echo '<p style="border:1px dashed red;"><strong>Erreur : </strong>' . $Msg . '</p>';
 
 		$trace = self::_getDebugLog();
 		

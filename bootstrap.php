@@ -122,6 +122,7 @@ if(!method_exists($ControllerName, $ViewName))
 /**
  * Exploitation.
  */
+Sql::connect();
 //Chargement du contrôleur
 $Controller = new $ControllerName($_GET['module'], $_GET['controller'], $_GET['view'], $_GET['data']);
 //Exécution du contrôleur
