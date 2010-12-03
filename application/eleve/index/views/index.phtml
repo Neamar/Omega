@@ -1,3 +1,6 @@
 <?php
-$E = new Exercice();
-echo $E->getForeignItem('Createur'); ?>
+$E = Exercice::load(1);
+
+echo '<pre>';
+var_dump($E);
+//echo $E->getForeignItem('Createur'); ?>

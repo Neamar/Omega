@@ -31,7 +31,7 @@
 abstract class DbObject
 {
 	const TABLE_NAME = 'DbObjects';
-	const OBJECT_NAME = 'DbObject';
+	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE ID=%ID%';
 	
 	protected $Foreign = array(
 		'Nom'=>'Objet');
@@ -43,10 +43,32 @@ abstract class DbObject
 	 */
 	public $ID;
 	
+	/**
+	 * Filtre les valeurs incorrectes de l'identifiant pour se prémunir de potentielles injections SQL.
+	 * 
+	 * @param string $ID l'identifiant à protéger
+	 * 
+	 * @return int l'id numérique.
+	 */
 	public static function filterID($ID)
 	{
-		return preg_replace('`[^a-z0-9]`i','',$ID);
+		return intval($ID);
 	}
+	
+	/**
+	 * Renvoie la requête de sélection de tuple type ActiveObject.
+	 * Considère que tous les paramètres sont protégés.
+	 * 
+	 * @param string $Table
+	 * @param int $ID
+	 * 
+	 * @return string Une requête SQL.
+	 */
+	public static function makeQuery($Query, $Table, $ID)
+	{
+		return str_replace(array('%TABLE%','%ID%'),array($Table,$ID),$Query);
+	}
+	
 	/**
 	 * Charge un élément à partir de son identifiant.
 	 * 
@@ -56,7 +78,8 @@ abstract class DbObject
 	 */
 	public static function load($ID)
 	{	
-		return Sql::singleQuery('SELECT * FROM ' . static::TABLE_NAME . ' WHERE ID=' . self::filterID($ID), static::OBJECT_NAME);
+		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($ID));
+		return Sql::singleQuery($Query, get_called_class());
 	}
 
 	/**
@@ -70,7 +93,7 @@ abstract class DbObject
 	{	
 		if(Sql::insert(static::TABLE_NAME, $Values))
 		{
-			return call_user_func(array(static::OBJECT_NAME, 'load'), mysql_insert_id());
+			return call_user_func(array(get_called_class(), 'load'), mysql_insert_id());
 		}
 		else
 		{
@@ -142,7 +165,9 @@ abstract class DbObject
 	 */
 	public function update()
 	{
-		$Updated = Sql::singleQuery('SELECT * FROM ' . static::TABLE_NAME . ' WHERE ID=' . self::filterID($this->ID), static::OBJECT_NAME);
+		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($ID));
+		$Updated = Sql::singleQuery($Query, get_called_class());
+		
 		foreach($Updated as $Col=>$Val)
 		{
 			$this->$Col = $Val;

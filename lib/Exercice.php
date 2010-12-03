@@ -28,14 +28,13 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	const OBJECT_NAME = 'Exercice';
 	
 	protected $Foreign = array(
 		'Createur'=>'Eleve',
-		'Matiere'=>'Matiere',
+		//'Matiere'=>'Matiere',
 		'Classe'=>'Classe',
 		'Type'=>'Type',
-		'Statut'=>'Statut',
+		//'Statut'=>'Statut',
 		'Correcteur'=>'Correcteur'
 	);
 	
@@ -51,7 +50,7 @@ class Exercice extends DbObject
 	public $Demande;
 	public $InfosEleve;
 	public $Autoaccept;
-	public $Majoration;
+	public $Modificateur;
 	public $Statut;
 	public $Correcteur;
 	public $TimeoutCorrecteur;
