@@ -29,7 +29,6 @@
 class Membre extends DbObject
 {
 	const TABLE_NAME = 'Membres';
-	const OBJECT_NAME = 'Membre';
 	
 	public $Mail;
 	private $Pass;
