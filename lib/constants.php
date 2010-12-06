@@ -136,7 +136,7 @@ define('DELAI_REMBOURSEMENT', 7);
  * 
  * @var int
  */
-define('MAX_EXERCICE_RESERVE', 5);
+define('MAX_EXERCICE_RESERVES', 5);
 
 /**
  * Nombre max d'exercices créés non acceptés par un élève
