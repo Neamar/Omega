@@ -87,7 +87,7 @@ abstract class DbObject
 	/**
 	 * Crée un nouvel élément et renvoie le nouvel objet.
 	 * 
-	 * @param array $Values les données de l'objet. Les champs non renseignés sont 
+	 * @param array $Values les données de l'objet. Les champs non renseignés prendront la valeur par défaut de la table
 	 *
 	 * @return DbObject l'objet inséré.
 	 */
@@ -150,6 +150,10 @@ abstract class DbObject
 		if(isset($this->Foreign[$Column]))
 		{
 			return call_user_func(array($this->Foreign[$Column], 'load'), $this->$Column);
+		}
+		else
+		{
+			return null;
 		}
 	}
 	

@@ -42,6 +42,26 @@ class Sql
 	{
 		mysql_close();
 	}
+	
+	/**
+	 * Échappe le (les) paramètres fournis.
+	 * Non récursif.
+	 * 
+	 * @param mixed $Data
+	 */
+	public static function escape($Data)
+	{
+		if(is_array($Data))
+		{
+			$Data = array_map('mysql_real_escape_string',$Data);
+		}
+		else
+		{
+			$Data = mysql_real_escape_string($Data);
+		}
+		
+		return $Data;
+	}
 
 	/**
 	 * Exécute une requête sur la base
@@ -106,7 +126,7 @@ class Sql
 	 * En cas d'erreurs (duplicate), l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
 	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
 	 * @param string $Table la table dans laquelle insérer les données.
-	 * @param array $Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
+	 * @param array $Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs seront échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
 	 * @return SQLResource le résultat de la requête.
 	 * @example
 	 *	$ToInsert = array('Reference'=>$ArticleID,'URL'=>'http://neamar.fr');
@@ -125,7 +145,7 @@ class Sql
 			else
 			{
 				$Keys[] = $K;
-				$V = '"' . $V . '"';
+				$V = '"' . self::escape($V) . '"';
 			}
 		}
 

@@ -31,9 +31,18 @@ class Membre extends DbObject
 	const TABLE_NAME = 'Membres';
 	public static $_Props;
 	
+		protected $Foreign = array(
+		'Createur'=>'Eleve',
+		//'Matiere'=>'Matiere',
+		'Classe'=>'Classe',
+		'Type'=>'Type',
+		//'Statut'=>'Statut',
+		'Correcteur'=>'Correcteur'
+	);
+	
 	public $Mail;
 	private $Pass;
-	private $Points;
+	protected $Points;
 	public $Creation;
 	public $Connexion;
 	public $Statut;

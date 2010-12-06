@@ -15,6 +15,8 @@
  * @link      http://devoirminute.com
  */
 
+date_default_timezone_set("Europe/Paris");
+
 /**
  * Chemin vers les librairies
  * @var string
@@ -56,10 +58,10 @@ define('SALT', 'Omega_cy4:D#4|sa|P)\|BUjdxS~');
 define('EQUIVALENCE_POINT', 25);
 
 /**
- * Marge prise par le site (hors TVA)
+ * Pourcentage de multiplication de la somme correcteur (dont TVA)
  * @var float
  */
-define('MARGE', 1.25418060200669);
+define('MARGE', 150);
 
 /**
  * Borne supérieure maximale (en pourcentage) pour un remboursement
@@ -157,7 +159,4 @@ define('MAX_FICHIERS_EXERCICE', 3);
  * 
  * @var int
  */
-define('MIN_VIREMENT', 7);
-
-
-date_default_timezone_set("Europe/Paris");
+define('DELAI_VIREMENT', 7);
