@@ -88,6 +88,18 @@ class Sql
 			return mysql_fetch_object($R, $Type);
 		}
 	}
+	
+	/**
+	 * Récupère une unique colonne du premier tuple résultat.
+	 * 
+	 * @param string $Query la requête à effectuer
+	 * @param string $Column la colonne à renvoyer
+	 */
+	public static function singleColumn($Query,$Column)
+	{
+		$Resultat = self::singleQuery($Query);
+		return $Resultat[$Column];
+	}
 
 	/**
 	 * Insère un tuple dans une table de la base de données.
@@ -181,6 +193,18 @@ class Sql
 	public static function delete($Table,$ID,$And)
 	{
 		SQL::delete('DELETE FROM ' . $Table . ' WHERE ID=' . intval($ID) . ' ' . $And . ' LIMIT 1');
+	}
+	
+	/**
+	 * Retourne la date indiquée par le timestamp au format SQL.
+	 * 
+	 * @param int $time
+	 * 
+	 * @return string une chaîne formatée
+	 */
+	public static function getDate($time)
+	{
+		return date ("Y-m-d H:i:s", $time);
 	}
 }
 

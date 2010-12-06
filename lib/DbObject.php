@@ -52,7 +52,7 @@ abstract class DbObject
 	 * 
 	 * @return int l'id numérique.
 	 */
-	public static function filterID($ID)
+	public static function filterID($ID=null)
 	{
 		return intval($ID);
 	}

@@ -37,6 +37,22 @@ class Eleve extends Membre
 	public $Classe;
 	public $Section;
 	
+	/**
+	 * Renvoie le pourcentage multiplicateur de suractivité pour l'élève
+	 * 
+	 * @return int un nombre >100.
+	 */
+	public function getRaise()
+	{
+		
+		$Raise = SQL::singleColumn('SELECT COUNT(DISTINCT(DATE(Creation))) AS Nb
+		FROM Exercices
+		WHERE Createur=' . $this->getFilteredId() . '
+		AND Creation > "' . SQL::getDate(time()-CALCUL_CUMUL*3600*24) . '"', 'Nb');
+		
+		$Raise = min(POURCENTAGE_MAX_SURACTIVITE, 100 + $Raise * POURCENTAGE_SURACTIVITE);
+		return $Raise;
+	}
 }
 
 Eleve::$_Props = init_props('Eleve');

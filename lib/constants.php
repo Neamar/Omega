@@ -101,7 +101,7 @@ define('POURCENTAGE_SURACTIVITE', 200);
  * 
  * @var int
  */
-define('POURCENTAGE_MAX_SURACTIVITE', 3);
+define('POURCENTAGE_MAX_SURACTIVITE', 150);
 
 /**
  * Nombre de jours pris en compte pour le calcul du cumul
