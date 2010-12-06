@@ -53,6 +53,29 @@ class Eleve extends Membre
 		$Raise = min(POURCENTAGE_MAX_SURACTIVITE, 100 + $Raise * POURCENTAGE_SURACTIVITE);
 		return $Raise;
 	}
+	
+	/**
+	 * Renvoie vrai si l'élève peut créer un nouvel exercice
+	 * 
+	 * @return bool
+	 */
+	public function isAbleToCreate()
+	{
+		return ($this->getCreated()<=MAX_EXERCICE_CREES);
+	}
+	
+	/**
+	 * Renvoie le nombre d'exercices crées en attente (non acceptés, non annulés, non terminés)
+	 * 
+	 * @return int
+	 */
+	public function getCreated()
+	{
+		return SQL::singleColumn('SELECT COUNT(*) AS Nb
+		FROM Exercices
+		WHERE Createur=' . $this->getFilteredId() . '
+		AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")', $Nb);	
+	}
 }
 
 Eleve::$_Props = init_props('Eleve');
