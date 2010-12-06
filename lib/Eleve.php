@@ -32,6 +32,11 @@ class Eleve extends Membre
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
+	public static $_Props;
+
 	public $Classe;
 	public $Section;
+	
 }
+
+Eleve::$_Props = init_props('Eleve');

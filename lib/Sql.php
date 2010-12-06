@@ -279,3 +279,5 @@ class SqlParam
 		}
 	}
 }
+
+//TODO : pas d'appels à mysql_ en dehors de cette classe.

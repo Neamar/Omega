@@ -33,6 +33,8 @@ abstract class DbObject
 	const TABLE_NAME = 'DbObjects';
 	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE ID=%ID%';
 	
+	public static $_Props;
+	
 	protected $Foreign = array(
 		'Nom'=>'Objet');
 	
@@ -105,8 +107,10 @@ abstract class DbObject
 	{
 		return self::filterId($this->ID);
 	}
+	
 	/**
 	 * Modifie l'objet et met à jour ses propriétés en base de données.
+	 * Remonte méthodiquement l'héritage de l'objet pour trouver sur quelles tables se trouvent quelles propriétés.
 	 * 
 	 * @param array $Changes
 	 * 
@@ -114,7 +118,22 @@ abstract class DbObject
 	 */
 	public function setAndSave(array $Changes)
 	{
-		Sql::update(static::TABLE_NAME, $this->ID, $Changes);
+
+		$Class = get_class($this);
+		while($Class!=='DbObject')
+		{
+			//Récupérer les éléments à updater sur cette table
+			$CurrentChanges = array_intersect_key($Changes, $Class::$_Props);
+			
+			if(count($CurrentChanges)!=0)
+			{
+				//Il y a des éléments à mettre à jour sur cette table !
+				SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges);
+			}
+			
+			//Remonter d'un cran :
+			$Class = get_parent_class($Class);
+		}
 		
 		$this->update();
 	}
@@ -165,7 +184,7 @@ abstract class DbObject
 	 */
 	public function update()
 	{
-		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($ID));
+		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($this->ID));
 		$Updated = Sql::singleQuery($Query, get_called_class());
 		
 		foreach($Updated as $Col=>$Val)
@@ -174,3 +193,44 @@ abstract class DbObject
 		}
 	}
 }
+
+/**
+ * Récupère les propriétés définies par une classe pour faciliter l'héritage d'ActiveRecord
+ * 
+ * @param string $ClassName
+ * 
+ * @return array les paramètres explicitement déclarés par la classe (sans les paramètres hérités)
+ */
+function init_props($ClassName)
+{
+	$Props = get_props($ClassName);
+	
+	$ParentClass = get_parent_class($ClassName);
+	if($ParentClass !==false)
+	{
+		$PropsParent = get_props($ParentClass);
+		$InnerProps = array_diff_assoc($Props, $PropsParent);
+	}
+	else
+		$InnerProps = $Props;
+		
+	return $InnerProps;
+}
+
+
+function get_props($ClassName)
+{
+	$R = new ReflectionClass($ClassName);
+	$RProps = $R->getProperties();
+	$Props = array();
+	
+	foreach ($RProps as $Prop)
+	{
+	    $Props[$Prop->getName()]=true;
+	    $Props['_' . $Prop->getName()]=true;//pour les requêtes SQL à underscore.
+	}
+	
+	return $Props;
+}
+
+DbObject::$_Props = init_props('DbObject');

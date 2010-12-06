@@ -29,22 +29,18 @@
 class Membre extends DbObject
 {
 	const TABLE_NAME = 'Membres';
+	public static $_Props;
 	
 	public $Mail;
 	private $Pass;
-	protected $Points;
+	private $Points;
 	public $Creation;
 	public $Connexion;
 	public $Statut;
 	public $Type;
 	public $RIB;
 	public $Paypal;
-	
 
-	public function __construct()
-	{
-		
-	}
 	
 	/**
 	 * Renvoie true si le membre peut se permettre de débourser $Value.
@@ -155,3 +151,5 @@ class Membre extends DbObject
 		return ($this->Statut=='BLOQUE');
 	}
 }
+
+Membre::$_Props = init_props('Membre');
