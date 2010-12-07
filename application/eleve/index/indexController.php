@@ -42,10 +42,18 @@ class Eleve_IndexController extends AbstractController
 	/**
 	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
 	 * 
-	 * @return void
 	 */
 	public function indexAction()
 	{
-
+		$this->View->setTitle('Accueil élève');
+	}
+	
+	/**
+	 * Page d'inscription.
+	 * 
+	 */
+	public function inscriptionAction()
+	{
+		$this->View->setTitle('Inscription élève');
 	}
 }

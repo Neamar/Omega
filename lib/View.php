@@ -49,7 +49,7 @@ class View
 	public function __construct($Name, AbstractController $Controller)
 	{
 		$this->_Datas = array();
-		$this->_Metas = array('Name'=>$Name, 'Controller'=>$Controller);
+		$this->_Metas = array('name'=>$Name, 'controller'=>$Controller);
 	}
 
 	/**
@@ -145,5 +145,18 @@ class View
 		}
 
 		return call_user_func_array($Helper, $args);
+	}
+	
+	public function setTitle($Title)
+	{
+		self::setMeta('title', $Title);
+	}
+	
+	/**
+	 * Écrit la vue sur la sortie standard
+	 */
+	public function render()
+	{
+		include PATH . '/layouts/template.phtml';
 	}
 }

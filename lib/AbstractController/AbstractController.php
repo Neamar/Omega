@@ -77,6 +77,7 @@ abstract class AbstractController
 		$this->Data = $Data;
 
 		$this->View = new View($View, $this);
+		$this->View->setMeta('viewFile',OO2FS::viewPath($View, $Controller, $Module));
 
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')
@@ -155,7 +156,7 @@ abstract class AbstractController
 		}
 		else
 		{
-			include OO2FS::viewPath($V->getMeta('Name'), $this->Controller, $this->Module);
+			$V->render();
 		}
 	}
 
