@@ -95,11 +95,11 @@ abstract class DbObject
 	{	
 		if(Sql::insert(static::TABLE_NAME, $Values))
 		{
-			return call_user_func(array(get_called_class(), 'load'), mysql_insert_id());
+			return call_user_func(array(get_called_class(), 'load'), SQL::lastId());
 		}
 		else
 		{
-			Debug::fail('Impossible de créer l\'objet demandé : ' . mysql_error());
+			Debug::fail('Impossible de créer l\'objet demandé : ' . SQL::error());
 		}
 	}
 	
@@ -169,7 +169,7 @@ abstract class DbObject
 	public function log($Table, $Action, Membre $Membre, Exercice $Exercice, array $Values)
 	{
 		$Values['Membre'] = $Membre->getFilteredId();
-		$Values['Action'] = mysql_real_escape_string($Action);
+		$Values['Action'] = $Action;
 		$Values['_Date'] = 'NOW()';
 		
 		if(!is_null($Exercice))
@@ -179,7 +179,7 @@ abstract class DbObject
 		
 		if(!SQL::insert($Table, $Values))
 		{
-			Debug::fail('Log : ' . mysql_error());
+			Debug::fail('Log : ' . SQL::error());
 		}
 	}
 	

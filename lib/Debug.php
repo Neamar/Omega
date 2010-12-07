@@ -31,7 +31,7 @@ class Debug
 	*/
 	public static function sqlFail()
 	{
-		self::fail(mysql_error());
+		self::fail(SQL::error());
 	}
 
 	/**

@@ -62,6 +62,22 @@ class Sql
 		
 		return $Data;
 	}
+	
+	/**
+	 * Renvoie le texte de la dernière erreur SQL.
+	 */
+	public static function error()
+	{
+		return mysql_error();
+	}
+	
+	/**
+	 * Renvoie le numéro du dernier identifiant inséré
+	 */
+	public static function lastId()
+	{
+		return mysql_insert_id();
+	}
 
 	/**
 	 * Exécute une requête sur la base
