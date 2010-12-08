@@ -55,5 +55,11 @@ class Eleve_IndexController extends AbstractController
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
+		if(isset($_POST['inscription-eleve']))
+		{
+			//$this->View->setMessage("warning", "Enregistré :)");
+		}
+		//Charger la liste des matières :
+		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');
 	}
 }

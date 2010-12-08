@@ -147,9 +147,24 @@ class View
 		return call_user_func_array($Helper, $args);
 	}
 	
+	/**
+	 * Définit le titre de la page Web (balise <title>)
+	 * 
+	 * @param string $Title
+	 */
 	public function setTitle($Title)
 	{
 		self::setMeta('title', $Title);
+	}
+	
+	/**
+	 * Définit le message à afficher en tête de page
+	 * 
+	 * @param string $Title
+	 */
+	public function setMessage($Type, $Message)
+	{
+		self::setMeta('message', array('class'=>$Type,'message'=>$Message));
 	}
 	
 	/**

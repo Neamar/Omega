@@ -33,6 +33,7 @@ class Sql
 	{
 		mysql_connect('localhost', 'root', '');
 		mysql_select_db('work');
+		mysql_set_charset('utf8');
 	}
 
 	/**
@@ -135,6 +136,34 @@ class Sql
 	{
 		$Resultat = self::singleQuery($Query);
 		return $Resultat[$Column];
+	}
+	
+	/**
+	 * Exécute une requête sur la base et renvoie le résultat dans un tableau associatif clé => valeur
+	 *
+	 * @param string $Query la requête à effectuer
+	 * @param string $KeyColumn la colonne qui doit servir de clé
+	 * @param string $ValueColumn la colonne qui doit servir de valeur. Si non spécifiée, l'intégralité du tuple sert de valeur.
+	 *
+	 * @return array le résultat de la requête.
+	 */
+	public static function queryAssoc($Query,$KeyColumn,$ValueColumn=null)
+	{
+		$RSql = self::query($Query);
+		$R = array();
+		while($RTuple = mysql_fetch_assoc($RSql))
+		{
+			if(is_null($ValueColumn))
+			{
+				$R[$RTuple[$KeyColumn]] = $RTuple;
+			}
+			else
+			{
+				$R[$RTuple[$KeyColumn]] = $RTuple[$ValueColumn];
+			}
+		}
+		
+		return $R;
 	}
 
 	/**
@@ -339,5 +368,3 @@ class SqlParam
 		}
 	}
 }
-
-//TODO : pas d'appels à mysql_ en dehors de cette classe.

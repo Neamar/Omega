@@ -1,1 +1,35 @@
+<h1>Inscription élève</h1>
+<p>L'inscription à <strong>eDevoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permttre de profiter rapidement des services offerts par le site.</p>
+<form id="inscription-eleve" method="post" action="">
+
 <?php
+echo $this->Form_inputLabelBr('mail', 'Votre adresse mail',
+	array(
+		'type'=>'email',
+		'placeholder'=>'nom@fai.fr',
+	));
+echo $this->Form_inputLabelBr('password', 'Votre mot de passe',
+	array(
+		'type'=>'password',
+	));
+echo $this->Form_inputLabelBr('password_confirm', 'Confirmez votre mot de passe',
+	array(
+		'type'=>'password',
+	));
+	
+echo $this->Form_selectLabelBr('classe','Votre niveau scolaire', $this->Matieres, 2);
+
+echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
+	array(
+		'placeholder'=>'S, ES, L...'
+	));
+?>
+
+CGU Élèves<br />
+
+<?php 
+echo $this->Form_checkbox('cgu',array('ok'=>"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site"));
+//TODO : ajouter CAPTCHA.
+echo $this->Form_submit('inscription-eleve',"M'inscrire");
+?>
+</form>

@@ -22,7 +22,7 @@
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_input($name,array $args)
+function ViewHelper_Form_input($name, array $args)
 {
 	if(!isset($args['name']))
 	{
@@ -49,7 +49,7 @@ function ViewHelper_Form_input($name,array $args)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_submit($name,$value)
+function ViewHelper_Form_submit($name, $value)
 {
 	$args = array('type'=>'submit','value'=>$value);
 	if($name!=null)
@@ -70,7 +70,7 @@ function ViewHelper_Form_submit($name,$value)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_select($name,array $values, $selected=null, array $args=array())
+function ViewHelper_Form_select($name, array $values, $selected=null, array $args=array())
 {
 	if(!isset($args['name']))
 	{
@@ -100,7 +100,7 @@ function ViewHelper_Form_select($name,array $values, $selected=null, array $args
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_radio($name,array $values, $selected=null)
+function ViewHelper_Form_radio($name, array $values, $selected=null)
 {
 	$Return = '';
 	foreach($values as $value=>$caption)
@@ -116,11 +116,11 @@ function ViewHelper_Form_radio($name,array $values, $selected=null)
  * 
  * @param string $name Nom / id du composant
  * @param array $values Un tableau associatif.
- * @param string|array selected la valeur sélectionnée par défaut
+ * @param string|array selected la valeur (les valeurs) sélectionnée(s) par défaut
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_checkbox($name,array $values, $selected=null)
+function ViewHelper_Form_checkbox($name, array $values, $selected=null)
 {
 	if(!is_array($selected))
 	{
@@ -144,7 +144,7 @@ function ViewHelper_Form_checkbox($name,array $values, $selected=null)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_label($name,$label)
+function ViewHelper_Form_label($name, $label)
 {
 	return '<label for="' . $name . '">' . $label . '&nbsp;: </label>';
 }
@@ -158,10 +158,59 @@ function ViewHelper_Form_label($name,$label)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_inputLabel($name,$label,array $args)
+function ViewHelper_Form_inputLabel($name, $label, array $args)
 {
 	return ViewHelper_Form_Label($name, $label) . viewHelper_Form_Input($name, $args);
 }
+
+/**
+ * Génère un input et son label avec les arguments spécifiés. Ajoute un retour à la ligne.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_inputLabelBr($name, $label, array $args)
+{
+	return ViewHelper_Form_inputLabel($name, $label, $args) . "<br />\n";
+}
+
+/**
+ * Génère un select et son label avec les arguments et valeurs spécifiés.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label le contenu du label
+ * @param array $values Un tableau associatif.
+ * @param string selected la valeur sélectionnée par défaut
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_selectLabel($name, $label, array $values, $selected, array $args=array())
+{
+	return ViewHelper_Form_Label($name, $label) . ViewHelper_Form_select($name, $values, $selected, $args);
+}
+
+/**
+ * Génère un select et son label avec les arguments et valeurs spécifiés. Ajoute un retour à la ligne.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label le contenu du label
+ * @param array $values Un tableau associatif.
+ * @param string selected la valeur sélectionnée par défaut
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected, array $args=array())
+{
+	return ViewHelper_Form_selectLabel($name, $label, $values, $selected, $args) . "<br />\n";
+}
+
+
+
 
 /**
  * Sérialise une pile d'arguments en attributs HTML.
