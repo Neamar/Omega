@@ -11,7 +11,12 @@
 </head>
 <body>
 
-<!-- Présentation du site -->
+<?php 
+//Gestion des messages
+if($this->issetMeta('message')) {?>
+<aside id="message" class="<?php echo $this->getMeta('messageClass') ?>"><?php echo $this->getMeta('message') ?></aside>
+<?php }?>
+
 <section id="content">
 <?php include $this->getMeta('viewFile');?>
 </section>

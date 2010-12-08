@@ -3,7 +3,7 @@
 <form id="inscription-eleve" method="post" action="">
 
 <?php
-echo $this->Form_inputLabelBr('mail', 'Votre adresse mail',
+echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
 	array(
 		'type'=>'email',
 		'placeholder'=>'nom@fai.fr',
@@ -28,7 +28,7 @@ echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
 CGU Élèves<br />
 
 <?php 
-echo $this->Form_checkbox('cgu',array('ok'=>"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site"));
+echo $this->Form_checkbox('cgu',"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
 //TODO : ajouter CAPTCHA.
 echo $this->Form_submit('inscription-eleve',"M'inscrire");
 ?>

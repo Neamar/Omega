@@ -79,6 +79,31 @@ class Sql
 	{
 		return mysql_insert_id();
 	}
+	
+	/**
+	 * Débute une transaction.
+	 */
+	public static function start()
+	{
+		//TODO : tester la transaction
+		return self::query('BEGIN');
+	}
+	
+	/**
+	 * Enregistre les modifications de la transaction.
+	 */
+	public static function commit()
+	{
+		return self::query('COMMIT');
+	}
+	
+	/**
+	 * Annule les modifications de la transaction.
+	 */
+	public static function rollback()
+	{
+		return self::query('ROLLBACK');
+	}
 
 	/**
 	 * Exécute une requête sur la base
@@ -89,7 +114,9 @@ class Sql
 	 */
 	public static function query($Query)
 	{
-		$R = mysql_query($Query) or Debug::sqlFail();
+		$R = mysql_query($Query);
+		if($R===false)
+			throw new Exception("Erreur SQL", 125);
 		return $R;
 	}
 

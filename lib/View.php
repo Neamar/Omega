@@ -107,6 +107,7 @@ class View
 	{
 		$this->_Metas[$Key] = $Value;
 	}
+	
 	/**
 	 * Teste l'existence d'une clé.
 	 *
@@ -118,6 +119,18 @@ class View
 	{
 		return isset($this->_Datas[$Key]);
 	}
+	
+	/**
+	 * Teste l'existence d'une clé méta.
+	 *
+	 * @param string $Key la clé à tester
+	 *
+	 * @return bool true si la clé existe.
+	 */
+	public function issetMeta($Key)
+	{
+		return isset($this->_Metas[$Key]);
+	}
 
 	/**
 	 * Efface la valeur d'une clé.
@@ -127,6 +140,16 @@ class View
 	public function __unset($Key)
 	{
 		unset($this->_Datas[$Key]);
+	}
+	
+	/**
+	 * Efface la valeur d'une clé méta.
+	 *
+	 * @param string $Key la clé à effacer.
+	 */
+	public function unsetMeta($Key)
+	{
+		unset($this->_Metas[$Key]);
 	}
 
 	/**
@@ -164,7 +187,8 @@ class View
 	 */
 	public function setMessage($Type, $Message)
 	{
-		self::setMeta('message', array('class'=>$Type,'message'=>$Message));
+		self::setMeta('message', $Message);
+		self::setMeta('messageClass', $Type);
 	}
 	
 	/**

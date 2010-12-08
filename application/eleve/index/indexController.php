@@ -55,9 +55,53 @@ class Eleve_IndexController extends AbstractController
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
+		
 		if(isset($_POST['inscription-eleve']))
 		{
-			//$this->View->setMessage("warning", "Enregistré :)");
+			if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
+				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			else if(External::isTrash($_POST['email']))
+				$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
+			else if(empty($_POST['password']))
+				$this->View->setMessage("error", "Aucun mot de passe spécifié !");
+			else if($_POST['password'] != $_POST['password_confirm'])
+				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+			else if(!isset($_POST['cgu']) || $_POST['cgu'] != 'on')
+				$this->View->setMessage("error", "Vous n'avez pas validé les conditions générales d'utilisation");
+			else
+			{
+				SQL::start();
+				$ToInsert = array(
+					'Mail'=> $_POST['email'],
+					'Pass'=>sha1(SALT . $_POST['password']),
+					'_Creation'=>'NOW()',
+					'_Connexion'=>'NOW()',
+				);
+				if(!Sql::insert('Membres', $ToInsert))
+				{
+					Sql::rollback();
+					$this->View->setMessage("error", "Impossible de vous enregistrer. L'adresse email est peut-être déjà réservée ?");
+				}
+				else
+				{
+					$ToInsert = array(
+						'ID'=>Sql::lastId(),
+						'Classe'=>intval($_POST['classe']),
+						'Section'=>$_POST['section']
+					);
+					
+					if(!Sql::insert('Eleves',$ToInsert))
+					{
+						Sql::rollback();
+						$this->View->setMessage("error", "Impossible de vous enregistrer. Veuillez réessayer plus tard.");
+					}
+					else 
+					{
+						Sql::commit();
+						$this->View->setMessage("info", "Vous êtes enregistré !");
+					}
+				}
+			}
 		}
 		//Charger la liste des matières :
 		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');

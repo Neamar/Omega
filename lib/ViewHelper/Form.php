@@ -35,7 +35,11 @@ function ViewHelper_Form_input($name, array $args)
 	if(!isset($args['type']))
 	{
 		$args['type'] = 'text';
-	}	
+	}
+	if(isset($_POST[$name]) && $args['type']!='password')
+	{
+		$args['value'] = $_POST[$name];
+	}
 	
 
 	return '<input ' . ViewHelper_Form_args($args) . '/>';
@@ -80,11 +84,15 @@ function ViewHelper_Form_select($name, array $values, $selected=null, array $arg
 	{
 		$args['id'] = $name;
 	}
+	if(isset($_POST[$name]))
+	{
+		$selected = $_POST[$name];
+	}
 	
 	$Return = '<select ' . ViewHelper_Form_args($args)  . ">\n";
 	foreach($values as $value=>$caption)
 	{
-		$Return .= '	<option value="' . $value . '"' . ($value===$selected?' selected="selected"':'') . '>' . $caption . "</option>\n";
+		$Return .= '	<option value="' . $value . '"' . ($value==$selected?' selected="selected"':'') . '>' . $caption . "</option>\n";
 	}
 	$Return .="</select>\n";
 	
@@ -115,12 +123,28 @@ function ViewHelper_Form_radio($name, array $values, $selected=null)
  * Génère un checkbox avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
+ * @param string $label le label du checkbox
+ * @param bool $selected true pour le cocher
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_checkbox($name, $label, $selected=false)
+{
+
+	return  '<input type="checkbox" name="' . $name . '" id="' . $name . '"' . ($selected?' checked="checked"':'') . ' /><label for="' . $name . '">' . $label . "</label><br />\n";
+}
+
+
+/**
+ * Génère une liste checkbox avec les arguments et valeurs spécifiés.
+ * 
+ * @param string $name Nom / id du composant
  * @param array $values Un tableau associatif.
  * @param string|array selected la valeur (les valeurs) sélectionnée(s) par défaut
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_checkbox($name, array $values, $selected=null)
+function ViewHelper_Form_checkboxs($name, array $values, $selected=null)
 {
 	if(!is_array($selected))
 	{
