@@ -2,7 +2,7 @@
 /**
  * Event.php - 11 déc. 2010
  * 
- * 
+ * Simuler une gestion d'évenements (basique) en PHP.
  * 
  * PHP Version 5
  * 
@@ -17,7 +17,7 @@
  */
  
 /**
- * Documentation de la classe
+ * Permet d'enregistrer des actions, et de déclencher des fonctions sur ces actions.
  *
  * @category Default
  * @package  Root
@@ -25,17 +25,6 @@
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link     http://edevoir.com
  */
-<?php
-/**
-* But : simuler une gestion d'évenements en PHP.
-* Permet d'enregistrer des actions, et de déclencher des fonctions sur ces actions.
-*/
-//Omni
-
-//////////////////////////////////////////////////////
-//Fonctionnalités du contrôleur :
-
-
 class Event
 {
 	const NOUVEAU = 'Création de l\'omnilogisme';

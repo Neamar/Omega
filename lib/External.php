@@ -28,6 +28,15 @@
 class External
 {
 	/**
+	 * Données utiles pour le template du mail avec replace_callback.
+	 * 
+	 * @see External::template_mail
+	 * 
+	 * @var array
+	 */
+	private static $Datas;
+	
+	/**
 	 * Teste si l'adresse mail provient d'un fournisseur de jetable.
 	 * 
 	 * @param string $email
@@ -61,8 +70,49 @@ class External
 		// En-têtes additionnels
 		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
 
-		register_shutdown_function("mail",$to, $subject, $message, $headers);
+		//register_shutdown_function("mail",$to, $subject, $message, $headers);
+		file_put_contents(DATA_PATH . '/logs/last_mail', $subject . "\n\n" . $message);
 
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
+	}
+	
+	/**
+	 * Envoie un mail-template.
+	 * 
+	 * @param string $to le destinataire
+	 * @param string $template le nom du template sans html, par exemple /eleve/validation
+	 * @param array $Datas
+	 */
+	public static function template_mail($to, $template, array $Datas)
+	{
+		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.','',$template) . '.html');
+		
+		$Items = explode("\n",$File,2);
+		$subject = $Items[0];
+		$Body = $Items[1];
+		External::$Datas = $Datas;
+		$message = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::template_replace', $Body);
+		
+		self::mail($to, $subject, $message);
+	}
+	
+	private static function template_replace($Matches)
+	{
+		if(isset(External::$Datas[$Matches[1]]))
+		{
+			return External::$Datas[$Matches[1]];
+		}
+		else
+		{
+			if(defined($Matches[1]))
+			{
+				return constant($Matches[1]);
+			}
+			else 
+			{
+				throw new Exception("Utilisation d'une clé inconnue dans un template : " . $Matches[1]);
+				return 'INCONNU';
+			}
+		}
 	}
 }

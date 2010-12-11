@@ -70,17 +70,53 @@ class Eleve_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Page de connexion.
+	 * Les données peuvent avoir été envoyées depuis la page d'accueil ou depuis cette page là.
+	 * 
+	 */
+	public function connexionAction()
+	{
+		$this->View->setTitle('Connexion élève');
+		
+		if(isset($_POST['connexion-eleve']))
+		{
+			$Eleve = $this->logMe($_POST['email'], $_POST['password'], 'Eleve');
+			if(!is_null($Eleve))
+			{
+				if($Eleve->Statut == 'EN_ATTENTE')
+				{
+					$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
+					$_SESSION['Eleve'];// = NULL;
+				}
+				else
+				{
+					$this->redirect('/eleve/');
+				}
+			}
+			else
+			{
+				$this->View->setMessage("error", "Identifiants incorrects.");
+			}
+		}
+	}
+	
+	/**
 	 * Page d'inscription.
 	 * 
 	 */
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
-		
+				
 		if(isset($_POST['inscription-eleve']))
 		{
-			if($this->create_account($_POST)===true)
+			if($ID = $this->create_account($_POST) !== FAIL)
 			{
+				$Datas = array(
+					'mail'=>$_POST['email'],
+					'lien'=>sha1(SALT . $ID . $_POST['email'])
+				);
+				External::template_mail($_POST['email'], '/eleve/validation', $Datas);
 				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 				$this->redirect('/eleve/');
 			}
@@ -88,6 +124,15 @@ class Eleve_IndexController extends IndexAbstractController
 
 		//Charger la liste des matières :
 		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');
+	}
+	
+		/**
+	 * Page d'inscription.
+	 * 
+	 */
+	public function validationAction_wd()
+	{
+		print_r($this->Data);
 	}
 	
 	/**

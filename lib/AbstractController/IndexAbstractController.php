@@ -62,6 +62,7 @@ abstract class IndexAbstractController extends AbstractController
 			}
 			else
 			{
+				$ID = SQL::lastId();
 				if(!$this->create_account_special($Datas))
 				{
 					Sql::rollback();
@@ -71,10 +72,12 @@ abstract class IndexAbstractController extends AbstractController
 				{
 					Sql::commit();
 					$this->View->setMessage("info", "Vous êtes enregistré !");
-					return true;
+					return $ID ;
 				}
 			}
 		}
+		
+		return FAIL;
 	}
 	
 	/**
@@ -105,6 +108,7 @@ abstract class IndexAbstractController extends AbstractController
 		$_SESSION[$Type] = $Membre;
 		if(!is_null($Membre))
 		{
+			$Membre->setAndSave(array('Connexion'=>SQL::getDate()));
 			$_SESSION['Membre']['Mail'] = $Membre->Mail;
 		}
 		

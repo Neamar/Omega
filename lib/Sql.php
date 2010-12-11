@@ -294,8 +294,11 @@ class Sql
 	 * 
 	 * @return string une chaîne formatée
 	 */
-	public static function getDate($time)
+	public static function getDate($time=-1)
 	{
+		if($time==-1)
+			$time = time();
+			
 		return date ("Y-m-d H:i:s", $time);
 	}
 }

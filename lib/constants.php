@@ -47,6 +47,11 @@ define('URL', 'http://localhost/Omega');
  */
 define('SALT', 'Omega_cy4:D#4|sa|P)\|BUjdxS~');
 
+/**
+ * Code d'erreur
+ * @var int
+ */
+define('FAIL', -1);
 
 //-------------------------------------------
 //Constantes du site

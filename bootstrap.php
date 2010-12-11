@@ -24,9 +24,12 @@
  * 
  */
 
-session_start();
 define('PATH', substr(__FILE__, 0, strrpos(__FILE__, '/')));
 include PATH . '/lib/constants.php';
+
+session_start();
+
+
 include PATH . '/lib/OO2FS.php';
 $ModulePath = OO2FS::modulePath($_GET['module']);
 $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);

@@ -1,0 +1,21 @@
+<h1>Connexion élève</h1>
+<p>Rentrez vos identifiants pour vous connecter.<br />
+<a href="/eleve/inscription">Vous n'êtes pas encore inscrit ?</a></p>
+
+<form id="connexion-eleve" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
+	array(
+		'type'=>'email',
+		'placeholder'=>'nom@fai.fr',
+	));
+echo $this->Form_inputLabelBr('password', 'Votre mot de passe',
+	array(
+		'type'=>'password',
+	));
+echo $this->Form_submit('connexion-eleve',"Connexion");
+?>
+</form>
+
+<p><a href="/eleve/recuperation">Mot de passe perdu ?</a></p>
