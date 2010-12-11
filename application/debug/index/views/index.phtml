@@ -1,6 +1,6 @@
-<?php
-$E = Eleve::load(1);
-$E->setAndSave(array('Mail'=>'lol@yopmail.fr','_Points'=>'Points + 50'));
-
-new dBug($E);
-//echo $E->getForeignItem('Createur'); ?>
+<?php 
+echo $this->Html_list_anchor(array(
+	'/debug/session'=>'Données session',
+	'/debug/server'=>'Données serveur',
+));
+?>

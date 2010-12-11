@@ -45,6 +45,7 @@ class Debug_IndexController extends AbstractController
 	 */
 	public function indexAction()
 	{
+		$this->View->setTitle('Module de debug');
 	}
 	
 	/**
