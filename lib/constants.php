@@ -33,7 +33,7 @@ define('APPLICATION_PATH', PATH . '/application');
  * Chemin vers les données
  * @var string
  */
-define('DATA_PATH', '');
+define('DATA_PATH', PATH . '/data');
 
 /**
  * L'adresse sur laquelle le site est hébergé. Utile pour les redirections ou les liens qu'on doit placer en absolu.

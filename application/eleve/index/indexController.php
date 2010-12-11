@@ -40,12 +40,33 @@ class Eleve_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
+	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil élève');
+		
+		if(isset($_POST['connexion-eleve']))
+		{
+			$Eleve = $this->logMe($_POST['mail'], $_POST['password'], 'Eleve');
+			if(!is_null($Eleve))
+			{
+				if($Eleve->Statut == 'EN_ATTENTE')
+				{
+					$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
+					$_SESSION['Eleve'] = NULL;
+				}
+				else
+				{
+					$this->redirect('/eleve/');
+				}
+			}
+			else
+			{
+				$this->View->setMessage("error", "Identifiants incorrects.");
+			}
+		}
 	}
 	
 	/**
@@ -60,6 +81,7 @@ class Eleve_IndexController extends IndexAbstractController
 		{
 			if($this->create_account($_POST)===true)
 			{
+				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 				$this->redirect('/eleve/');
 			}
 		}

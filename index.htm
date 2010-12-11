@@ -40,12 +40,12 @@ rendu de qualité et un suivi personnalisé adapté à vos besoins.</p>
 <!-- Formulaire de connexion élève -->
 <section id="eleve_form">
 <h1>Connexion élève</h1>
-<form method="post" action="/eleve/">
+<form method="post" action="/eleve/" id="connexion-eleve">
 	<label for="eleve_email">E-mail :</label>
 	<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
 	<label for="eleve_password">E-mail :</label>
 	<input type="password" name="password" id="eleve_password" /><br />
-	<input type="submit" value="Connexion" />
+	<input type="submit" name="connexion-eleve" value="Connexion" />
 </form>
 <p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
 </section>
@@ -53,12 +53,12 @@ rendu de qualité et un suivi personnalisé adapté à vos besoins.</p>
 <!-- Formulaire de connexion correcteur -->
 <section id="correcteur_form">
 <h1>Connexion correcteur</h1>
-<form method="post" action="/eleve/">
+<form method="post" action="/correcteur/" id="connexion-correcteur">
 	<label for="correcteur_email">E-mail :</label>
 	<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
 	<label for="correcteur_password">E-mail :</label>
 	<input type="password" name="password" id="correcteur_password" /><br />
-	<input type="submit" value="Connexion" />
+	<input type="submit" name="connexion-correcteur" value="Connexion" />
 </form>
 <p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
 </section>

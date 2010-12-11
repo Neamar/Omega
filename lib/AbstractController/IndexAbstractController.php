@@ -77,5 +77,37 @@ abstract class IndexAbstractController extends AbstractController
 		}
 	}
 	
+	/**
+	 * Gère la partie spécifique de l'inscription.
+	 * 
+	 * @param array $Datas
+	 * 
+	 * @return bool true en succès, false en échec.
+	 */
 	protected abstract function create_account_special(array $Datas);
+	
+	/**
+	 * Connecte la personne en tant que $Type (Eleve, Correcteur) si ses identifiants sont corrects.
+	 * Renvoie null si les identifiants sont incorrects ou si le membre est désinscrit.
+	 * 
+	 * @param string $Mail le login à tester
+	 * @param string $Pass le mdp à tester
+	 * @param string $Type le type d'objet à renvoyer
+	 * 
+	 * @return Membre l'objet membre ou null.
+	 */
+	protected function logMe($Mail, $Pass, $Type)
+	{
+		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT")';
+		
+		$Membre = $Type::load($ID,false); // Récupérer sans filtrer.
+	
+		$_SESSION[$Type] = $Membre;
+		if(!is_null($Membre))
+		{
+			$_SESSION['Membre']['Mail'] = $Membre->Mail;
+		}
+		
+		return $Membre;
+	}
 }

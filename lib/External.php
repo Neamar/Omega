@@ -44,4 +44,25 @@ class External
 		}
 		return false;
 	}
+	
+	/**
+	* Envoie un mail à $to.
+	* L'envoi du mail se fait en fin de page, afin de ne pas ralentir l'affichage.
+	* @param To:String le destinataire du message
+	* @param Subject:String le sujet du mail
+	* @param Message:String le message au format HTML.
+	*/
+	public static function mail($to,$subject,$message,$from='no-reply@edevoir.com')
+	{
+		// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+		// En-têtes additionnels
+		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
+
+		register_shutdown_function("mail",$to, $subject, $message, $headers);
+
+		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
+	}
 }

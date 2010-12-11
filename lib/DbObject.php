@@ -75,12 +75,16 @@ abstract class DbObject
 	 * Charge un élément à partir de son identifiant.
 	 * 
 	 * @param int $ID Ce paramètre peut ne pas être numérique. Attention aux injections dans ce cas !
-	 *
+	 * @param bool $FilterID l'id fourni doit-il être filtré ?
+	 * 
 	 * @return DbObject
 	 */
-	public static function load($ID)
-	{	
-		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($ID));
+	public static function load($ID,$FilterID=true)
+	{
+		if($FilterID)
+			$ID = self::filterID($ID);
+			
+		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, $ID);
 		return Sql::singleQuery($Query, get_called_class());
 	}
 
