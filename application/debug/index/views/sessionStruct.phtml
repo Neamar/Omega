@@ -1,12 +1,14 @@
- <?php 
-new dBug(
-array(
+ <?php
+ $T = array(
 	'Membre'=>'neamar@neamar.fr',
 	'Eleve'=>Eleve::load(3),
 	'Correcteur'=>'object',
 	'Futur'=>array(
 		'messageClass'=>'info',
 		'message'=>'Un message'
-	),
-));
+	)
+);
+	 
+new dBug($T);
+
  ?>

@@ -46,27 +46,7 @@ class Eleve_IndexController extends IndexAbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil élève');
-		
-		if(isset($_POST['connexion-eleve']))
-		{
-			$Eleve = $this->logMe($_POST['mail'], $_POST['password'], 'Eleve');
-			if(!is_null($Eleve))
-			{
-				if($Eleve->Statut == 'EN_ATTENTE')
-				{
-					$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
-					$_SESSION['Eleve'] = NULL;
-				}
-				else
-				{
-					$this->redirect('/eleve/');
-				}
-			}
-			else
-			{
-				$this->View->setMessage("error", "Identifiants incorrects.");
-			}
-		}
+
 	}
 	
 	/**
@@ -127,7 +107,7 @@ class Eleve_IndexController extends IndexAbstractController
 		}
 
 		//Charger la liste des matières :
-		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');
+		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
 	}
 	
 	/**
@@ -137,19 +117,25 @@ class Eleve_IndexController extends IndexAbstractController
 	public function validationAction_wd()
 	{
 		if(!isset($this->Data['data'],$this->Data['mail']))
+		{
 			exit();
+		}
 		
-		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")',false);
+		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
 
 		if(!is_null($Eleve) && sha1(SALT . $Eleve->ID . $this->Data['mail']) == $this->Data['data'])
 		{
-			$Eleve->setAndSave(array('Statut'=>'OK'));
-			$this->View->setMessage("info","Votre compte est validé ! Vous pouvez maintenant vous connecter");
-			$this->redirect("/eleve/");
+			if($Eleve->Statut == 'EN_ATTENTE')
+			{
+				$Eleve->setAndSave(array('Statut'=>'OK'));
+			}
+			
+			$this->View->setMessage("info", "Votre compte est validé ! Vous pouvez maintenant vous connecter");
+			$this->redirect("/eleve/connexion");
 		}
 		else
 		{
-			$this->View->setMessage("error","Lien de validation invalide.");
+			$this->View->setMessage("error", "Lien de validation invalide.");
 			$this->redirect("/eleve/inscription");
 		}
 	}
@@ -171,6 +157,6 @@ class Eleve_IndexController extends IndexAbstractController
 			'Section'=>$Datas['section']
 		);
 		
-		return Sql::insert('Eleves',$ToInsert);
+		return Sql::insert('Eleves', $ToInsert);
 	}
 }

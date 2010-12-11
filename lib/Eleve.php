@@ -17,7 +17,7 @@
  */
  
 /**
- * 
+ * Un élève inscrit au site.
  *
  * @category Db
  * @package  Root
@@ -32,7 +32,7 @@ class Eleve extends Membre
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 
 	public $Classe;
 	public $Section;
@@ -78,4 +78,4 @@ class Eleve extends Membre
 	}
 }
 
-Eleve::$_Props = init_props('Eleve');
+Eleve::$Props = init_props('Eleve');

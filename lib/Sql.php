@@ -54,7 +54,7 @@ class Sql
 	{
 		if(is_array($Data))
 		{
-			$Data = array_map('mysql_real_escape_string',$Data);
+			$Data = array_map('mysql_real_escape_string', $Data);
 		}
 		else
 		{
@@ -116,7 +116,9 @@ class Sql
 	{
 		$R = mysql_query($Query);
 		if($R===false)
+		{
 			throw new Exception("Erreur SQL", 125);
+		}
 		return $R;
 	}
 
@@ -297,9 +299,11 @@ class Sql
 	public static function getDate($time=-1)
 	{
 		if($time==-1)
+		{
 			$time = time();
+		}
 			
-		return date ("Y-m-d H:i:s", $time);
+		return date("Y-m-d H:i:s", $time);
 	}
 }
 

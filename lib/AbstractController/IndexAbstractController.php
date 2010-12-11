@@ -35,16 +35,26 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function create_account(array $Datas)
 	{
-		if(!filter_var($Datas['email'],FILTER_VALIDATE_EMAIL))
+		if(!filter_var($Datas['email'], FILTER_VALIDATE_EMAIL))
+		{
 			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+		}
 		else if(External::isTrash($Datas['email']))
+		{
 			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
+		}
 		else if(empty($Datas['password']))
+		{
 			$this->View->setMessage("error", "Aucun mot de passe spécifié !");
+		}
 		else if($Datas['password'] != $Datas['password_confirm'])
+		{
 			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+		}
 		else if(!isset($Datas['cgu']) || $Datas['cgu'] != 'on')
+		{
 			$this->View->setMessage("error", "Vous n'avez pas validé les conditions générales d'utilisation");
+		}
 		else
 		{
 			//Commencer une transaction pour garantir l'intégrité :
@@ -103,7 +113,7 @@ abstract class IndexAbstractController extends AbstractController
 	{
 		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT")';
 		
-		$Membre = $Type::load($ID,false); // Récupérer sans filtrer.
+		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	
 		$_SESSION[$Type] = $Membre;
 		if(!is_null($Membre))

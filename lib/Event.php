@@ -43,7 +43,7 @@ class Event
 	const NOUVELLE_PROPOSITION = 'Nouvelle proposition';
 	const NOUVELLE_CATEGORIE = 'Nouvelle catégorie';
 
-	private static $Events = array();
+	private static $_Events = array();
 
 	/**
 	* Transmet un événement aux écouteurs associés.
@@ -52,10 +52,12 @@ class Event
 	*/
 	public static function dispatch($Event, Omni $Article = null)
 	{
-		if(count(self::$Events)==0)
-			self::buildEvents();
+		if(count(self::$_Events)==0)
+		{
+			self::_buildEvents();
+		}
 
-		$EventType = array_search($Event,self::$Events);
+		$EventType = array_search($Event, self::$_Events);
 
 		//S'il y a des listeners associés :
 		if($EventType!=false && is_dir(PATH . '/E/' . strtolower($EventType)))
@@ -66,7 +68,9 @@ class Event
 			while (false !== ($file = readdir($handle)))
 			{
 				if ($file != "." && $file != "..")
-					include(PATH . '/E/' .strtolower($EventType) . '/' . $file);
+				{
+					include PATH . '/E/' .strtolower($EventType) . '/' . $file;
+				}
 
 			}
 			closedir($handle);
@@ -85,7 +89,7 @@ class Event
 	*/
 	public static function callGeneric($File)
 	{
-		include(PATH . '/E/generique/' . $File);
+		include PATH . '/E/generique/' . $File;
 	}
 
 	/**
@@ -95,23 +99,27 @@ class Event
 	public static function log($Event)
 	{
 		if(isset($_SESSION['Membre']['Pseudo']))
+		{
 			$Auteur = $_SESSION['Membre']['Pseudo'];
+		}
 		else
+		{
 			$Auteur = '-----';
+		}
 
-		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'],15) . '	' . str_pad($Auteur,12) . '	' . $Event . "\n";
+		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'], 15) . '	' . str_pad($Auteur, 12) . '	' . $Event . "\n";
 		
-		$f = fopen(DATA_PATH . '/logs/' . date('Y-m-d') . '.log','a');
-		fputs($f,$Ligne);
+		$f = fopen(DATA_PATH . '/logs/' . date('Y-m-d') . '.log', 'a');
+		fputs($f, $Ligne);
 		fclose($f);
 	}
 
 	/**
 	* Transforme les constantes en tableau pour les manipuler facilement.
 	*/
-	private static function buildEvents()
+	private static function _buildEvents()
 	{
-		$oClass = new ReflectionClass ('Event');
-		self::$Events = $oClass->getConstants ();
+		$oClass = new ReflectionClass('Event');
+		self::$_Events = $oClass->getConstants ();
 	}
 }

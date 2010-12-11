@@ -49,7 +49,9 @@ class External
 		foreach($Jetables as $Jetable)
 		{
 			if(strpos($_POST['email'],'@' . $Jetable)!==false)
+			{
 				return true;
+			}
 		}
 		return false;
 	}
@@ -85,7 +87,7 @@ class External
 	 */
 	public static function template_mail($to, $template, array $Datas)
 	{
-		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.','',$template) . '.html');
+		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.', '',$template) . '.html');
 		
 		$Items = explode("\n",$File,2);
 		$subject = $Items[0];

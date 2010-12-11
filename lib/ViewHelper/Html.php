@@ -42,7 +42,7 @@ function ViewHelper_Html_list(array $Items, $Type='ul')
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_list_anchor(array $Items, $Type='ul')
+function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
 {
 	$R = '<' . $Type . ">\n";
 	foreach($Items as $URL => $Item)

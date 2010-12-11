@@ -16,9 +16,9 @@
  * @param string
  * @param string
  */
- 
+
 /**
- * Documentation de la classe
+ * Objet en base de données
  *
  * @category Db
  * @package  Root
@@ -33,7 +33,7 @@ abstract class DbObject
 	const TABLE_NAME = 'DbObjects';
 	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 	
 	protected $Foreign = array(
 		'Nom'=>'Objet');
@@ -68,7 +68,7 @@ abstract class DbObject
 	 */
 	public static function makeQuery($Query, $Table, $ID)
 	{
-		return str_replace(array('%TABLE%','%ID%'),array($Table,$ID),$Query);
+		return str_replace(array('%TABLE%', '%ID%'), array($Table, $ID), $Query);
 	}
 	
 	/**
@@ -82,7 +82,9 @@ abstract class DbObject
 	public static function load($ID,$FilterID=true)
 	{
 		if($FilterID)
+		{
 			$ID = self::filterID($ID);
+		}
 			
 		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, $ID);
 		return Sql::singleQuery($Query, get_called_class());
@@ -220,7 +222,9 @@ function init_props($ClassName)
 		$InnerProps = array_diff_assoc($Props, $PropsParent);
 	}
 	else
+	{
 		$InnerProps = $Props;
+	}
 		
 	return $InnerProps;
 }
@@ -241,4 +245,4 @@ function get_props($ClassName)
 	return $Props;
 }
 
-DbObject::$_Props = init_props('DbObject');
+DbObject::$Props = init_props('DbObject');

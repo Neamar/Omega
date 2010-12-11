@@ -77,7 +77,7 @@ abstract class AbstractController
 		$this->Data = $Data;
 
 		$this->View = new View($View, $this);
-		$this->View->setMeta('viewFile',OO2FS::viewPath($View, $Controller, $Module));
+		$this->View->setMeta('viewFile', OO2FS::viewPath($View, $Controller, $Module));
 
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')
@@ -124,8 +124,8 @@ abstract class AbstractController
 			if($this->View->issetMeta('message'))
 			{
 				$_SESSION['Futur'] = array(
-					'messageClass'=>$this->getMeta('messageClass'),
-					'message'=>$this->getMeta('message')
+					'messageClass'=>$this->View->getMeta('messageClass'),
+					'message'=>$this->View->getMeta('message')
 				);
 			}
 			

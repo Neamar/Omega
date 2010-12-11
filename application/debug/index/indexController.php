@@ -61,7 +61,7 @@ class Debug_IndexController extends AbstractController
 	 * Structure d'une session.
 	 * 
 	 */
-	public function session_structAction()
+	public function sessionStructAction()
 	{
 		$this->View->setTitle('Dump de la structure session.');
 	}
@@ -73,25 +73,5 @@ class Debug_IndexController extends AbstractController
 	public function serverAction()
 	{
 		$this->View->setTitle('Dump des données serveur.');
-	}
-	
-	/**
-	 * Gère l'enregistrement dans la table Eleves en particulier.
-	 * 
-	 * @see IndexAbstractController::create_account_special()
-	 * 
-	 * @param array $Datas les données envoyées
-	 * 
-	 * @return bool true sur un succès.
-	 */
-	protected function create_account_special(array $Datas)
-	{
-		$ToInsert = array(
-			'ID'=>Sql::lastId(),
-			'Classe'=>intval($Datas['classe']),
-			'Section'=>$Datas['section']
-		);
-		
-		return Sql::insert('Eleves',$ToInsert);
 	}
 }

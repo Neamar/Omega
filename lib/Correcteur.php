@@ -32,7 +32,7 @@ class Correcteur extends Membre
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 
 	public $Siret;
 	public $SiretOK;
@@ -60,3 +60,4 @@ class Correcteur extends Membre
 		AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")', $Nb);	
 	}
 }
+Correcteur::$Props = init_props('Correcteur');

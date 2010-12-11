@@ -29,7 +29,7 @@
 class Membre extends DbObject
 {
 	const TABLE_NAME = 'Membres';
-	public static $_Props;
+	public static $Props;
 	
 		protected $Foreign = array(
 		'Createur'=>'Eleve',
@@ -161,4 +161,4 @@ class Membre extends DbObject
 	}
 }
 
-Membre::$_Props = init_props('Membre');
+Membre::$Props = init_props('Membre');
