@@ -24,7 +24,7 @@
  * @link     http://devoirminute.com
  *
  */
-class Eleve_IndexController extends AbstractController
+class Eleve_IndexController extends IndexAbstractController
 {
 	/**
 	 * Constructeur.
@@ -58,52 +58,33 @@ class Eleve_IndexController extends AbstractController
 		
 		if(isset($_POST['inscription-eleve']))
 		{
-			if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
-				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
-			else if(External::isTrash($_POST['email']))
-				$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
-			else if(empty($_POST['password']))
-				$this->View->setMessage("error", "Aucun mot de passe spécifié !");
-			else if($_POST['password'] != $_POST['password_confirm'])
-				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
-			else if(!isset($_POST['cgu']) || $_POST['cgu'] != 'on')
-				$this->View->setMessage("error", "Vous n'avez pas validé les conditions générales d'utilisation");
-			else
+			if($this->create_account($_POST)===true)
 			{
-				SQL::start();
-				$ToInsert = array(
-					'Mail'=> $_POST['email'],
-					'Pass'=>sha1(SALT . $_POST['password']),
-					'_Creation'=>'NOW()',
-					'_Connexion'=>'NOW()',
-				);
-				if(!Sql::insert('Membres', $ToInsert))
-				{
-					Sql::rollback();
-					$this->View->setMessage("error", "Impossible de vous enregistrer. L'adresse email est peut-être déjà réservée ?");
-				}
-				else
-				{
-					$ToInsert = array(
-						'ID'=>Sql::lastId(),
-						'Classe'=>intval($_POST['classe']),
-						'Section'=>$_POST['section']
-					);
-					
-					if(!Sql::insert('Eleves',$ToInsert))
-					{
-						Sql::rollback();
-						$this->View->setMessage("error", "Impossible de vous enregistrer. Veuillez réessayer plus tard.");
-					}
-					else 
-					{
-						Sql::commit();
-						$this->View->setMessage("info", "Vous êtes enregistré !");
-					}
-				}
+				$this->redirect('/eleve/');
 			}
 		}
+
 		//Charger la liste des matières :
 		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');
+	}
+	
+	/**
+	 * Gère l'enregistrement dans la table Eleves en particulier.
+	 * 
+	 * @see IndexAbstractController::create_account_special()
+	 * 
+	 * @param array $Datas les données envoyées
+	 * 
+	 * @return bool true sur un succès.
+	 */
+	protected function create_account_special(array $Datas)
+	{
+		$ToInsert = array(
+			'ID'=>Sql::lastId(),
+			'Classe'=>intval($Datas['classe']),
+			'Section'=>$Datas['section']
+		);
+		
+		return Sql::insert('Eleves',$ToInsert);
 	}
 }
