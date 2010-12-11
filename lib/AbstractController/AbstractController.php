@@ -90,6 +90,17 @@ abstract class AbstractController
 			$this->IsAjax = false;
 			$this->IsTemplate = true;
 		}
+		
+		//Réucpérer les enregistrements qui devaient être sauvegardés pour le futur (i.e. maintenant)
+		if(isset($_SESSION['Futur']))
+		{
+			foreach($_SESSION['Futur'] as $MetaKey => $V)
+			{
+				$this->View->setMeta($MetaKey, $V);
+			}
+			
+			unset($_SESSION['Futur']);
+		}
 	}
 
 	/**
@@ -110,6 +121,14 @@ abstract class AbstractController
 	{
 		if(!headers_sent())
 		{
+			if($this->View->issetMeta('message'))
+			{
+				$_SESSION['Futur'] = array(
+					'messageClass'=>$this->getMeta('messageClass'),
+					'message'=>$this->getMeta('message')
+				);
+			}
+			
 			header('Location:' . URL . $URL);
 		}
 		else

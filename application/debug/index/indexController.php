@@ -58,6 +58,15 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Structure d'une session.
+	 * 
+	 */
+	public function session_structAction()
+	{
+		$this->View->setTitle('Dump de la structure session.');
+	}
+	
+	/**
 	 * Dumping des données serveur
 	 * 
 	 */

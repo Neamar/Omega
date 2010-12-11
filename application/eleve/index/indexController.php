@@ -107,14 +107,18 @@ class Eleve_IndexController extends IndexAbstractController
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
-				
+								$Datas = array(
+					'mail'=>'neamar@neamar.fr',
+					'lien'=>sha1(SALT . 3 . 'neamar@neamar.fr') . '/mail/' . 'neamar@neamar.fr',
+				);
+				External::template_mail('neamar@neamar.fr', '/eleve/validation', $Datas);
 		if(isset($_POST['inscription-eleve']))
 		{
 			if($ID = $this->create_account($_POST) !== FAIL)
 			{
 				$Datas = array(
 					'mail'=>$_POST['email'],
-					'lien'=>sha1(SALT . $ID . $_POST['email'])
+					'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 				);
 				External::template_mail($_POST['email'], '/eleve/validation', $Datas);
 				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
@@ -126,13 +130,28 @@ class Eleve_IndexController extends IndexAbstractController
 		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC','ID','Nom');
 	}
 	
-		/**
+	/**
 	 * Page d'inscription.
 	 * 
 	 */
 	public function validationAction_wd()
 	{
-		print_r($this->Data);
+		if(!isset($this->Data['data'],$this->Data['mail']))
+			exit();
+		
+		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")',false);
+
+		if(!is_null($Eleve) && sha1(SALT . $Eleve->ID . $this->Data['mail']) == $this->Data['data'])
+		{
+			$Eleve->setAndSave(array('Statut'=>'OK'));
+			$this->View->setMessage("info","Votre compte est validé ! Vous pouvez maintenant vous connecter");
+			$this->redirect("/eleve/");
+		}
+		else
+		{
+			$this->View->setMessage("error","Lien de validation invalide.");
+			$this->redirect("/eleve/inscription");
+		}
 	}
 	
 	/**
