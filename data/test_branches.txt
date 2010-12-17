@@ -10,3 +10,5 @@ Mais je suis un fou et je fais même 4
 5
 6 correction d'un bug critique sur master !
 un deuxième bug ! l'horreur
+
+Tout semble OK.
