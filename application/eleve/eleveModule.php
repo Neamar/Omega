@@ -15,6 +15,25 @@
  * @link      http://devoirminute.com
  */
 
-//TODO: Tester la possibilité d'accéder au module.
-return true;
+//Soit on est déjà connecté et tout va bien
+
+if(isset($_SESSION['Eleve']))
+{
+	return true;
+}
+else 
+{//Sinon on dégage sauf si on demande une page accessible hors ligne.
+	$Allowed = array('inscription','connexion');
+	
+	if(in_array($_GET['view'],$Allowed))
+	{
+		return true;
+	}
+	else
+	{
+		Debug::redirect('/eleve/connexion',302);
+	}
+}
+
+return false;
 ?>

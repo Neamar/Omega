@@ -116,12 +116,12 @@ class Debug
 	*/
 	public static function status($Code)
 	{
-		if(!isset(self::$Codes[$Code]))
+		if(!isset(self::$_Codes[$Code]))
 		{
 			self::fail('Code inconnu.');
 		}
 
-		header('Status: ' . $Code. ' ' . self::$Codes[$Code], true, $Code);
+		header('Status: ' . $Code. ' ' . self::$_Codes[$Code], true, $Code);
 
 		//Gestion des 403,404,500
 		if($Code>400)
