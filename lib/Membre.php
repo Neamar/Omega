@@ -65,6 +65,19 @@ class Membre extends DbObject
 	}
 	
 	/**
+	 * Renvoie la somme possédée par l'élève.
+	 * ATTENTION. Cette somme peut-être désynchronisée avec la base de données.
+	 * Utiliser getDebitAbility() pour obtenir une valeur fiable.
+	 * 
+	 * @see Membre::getDebitAbility
+	 * @return int la somme maximale dépensable.
+	 */
+	public function getPoints()
+	{
+		return $this->Points;
+	}
+	
+	/**
 	 * Renvoie la somme maximale que le membre peut se permettre de débiter.
 	 * Force une mise à jour de l'objet.
 	 * 

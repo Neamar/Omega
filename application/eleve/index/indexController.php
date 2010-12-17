@@ -70,6 +70,7 @@ class Eleve_IndexController extends IndexAbstractController
 				}
 				else
 				{
+					$this->View->setMessage("Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
 					$this->redirect('/eleve/');
 				}
 			}
@@ -87,11 +88,12 @@ class Eleve_IndexController extends IndexAbstractController
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
-								$Datas = array(
-					'mail'=>'neamar@neamar.fr',
-					'lien'=>sha1(SALT . 3 . 'neamar@neamar.fr') . '/mail/' . 'neamar@neamar.fr',
-				);
-				External::template_mail('neamar@neamar.fr', '/eleve/validation', $Datas);
+		$Datas = array(
+				'mail'=>'neamar@neamar.fr',
+				'lien'=>sha1(SALT . 3 . 'neamar@neamar.fr') . '/mail/' . 'neamar@neamar.fr',
+			);
+		External::template_mail('neamar@neamar.fr', '/eleve/validation', $Datas);
+		
 		if(isset($_POST['inscription-eleve']))
 		{
 			if($ID = $this->create_account($_POST) !== FAIL)
