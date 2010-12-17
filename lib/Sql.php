@@ -85,7 +85,6 @@ class Sql
 	 */
 	public static function start()
 	{
-		//TODO : tester la transaction
 		return self::query('BEGIN');
 	}
 	

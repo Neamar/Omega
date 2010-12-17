@@ -66,7 +66,7 @@ class Eleve_IndexController extends IndexAbstractController
 				if($Eleve->Statut == 'EN_ATTENTE')
 				{
 					$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
-					$_SESSION['Eleve'];// = NULL;
+					$_SESSION['Eleve'] = NULL;
 				}
 				else
 				{
