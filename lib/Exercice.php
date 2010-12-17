@@ -28,7 +28,7 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	public static $Props;
+	public static $_Props;
 	
 	protected $Foreign = array(
 		'Createur'=>'Eleve',
@@ -150,4 +150,4 @@ class Exercice extends DbObject
 	}
 }
 
-Exercice::$Props = init_props('Exercice');
+Exercice::$_Props = init_props('Exercice');

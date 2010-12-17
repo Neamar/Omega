@@ -88,27 +88,31 @@ class Eleve_IndexController extends IndexAbstractController
 	public function inscriptionAction()
 	{
 		$this->View->setTitle('Inscription élève');
-		$Datas = array(
-				'mail'=>'neamar@neamar.fr',
-				'lien'=>sha1(SALT . 3 . 'neamar@neamar.fr') . '/mail/' . 'neamar@neamar.fr',
-			);
-		External::template_mail('neamar@neamar.fr', '/eleve/validation', $Datas);
+		
+		//Le membre vient de s'inscrire mais revient sur cette page.
+		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
+		{
+			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
+		}
 		
 		if(isset($_POST['inscription-eleve']))
 		{
-			if($ID = $this->create_account($_POST) !== FAIL)
+			$ID = $this->create_account($_POST);
+			if($ID != FAIL)
 			{
+				//Enregistrer le nouveau membre et le rediriger vers la page de connexion
 				$Datas = array(
 					'mail'=>$_POST['email'],
 					'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 				);
 				External::template_mail($_POST['email'], '/eleve/validation', $Datas);
+				$_SESSION['Eleve_JusteInscrit'] = true;
 				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
-				$this->redirect('/eleve/');
+				$this->redirect('/eleve/connexion');
 			}
 		}
 
-		//Charger la liste des matières :
+		//Charger la liste des matières pour le combobox :
 		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
 	}
 	
@@ -123,8 +127,9 @@ class Eleve_IndexController extends IndexAbstractController
 			exit();
 		}
 		
-		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
 
+		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
+		
 		if(!is_null($Eleve) && sha1(SALT . $Eleve->ID . $this->Data['mail']) == $this->Data['data'])
 		{
 			if($Eleve->Statut == 'EN_ATTENTE')

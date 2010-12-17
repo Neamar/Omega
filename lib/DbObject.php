@@ -33,7 +33,7 @@ abstract class DbObject
 	const TABLE_NAME = 'DbObjects';
 	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE ID=%ID%';
 	
-	public static $Props;
+	public static $_Props;
 	
 	protected $Foreign = array(
 		'Nom'=>'Objet');
@@ -245,4 +245,4 @@ function get_props($ClassName)
 	return $Props;
 }
 
-DbObject::$Props = init_props('DbObject');
+DbObject::$_Props = init_props('DbObject');

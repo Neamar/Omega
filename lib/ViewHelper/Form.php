@@ -130,7 +130,10 @@ function ViewHelper_Form_radio($name, array $values, $selected=null)
  */
 function ViewHelper_Form_checkbox($name, $label, $selected=false)
 {
-
+	if(isset($_POST[$name]) && $_POST[$name]=='on')
+	{
+		$selected = true;
+	}
 	return  '<input type="checkbox" name="' . $name . '" id="' . $name . '"' . ($selected?' checked="checked"':'') . ' /><label for="' . $name . '">' . $label . "</label><br />\n";
 }
 
