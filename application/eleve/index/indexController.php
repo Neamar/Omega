@@ -58,6 +58,12 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle('Connexion élève');
 		
+		if(isset($_SESSION['Eleve']))
+		{
+			unset($_SESSION['Eleve']);
+			$this->View->setMessage("info", "Vous vous êtes déconnecté.");
+		}
+		
 		if(isset($_POST['connexion-eleve']))
 		{
 			$Eleve = $this->logMe($_POST['email'], $_POST['password'], 'Eleve');
@@ -70,7 +76,7 @@ class Eleve_IndexController extends IndexAbstractController
 				}
 				else
 				{
-					$this->View->setMessage("Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
+					$this->View->setMessage("infos","Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
 					$this->redirect('/eleve/');
 				}
 			}
