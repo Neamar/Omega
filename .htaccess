@@ -2,6 +2,9 @@ Options +FollowSymlinks
 RewriteEngine on
 
 #--------------------------------------------------
+#Erreur corrigables.
+# /eleve
+RewriteRule ^([a-z]+)$ /$1/ [L,R=301]
 
 # /eleve/
 RewriteRule ^([^/]+)/$ bootstrap.php?module=$1&controller=index&view=index&data=
