@@ -1,5 +1,3 @@
-1
-Ceci est mon taff sur la branche 1
 2
 Ceci est mon taff sur la branche 2 !
 Je le complexifie un peu parce que je suis fort.
