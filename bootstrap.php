@@ -24,7 +24,8 @@
  * 
  */
 
-define('PATH', substr(__FILE__, 0, strrpos(__FILE__, '/')));
+$File = str_replace('\\','/',__FILE__);
+define('PATH', substr($File, 0, strrpos($File, '/')));
 include PATH . '/lib/constants.php';
 
 session_start();
