@@ -16,14 +16,14 @@ $(function(){
 var Max;
 $(function() {
 	Max = parseInt($("#slider_auto-accept span:first").text());
-	
+
 	$("#slider_auto-accept")
 		.text('')
 		.width('300px')
 		.slider({
 			range: "min",
 			animate: true,
-			value: 0,
+			value: $('#auto_accept').val(),
 			min: 0,
 			max: Max,
 			slide: function(event, ui)
@@ -32,7 +32,6 @@ $(function() {
 			}
 	});
 	$("#auto_accept")
-		.val(0)
 		.keyup(numeric)
 		.change(function()
 		{

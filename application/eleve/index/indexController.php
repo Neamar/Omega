@@ -67,23 +67,31 @@ class Eleve_IndexController extends IndexAbstractController
 		
 		if(isset($_POST['connexion-eleve']))
 		{
-			$Eleve = $this->logMe($_POST['email'], $_POST['password'], 'Eleve');
-			if(!is_null($Eleve))
+			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 			{
-				if($Eleve->Statut == 'EN_ATTENTE')
-				{
-					$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
-					unset($_SESSION['Eleve']); 
-				}
-				else
-				{
-					$this->View->setMessage("infos","Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
-					$this->redirect('/eleve/');
-				}
+				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
 			}
 			else
 			{
-				$this->View->setMessage("error", "Identifiants incorrects.");
+				$Eleve = $this->logMe($_POST['email'], $_POST['password'], 'Eleve');
+				if(!is_null($Eleve))
+				{
+					if($Eleve->Statut == 'EN_ATTENTE')
+					{
+						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
+						unset($_SESSION['Eleve']); 
+					}
+					else
+					{
+						$this->View->setMessage("infos","Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
+						$this->redirect('/eleve/');
+					}
+				}
+				else
+				{
+					//TODO : Bloquer après trois connexions ?
+					$this->View->setMessage("error", "Identifiants incorrects.");
+				}
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 <?php //TODO : getRaise() ?>
 
 <form id="form_creation-exercice" method="post" action="">
+<p>Merci de remplir les champs suivants. L'envoi de fichiers se fera à la prochaine étape.</p>
 
 <h3>Classe et matières</h3>
 <?php
@@ -27,10 +28,7 @@ echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres);
 echo $this->Form_selectLabelBr('type','Type de l\'exercice', $this->Types);
 
 //Type de la demande
-echo $this->Form_selectLabelBr('type','Demande', array(
-		'COMPLET'=>'Corrigé complet',
-		'AIDE'=>'Pistes de résolution',
-	));
+echo $this->Form_selectLabelBr('demande','Demande', $this->Demandes);
 ?>
 
 <h3>Dates</h3>
@@ -38,7 +36,7 @@ echo $this->Form_selectLabelBr('type','Demande', array(
 $HeureData = array(
 	'type'=>'number',
 	'min'=>0,
-	'max'=>24,
+	'max'=>23,
 	'step'=>1,
 	'maxlength'=>2,
 	'placeholder'=>'HH',
@@ -75,13 +73,14 @@ echo $this->Form_textareaLabelBr('infos','Informations complémentaires');
 
 	<div id="div_auto-accept">
 		<?php 
-			echo $this->Form_inputLabelBr('auto_accept', 'Valeur maximale d\'acceptation automatique');
+			echo $this->Form_inputLabelBr('auto_accept', 'Valeur maximale d\'acceptation automatique',array('value'=>0));
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
 	</div>
 </fieldset>
 
 <h3>Envoi du formulaire</h3>
+<p>Tout est prêt ? Cliquez sur le bouton ci-dessous pour envoyer les fichiers constituant l'exercice.</p>
 <?php
 echo $this->Form_submit('creation-exercice',"Créer l'exercice");
 ?>

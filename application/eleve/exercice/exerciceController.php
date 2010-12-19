@@ -73,5 +73,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		//Charger la liste des types d'exercices pour le combobox :
 		$this->View->Types = SQL::queryAssoc('SELECT Type, Details FROM Types', 'Type', 'Details');
 		
+		//Créer la liste des demandes supportées :
+		$this->View->Demandes = array(
+			'COMPLET'=>'Corrigé complet',
+			'AIDE'=>'Pistes de résolution',
+		);
+		
 	}
 }
