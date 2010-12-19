@@ -2,7 +2,7 @@ Options +FollowSymlinks
 RewriteEngine on
 
 #--------------------------------------------------
-# Répértoire public directement accessible
+# Répertoire public directement accessible
 #--------------------------------------------------
 RewriteRule ^public/.+ - [L]
 

@@ -40,7 +40,7 @@ class Eleve extends Membre
 	/**
 	 * Renvoie le pourcentage multiplicateur de suractivité pour l'élève
 	 * 
-	 * @return int un nombre >100.
+	 * @return int un nombre >=100.
 	 */
 	public function getRaise()
 	{
