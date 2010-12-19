@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 /**
@@ -22,7 +22,7 @@
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://devoirminute.com
+ * @link     http://edevoir.com
  *
  */
 class View
@@ -49,7 +49,17 @@ class View
 	public function __construct($Name, AbstractController $Controller)
 	{
 		$this->_Datas = array();
-		$this->_Metas = array('name'=>$Name, 'controller'=>$Controller);
+		$this->_Metas = array(
+			'name'=>$Name,
+			'controller'=>$Controller,
+			'script'=>array(
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
+			),
+			'meta'=>array(),
+			'style'=>array(
+				'/public/css/base.css'=>'true',
+			),
+		);
 	}
 
 	/**
@@ -192,10 +202,101 @@ class View
 	}
 	
 	/**
+	 * Ajoute un script en haut de page
+	 * 
+	 * @param string $Src l'URL du script à ajouter
+	 */
+	public function addScript($Src)
+	{
+		$this->_Metas['script'][$Src] = true;
+	}
+	
+	/**
+	 * Supprime un script en haut de page
+	 * 
+	 * @param string $Src le script à supprimer
+	 */
+	public function removeScript($Src)
+	{
+		unset($this->_Metas['script'][$Src]);
+	}
+	
+	/**
+	 * Ajoute une donnée de balise méta
+	 * 
+	 * @param string $Meta le nom de la balise
+	 * @param string $Valeur la valeur à donner
+	 */
+	public function addMeta($Meta, $Valeur)
+	{
+		$this->_Metas['meta'][$Meta] = $Valeur;
+	}
+	
+	/**
+	 * Supprime une donnée de balise méta
+	 * 
+	 * @param string $Meta la balise à supprimer
+	 */
+	public function removeMeta($Meta)
+	{
+		unset($this->_Metas['meta'][$Meta]);
+	}
+	
+	/**
+	 * Ajoute une feuille de style externe
+	 * 
+	 * @param string $Src l'URL à ajouter
+	 */
+	public function addStyle($Src)
+	{
+		$this->_Metas['style'][$Src] = true;
+	}
+	
+	/**
+	 * Supprime une feuille de style externe
+	 * 
+	 * @param string $Src l'URL à supprimer
+	 */
+	public function removeStyle($Src)
+	{
+		unset($this->_Metas['style'][$Src]);
+	}
+	
+	/**
+	 * Écrit le contenu de la balise <head>
+	 * 
+	 * Dans l'ordre :
+	 * Titre
+	 * Balises Meta
+	 * Feuilles de style
+	 * Scripts
+	 */
+	public function renderHead()
+	{
+		echo '	<title>' . $this->getMeta('title') . '</title>' . "\n";
+		
+		foreach($this->_Metas['meta'] as $Meta=> $Value)
+		{
+			echo '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
+		}
+		
+		foreach($this->_Metas['style'] as $URL=>$_)
+		{
+			echo '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
+		}
+		
+		foreach($this->_Metas['script'] as $URL=>$_)
+		{
+			echo '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
+		}
+	}
+
+	
+	/**
 	 * Écrit la vue sur la sortie standard
 	 */
 	public function render()
 	{
-		include PATH . '/layouts/template.phtml';
+		include DATA_PATH . '/layouts/template.phtml';
 	}
 }
