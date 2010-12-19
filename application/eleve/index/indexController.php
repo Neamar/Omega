@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 /**
@@ -21,7 +21,7 @@
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://devoirminute.com
+ * @link     http://edevoir.com
  *
  */
 class Eleve_IndexController extends IndexAbstractController
@@ -58,6 +58,7 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle('Connexion élève');
 		
+		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Eleve']))
 		{
 			unset($_SESSION['Eleve']);
@@ -98,7 +99,7 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
+			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.");
 		}
 		
 		if(isset($_POST['inscription-eleve']))
@@ -112,7 +113,7 @@ class Eleve_IndexController extends IndexAbstractController
 					'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 				);
 				External::template_mail($_POST['email'], '/eleve/validation', $Datas);
-				$_SESSION['Eleve_JusteInscrit'] = true;
+				$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
 				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 				$this->redirect('/eleve/connexion');
 			}
@@ -123,7 +124,9 @@ class Eleve_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Page d'inscription.
+	 * Page de validation du compte.
+	 * Si le compte est en attente, vérifie que l'identifiant fourni est correct puis marque le compte comme accessible.
+	 * Redirige vers /eleve/connexion
 	 * 
 	 */
 	public function validationAction_wd()
