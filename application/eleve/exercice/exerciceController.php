@@ -68,5 +68,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		//Charger la liste des classes pour le combobox :
 		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		
+		//Charger la liste des types d'exercices pour le combobox :
+		$this->View->Types = SQL::queryAssoc('SELECT Type, Details FROM Types', 'Type', 'Details');
+		
 	}
 }

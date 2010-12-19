@@ -215,7 +215,7 @@ function ViewHelper_Form_inputLabelBr($name, $label, array $args)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_selectLabel($name, $label, array $values, $selected, array $args=array())
+function ViewHelper_Form_selectLabel($name, $label, array $values, $selected = null, array $args=array())
 {
 	return ViewHelper_Form_Label($name, $label) . ViewHelper_Form_select($name, $values, $selected, $args);
 }
@@ -231,7 +231,7 @@ function ViewHelper_Form_selectLabel($name, $label, array $values, $selected, ar
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected, array $args=array())
+function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected = null, array $args=array())
 {
 	return ViewHelper_Form_selectLabel($name, $label, $values, $selected, $args) . "<br />\n";
 }

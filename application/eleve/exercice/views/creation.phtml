@@ -18,14 +18,17 @@ echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
 	));
 
 //Matière
-echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres, 2);
+echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres);
 
 //Type de l'exercice
-echo $this->Form_selectLabelBr('type','Type de la demande', array(
-		''=>'lol',
+echo $this->Form_selectLabelBr('type','Type de l\'exercice', $this->Types);
+
+//Type de la demande
+echo $this->Form_selectLabelBr('type','Demande', array(
+		'COMPLET'=>'Corrigé complet',
+		'AIDE'=>'Pistes de résolution',
 	));
 
-	
 echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
 	array(
 		'type'=>'email',
@@ -46,11 +49,7 @@ echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
 	array(
 		'placeholder'=>'S, ES, L...'
 	));
-?>
 
-CGU Élèves<br />
-
-<?php 
 echo $this->Form_checkbox('cgu',"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
 //TODO : ajouter CAPTCHA.
 echo $this->Form_submit('inscription-eleve',"M'inscrire");
