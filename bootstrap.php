@@ -74,6 +74,8 @@ function __autoload($ClassName)
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);
 
+//Connecter le serveur SQL
+Sql::connect();
 
 
 
@@ -130,7 +132,6 @@ if(!method_exists($ControllerName, $ViewName))
 /**
  * Exploitation.
  */
-Sql::connect();
 //Chargement du contrôleur
 $Controller = new $ControllerName($_GET['module'], $_GET['controller'], $_GET['view'], $_GET['data']);
 //Exécution du contrôleur

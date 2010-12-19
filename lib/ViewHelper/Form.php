@@ -22,7 +22,7 @@
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_input($name, array $args)
+function ViewHelper_Form_input($name, array $args = array())
 {
 	if(!isset($args['name']))
 	{
@@ -43,6 +43,43 @@ function ViewHelper_Form_input($name, array $args)
 	
 
 	return '<input ' . ViewHelper_Form_args($args) . '/>';
+}
+
+/**
+ * Génère un textarea avec les arguments spécifiés.
+ * 
+ * @param string $name Nom / id du composant
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_textarea($name, array $args = array())
+{
+	if(!isset($args['name']))
+	{
+		$args['name'] = $name;
+	}
+	if(!isset($args['id']))
+	{
+		$args['id'] = $name;
+	}
+	if(!isset($args['cols']))
+	{
+		$args['cols'] = 30;
+	}
+	if(!isset($args['rows']))
+	{
+		$args['rows'] = 5;
+	}
+	if(isset($_POST[$name]))
+	{
+		$args['value'] = $_POST[$name];
+	}
+
+	$Value = (isset($args['value']))?$args['value']:'';
+	unset($args['value']);
+
+	return '<textarea ' . ViewHelper_Form_args($args) . '>' . $Value . '</textarea>';
 }
 
 /**
@@ -128,13 +165,24 @@ function ViewHelper_Form_radio($name, array $values, $selected=null)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_checkbox($name, $label, $selected=false)
+function ViewHelper_Form_checkbox($name, $label, $selected=false, $args=array())
 {
-	if(isset($_POST[$name]) && $_POST[$name]=='on')
+	$args['type'] = 'checkbox';
+	
+	if(!isset($args['name']))
 	{
-		$selected = true;
+		$args['name'] = $name;
 	}
-	return  '<input type="checkbox" name="' . $name . '" id="' . $name . '"' . ($selected?' checked="checked"':'') . ' /><label for="' . $name . '">' . $label . "</label><br />\n";
+	if(!isset($args['id']))
+	{
+		$args['id'] = $name;
+	}
+	if($selected || (isset($_POST[$name]) && $_POST['name']=='on'))
+	{
+		$args['checked'] = 'checked';
+	}
+	
+	return  '<input ' . ViewHelper_Form_args($args) . ' /><label for="' . $args['name'] . '">' . $label . "</label><br />\n";
 }
 
 
@@ -185,9 +233,23 @@ function ViewHelper_Form_label($name, $label)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_inputLabel($name, $label, array $args)
+function ViewHelper_Form_inputLabel($name, $label, array $args=array())
 {
 	return ViewHelper_Form_Label($name, $label) . viewHelper_Form_Input($name, $args);
+}
+
+/**
+ * Génère un textarea et son label avec les arguments spécifiés.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
+{
+	return ViewHelper_Form_Label($name, $label) . "<br />\n" . ViewHelper_Form_textarea($name, $args);
 }
 
 /**
@@ -199,9 +261,23 @@ function ViewHelper_Form_inputLabel($name, $label, array $args)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_inputLabelBr($name, $label, array $args)
+function ViewHelper_Form_inputLabelBr($name, $label, array $args=array())
 {
 	return ViewHelper_Form_inputLabel($name, $label, $args) . "<br />\n";
+}
+
+/**
+ * Génère un textarea et son label avec les arguments spécifiés. Ajoute un retour à la ligne.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_textareaLabelBr($name, $label, array $args=array())
+{
+	return ViewHelper_Form_textareaLabel($name, $label, $args) . "<br />\n";
 }
 
 /**

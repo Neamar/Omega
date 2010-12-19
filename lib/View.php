@@ -54,10 +54,12 @@ class View
 			'controller'=>$Controller,
 			'script'=>array(
 				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
+				'/public/js/jquery-ui.min.js'=>true,
 			),
 			'meta'=>array(),
 			'style'=>array(
-				'/public/css/base.css'=>'true',
+				'/public/css/base.css'=>true,
+				'/public/css/ui/ui.css'=>true,
 			),
 		);
 	}

@@ -62,6 +62,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function creationAction()
 	{
 		$this->View->setTitle('Création d\'un exercice');
+		$this->View->addScript('/public/js/eleve/exercice/creation.js');
 		
 		//Charger la liste des matières pour le combobox :
 		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere','Matiere');

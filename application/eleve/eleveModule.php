@@ -19,6 +19,8 @@
 
 if(isset($_SESSION['Eleve']))
 {
+	//Mettre à jour l'objet :
+	$_SESSION['Eleve'] = Eleve::load($_SESSION['Eleve']->ID);
 	return true;
 }
 else 

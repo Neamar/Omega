@@ -3,8 +3,9 @@
 
 <?php //TODO : getRaise() ?>
 
-<form id="creation-exercice" method="post" action="">
+<form id="form_creation-exercice" method="post" action="">
 
+<h3>Classe et matières</h3>
 <?php
 //Classe
 echo $this->Form_selectLabelBr('classe','Niveau de l\'exercice', $this->Classes, $_SESSION['Eleve']->Classe);
@@ -18,7 +19,10 @@ echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
 
 //Matière
 echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres);
+?>
 
+<h3>Demande</h3>
+<?php
 //Type de l'exercice
 echo $this->Form_selectLabelBr('type','Type de l\'exercice', $this->Types);
 
@@ -27,30 +31,54 @@ echo $this->Form_selectLabelBr('type','Demande', array(
 		'COMPLET'=>'Corrigé complet',
 		'AIDE'=>'Pistes de résolution',
 	));
+?>
 
-echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
+<h3>Dates</h3>
+<?php
+//Rendu
+echo $this->Form_inputLabel('rendu_date', 'Date de rendu',
 	array(
-		'type'=>'email',
-		'placeholder'=>'nom@fai.fr',
+		'value'=> date('d/m/y',time()+3600*24*7),
+		'placeholder'=>'JJ/MM/AA'
 	));
-echo $this->Form_inputLabelBr('password', 'Votre mot de passe',
+echo 'à ' . $this->Form_input('rendu_heure',
 	array(
-		'type'=>'password',
-	));
-echo $this->Form_inputLabelBr('password_confirm', 'Confirmez votre mot de passe',
-	array(
-		'type'=>'password',
-	));
-	
-echo $this->Form_selectLabelBr('classe','Votre niveau scolaire', $this->Matieres, 2);
+		'value'=> 21,
+		'placeholder'=>'HH'
+	)) . "h<br />\n";
 
-echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
+//Annulation automatique
+echo $this->Form_inputLabel('annulation_date', 'Date d\'annulation',
 	array(
-		'placeholder'=>'S, ES, L...'
+		'value'=> date('d/m/y',time()+3600*24*3),
+		'placeholder'=>'JJ/MM/AA'
 	));
+echo 'à ' . $this->Form_input('annulation_heure',
+	array(
+		'value'=> 21,
+		'placeholder'=>'HH'
+	)) . "h<br />\n";
+?>
 
-echo $this->Form_checkbox('cgu',"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
-//TODO : ajouter CAPTCHA.
-echo $this->Form_submit('inscription-eleve',"M'inscrire");
+<h3>Informations complémentaires</h3>
+<?php
+echo $this->Form_textareaLabelBr('infos','Informations complémentaires');
+?>
+
+<h3>Options avancées</h3>
+<fieldset>
+	<legend><input id="avance" type="checkbox" /><label for="avance">Afficher les options avancées</label></legend>
+
+	<div id="div_auto-accept">
+		<?php 
+			echo $this->Form_inputLabelBr('auto_accept', 'Valeur maximale d\'acceptation automatique');
+		?>
+		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
+	</div>
+</fieldset>
+
+<h3>Envoi du formulaire</h3>
+<?php
+echo $this->Form_submit('creation-exercice',"Créer l'exercice");
 ?>
 </form>
