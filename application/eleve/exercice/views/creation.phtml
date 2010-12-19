@@ -35,29 +35,33 @@ echo $this->Form_selectLabelBr('type','Demande', array(
 
 <h3>Dates</h3>
 <?php
+$HeureData = array(
+	'type'=>'number',
+	'min'=>0,
+	'max'=>24,
+	'step'=>1,
+	'maxlength'=>2,
+	'placeholder'=>'HH',
+	'size'=>2
+);
+
 //Rendu
+$HeureData['value'] = 21;
 echo $this->Form_inputLabel('rendu_date', 'Date de rendu',
 	array(
 		'value'=> date('d/m/y',time()+3600*24*7),
 		'placeholder'=>'JJ/MM/AA'
 	));
-echo 'à ' . $this->Form_input('rendu_heure',
-	array(
-		'value'=> 21,
-		'placeholder'=>'HH'
-	)) . "h<br />\n";
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . "h<br />\n";
 
 //Annulation automatique
+$HeureData['value'] = 18;
 echo $this->Form_inputLabel('annulation_date', 'Date d\'annulation',
 	array(
 		'value'=> date('d/m/y',time()+3600*24*3),
 		'placeholder'=>'JJ/MM/AA'
 	));
-echo 'à ' . $this->Form_input('annulation_heure',
-	array(
-		'value'=> 21,
-		'placeholder'=>'HH'
-	)) . "h<br />\n";
+echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . "h<br />\n";
 ?>
 
 <h3>Informations complémentaires</h3>
