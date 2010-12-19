@@ -34,8 +34,9 @@ include PATH . '/lib/OO2FS.php';
 $ModulePath = OO2FS::modulePath($_GET['module']);
 $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
 $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
-$ViewPath = OO2FS::viewPath($_GET['view'], $_GET['controller'], $_GET['module']);
-$ViewName = $_GET['view'] . 'Action' . (empty($_GET['data'])?'':'_wd');
+$ViewPath = OO2FS::viewPath($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
+$ViewName = OO2FS::viewFunction($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
+
 //Traiter les données si existantes
 if(!empty($_GET['data']))
 {

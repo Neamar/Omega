@@ -71,14 +71,15 @@ class OO2FS
 	* Récupérer le chemin vers une vue
 	*
 	* @param string $View la vue désirée
+	* @param string $Data les données (ou non)
 	* @param string $Controller le contrôleur cherché
 	* @param string $Module le module demandé
 	*
 	* @return string /{$Module}/{$Controller}/views/{$View}.phtml
 	*/
-	public static function viewPath($View, $Controller, $Module)
+	public static function viewPath($View, $Data, $Controller, $Module)
 	{
-		return APPLICATION_PATH . '/' . $Module . '/' . $Controller . '/views/' . $View . '.phtml';
+		return APPLICATION_PATH . '/' . $Module . '/' . $Controller . '/views/' . $View . (empty($Data)?'':'_wd') . '.phtml';
 	}
 
 	/**
