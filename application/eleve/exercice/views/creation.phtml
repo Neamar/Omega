@@ -6,8 +6,25 @@
 <form id="creation-exercice" method="post" action="">
 
 <?php
-echo $this->Form_selectLabelBr('classe','Niveau de l\'exercice', $this->Matieres, $_SESSION['Eleve']->Classe);
+//Classe
+echo $this->Form_selectLabelBr('classe','Niveau de l\'exercice', $this->Classes, $_SESSION['Eleve']->Classe);
 
+//Section
+echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
+	array(
+		'placeholder'=>'S, ES, L...',
+		'value'=>$_SESSION['Eleve']->Section
+	));
+
+//Matière
+echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres, 2);
+
+//Type de l'exercice
+echo $this->Form_selectLabelBr('type','Type de la demande', array(
+		''=>'lol',
+	));
+
+	
 echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
 	array(
 		'type'=>'email',

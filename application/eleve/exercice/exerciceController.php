@@ -61,13 +61,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	
 	public function creationAction()
 	{
-		$this->View->setTitle('Accueil exercice #');
-		
-		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT Matiere FROM Matieres ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->setTitle('Création d\'un exercice');
 		
 		//Charger la liste des matières pour le combobox :
-		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere','Matiere');
 		
+		//Charger la liste des classes pour le combobox :
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
 	}
 }

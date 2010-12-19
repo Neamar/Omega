@@ -120,7 +120,7 @@ class Eleve_IndexController extends IndexAbstractController
 		}
 
 		//Charger la liste des matières pour le combobox :
-		$this->View->Matieres = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
 	}
 	
 	/**
