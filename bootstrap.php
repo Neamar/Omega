@@ -96,8 +96,12 @@ if(!isset($_GET['view'], $_GET['controller'], $_GET['module'], $_GET['data']))
 	exit('Appel incorrect.');
 }
 	
-//Demander au module s'il accepte la demande.
-if(!is_file($ModulePath) || !include $ModulePath)
+//Vérifier que le module existe et lui demander s'il accepte la demande.
+if(!is_file($ModulePath))
+{
+	exit("Le module n'existe pas !");
+}
+if(!include $ModulePath)
 {
 	exit('Le module refuse de s\'exécuter.');
 }

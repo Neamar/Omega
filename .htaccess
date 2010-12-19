@@ -2,10 +2,20 @@ Options +FollowSymlinks
 RewriteEngine on
 
 #--------------------------------------------------
-#Erreur corrigables.
-# /eleve
+# Répértoire public directement accessible
+#--------------------------------------------------
+RewriteRule ^public/.+ - [L]
+
+#--------------------------------------------------
+# Erreurs corrigeables.
+#--------------------------------------------------
+# /eleve => /eleves/
 RewriteRule ^([a-z]+)$ /$1/ [L,R=301]
 
+
+#--------------------------------------------------
+# Passage URL / MVCD
+#--------------------------------------------------
 # /eleve/
 RewriteRule ^([^/]+)/$ bootstrap.php?module=$1&controller=index&view=index&data=
 
