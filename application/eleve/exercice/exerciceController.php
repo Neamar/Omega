@@ -45,7 +45,17 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil élève');
+		$this->View->setTitle('Accueil exercice');
+
+	}
+	
+	/**
+	 * Page d'accueil d'un exercice.
+	 * 
+	 */
+	public function indexAction_wd()
+	{
+		$this->View->setTitle('Accueil exercice #');
 
 	}
 	

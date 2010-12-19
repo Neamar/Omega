@@ -40,23 +40,12 @@ class Eleve_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Page d'accueil du module.
-	 * Affiche la liste des exercices de l'élève
+	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil exercice');
-
-	}
-	
-	/**
-	 * Page d'accueil d'un exercice.
-	 * 
-	 */
-	public function indexAction_wd()
-	{
-		$this->View->setTitle('Accueil exercice n°');
+		$this->View->setTitle('Accueil élève');
 
 	}
 	
