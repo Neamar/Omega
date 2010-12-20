@@ -14,42 +14,61 @@
  * @link      http://devoirminute.com
  */
 
+//Ces fonctions nécessitent le chargement du contrôleur de documentation.
+//S'agissant d'un contrôleur, l'autoload ne suffit pas : il faut le récupérer manuellement.
+include OO2FS::controllerPath('index', 'documentation');
+
 /**
- * Génère une liste avec les items spécifiés.
+ * Récupérer l'URL vers une page de la documentation
  * 
- * @param array $items la liste à créer
- * @param string $type ul ou ol.
+ * @param string $section
+ * @param string $page
+ */
+function ViewHelper_Doc_Link($section, $page)
+{
+	if($section == 'index')
+	{
+		$URL = '/' . $page . '.htm'; 
+	}
+	else
+	{
+		$URL = '/documentation/' . $section . '/' . $page;
+	}
+	
+	return $URL;
+}	
+/**
+ * Génère un lien vers la page de documentation spécifiée.
+ * 
+ * @param string $section la section de documentation (eleve par exemple)
+ * @param string $page la page de la section (exemple : inscription)
+ * @param string $caption le titre de la page ; si non spécifié, le titre de la page spécifiée.
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_list(array $Items, $Type='ul')
+function ViewHelper_Doc_Anchor($section,$page,$caption = null)
 {
-	$R = '<' . $Type . ">\n";
-	foreach($Items as $Item)
+	$title = Documentation_IndexController::getTitle($section, $page);
+	if(is_null($caption))
 	{
-		$R .= '	<li>' . $Item . "</li>\n";
+		$caption = $title;
 	}
-	$R .= '</' . $Type . ">\n";
-	
-	return $R;
+	return '<a href="' . ViewHelper_Doc_Link($section, $page) . '" title="Accès à la documentation : ' . $title . '" class="doc-link">' . $caption . '</a>';
 }
 
 /**
- * Génère une liste avec les items spécifiés transformés en URL
+ * Afifche une boîte de documentation avec le texte $caption et un lien vers l'aide.
  * 
- * @param array $items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
- * @param string $type ul ou ol.
- * 
- * @return string le code HTML demandé.
+ * @param string $section
+ * @param string $page
+ * @param string $caption
  */
-function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
+function ViewHelper_Doc_Box($section,$page,$caption)
 {
-	$R = '<' . $Type . ">\n";
-	foreach($Items as $URL => $Item)
-	{
-		$R .= '	<li><a href="' . $URL . '">' . $Item . "</a></li>\n";
-	}
-	$R .= '</' . $Type . ">\n";
+	return '<aside class="doc-box">
+	<p>' . $caption . '</p>
 	
-	return $R;
+	<p class="doc-box-link">' . ViewHelper_Doc_Anchor($section, $page) . '</p>
+	
+</aside>';
 }

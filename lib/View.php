@@ -197,10 +197,11 @@ class View
 	 * 
 	 * @param string $Title
 	 */
-	public function setMessage($Type, $Message)
+	public function setMessage($Type, $Message, $DocLink = null)
 	{
 		self::setMeta('message', $Message);
 		self::setMeta('messageClass', $Type);
+		self::setMeta('messageDoc', $DocLink);
 	}
 	
 	/**

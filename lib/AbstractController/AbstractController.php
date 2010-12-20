@@ -124,8 +124,9 @@ abstract class AbstractController
 			if($this->View->issetMeta('message'))
 			{
 				$_SESSION['Futur'] = array(
-					'messageClass'=>$this->View->getMeta('messageClass'),
-					'message'=>$this->View->getMeta('message')
+					'messageClass' => $this->View->getMeta('messageClass'),
+					'messageDoc' => $this->View->getMeta('messageClass'),
+					'message' => $this->View->getMeta('message')
 				);
 			}
 			

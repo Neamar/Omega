@@ -30,12 +30,33 @@ class Documentation_IndexController extends AbstractController
 	(
 		'index' => array
 		(
-			'index' => 'Accueil de la documentation',
-			'fonctionnement' => 'Fonctionnement du site',
+			'index' => "Accueil de la documentation",
+			'fonctionnement' => "Fonctionnement du site",
 		),
 		'eleve' => array
 		(
-			'index' => 'Aide des élèves',
-		)
+			'index' => "Aide des élèves",
+			'inscription' => "Comment m'inscrire en tant qu'élève ?",
+		),
 	);
+	
+	/**
+	 * Récupère le titre d'une page.
+	 * 
+	 * @param string $section
+	 * @param string $page
+	 * 
+	 * @return le titre de la page $section/$page.
+	 */
+	public static function getTitle($section, $page)
+	{
+		if(isset(self::$Pages[$section][$page]))
+		{
+			return self::$Pages[$section][$page];
+		}
+		else
+		{
+			return 'Page inconnue.';
+		}
+	}
 }
