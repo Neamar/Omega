@@ -1,6 +1,6 @@
 <?php
 /**
- * indexController.php - 26 oct. 2010
+ * exerciceController.php - 26 oct. 2010
  * 
  * Actions de base pour un élève.
  * 
@@ -27,26 +27,12 @@
 class Eleve_ExerciceController extends ExerciceAbstractController
 {
 	/**
-	 * Constructeur.
-	 * 
-	 * @param string $module nom de module
-	 * @param string $controller nom de contrôleur
-	 * @param string $view nom de vue
-	 * @param string $data données
-	 */
-	public function __construct($module,$controller,$view,$data)
-	{
-		parent::__construct($module, $controller, $view, $data);
-	}
-	
-	/**
 	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil exercice');
-
 	}
 	
 	/**
@@ -56,7 +42,6 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function indexAction_wd()
 	{
 		$this->View->setTitle('Accueil exercice #');
-
 	}
 	
 	public function creationAction()
