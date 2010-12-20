@@ -26,20 +26,21 @@ a img, hr {  border: none; }
 em { font-style: italic; } /* autres */ 
 strong { font-weight: bold; } 
 
-#top, #content {width:930px;margin:auto;}
+
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1. Top Barre --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/* ------------------------------------- Image de départ --*/
+/* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
-background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x;
+background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
 height:244px;
 }
+#content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
 
 /* ------------------------------------- style de la top barre --*/
 #top {
 padding-top:20px;
-padding-bottom:50px;
+padding-bottom:40px;
 }
 	#top p {
 	background: url('../../images/index/house.png') top left scroll no-repeat;
@@ -69,8 +70,22 @@ padding-right:50px;
 /*----------------------------------------------- 2. Logo -------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 header hgroup#logo{
-/*background:red url('image.png') repeat top left scroll;*/
+position:absolute;
+top:87px;
+background: url('../../images/index/logo.png') top left scroll no-repeat;
+width:249px;
+height:54px;
+z-index:15;
 }
+	header:before{
+	position:absolute;
+	top:61px;
+	content: "";
+	height:171px;
+	width:341px;
+	background: url('../../images/index/rosa.png') top left scroll no-repeat;
+	z-index:5;
+	}
 	#banner h2, #banner h1 {
 	text-indent: -5000px;
 	margin:0;
@@ -82,4 +97,49 @@ header hgroup#logo{
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #content {
 clear:both;
+position:relative;
 }
+	#content p {
+	position:relative;
+	z-index:10;
+	padding-top:93px;
+	margin-left:5px;
+	padding-right:10px;
+	font:normal 20px/1.5em Georgia, Palatino, "Palatino Linotype", serif;
+	text-shadow: #fff 1px 1px 1px;
+	}
+	#content p span {
+	font-weight:bold;
+	}
+/* ------------------------------------- le menu --*/
+#content nav {
+position:absolute;
+top:5px;
+left:500px;
+}
+
+#content nav ul{
+
+}
+
+#content nav ul li{
+
+}
+#content nav ul li a{
+color:#666666;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
