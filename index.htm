@@ -3,6 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <title>Bienvenue sur eDevoir !</title>
+<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <!--[if IE]>
@@ -10,32 +11,43 @@
 	<![endif]-->
 </head>
 <body>
-
+<div id="main-top-r">
+	<div id="content-top">
 <!-- Logo -->
-<header role="banner" id="banner"> <a href="/">
-<hgroup id="logo">
-	<h1>eDevoir.com</h1>
-	<h2>PUNCHLINE <!-- TODO : puchline --></h2>
-</hgroup>
-</a> </header>
+<header role="banner" id="banner"> 
+    <a href="/">
+    <hgroup id="logo">
+        <h1>eDevoir.com</h1>
+        <h2>PUNCHLINE <!-- TODO : puchline --></h2>
+    </hgroup>
+    </a> 
+</header>
+
+<!-- Top Barre -->
+<nav id="top">
+    <p>Bienvenue sur <strong><span>e</span>Devoir</strong> !</p>
+    <ul>
+        <li><a href="/eleve.htm">Vous êtes élève ?</a></li>
+        <li><a href="/parent.htm">Vous êtes parent ?</a></li>
+    </ul>
+</nav>
 
 <!-- Présentation du site -->
 <section id="content">
-<p>Bienvenue sur <strong>eDevoir</strong> !<br />
-Un devoir à réaliser ? Une équipe de gens compétents se tient à votre
-disposition pour vous fournir – dans les délais que vous fixez – un
-rendu de qualité et un suivi personnalisé adapté à vos besoins.</p>
+<p><strong>Un devoir à réaliser ?</strong> Une équipe de gens compétents se tient à votre
+disposition pour vous fournir – dans les délais que <span>vous</span> fixez – un
+rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.</p>
 
 <nav>
-<ul>
-	<li><a href="/fonctionnement.htm">Fonctionnement du site</a></li>
-	<li><a href="/faq.htm">FAQ</a></li>
-	<li><a href="/exemples.htm">Exemples de corrigé</a></li>
-	<li><a href="/eleve.htm">Vous êtes élève ?</a></li>
-	<li><a href="/parent.htm">Vous êtes parent ?</a></li>
-</ul>
-</nav>
+    <ul>
+        <li><a href="/fonctionnement.htm">Fonctionnement du site</a></li>
+        <li><a href="/faq.htm">FAQ</a></li>
+        <li><a href="/exemples.htm">Exemples de corrigé</a></li>
+    </ul>
+    </nav>
 </section>
+    </div><!-- /main-top-r -->
+</div><!-- /content-top -->
 
 <!-- Formulaire de connexion élève -->
 <section id="eleve_form">

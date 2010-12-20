@@ -1,0 +1,153 @@
+/*********************************************************************************************
+
+Version : Pour l'index !
+Changements récents : 
+
+/***********************************************************************************************
+
+0. CSS Reset  --------------------------------  Start !
+1. Top Barre  --------------------------------  Première barre haut
+2. Logo  -------------------------------------  Le logo
+
+**********************************************************************************************/
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 0. CSS Reset -----------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
+body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;font-size: 0.9em; line-height: 1.4;color:#4d4b45;background-color:#ededed;}
+
+ul, p {margin:0; padding:0; list-style-type:none;}
+a { text-decoration: none; color: #fff;}
+a:visited { color: #000; } 
+a:hover, a:focus, a:active { text-decoration: none;} 
+/*a:focus, a:active { outline: none; }*/
+a img, hr {  border: none; }
+em { font-style: italic; } /* autres */ 
+strong { font-weight: bold; } 
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 1. Top Barre --------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- Conteneur de départ --*/
+#main-top-r {
+background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
+height:244px;
+}
+#content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
+
+/* ------------------------------------- style de la top barre --*/
+#top {
+padding-top:20px;
+padding-bottom:40px;
+}
+	#top p {
+	background: url('../../images/index/house.png') top left scroll no-repeat;
+	padding-left:25px;
+	font:bold 18px/1.2em "Gill Sans MT", Georgia, serif;
+	color:#e8e8e8;
+	float:left;
+	}
+		#top p span{
+		color:#ff9c00;
+		}
+
+#top ul {
+float:right;
+padding-right:50px;
+}
+	#top ul li{
+	color:#f4f4f4;
+	display:inline;
+	padding:0 8px 0 3px;
+	background: url('../../images/index/sep01.png') top right scroll no-repeat;
+	}
+	#top ul li a:hover{
+	color:#ffc000;
+	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 2. Logo -------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+header hgroup#logo{
+position:absolute;
+top:87px;
+background: url('../../images/index/logo.png') top left scroll no-repeat;
+width:249px;
+height:54px;
+z-index:15;
+}
+	header:before{
+	position:absolute;
+	top:61px;
+	content: "";
+	height:171px;
+	width:341px;
+	background: url('../../images/index/rosa.png') top left scroll no-repeat;
+	z-index:5;
+	}
+	#banner h2, #banner h1 {
+	text-indent: -5000px;
+	margin:0;
+	line-height:0;
+	}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 3. Content ----------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#content {
+clear:both;
+position:relative;
+}
+	#content p {
+	position:relative;
+	z-index:10;
+	padding-top:93px;
+	margin-left:5px;
+	padding-right:10px;
+	font:normal 20px/1.5em Georgia, Palatino, "Palatino Linotype", serif;
+	text-shadow: #fff 1px 1px 1px;
+	}
+	#content p span {
+	font-weight:bold;
+	}
+/* ------------------------------------- le menu --*/
+#content nav {
+position:absolute;
+top:5px;
+left:400px;
+z-index:10;
+}
+
+#content nav ul{
+font-weight:bold;
+padding-top:15px;
+}
+
+#content nav ul li{
+display:inline;
+font-size:18px;
+padding-right:20px;
+}
+
+#content nav ul li a{
+color:#777777;
+}
+	#content nav ul li a:hover{
+	color:#949494;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
