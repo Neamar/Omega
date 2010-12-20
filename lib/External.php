@@ -87,14 +87,21 @@ class External
 	 */
 	public static function template_mail($to, $template, array $Datas)
 	{
+		//Enregistrer les données
+		External::$Datas = $Datas;
+		
+		//Lire le fichier
 		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.', '',$template) . '.html');
 		
+		//Le parser
+		$File = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::template_replace', $File);
+		
+		//Réucpérer ses composantes
 		$Items = explode("\n",$File,2);
 		$subject = $Items[0];
-		$Body = $Items[1];
-		External::$Datas = $Datas;
-		$message = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::template_replace', $Body);
+		$message = $Items[1];
 		
+		//L'envoyer :
 		self::mail($to, $subject, $message);
 	}
 	
