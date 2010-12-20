@@ -32,13 +32,19 @@ class View
 	 * La liste des données contenues par la vue
 	 * @var array
 	 */
-	private $_Datas;
+	protected $_Datas;
 	
 	/**
 	 * Les méta données de la vue : le contrôleur parent, le nom, le titre de la page...
 	 * @var array
 	 */
-	private $_Metas;
+	protected $_Metas;
+	
+	/**
+	 * Le contrôleur possédant cette vue
+	 * @var AbstractController
+	 */
+	protected $Controller;
 
 	/**
 	 * Initialise une nouvelle vue.
@@ -51,7 +57,6 @@ class View
 		$this->_Datas = array();
 		$this->_Metas = array(
 			'name'=>$Name,
-			'controller'=>$Controller,
 			'script'=>array(
 				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
 				'/public/js/jquery-ui.min.js'=>true,
@@ -62,6 +67,8 @@ class View
 				'/public/css/ui/ui.css'=>true,
 			),
 		);
+		
+		$this->Controller = $Controller;
 	}
 
 	/**
@@ -273,6 +280,8 @@ class View
 	 * Balises Meta
 	 * Feuilles de style
 	 * Scripts
+	 * 
+	 * @return html
 	 */
 	public function renderHead()
 	{
@@ -296,6 +305,11 @@ class View
 		return $Head;
 	}
 	
+	/**
+	 * Renvoie le message enregistré pour la page (s'il existe)
+	 * 
+	 * @return html
+	 */
 	public function renderMessage()
 	{
 		if($this->issetMeta('message'))
@@ -313,10 +327,18 @@ class View
 			}
 		}
 	}
+	
+	public function renderRibbon()
+	{
+		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
+		return $this->Html_List($RibbonParts);
+	}
 
 	
 	/**
 	 * Écrit la vue sur la sortie standard
+	 * 
+	 * @return void tout est écrit via echo.
 	 */
 	public function render()
 	{

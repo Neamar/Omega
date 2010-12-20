@@ -9,13 +9,23 @@
 </head>
 <body>
 
-<?php 
-//Gestion des messages
-echo $this->renderMessage()
-?>
+<section id="ribbon">
+	<?php 
+	//Gestion du ruban
+	echo $this->renderRibbon()
+	?>
+</section>
 
 <section id="content">
-<?php include $this->getMeta('viewFile');?>
+	<?php 
+	//Gestion des messages
+	echo $this->renderMessage()
+	?>
+	
+	<?php
+	//Et le contenu de la page.
+	include $this->getMeta('viewFile');
+	?>
 </section>
 
 </body>

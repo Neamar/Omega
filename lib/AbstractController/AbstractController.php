@@ -111,6 +111,25 @@ abstract class AbstractController
 	{
 		return $this->View();
 	}
+	
+	/**
+	 * Récupère le contrôleur associé au contrôleur objet.
+	 * @return string le contrôleur associé
+	 */
+	public function getController()
+	{
+		return $this->Controller;
+	}
+	
+	/**
+	 * Récupère le module associé au contrôleur.
+	 * @return string le module associé
+	 */
+	public function getModule()
+	{
+		return $this->Module;
+	}
+
 
 	/**
 	 * Redirige le visiteur sur la page spécifiée
