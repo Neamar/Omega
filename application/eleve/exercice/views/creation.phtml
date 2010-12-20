@@ -3,6 +3,9 @@
 
 <?php //TODO : getRaise() ?>
 
+<?php 
+echo $this->Doc_box('eleve','ajout','Besoin d\'aide pour compléter ce formulaire ?');
+?>
 <form id="form_creation-exercice" method="post" action="">
 <p>Merci de remplir les champs suivants. L'envoi de fichiers se fera à la prochaine étape.</p>
 
@@ -73,7 +76,8 @@ echo $this->Form_textareaLabelBr('infos','Informations complémentaires');
 
 	<div id="div_auto-accept">
 		<?php 
-			echo $this->Form_inputLabelBr('auto_accept', 'Valeur maximale d\'acceptation automatique',array('value'=>0));
+			echo $this->Form_inputLabel('auto_accept', 'Valeur maximale d\'acceptation automatique',array('value'=>0));
+			echo $this->Doc_input('eleve','auto_accept') . "\n";
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
 	</div>

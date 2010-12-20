@@ -10,19 +10,19 @@
 <body>
 
 <section id="ribbon">
-	<?php 
+<?php 
 	//Gestion du ruban
 	echo $this->renderRibbon()
 	?>
 </section>
 
 <section id="content">
-	<?php 
+<?php 
 	//Gestion des messages
 	echo $this->renderMessage()
 	?>
 	
-	<?php
+<?php
 	//Et le contenu de la page.
 	include $this->getMeta('viewFile');
 	?>

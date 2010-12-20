@@ -57,6 +57,17 @@ function ViewHelper_Doc_Anchor($section,$page,$caption = null)
 }
 
 /**
+ * Ajoute un champ d'aide après un élément de type input (ou n'importe quel élèment de formulaire)
+ * 
+ * @param string $section la section de documentation (eleve par exemple)
+ * @param string $page la page de la section (exemple : inscription)
+ * @param string $caption le titre de la page ; si non spécifié, le titre de la page spécifiée.
+ */
+function ViewHelper_Doc_Input($section, $page, $caption = null)
+{
+	return '<span class="doc-input">' . ViewHelper_Doc_Anchor($section, $page, $caption) . '</span>';
+}
+/**
  * Afifche une boîte de documentation avec le texte $caption et un lien vers l'aide.
  * 
  * @param string $section

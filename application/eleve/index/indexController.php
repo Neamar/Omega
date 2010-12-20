@@ -49,7 +49,7 @@ class Eleve_IndexController extends IndexAbstractController
 		if(isset($_SESSION['Eleve']))
 		{
 			unset($_SESSION['Eleve']);
-			$this->View->setMessage("info", "Vous vous êtes déconnecté.");
+			$this->View->setMessage("info", "Vous vous êtes déconnecté.",'eleve/deconnexion');
 		}
 		
 		if(isset($_POST['connexion-eleve']))
@@ -65,7 +65,7 @@ class Eleve_IndexController extends IndexAbstractController
 				{
 					if($Eleve->Statut == 'EN_ATTENTE')
 					{
-						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.");
+						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.", 'eleve/probleme_connexion');
 						unset($_SESSION['Eleve']); 
 					}
 					else
@@ -77,7 +77,7 @@ class Eleve_IndexController extends IndexAbstractController
 				else
 				{
 					//TODO : Bloquer après trois connexions ?
-					$this->View->setMessage("error", "Identifiants incorrects.");
+					$this->View->setMessage("error", "Identifiants incorrects.", 'eleve/probleme_connexion');
 				}
 			}
 		}
@@ -94,7 +94,7 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.");
+			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.",'eleve/validation');
 		}
 		
 		if(isset($_POST['inscription-eleve']))
