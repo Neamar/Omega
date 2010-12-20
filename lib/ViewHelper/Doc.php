@@ -63,12 +63,13 @@ function ViewHelper_Doc_Anchor($section,$page,$caption = null)
  * @param string $page
  * @param string $caption
  */
-function ViewHelper_Doc_Box($section,$page,$caption)
+function ViewHelper_Doc_Box($section,$page,$caption, $class='doc-box')
 {
-	return '<aside class="doc-box">
+	return '<aside class="' . $class . '">
 	<p>' . $caption . '</p>
 	
 	<p class="doc-box-link">' . ViewHelper_Doc_Anchor($section, $page) . '</p>
 	
-</aside>';
+</aside>
+';
 }

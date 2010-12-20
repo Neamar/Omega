@@ -11,9 +11,8 @@
 
 <?php 
 //Gestion des messages
-if($this->issetMeta('message')) {?>
-<aside id="message" class="<?php echo $this->getMeta('messageClass') ?>"><?php echo $this->getMeta('message') ?></aside>
-<?php }?>
+echo $this->renderMessage()
+?>
 
 <section id="content">
 <?php include $this->getMeta('viewFile');?>

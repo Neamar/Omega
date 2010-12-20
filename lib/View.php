@@ -276,21 +276,41 @@ class View
 	 */
 	public function renderHead()
 	{
-		echo '	<title>' . $this->getMeta('title') . '</title>' . "\n";
+		$Head = '	<title>' . $this->getMeta('title') . '</title>' . "\n";
 		
 		foreach($this->_Metas['meta'] as $Meta=> $Value)
 		{
-			echo '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
+			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
 		}
 		
 		foreach($this->_Metas['style'] as $URL=>$_)
 		{
-			echo '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
+			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
 		}
 		
 		foreach($this->_Metas['script'] as $URL=>$_)
 		{
-			echo '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
+			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
+		}
+		
+		return $Head;
+	}
+	
+	public function renderMessage()
+	{
+		if($this->issetMeta('message'))
+		{
+			if($this->issetMeta('messageDoc'))
+			{
+				$Parties = explode("/",$this->getMeta("messageDoc"));
+				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), $this->getMeta('messageClass'));
+			}
+			else
+			{
+				return '<aside class="message ' . $this->getMeta('messageClass')  . '">
+	<p>' . $this->getMeta('message') . '</p>
+</aside>';
+			}
 		}
 	}
 

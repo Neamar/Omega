@@ -28,6 +28,10 @@ class Documentation_IndexController extends AbstractController
 {
 	private static $Pages = array
 	(
+		'foo' => array
+		(
+			'bar' => "Titre de la page d'aide"
+		),
 		'index' => array
 		(
 			'index' => "Accueil de la documentation",
