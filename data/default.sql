@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Lun 20 Décembre 2010 à 12:46
+-- Généré le : Lun 20 Décembre 2010 à 19:00
 -- Version du serveur: 5.1.41
 -- Version de PHP: 5.3.1
 
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   `InfosEleve` mediumtext,
   `Autoaccept` int(11) DEFAULT NULL,
   `Modificateur` int(11) NOT NULL DEFAULT '100',
-  `Statut` varchar(20) DEFAULT NULL,
+  `Statut` varchar(20) NOT NULL DEFAULT 'VIERGE',
   `Correcteur` int(11) DEFAULT NULL,
   `TimeoutCorrecteur` int(11) DEFAULT NULL,
   `InfosCorrecteur` mediumtext,
@@ -204,8 +204,11 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   KEY `Matiere` (`Matiere`),
   KEY `Classe` (`Classe`),
   KEY `Type` (`Type`),
-  KEY `Statut` (`Statut`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des exercices' AUTO_INCREMENT=1 ;
+  KEY `Statut` (`Statut`),
+  KEY `TimeoutEleve` (`TimeoutEleve`),
+  KEY `Expiration` (`Expiration`),
+  KEY `TimeoutCorrecteur` (`TimeoutCorrecteur`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste des exercices' AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `Exercices`
@@ -414,7 +417,7 @@ CREATE TABLE IF NOT EXISTS `Membres` (
 INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`, `RIB`, `Paypal`) VALUES
 (3, 'neamar@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2010-12-08 17:49:38', '2010-12-11 12:58:08', 'OK', 'ELEVE', NULL, NULL),
 (4, 'essai@neamar.fr', '9fee891593f8c384cdb7e964a18ed1f20a48f787', 0, '2010-12-11 10:55:17', '2010-12-11 10:55:17', 'EN_ATTENTE', 'ELEVE', NULL, NULL),
-(15, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 150, '2010-12-17 23:07:33', '2010-12-19 22:59:46', 'OK', 'ELEVE', NULL, NULL);
+(15, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 150, '2010-12-17 23:07:33', '2010-12-20 15:07:32', 'OK', 'ELEVE', NULL, NULL);
 
 -- --------------------------------------------------------
 
