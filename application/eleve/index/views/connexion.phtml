@@ -1,8 +1,8 @@
 <h1>Connexion élève</h1>
 <p class="intro">Connectez-vous pour accéder au site.</p>
-<p><a href="/eleve/inscription">Vous n'êtes pas encore inscrit ?</a></p>
+<p class="see-link"><a href="/eleve/inscription">Vous n'êtes pas encore inscrit ?</a></p>
 
-<form id="connexion-eleve" method="post" action="">
+<form id="form_connexion-eleve" method="post" action="">
 
 <?php
 echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
@@ -18,4 +18,4 @@ echo $this->Form_submit('connexion-eleve',"Connexion");
 ?>
 </form>
 
-<p><a href="/eleve/recuperation">Mot de passe perdu ?</a></p>
+<p class="see-link"><a href="/eleve/recuperation">Mot de passe perdu ?</a></p>

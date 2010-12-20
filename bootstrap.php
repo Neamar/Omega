@@ -26,12 +26,14 @@
 
 $File = str_replace('\\','/',__FILE__);
 define('PATH', substr($File, 0, strrpos($File, '/')));
-include PATH . '/lib/constants.php';
+include PATH . '/lib/core/constants.php';
+include PATH . '/lib/core/OO2FS.php';
+include PATH . '/lib/core/Sql.php';
 
 session_start();
 
 
-include PATH . '/lib/OO2FS.php';
+
 $ModulePath = OO2FS::modulePath($_GET['module']);
 $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
 $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);

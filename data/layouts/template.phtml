@@ -9,14 +9,23 @@
 </head>
 <body>
 
+<section id="ribbon">
 <?php 
-//Gestion des messages
-if($this->issetMeta('message')) {?>
-<aside id="message" class="<?php echo $this->getMeta('messageClass') ?>"><?php echo $this->getMeta('message') ?></aside>
-<?php }?>
+	//Gestion du ruban
+	echo $this->renderRibbon()
+	?>
+</section>
 
 <section id="content">
-<?php include $this->getMeta('viewFile');?>
+<?php 
+	//Gestion des messages
+	echo $this->renderMessage()
+	?>
+	
+<?php
+	//Et le contenu de la page.
+	include $this->getMeta('viewFile');
+	?>
 </section>
 
 </body>

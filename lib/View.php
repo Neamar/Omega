@@ -32,13 +32,19 @@ class View
 	 * La liste des données contenues par la vue
 	 * @var array
 	 */
-	private $_Datas;
+	protected $_Datas;
 	
 	/**
 	 * Les méta données de la vue : le contrôleur parent, le nom, le titre de la page...
 	 * @var array
 	 */
-	private $_Metas;
+	protected $_Metas;
+	
+	/**
+	 * Le contrôleur possédant cette vue
+	 * @var AbstractController
+	 */
+	protected $Controller;
 
 	/**
 	 * Initialise une nouvelle vue.
@@ -51,7 +57,6 @@ class View
 		$this->_Datas = array();
 		$this->_Metas = array(
 			'name'=>$Name,
-			'controller'=>$Controller,
 			'script'=>array(
 				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
 				'/public/js/jquery-ui.min.js'=>true,
@@ -62,6 +67,8 @@ class View
 				'/public/css/ui/ui.css'=>true,
 			),
 		);
+		
+		$this->Controller = $Controller;
 	}
 
 	/**
@@ -197,10 +204,11 @@ class View
 	 * 
 	 * @param string $Title
 	 */
-	public function setMessage($Type, $Message)
+	public function setMessage($Type, $Message, $DocLink = null)
 	{
 		self::setMeta('message', $Message);
 		self::setMeta('messageClass', $Type);
+		self::setMeta('messageDoc', $DocLink);
 	}
 	
 	/**
@@ -272,30 +280,65 @@ class View
 	 * Balises Meta
 	 * Feuilles de style
 	 * Scripts
+	 * 
+	 * @return html
 	 */
 	public function renderHead()
 	{
-		echo '	<title>' . $this->getMeta('title') . '</title>' . "\n";
+		$Head = '	<title>' . $this->getMeta('title') . '</title>' . "\n";
 		
 		foreach($this->_Metas['meta'] as $Meta=> $Value)
 		{
-			echo '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
+			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
 		}
 		
 		foreach($this->_Metas['style'] as $URL=>$_)
 		{
-			echo '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
+			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
 		}
 		
 		foreach($this->_Metas['script'] as $URL=>$_)
 		{
-			echo '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
+			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
 		}
+		
+		return $Head;
+	}
+	
+	/**
+	 * Renvoie le message enregistré pour la page (s'il existe)
+	 * 
+	 * @return html
+	 */
+	public function renderMessage()
+	{
+		if($this->issetMeta('message'))
+		{
+			if($this->issetMeta('messageDoc'))
+			{
+				$Parties = explode("/",$this->getMeta("messageDoc"));
+				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), $this->getMeta('messageClass'));
+			}
+			else
+			{
+				return '<aside class="message ' . $this->getMeta('messageClass')  . '">
+	<p>' . $this->getMeta('message') . '</p>
+</aside>';
+			}
+		}
+	}
+	
+	public function renderRibbon()
+	{
+		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
+		return $this->Html_List($RibbonParts);
 	}
 
 	
 	/**
 	 * Écrit la vue sur la sortie standard
+	 * 
+	 * @return void tout est écrit via echo.
 	 */
 	public function render()
 	{

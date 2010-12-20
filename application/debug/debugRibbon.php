@@ -1,19 +1,17 @@
 <?php
 /**
- * debugModule.php - 5 déc. 2010
+ * debugRibbon.php - 20 déc. 2010
  * 
- * Fichier de test de module : debug.
- *
+ * Ruban du module débuggage.
+ * 
  * PHP Version 5
  * 
- * @category  ModuleCheck
+ * @category  Default
  * @package   Root
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
-
-//TODO: Tester la possibilité d'accéder au module.
-return true;
-?>
+ 
+return array('Module de débuggage.');

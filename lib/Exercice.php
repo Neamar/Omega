@@ -30,6 +30,14 @@ class Exercice extends DbObject
 	const TABLE_NAME = 'Exercices';
 	public static $_Props;
 	
+	/**
+	 * Génère un hash pour l'insertion d'un exercice.
+	 */
+	public static function generateHash()
+	{
+		return substr(uniqid(),-6);	
+	}
+	
 	protected $Foreign = array(
 		'Createur'=>'Eleve',
 		//'Matiere'=>'Matiere',
@@ -102,7 +110,7 @@ class Exercice extends DbObject
 	 * 
 	 * @return bool
 	 */
-	public function isCancellable()
+	public function isClosed()
 	{
 		$Ended = array('ANNULE','TERMINE','REMBOURSE');
 		

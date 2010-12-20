@@ -1,8 +1,8 @@
 <?php 
 /**
- * Html.php - 26 oct. 2010
+ * Doc.php - 26 oct. 2010
  *
- * Offrir des primitives de bas niveau pour la gestion des éléments HTML.
+ * Offrir des primitives pour la gestion des liens de documentations
  *
  * PHP Version 5
  *
@@ -15,7 +15,8 @@
  */
 
 /**
- * Génère une liste avec les items spécifiés.
+ * Génère un lien vers l'élément de documentation demandé.
+ * Si le titre n'est pas fourni, il est automatiquement récupéré.
  * 
  * @param array $items la liste à créer
  * @param string $type ul ou ol.

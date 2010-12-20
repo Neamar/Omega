@@ -40,6 +40,18 @@ class OO2FS
 	{
 		return APPLICATION_PATH . '/' . $Module . '/' . $_GET['module'] . 'Module.php';
 	}
+	
+	/**
+	 * Renvoie le chemin vers le ruban de haut de page du module.
+	 * 
+	 * @param string $Module
+	 * 
+	 * @return string /{$Module}/{$Module}Ribbon.php
+	 */
+	public static function ribbonPath($Module)
+	{
+		return APPLICATION_PATH . '/' . $Module . '/' . $Module . 'Ribbon.php';
+	}
 
 	/**
 	* Récupérer le chemin vers un contrôleur.

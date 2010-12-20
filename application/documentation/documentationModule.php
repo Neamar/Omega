@@ -1,9 +1,10 @@
 <?php
 /**
- * debugModule.php - 5 déc. 2010
+ * documentationModule.php - 20 déc. 2010
  * 
- * Fichier de test de module : debug.
- *
+ * Fichier de test de module : documentation.
+ * Ce module est accessible à tous par tout le monde.
+ * 
  * PHP Version 5
  * 
  * @category  ModuleCheck
@@ -14,6 +15,5 @@
  * @link      http://devoirminute.com
  */
 
-//TODO: Tester la possibilité d'accéder au module.
 return true;
 ?>
