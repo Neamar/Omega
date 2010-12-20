@@ -115,19 +115,27 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:500px;
+left:400px;
+z-index:10;
 }
 
 #content nav ul{
-
+font-weight:bold;
+padding-top:15px;
 }
 
 #content nav ul li{
+display:inline;
+font-size:18px;
+padding-right:20px;
+}
 
-}
 #content nav ul li a{
-color:#666666;
+color:#777777;
 }
+	#content nav ul li a:hover{
+	color:#949494;
+	}
 
 
 
