@@ -26,5 +26,44 @@
  */
 abstract class ExerciceAbstractController extends AbstractController
 {
+	/**
+	 * L'exercice sur lequel porte la page
+	 * 
+	 * @var Exercice
+	 */
+	protected $Exercice;
+	
+	/**
+	 * Si nécessaire, vérifier que l'utilisateur actuel a bien le droit de récupérer l'exercice
+	 *
+	 * @param string $module
+	 * @param string $controller
+	 * @param string $view
+	 * @param string $data
+	 */
+	public function __construct($Module,$Controller,$View,$Data)
+	{
+		parent::__construct($Module, $Controller, $View, $Data);
+		
+		//La page porte sur un exercice en particulier
+		if(is_array($Data) && isset($Data['data']))
+		{
+			//Récupérer l'exercice :
+			$this->Exercice = Exercice::load($Data['data']);
+			if(is_null($this->Exercice)
+			||
+			(!isset($_SESSION['Eleve']) && !isset($_SESSION['Correcteur']) && !isset($_SESSION['Admin'])
+			||
+			(
+				(isset($_SESSION['Eleve']) && $this->Exercice->Createur != $_SESSION['Eleve']->ID)
+				||
+				(isset($_SESSION['Correcteur']) && $this->Exercice->Correcteur != $_SESSION['Correcteur'])
+			)))
+			{
+				$this->View->setMessage("warning","Impossible d'accéder à l'exercice " . $Data['data'],'eleve/acces_impossible');
 
+				$this->redirect("/eleve/exercice/");
+			}
+		}
+	}
 }

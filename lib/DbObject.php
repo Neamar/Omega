@@ -83,9 +83,8 @@ abstract class DbObject
 	{
 		if($FilterID)
 		{
-			$ID = self::filterID($ID);
+			$ID = static::filterID($ID);
 		}
-			
 		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, $ID);
 		return Sql::singleQuery($Query, get_called_class());
 	}

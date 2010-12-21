@@ -28,6 +28,8 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
+	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE Hash="%ID%"';
+	
 	public static $_Props;
 	
 	/**
@@ -35,7 +37,19 @@ class Exercice extends DbObject
 	 */
 	public static function generateHash()
 	{
-		return substr(uniqid(),-6);	
+		return substr(sha1('EX_' . uniqid()),-6);	
+	}
+	
+	/**
+	 * Filtre les valeurs incorrectes de l'identifiant pour se prémunir de potentielles injections SQL.
+	 * 
+	 * @param string $ID l'identifiant (hash) à protéger
+	 * 
+	 * @return string(6) le hash filtré
+	 */
+	public static function filterID($ID=null)
+	{
+		return preg_replace('`[^a-zA-Z0-9]`','', $ID);
 	}
 	
 	protected $Foreign = array(

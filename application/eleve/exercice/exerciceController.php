@@ -44,6 +44,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->setTitle('Accueil exercice #');
 	}
 	
+	/**
+	 * Création d'un nouvel exercice
+	 */
 	public function creationAction()
 	{
 		$this->View->setTitle('Création d\'un exercice');
@@ -146,7 +149,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
-					$this->redirect('/eleve/exercice/index/' . $ToInsert['Hash']);
+					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
 				{
@@ -154,6 +157,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * Ajoute des fichiers à un exercice si possible.
+	 */
+	public function ajoutAction_wd()
+	{
+		$this->View->setTitle("Ajout de fichiers à l'exercice ");
 	}
 }
