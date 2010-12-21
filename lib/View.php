@@ -316,6 +316,8 @@ class View
 		{
 			if($this->issetMeta('messageDoc'))
 			{
+				new dBug($this->_Metas);
+				exit($this->getMeta("messageDoc"));
 				$Parties = explode("/",$this->getMeta("messageDoc"));
 				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), $this->getMeta('messageClass'));
 			}
