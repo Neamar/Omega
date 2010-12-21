@@ -185,7 +185,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$NbFichiersAjoutes = 0;
 		
 		//La taille maximale du formulaire (20Mo) :
-		$this->View->SizeLimit = 5*1048576;
+		$this->View->SizeLimit = 20*1048576;
 
 		if(isset($_POST['upload-noscript']) || isset($_POST['upload']))
 		{
@@ -218,18 +218,39 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					}
 					else
 					{
-						if(move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier))
-						{
-							$NbFichiersPresents++;
-							$NbFichiersAjoutes++;
-						}
-						else
+						$URL = '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						
+						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . $URL))
 						{
 							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
 						}
+						else
+						{
+							$ToInsert = array
+							(
+								'Exercice' => $this->Exercice->ID,
+								'Type' => 'SUJET',
+								'URL' => $URL,
+								'ThumbURL' => 'TODO',
+								'NomUpload' => $_FILES['fichiers']['name'][$i],
+							);
+							
+							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
+							{
+								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
+							}
+							else
+							{
+								$NbFichiersPresents++;
+								$NbFichiersAjoutes++;
+							}
+						}
+
 					}					
 				}
 			}
+			
+			
 			if(count($Messages)!=0)
 			{
 				$this->View->setMessage("error", implode("<br />\n",$Messages));
