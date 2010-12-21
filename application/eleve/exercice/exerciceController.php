@@ -203,14 +203,17 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				elseif($_FILES['fichiers']['error'][$i] > 0)
 				{
+					//Erreur côté http
 					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
 				}
 				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
 				{
+					//Dépassement de la taille maximale
 					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
 				}
 				else
 				{
+					//Vérification de l'extension
 					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
 					if (!in_array($ExtensionFichier,$Extensions))
 					{
@@ -218,6 +221,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					}
 					else
 					{
+						//Enregistrement du fichier.
 						$URL = '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
 						
 						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . $URL))
@@ -237,6 +241,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 							
 							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
 							{
+								//Erreur à l'enregistrement en base de données
 								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
 							}
 							else
@@ -245,20 +250,27 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								$NbFichiersAjoutes++;
 							}
 						}
-
 					}					
 				}
 			}
 			
+			if($NbFichiersAjoutes>0)
+			{
+				$Corrects = (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.";
+			}
+			else
+			{
+				$Corrects = "Aucun fichier ajouté.";
+			}
 			
 			if(count($Messages)!=0)
 			{
+				$Messages[] = $Corrects;
 				$this->View->setMessage("error", implode("<br />\n",$Messages));
 			}
 			elseif($_POST['next_page']!='resume')
 			{
-				$this->View->setMessage("info", (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.<br />
-				N'oubliez pas de cocher la case « J'ai terminé d'ajouter des fichiers » une fois l'envoi terminé !");
+				$this->View->setMessage("info", $Corrects);
 			}
 			else
 			{
