@@ -8,6 +8,7 @@ Changements récents :
 0. CSS Reset  --------------------------------  Start !
 1. Top Barre  --------------------------------  Première barre haut
 2. Logo  -------------------------------------  Le logo
+3. Content  ----------------------------------  Le contenu du haut (logo/menu)
 
 **********************************************************************************************/
 
@@ -17,15 +18,14 @@ Changements récents :
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
 body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;font-size: 0.9em; line-height: 1.4;color:#4d4b45;background-color:#ededed;}
 
-ul, p {margin:0; padding:0; list-style-type:none;}
+ul, p, h1 {margin:0; padding:0; list-style-type:none;}
 a { text-decoration: none; color: #fff;}
-a:visited { color: #000; } 
+a:visited {  } 
 a:hover, a:focus, a:active { text-decoration: none;} 
-/*a:focus, a:active { outline: none; }*/
+a:focus, a:active { outline: none; }
 a img, hr {  border: none; }
 em { font-style: italic; } /* autres */ 
 strong { font-weight: bold; } 
-
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1. Top Barre --------------------------------------------------------------------------------*/
@@ -33,7 +33,7 @@ strong { font-weight: bold; }
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
 background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
-height:244px;
+height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
 
@@ -54,6 +54,7 @@ padding-bottom:40px;
 		}
 
 #top ul {
+position:relative;
 float:right;
 padding-right:50px;
 }
@@ -66,6 +67,15 @@ padding-right:50px;
 	#top ul li a:hover{
 	color:#ffc000;
 	}
+		#top ul li a:hover:before{
+		position:absolute;
+		content: "";
+		top:-18px;
+		height:10px;
+		width:19px;
+		background: url('../../images/index/curseur2.png') top left scroll no-repeat;
+		}
+	
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 2. Logo -------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -115,39 +125,225 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:400px;
+left:385px;
 z-index:10;
 }
+	#content nav ul{
+	position:relative;
+	padding-top:16px;
+	}
+		#content nav ul li{
+		float:left;
+		padding-right:20px;
+		font-weight:bold;
+		text-transform:uppercase;
+		text-shadow: #fff 1px 1px 1px;
+		}
 
-#content nav ul{
-font-weight:bold;
-padding-top:15px;
+			#content nav ul li a{
+			color:#6e6e6e;
+			line-height:28px;
+			}
+				#content nav ul li a:hover{
+				color:#898989;
+				display:block;
+				background: url('../../images/index/link-right-h.png') bottom center no-repeat;
+				}
+				#content nav ul li a span:hover{
+				display:block;
+				background: url('../../images/index/link-lefts-h.png') bottom center no-repeat;
+				}
+			#content nav ul li a.active{
+			display:block;
+			height:29px;
+			color:#fff;
+			text-shadow: #fd6b0e 1px 1px 1px;
+			background: url('../../images/index/menu-left.png') top left no-repeat;
+			text-decoration:none;
+			padding-left:8px;
+			}
+				#content nav ul li a.active:before{
+				position:absolute;
+				top:-3px;
+				content: "";
+				height:10px;
+				width:19px;
+				background: url('../../images/index/curseur.png') top left scroll no-repeat;
+				}
+				#content nav ul li a.active:hover{
+				background: url('../../images/index/menu-left-h.png') top left no-repeat;
+				}
+				
+			#content nav ul li a.active span{
+			display:block;
+			height:29px;
+			padding-right:8px;
+			background: url('../../images/index/menu-right.png') top right no-repeat;
+			}
+				#content nav ul li a.active span:hover {
+				background: url('../../images/index/menu-right-h.png') top right no-repeat;
+				}
+				
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 4. Forms ------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- Contenu global --*/
+#content-form {
+margin-top:20px;
 }
-
-#content nav ul li{
-display:inline;
-font-size:18px;
-padding-right:20px;
-}
-
-#content nav ul li a{
-color:#777777;
-}
-	#content nav ul li a:hover{
-	color:#949494;
+	#content-form h1 {
+	color:#5c5b5b;
+	font:bold 31px "Lucida Bright", Georgia, serif;
+	margin-top:25px;
+	margin-bottom:18px;
+	}
+	#content-form label {
+	color:#878787;
+	font-weight:bold;
+	float: left;		
+	display:block;
+	line-height:26px;
+	width:107px;
 	}
 
+#content-form input {
+background: url('../../images/index/input.png') no-repeat;
+border:0;
+height:27px;
+margin-bottom:9px;
+width:200px;
+padding-left:5px;
+}
+	#content-form input:hover {
+	background: url('../../images/index/input-h.png') no-repeat;
+	}
+	#content-form input:focus {
+	background: url('../../images/index/input-f.png') no-repeat;
+	}
+
+/* ------------------------------------- Formulaire élève --*/
+#eleve_form, #correcteur_form {
+position:relative;
+float:left;
+}
+#eleve_form p a, #correcteur_form p a {
+font:normal 13px "Georgia", Times, serif;
+position:absolute;
+bottom:18px;
+left:55px;
+color:#5c5b5b;
+}
+	#eleve_form p a:hover, #correcteur_form p a:hover {
+	color:#8c5b00;
+	}
+
+#eleve_form {
+margin-right:150px;
+margin-left:65px;
+}
+	#eleve_form h1 {
+	background: url('../../images/index/eleve.png') left no-repeat;
+	padding-left:22px;
+	}
+	#connexion-eleve {
+	margin-left:9px;
+	}
+
+#correcteur_form h1 {
+font-size:29px;
+background: url('../../images/index/correct.png') left no-repeat;
+padding-left:22px;
+}
+	#connexion-correcteur {
+	margin-left:15px;
+	}
+/* ------------------------------------- Bouton d'envoie --*/
+#content-form input[type="submit"] {
+margin-left:207px;
+display: inline-block;
+zoom: 1;
+vertical-align: baseline;
+outline: none;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+font:bold 14px Arial, Helvetica, sans-serif;
+text-transform:uppercase;
+color:#fff;
+
+text-shadow: 1px 1px 1px #f97300;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	border-radius: 5px;
+		outline: 1px solid #fed07c;
+		outline-offset: -2px;
+			-moz-box-shadow: inset 0px 0px 7px #ef9816;
+			/*-webkit-box-shadow: inset 0px 0px 7px #ef9816;*/
+			box-shadow: inset 0px 0px 7px #ef9816;
+width:100px;
+height:40px;
+
+background: #feb229 url("../../images/index/gradient-bg-index.png") repeat-x top;
+-o-background-size: 100% 100%;
+-moz-background-size: 100% 100%;
+-webkit-background-size: 100% 100%;
+background-size: 100% 100%;
+/* Internet Explorer */
+*background: #feb229;
+background: #feb229\0/;
+filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../images/index/gradient-bg-index.png", sizingMethod="scale");
+}
+@media all and (min-width: 0px) {
+    #content-form input[type=submit] {
+        /* Opera */
+        background: #feb229 url("../../images/index/gradient-bg-index.svg");
+        /* Navigateurs récents */
+        background-image: -moz-linear-gradient(
+            top,
+            #ffb734,
+            #ffc14d 50%,
+			#feb229
+        );
+        background-image: -webkit-gradient(
+            linear,
+            left top, left bottom,
+            from(#ffb734),
+            to(#feb229),
+    color-stop(0.5, #ffc14d)
+        );
+    }
+}
+
+	#content-form input[type=submit]:active {
+	background: #fca70c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fca70c), to(#fbb93e));
+	background: -moz-linear-gradient(top,  #fca70c,  #fbb93e);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fca70c', endColorstr='#fbb93e');}
+		#content-form input[type=submit]:hover {
+		background: -webkit-gradient(linear, left top, left bottom, from(#fbb93e), to(#fca70c));
+		background: -moz-linear-gradient(top,  #fbb93e,  #fca70c);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fbb93e', endColorstr='#fca70c');}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+footer {
+clear:both;
+margin-left:220px;
+}
+	footer ul {
+	padding-top:40px;
+	}
+		footer ul li {
+		display:inline;
+		padding-left:20px;
+		}
+			footer ul li a{
+			color:#a9a9a9;
+			font:bold 14px Arial, Helvetica, sand-serif;
+			text-shadow: 1px 1px 1px #fff;
+			}
+			footer ul li a:hover{
+			color:#676767;
+			}
