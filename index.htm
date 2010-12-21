@@ -47,16 +47,15 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
     </ul>
     </nav>
 </section>
-    </div><!-- /content-top -->
-</div><!-- /main-top-r -->
 
+<div id="content-form">
 <!-- Formulaire de connexion élève -->
 <section id="eleve_form">
 <h1>Connexion élève</h1>
 <form method="post" action="/eleve/connexion" id="connexion-eleve">
 	<label for="eleve_email">E-mail :</label>
 	<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
-	<label for="eleve_password">E-mail :</label>
+	<label for="eleve_password">Mot de passe :</label>
 	<input type="password" name="password" id="eleve_password" /><br />
 	<input type="submit" name="connexion-eleve" value="Connexion" />
 </form>
@@ -69,12 +68,13 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
 <form method="post" action="/correcteur/connexion" id="connexion-correcteur">
 	<label for="correcteur_email">E-mail :</label>
 	<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
-	<label for="correcteur_password">E-mail :</label>
+	<label for="correcteur_password">Mot de passe :</label>
 	<input type="password" name="password" id="correcteur_password" /><br />
 	<input type="submit" name="connexion-correcteur" value="Connexion" />
 </form>
 <p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
 </section>
+</div><!-- /content-form -->
 
 <!-- Liens "légaux" -->
 <footer>
@@ -86,5 +86,7 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
 	<li><a href="/confidentialite.htm">Confidentialité</a></li>
 </ul>
 </footer>
+    </div><!-- /content-top -->
+</div><!-- /main-top-r -->
 </body>
 </html>

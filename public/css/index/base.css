@@ -8,6 +8,7 @@ Changements récents :
 0. CSS Reset  --------------------------------  Start !
 1. Top Barre  --------------------------------  Première barre haut
 2. Logo  -------------------------------------  Le logo
+3. Content  ----------------------------------  Le contenu du haut (logo/menu)
 
 **********************************************************************************************/
 
@@ -17,7 +18,7 @@ Changements récents :
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
 body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;font-size: 0.9em; line-height: 1.4;color:#4d4b45;background-color:#ededed;}
 
-ul, p {margin:0; padding:0; list-style-type:none;}
+ul, p, h1 {margin:0; padding:0; list-style-type:none;}
 a { text-decoration: none; color: #fff;}
 a:visited { color: #000; } 
 a:hover, a:focus, a:active { text-decoration: none;} 
@@ -32,7 +33,7 @@ strong { font-weight: bold; }
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
 background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
-height:244px;
+height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
 
@@ -145,6 +146,12 @@ z-index:10;
 			}
 				#content nav ul li a:hover{
 				color:#949494;
+				display:block;
+				background: url('../../images/index/link-right-h.png') bottom center no-repeat;
+				}
+				#content nav ul li a span:hover{
+				display:block;
+				background: url('../../images/index/link-lefts-h.png') bottom center no-repeat;
 				}
 			#content nav ul li a.active{
 			display:block;
@@ -177,29 +184,58 @@ z-index:10;
 				background: url('../../images/index/menu-right-h.png') top right no-repeat;
 				}
 				
-#content nav ul li a{
-display:block;
-background: url('../../images/index/link-right-h.png') bottom left no-repeat;
-}
-#content nav ul li a span{
-display:block;
-padding-right:8px;
-background: url('../../images/index/link-lefts-h.png') bottom right no-repeat;
-}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 4. Forms ------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-#eleve_form {
-background-color:#f6f6f6;
+/* ------------------------------------- Contenu global --*/
+#content-form {
+margin-top:20px;
+}
+	#content-form h1 {
+	color:#5c5b5b;
+	font:bold 31px "Lucida Bright", Georgia, serif;
+	margin-top:25px;
+	margin-bottom:18px;
+	}
+	#content-form label {
+	color:#878787;
+	font-weight:bold;
+	float: left;		
+	display:block;
+	line-height:26px;
+	width:107px;
+	}
 
+#content-form input {
+background: url('../../images/index/input.png') no-repeat;
+border:0;
+height:27px;
+margin-bottom:6px;
+width:200px;
+padding-left:5px;
+}
+	#content-form input:hover {
+	background: url('../../images/index/input-h.png') no-repeat;
+	}
+	#content-form input:focus {
+	background: url('../../images/index/input-f.png') no-repeat;
+	}
+
+/* ------------------------------------- Formulaire élève --*/
+#eleve_form {
+float:left;
+margin-right:150px;
+margin-left:65px;
+}
+#correcteur_form {
+float:left;
 }
 
-
-
-
-
-
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+footer {
+clear:both
 
 
 
