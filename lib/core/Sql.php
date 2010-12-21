@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 /**
@@ -21,7 +21,7 @@
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://devoirminute.com
+ * @link     http://edevoir.com
  *
  */
 class Sql
@@ -171,7 +171,7 @@ class Sql
 	 *
 	 * @param string $Query la requête à effectuer
 	 * @param string $KeyColumn la colonne qui doit servir de clé
-	 * @param string $ValueColumn la colonne qui doit servir de valeur. Si non spécifiée, l'intégralité du tuple sert de valeur.
+	 * @param string $ValueColumn la colonne qui doit servir de valeur. Si non spécifiée, l'intégralité du tuple (moins la clé) sert de valeur.
 	 *
 	 * @return array le résultat de la requête.
 	 */
@@ -183,7 +183,9 @@ class Sql
 		{
 			if(is_null($ValueColumn))
 			{
-				$R[$RTuple[$KeyColumn]] = $RTuple;
+				$Key = $RTuple[$KeyColumn];
+				unset($RTuple[$KeyColumn]);
+				$R[$Key] = $RTuple;
 			}
 			else
 			{

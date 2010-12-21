@@ -66,4 +66,22 @@ abstract class ExerciceAbstractController extends AbstractController
 			}
 		}
 	}
+	
+	/**
+	 * Vérifie que l'exercice associé à la page est dans un des statuts tolérés.
+	 * Sinon, affiche un message d'erreur et redirige vers l'accueil de l'exercice.
+	 * 
+	 * @param array $Status la lsite des status possibles
+	 * @param string $Message le message à afficher en cas d'erreur (type warning)
+	 * 
+	 * @return uniquement si autorisé, sinon redirect.
+	 */
+	protected function canAccess(array $Status, $Message)
+	{
+		if(!in_array($this->Exercice->Statut,$Status))
+		{
+			$this->View->setMessage("warning", $Message);
+			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);
+		}
+	}
 }

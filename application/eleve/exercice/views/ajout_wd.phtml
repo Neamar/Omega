@@ -1,1 +1,67 @@
+<?php 
+$Possibilites = array(
+	'again'=>"Je veux continuer à ajouter des fichiers. L'exercice reste inacessible aux correcteurs.",
+	'resume'=>"J'ai terminé d'ajouter des fichiers. J'attends maintenant les offres des correcteurs.");
+
+//20Mo max.
+$SizeLimit = '<input type="hidden" name="MAX_FILE_SIZE" value="' . (20*1048576) . '" />'; 
+?>
+
 <h1>Ajout de fichiers à l'exercice</h1>
+
+<?php
+echo $this->Doc_box('eleve','ajout',"Besoin d'aide pour compléter ce formulaire ?");
+?>
+<div id="tabs">
+	<ul>
+		<li><a href="#ajout-noscript">Ajout sans Javascript</a></li>
+		<li><a href="#ajout-basique">Ajout basique</a></li>
+		<li><a href="#ajout-complet">Ajout complet</a></li>
+	</ul>
+	<div id="ajout-noscript">
+		<p>Cet onglet sert aux personnes ayant désactivées Javascript.<br />
+		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>
+		
+		<?php
+			echo $this->Doc_box('eleve','fichiers',"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
+			Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.');
+		?>
+		
+		<p>Ne remplissez que les champs nécessaires, puis cliquez sur envoyer.</p>
+		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
+		<?php 
+		echo $SizeLimit . "\n";
+		for($i=0; $i < $this->NbFilesUpload; $i++) {?>
+			<input type="file" name="fichiers[]" id="fichiers-noscript" accept="<?php echo EXTENSIONS ?>" /><br />
+		<?php }?>
+		
+		<p>Que faire ensuite ?</p>
+		<?php 
+		echo $this->Form_radio('next_page',$Possibilites, 'resume','noscript_');
+		echo $this->Form_submit('upload-noscript','Envoyer les fichiers')
+		?>
+		</form>
+	</div>
+	<div id="ajout-basique">
+		<p>Cet onglet sert aux personnes ne disposant pas de Flash ou étant bloquée par un pare-feu.<br />
+		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>
+
+		<p>Cet onglet permet d'ajouter des fichiers à votre exercice.<br />
+		Sélectionnez vos fichiers un par un, puis cliquez sur Envoyer.</p>
+		
+		<form method="post" enctype="multipart/form-data" action="">
+		<?php echo $SizeLimit . "\n";?>
+			<input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />
+			
+			<p>Que faire ensuite ?</p>
+		<?php 
+		echo $this->Form_radio('next_page',$Possibilites, 'resume','noscript_');
+		echo $this->Form_submit('upload','Envoyer les fichiers')
+		?>
+		</form>
+	</div>
+	<div id="ajout-complet">
+		<p>Non implémenté pour l'instant.</p>
+	</div>
+</div>
+

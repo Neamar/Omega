@@ -17,7 +17,7 @@
  */
  
 /**
- * Communication extérieures
+ * Communications extérieures
  *
  * @category Default
  * @package  Root

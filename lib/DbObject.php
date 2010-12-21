@@ -193,7 +193,7 @@ abstract class DbObject
 	 */
 	public function update()
 	{
-		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, self::filterID($this->ID));
+		$Query = static::makeQuery(static::SQL_QUERY, static::TABLE_NAME, $this->getFilteredId());
 		$Updated = Sql::singleQuery($Query, get_called_class());
 		
 		foreach($Updated as $Col=>$Val)

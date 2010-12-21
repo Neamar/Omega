@@ -164,6 +164,53 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function ajoutAction_wd()
 	{
+		$this->canAccess(array('VIERGE'), "Vous ne pouvez plus ajouter de fichiers sur cet exercice.");
+		
 		$this->View->setTitle("Ajout de fichiers à l'exercice ");
+		$this->View->addScript('/public/js/jquery-multiupload.min.js');
+		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
+		
+		//Le nombre maximum de fichiers que l'on pourra envoyer depuis la page :
+		//10, ou moins si la limite des 25 est proche.
+		$NbFichiersPresents = $this->Exercice->getFilesCount(array('SUJET'));
+		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
+
+		if(isset($_POST['upload_noscript']) || isset($_POST['upload']))
+		{
+			//L'option "continuer" est cochée :
+			if($_POST['next_page']=='resume')
+			{
+				//Vérifier que l'on peut passer à l'étape suivante.
+				$CanForward = true;
+				
+				//Si on veut passer à la suite sans aucun fichier :
+				if($NbFichiersPresents==0)
+				{
+					if($this->Exercice->InfosEleve == '')
+					{
+						$this->View->setMessage("error", "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
+						$CanForward = false;
+					}
+					else
+					{
+						$this->View->setMessage("warning", "Attention, vous avez validé cet exercice sans aucun fichier.<br />
+						Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
+						S'il s'agit d'une erreur, vous pouvez <a href='/eleve/annulation/" . $this->Exercice->Hash . "'>annuler l'exercice</a>.");
+					}
+				}
+				
+				if($CanForward)
+				{
+					$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+					
+					if(!$this->View->issetMeta('message'))
+					{
+						$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
+					}
+					
+					$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+				}
+			}
+		}
 	}
 }
