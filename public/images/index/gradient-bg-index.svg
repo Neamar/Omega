@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="200px"
+    height="200px"
+    version="1.0"
+    >
+	<style type="text/css">
+		.start {
+			stop-color: #ffb734;
+			stop-opacity: 1;
+		}
+		.step1 {
+			stop-color: #ffc14d;
+			stop-opacity: 1;
+		}
+		.end
+		{
+			stop-color: #feb229;
+			stop-opacity: 1;
+		}
+	</style>
+	<defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" class="start"/>
+            <stop offset="50%" class="step1"/>
+			<stop offset="100%" class="end"/>
+        </linearGradient>
+    </defs>
+    <rect x="0" y="0" fill="url(#gradient)" width="100%" height="100%" />
+</svg>

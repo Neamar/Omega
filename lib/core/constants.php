@@ -132,6 +132,12 @@ define('MIN_CORRECTEUR_TIMEOUT', 10);
 define('DELAI_FAQ', 7);
 
 /**
+ * Liste des extensions autorisées à l'upload.
+ * 
+ * @var string
+ */
+define('EXTENSIONS','gif|jpg|jpeg|png|txt|pdf|rtf|doc|docx');
+/**
  *  Nombre de jours après l'expiration avant impossibilité de faire une réclamation remboursée
  * 
  * @var int
@@ -157,7 +163,7 @@ define('MAX_EXERCICE_CREES', 10);
  * 
  * @var int
  */
-define('MAX_FICHIERS_EXERCICE', 3);
+define('MAX_FICHIERS_EXERCICE', 25);
 
 /**
  * Délai minimum (jours) entre deux virements

@@ -140,17 +140,17 @@ function ViewHelper_Form_select($name, array $values, $selected=null, array $arg
  * Génère un radio avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
- * @param array $values Un tableau associatif.
+ * @param array $values Un tableau associatif : la valeur, l'étiquette.
  * @param string selected la valeur sélectionnée par défaut
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_radio($name, array $values, $selected=null)
+function ViewHelper_Form_radio($name, array $values, $selected=null, $id_prefix='')
 {
 	$Return = '';
 	foreach($values as $value=>$caption)
 	{
-		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $value . '">' . $caption . "</label><br />\n";
+		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $id_prefix . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $id_prefix . $value . '">' . $caption . "</label><br />\n";
 	}
 	
 	return $Return;

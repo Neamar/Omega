@@ -44,6 +44,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->setTitle('Accueil exercice #');
 	}
 	
+	/**
+	 * Création d'un nouvel exercice
+	 */
 	public function creationAction()
 	{
 		$this->View->setTitle('Création d\'un exercice');
@@ -122,9 +125,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			else
 			{
+				$LongHash = Exercice::generateHash();
+				
 				$ToInsert = array
 				(
-					'Hash' => Exercice::generateHash(),
+					'Hash' => substr($LongHash,-6),
+					'LongHash' => $LongHash,
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
 					'_Creation' => 'NOW()',
@@ -141,12 +147,18 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if($_POST['auto_accept'] > 0)
 				{
-					$ToInsert['Autoaccept'] = $_POST['auto_accept'];
+					$ToInsert['AutoAccept'] = $_POST['auto_accept'];
 				}
 				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
-					$this->redirect('/eleve/exercice/index/' . $ToInsert['Hash']);
+					//Créer les dossiers contenant les images :
+					mkdir(PATH . '/public/exercices/' . $LongHash);
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
+					
+					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
 				{
@@ -154,6 +166,147 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Ajoute des fichiers à un exercice si possible.
+	 */
+	public function ajoutAction_wd()
+	{
+		$this->canAccess(array('VIERGE'), "Vous ne pouvez plus ajouter de fichiers sur cet exercice.");
 		
+		$this->View->setTitle("Ajout de fichiers à l'exercice ");
+		$this->View->addScript('/public/js/jquery-multiupload.min.js');
+		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
+		
+		//Le nombre maximum de fichiers que l'on pourra envoyer depuis la page :
+		//10, ou moins si la limite des 25 est proche.
+		$NbFichiersPresents = $this->Exercice->getFilesCount(array('SUJET'));
+		$NbFichiersAjoutes = 0;
+		
+		//La taille maximale du formulaire (20Mo) :
+		$this->View->SizeLimit = 20*1048576;
+
+		if(isset($_POST['upload-noscript']) || isset($_POST['upload']))
+		{
+			$NbFiles = count($_FILES['fichiers']['name']);
+			$Messages = array();
+			$Extensions = explode('|',EXTENSIONS);
+			
+			//Ajout des messages
+			for($i=0;$i<$NbFiles;$i++)
+			{
+				if($_FILES['fichiers']['name'][$i]=='')
+				{
+					//Fichier vide envoyé en mode no-script.
+					//À ignorer.
+				}
+				elseif($_FILES['fichiers']['error'][$i] > 0)
+				{
+					//Erreur côté http
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+				}
+				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
+				{
+					//Dépassement de la taille maximale
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
+				}
+				else
+				{
+					//Vérification de l'extension
+					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
+					if (!in_array($ExtensionFichier,$Extensions))
+					{
+						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+					}
+					else
+					{
+						//Enregistrement du fichier.
+						$URL = '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						
+						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . $URL))
+						{
+							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
+						}
+						else
+						{
+							$ToInsert = array
+							(
+								'Exercice' => $this->Exercice->ID,
+								'Type' => 'SUJET',
+								'URL' => $URL,
+								'ThumbURL' => 'TODO',
+								'NomUpload' => $_FILES['fichiers']['name'][$i],
+							);
+							
+							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
+							{
+								//Erreur à l'enregistrement en base de données
+								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
+							}
+							else
+							{
+								$NbFichiersPresents++;
+								$NbFichiersAjoutes++;
+							}
+						}
+					}					
+				}
+			}
+			
+			if($NbFichiersAjoutes>0)
+			{
+				$Corrects = (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.";
+			}
+			else
+			{
+				$Corrects = "Aucun fichier ajouté.";
+			}
+			
+			if(count($Messages)!=0)
+			{
+				$Messages[] = $Corrects;
+				$this->View->setMessage("error", implode("<br />\n",$Messages));
+			}
+			elseif($_POST['next_page']!='resume')
+			{
+				$this->View->setMessage("info", $Corrects);
+			}
+			else
+			{
+				//Vérifier que l'on peut passer à l'étape suivante.
+				$CanForward = true;
+				
+				//Si on veut passer à la suite sans aucun fichier :
+				if($NbFichiersPresents==0)
+				{
+					if($this->Exercice->InfosEleve == '')
+					{
+						$this->View->setMessage("error", "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
+						$CanForward = false;
+					}
+					else
+					{
+						$this->View->setMessage("warning", "Attention, vous avez validé cet exercice sans aucun fichier.<br />
+						Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
+						S'il s'agit d'une erreur, vous pouvez <a href='/eleve/annulation/" . $this->Exercice->Hash . "'>annuler l'exercice</a>.");
+					}
+				}
+				
+				if($CanForward)
+				{
+					$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+					
+					if(!$this->View->issetMeta('message'))
+					{
+						$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
+					}
+					
+					$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+				}
+			}
+		}
+		
+		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
 	}
 }

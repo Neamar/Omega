@@ -1,3 +1,5 @@
 .settings/*
 .buildpath
 .project
+data/logs/*
+public/exercices/*

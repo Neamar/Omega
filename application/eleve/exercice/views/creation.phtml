@@ -53,7 +53,7 @@ echo $this->Form_inputLabel('rendu_date', 'Date de rendu',
 		'value'=> date('d/m/Y',time()+3600*24*7),
 		'placeholder'=>'JJ/MM/AAAA'
 	));
-echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . "h<br />\n";
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve','champ_rendu') . "<br />\n";
 
 //Annulation automatique
 $HeureData['value'] = 18;
@@ -62,12 +62,13 @@ echo $this->Form_inputLabel('annulation_date', 'Date d\'annulation',
 		'value'=> date('d/m/Y',time()+3600*24*3),
 		'placeholder'=>'JJ/MM/AAAA'
 	));
-echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . "h<br />\n";
+echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_input('eleve','champ_annulation') . "<br />\n";
 ?>
 
 <h3>Informations complémentaires</h3>
 <?php
 echo $this->Form_textareaLabelBr('infos','Informations complémentaires');
+echo $this->Doc_input('eleve','champ_infos') . "\n";
 ?>
 
 <h3>Options avancées</h3>
