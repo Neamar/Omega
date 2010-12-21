@@ -26,7 +26,6 @@ a img, hr {  border: none; }
 em { font-style: italic; } /* autres */ 
 strong { font-weight: bold; } 
 
-
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1. Top Barre --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -54,6 +53,7 @@ padding-bottom:40px;
 		}
 
 #top ul {
+position:relative;
 float:right;
 padding-right:50px;
 }
@@ -66,6 +66,15 @@ padding-right:50px;
 	#top ul li a:hover{
 	color:#ffc000;
 	}
+		#top ul li a:hover:before{
+		position:absolute;
+		content: "";
+		top:-18px;
+		height:10px;
+		width:19px;
+		background: url('../../images/index/curseur2.png') top left scroll no-repeat;
+		}
+	
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 2. Logo -------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -115,29 +124,75 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:400px;
+left:350px;
 z-index:10;
 }
-
-#content nav ul{
-font-weight:bold;
-padding-top:15px;
-}
-
-#content nav ul li{
-display:inline;
-font-size:18px;
-padding-right:20px;
-}
-
-#content nav ul li a{
-color:#777777;
-}
-	#content nav ul li a:hover{
-	color:#949494;
+	#content nav ul{
+	position:relative;
+	padding-top:16px;
 	}
+		#content nav ul li{
+		float:left;
+		padding-right:20px;
+		font-weight:bold;
+		text-transform:uppercase;
+		text-shadow: #fff 1px 1px 1px;
+		}
 
+			#content nav ul li a{
+			color:#6e6e6e;
+			line-height:28px;
+			}
+				#content nav ul li a:hover{
+				color:#949494;
+				}
+			#content nav ul li a.active{
+			display:block;
+			height:29px;
+			color:#fff;
+			text-shadow: #fd6b0e 1px 1px 1px;
+			background: url('../../images/index/menu-left.png') top left no-repeat;
+			text-decoration:none;
+			padding-left:8px;
+			}
+				#content nav ul li a.active:before{
+				position:absolute;
+				top:-3px;
+				content: "";
+				height:10px;
+				width:19px;
+				background: url('../../images/index/curseur.png') top left scroll no-repeat;
+				}
+				#content nav ul li a.active:hover{
+				background: url('../../images/index/menu-left-h.png') top left no-repeat;
+				}
+				
+			#content nav ul li a.active span{
+			display:block;
+			height:29px;
+			padding-right:8px;
+			background: url('../../images/index/menu-right.png') top right no-repeat;
+			}
+				#content nav ul li a.active span:hover {
+				background: url('../../images/index/menu-right-h.png') top right no-repeat;
+				}
+				
+#content nav ul li a{
+display:block;
+background: url('../../images/index/link-right-h.png') bottom left no-repeat;
+}
+#content nav ul li a span{
+display:block;
+padding-right:8px;
+background: url('../../images/index/link-lefts-h.png') bottom right no-repeat;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 4. Forms ------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#eleve_form {
+background-color:#f6f6f6;
 
+}
 
 
 
