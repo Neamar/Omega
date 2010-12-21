@@ -10,7 +10,7 @@ $SizeLimit = '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->SizeLi
 <h1>Ajout de fichiers à l'exercice</h1>
 
 <?php
-echo $this->Doc_box('eleve','ajout',"Besoin d'aide pour compléter ce formulaire ?");
+echo $this->Doc_box('eleve', 'ajout', "Besoin d'aide pour compléter ce formulaire ?");
 ?>
 <div id="tabs">
 	<ul>
@@ -23,22 +23,29 @@ echo $this->Doc_box('eleve','ajout',"Besoin d'aide pour compléter ce formulaire
 		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>
 		
 		<?php
-			echo $this->Doc_box('eleve','fichiers',"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
-			Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.');
+			echo $this->Doc_box(
+				'eleve',
+				'fichiers',
+				"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
+				Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
+			);
 		?>
 		
 		<p>Ne remplissez que les champs nécessaires, puis cliquez sur envoyer.</p>
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
 		<?php 
 		echo $SizeLimit . "\n";
-		for($i=0; $i < $this->NbFilesUpload; $i++) {?>
+		for($i=0; $i < $this->NbFilesUpload; $i++)
+		{?>
 			<input type="file" name="fichiers[]" id="fichiers-noscript" accept="<?php echo EXTENSIONS ?>" /><br />
-		<?php }?>
+		<?php
+		}
+		?>
 		
 		<p>Que faire ensuite ?</p>
 		<?php 
-		echo $this->Form_radio('next_page',$Possibilites, 'resume','script_');
-		echo $this->Form_submit('upload-noscript','Envoyer les fichiers')
+		echo $this->Form_radio('next_page', $Possibilites, 'resume', 'script_');
+		echo $this->Form_submit('upload-noscript', 'Envoyer les fichiers')
 		?>
 		</form>
 	</div>
@@ -55,8 +62,8 @@ echo $this->Doc_box('eleve','ajout',"Besoin d'aide pour compléter ce formulaire
 			
 			<p>Que faire ensuite ?</p>
 		<?php 
-		echo $this->Form_radio('next_page',$Possibilites, 'resume','noscript_');
-		echo $this->Form_submit('upload','Envoyer les fichiers')
+		echo $this->Form_radio('next_page', $Possibilites, 'resume', 'noscript_');
+		echo $this->Form_submit('upload', 'Envoyer les fichiers')
 		?>
 		</form>
 	</div>

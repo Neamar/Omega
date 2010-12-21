@@ -12,7 +12,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 //Soit on est déjà connecté et tout va bien
@@ -27,13 +27,13 @@ else
 {//Sinon on dégage sauf si on demande une page accessible hors ligne.
 	$Allowed = array('inscription','connexion','validation');
 	
-	if(in_array($_GET['view'],$Allowed))
+	if(in_array($_GET['view'], $Allowed))
 	{
 		return true;
 	}
 	else
 	{
-		Debug::redirect('/eleve/connexion',302);
+		Debug::redirect('/eleve/connexion', 302);
 	}
 }
 

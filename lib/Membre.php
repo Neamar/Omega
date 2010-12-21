@@ -29,7 +29,7 @@
 class Membre extends DbObject
 {
 	const TABLE_NAME = 'Membres';
-	public static $_Props;
+	public static $Props;
 	
 		protected $Foreign = array(
 		'Createur'=>'Eleve',
@@ -41,7 +41,7 @@ class Membre extends DbObject
 	);
 	
 	public $Mail;
-	private $Pass;
+	//private $Pass;
 	protected $Points;
 	public $Creation;
 	public $Connexion;
@@ -174,4 +174,4 @@ class Membre extends DbObject
 	}
 }
 
-Membre::$_Props = init_props('Membre');
+Membre::$Props = initProps('Membre');

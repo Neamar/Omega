@@ -33,7 +33,7 @@ abstract class IndexAbstractController extends AbstractController
 	 * @param array $Data les données envoyées
 	 * 
 	 */
-	protected function create_account(array $Datas)
+	protected function createAccount(array $Datas)
 	{
 		if(!filter_var($Datas['email'], FILTER_VALIDATE_EMAIL))
 		{
@@ -75,7 +75,7 @@ abstract class IndexAbstractController extends AbstractController
 				$ID = SQL::lastId();
 
 				
-				if(!$this->create_account_special($Datas))
+				if(!$this->createAccountSpecial($Datas))
 				{
 					Sql::rollback();
 					$this->View->setMessage("error", "Impossible de vous enregistrer. Veuillez réessayer plus tard.");
@@ -99,7 +99,7 @@ abstract class IndexAbstractController extends AbstractController
 	 * 
 	 * @return bool true en succès, false en échec.
 	 */
-	protected abstract function create_account_special(array $Datas);
+	protected abstract function createAccountSpecial(array $Datas);
 	
 	/**
 	 * Connecte la personne en tant que $Type (Eleve, Correcteur) si ses identifiants sont corrects.

@@ -30,7 +30,7 @@ class Exercice extends DbObject
 	const TABLE_NAME = 'Exercices';
 	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE Hash="%ID%"';
 	
-	public static $_Props;
+	public static $Props;
 	
 	/**
 	 * Génère un hash pour l'insertion d'un exercice.
@@ -51,7 +51,7 @@ class Exercice extends DbObject
 	 */
 	public static function filterID($ID=null)
 	{
-		return preg_replace('`[^a-zA-Z0-9]`','', $ID);
+		return preg_replace('`[^a-zA-Z0-9]`', '', $ID);
 	}
 	
 	protected $Foreign = array(
@@ -235,4 +235,4 @@ class Exercice extends DbObject
 	}
 }
 
-Exercice::$_Props = init_props('Exercice');
+Exercice::$Props = initProps('Exercice');

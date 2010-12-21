@@ -120,6 +120,6 @@ class Event
 	private static function _buildEvents()
 	{
 		$oClass = new ReflectionClass('Event');
-		self::$_Events = $oClass->getConstants ();
+		self::$_Events = $oClass->getConstants();
 	}
 }

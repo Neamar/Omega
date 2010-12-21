@@ -24,7 +24,7 @@
  * 
  */
 
-$File = str_replace('\\','/',__FILE__);
+$File = str_replace('\\', '/', __FILE__);
 define('PATH', substr($File, 0, strrpos($File, '/')));
 include PATH . '/lib/core/constants.php';
 include PATH . '/lib/core/OO2FS.php';

@@ -26,7 +26,7 @@
  */
 class Documentation_IndexController extends AbstractController
 {
-	private static $Pages = array
+	private static $_Pages = array
 	(
 		'foo' => array
 		(
@@ -54,9 +54,9 @@ class Documentation_IndexController extends AbstractController
 	 */
 	public static function getTitle($section, $page)
 	{
-		if(isset(self::$Pages[$section][$page]))
+		if(isset(self::$_Pages[$section][$page]))
 		{
-			return self::$Pages[$section][$page];
+			return self::$_Pages[$section][$page];
 		}
 		else
 		{

@@ -4,7 +4,7 @@
 <?php //TODO : getRaise() ?>
 
 <?php 
-echo $this->Doc_box('eleve','ajout','Besoin d\'aide pour compléter ce formulaire ?');
+echo $this->Doc_box('eleve', 'ajout', 'Besoin d\'aide pour compléter ce formulaire ?');
 ?>
 <form id="form_creation-exercice" method="post" action="">
 <p>Merci de remplir les champs suivants. L'envoi de fichiers se fera à la prochaine étape.</p>
@@ -12,26 +12,29 @@ echo $this->Doc_box('eleve','ajout','Besoin d\'aide pour compléter ce formulair
 <h3>Classe et matières</h3>
 <?php
 //Classe
-echo $this->Form_selectLabelBr('classe','Niveau de l\'exercice', $this->Classes, $_SESSION['Eleve']->Classe);
+echo $this->Form_selectLabelBr('classe', 'Niveau de l\'exercice', $this->Classes, $_SESSION['Eleve']->Classe);
 
 //Section
-echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
+echo $this->Form_inputLabelBr(
+	'section',
+	'Section (si nécessaire)',
 	array(
 		'placeholder'=>'S, ES, L...',
 		'value'=>$_SESSION['Eleve']->Section
-	));
+	)
+);
 
 //Matière
-echo $this->Form_selectLabelBr('matiere','Matière', $this->Matieres);
+echo $this->Form_selectLabelBr('matiere', 'Matière', $this->Matieres);
 ?>
 
 <h3>Demande</h3>
 <?php
 //Type de l'exercice
-echo $this->Form_selectLabelBr('type','Type de l\'exercice', $this->Types);
+echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 
 //Type de la demande
-echo $this->Form_selectLabelBr('demande','Demande', $this->Demandes);
+echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes);
 ?>
 
 <h3>Dates</h3>
@@ -48,27 +51,33 @@ $HeureData = array(
 
 //Rendu
 $HeureData['value'] = 21;
-echo $this->Form_inputLabel('rendu_date', 'Date de rendu',
+echo $this->Form_inputLabel(
+	'rendu_date',
+	'Date de rendu',
 	array(
-		'value'=> date('d/m/Y',time()+3600*24*7),
+		'value'=> date('d/m/Y', time()+3600*24*7),
 		'placeholder'=>'JJ/MM/AAAA'
-	));
-echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve','champ_rendu') . "<br />\n";
+	)
+);
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_rendu') . "<br />\n";
 
 //Annulation automatique
 $HeureData['value'] = 18;
-echo $this->Form_inputLabel('annulation_date', 'Date d\'annulation',
+echo $this->Form_inputLabel(
+	'annulation_date',
+	'Date d\'annulation',
 	array(
-		'value'=> date('d/m/Y',time()+3600*24*3),
+		'value'=> date('d/m/Y', time()+3600*24*3),
 		'placeholder'=>'JJ/MM/AAAA'
-	));
-echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_input('eleve','champ_annulation') . "<br />\n";
+	)
+);
+echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_annulation') . "<br />\n";
 ?>
 
 <h3>Informations complémentaires</h3>
 <?php
-echo $this->Form_textareaLabelBr('infos','Informations complémentaires');
-echo $this->Doc_input('eleve','champ_infos') . "\n";
+echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires');
+echo $this->Doc_input('eleve', 'champ_infos') . "\n";
 ?>
 
 <h3>Options avancées</h3>
@@ -77,8 +86,8 @@ echo $this->Doc_input('eleve','champ_infos') . "\n";
 
 	<div id="div_auto-accept">
 		<?php 
-			echo $this->Form_inputLabel('auto_accept', 'Valeur maximale d\'acceptation automatique',array('value'=>0));
-			echo $this->Doc_input('eleve','auto_accept') . "\n";
+			echo $this->Form_inputLabel('auto_accept', 'Valeur maximale d\'acceptation automatique', array('value'=>0));
+			echo $this->Doc_input('eleve', 'auto_accept') . "\n";
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
 	</div>
@@ -87,6 +96,6 @@ echo $this->Doc_input('eleve','champ_infos') . "\n";
 <h3>Envoi du formulaire</h3>
 <p>Tout est prêt ? Cliquez sur le bouton ci-dessous pour envoyer les fichiers constituant l'exercice.</p>
 <?php
-echo $this->Form_submit('creation-exercice',"Créer l'exercice");
+echo $this->Form_submit('creation-exercice', "Créer l'exercice");
 ?>
 </form>
