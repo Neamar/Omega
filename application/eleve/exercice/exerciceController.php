@@ -125,9 +125,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			else
 			{
+				$LongHash = Exercice::generateHash();
+				
 				$ToInsert = array
 				(
-					'Hash' => Exercice::generateHash(),
+					'Hash' => substr($LongHash,-6),
+					'LongHash' => $LongHash,
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
 					'_Creation' => 'NOW()',
@@ -144,11 +147,17 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if($_POST['auto_accept'] > 0)
 				{
-					$ToInsert['Autoaccept'] = $_POST['auto_accept'];
+					$ToInsert['AutoAccept'] = $_POST['auto_accept'];
 				}
 				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
+					//Créer les dossiers contenant les images :
+					mkdir(PATH . '/public/exercices/' . $LongHash);
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
+					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
@@ -173,12 +182,64 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		//Le nombre maximum de fichiers que l'on pourra envoyer depuis la page :
 		//10, ou moins si la limite des 25 est proche.
 		$NbFichiersPresents = $this->Exercice->getFilesCount(array('SUJET'));
-		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
+		$NbFichiersAjoutes = 0;
+		
+		//La taille maximale du formulaire (20Mo) :
+		$this->View->SizeLimit = 5*1048576;
 
-		if(isset($_POST['upload_noscript']) || isset($_POST['upload']))
+		if(isset($_POST['upload-noscript']) || isset($_POST['upload']))
 		{
-			//L'option "continuer" est cochée :
-			if($_POST['next_page']=='resume')
+			$NbFiles = count($_FILES['fichiers']['name']);
+			$Messages = array();
+			$Extensions = explode('|',EXTENSIONS);
+			
+			//Ajout des messages
+			for($i=0;$i<$NbFiles;$i++)
+			{
+				if($_FILES['fichiers']['name'][$i]=='')
+				{
+					//Fichier vide envoyé en mode no-script.
+					//À ignorer.
+				}
+				elseif($_FILES['fichiers']['error'][$i] > 0)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+				}
+				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
+				}
+				else
+				{
+					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
+					if (!in_array($ExtensionFichier,$Extensions))
+					{
+						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+					}
+					else
+					{
+						if(move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier))
+						{
+							$NbFichiersPresents++;
+							$NbFichiersAjoutes++;
+						}
+						else
+						{
+							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
+						}
+					}					
+				}
+			}
+			if(count($Messages)!=0)
+			{
+				$this->View->setMessage("error", implode("<br />\n",$Messages));
+			}
+			elseif($_POST['next_page']!='resume')
+			{
+				$this->View->setMessage("info", (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.<br />
+				N'oubliez pas de cocher la case « J'ai terminé d'ajouter des fichiers » une fois l'envoi terminé !");
+			}
+			else
 			{
 				//Vérifier que l'on peut passer à l'étape suivante.
 				$CanForward = true;
@@ -212,5 +273,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 			}
 		}
+		
+		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
 	}
 }

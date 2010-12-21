@@ -34,10 +34,12 @@ class Exercice extends DbObject
 	
 	/**
 	 * Génère un hash pour l'insertion d'un exercice.
+	 * 
+	 * @return string(40) un hash.
 	 */
 	public static function generateHash()
 	{
-		return substr(sha1('EX_' . uniqid()),-6);	
+		return sha1('EX_' . uniqid());	
 	}
 	
 	/**
@@ -62,6 +64,7 @@ class Exercice extends DbObject
 	);
 	
 	public $Hash;
+	public $LongHash;
 	public $Createur;
 	public $Creation;
 	public $TimeoutEleve;
