@@ -125,7 +125,7 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:350px;
+left:385px;
 z-index:10;
 }
 	#content nav ul{
@@ -145,7 +145,7 @@ z-index:10;
 			line-height:28px;
 			}
 				#content nav ul li a:hover{
-				color:#949494;
+				color:#898989;
 				display:block;
 				background: url('../../images/index/link-right-h.png') bottom center no-repeat;
 				}
@@ -227,9 +227,27 @@ float:left;
 margin-right:150px;
 margin-left:65px;
 }
+	#eleve_form h1 {
+	background: url('../../images/index/eleve.png') left no-repeat;
+	padding-left:22px;
+	}
+	#connexion-eleve {
+	margin-left:9px;
+	}
+
 #correcteur_form {
 float:left;
 }
+	#correcteur_form h1 {
+	font-size:29px;
+	background: url('../../images/index/correct.png') left no-repeat;
+	padding-left:22px;
+	}
+	#connexion-correcteur {
+	margin-left:15px;
+	}
+/* ------------------------------------- Bouton d'envoie --*/
+
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
