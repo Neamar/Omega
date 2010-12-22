@@ -331,7 +331,7 @@ class View
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
-		return $this->Html_List($RibbonParts);
+		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
 	}
 
 	
