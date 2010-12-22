@@ -5,16 +5,22 @@
 <form id="form_connexion-eleve" method="post" action="">
 
 <?php
-echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
 	array(
 		'type'=>'email',
 		'placeholder'=>'nom@fai.fr',
-	));
-echo $this->Form_inputLabelBr('password', 'Votre mot de passe',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
 	array(
 		'type'=>'password',
-	));
-echo $this->Form_submit('connexion-eleve',"Connexion");
+	)
+);
+echo $this->Form_submit('connexion-eleve', "Connexion");
 ?>
 </form>
 

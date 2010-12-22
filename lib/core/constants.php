@@ -136,7 +136,7 @@ define('DELAI_FAQ', 7);
  * 
  * @var string
  */
-define('EXTENSIONS','gif|jpg|jpeg|png|txt|pdf|rtf|doc|docx');
+define('EXTENSIONS', 'gif|jpg|jpeg|png|txt|pdf|rtf|doc|docx');
 /**
  *  Nombre de jours après l'expiration avant impossibilité de faire une réclamation remboursée
  * 

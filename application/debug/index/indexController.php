@@ -83,6 +83,6 @@ class Debug_IndexController extends AbstractController
 	{
 		$this->View->setTitle('Exemple de contenu HTML');
 		
-		$this->View->setMessage("error", "Texte du message d'erreur","foo/bar");
+		$this->View->setMessage("error", "Texte du message d'erreur", "foo/bar");
 	}
 }

@@ -32,7 +32,7 @@ class Eleve extends Membre
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 
 	public $Classe;
 	public $Section;
@@ -73,11 +73,13 @@ class Eleve extends Membre
 	 */
 	public function getCreated()
 	{
-		return SQL::singleColumn('SELECT COUNT(*) AS Nb
-		FROM Exercices
-		WHERE Createur=' . $this->getFilteredId() . '
-		AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")', $Nb);	
+		return SQL::singleColumn(
+			'SELECT COUNT(*) AS Nb
+			FROM Exercices
+			WHERE Createur=' . $this->getFilteredId() . '
+			AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")', $Nb
+		);	
 	}
 }
 
-Eleve::$_Props = init_props('Eleve');
+Eleve::$Props = initProps('Eleve');

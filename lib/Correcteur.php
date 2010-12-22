@@ -32,7 +32,7 @@ class Correcteur extends Membre
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 
 	public $Siret;
 	public $SiretOK;
@@ -54,10 +54,12 @@ class Correcteur extends Membre
 	 */
 	public function getBooked()
 	{
-		return SQL::singleColumn('SELECT COUNT(*) AS Nb
-		FROM Exercices
-		WHERE Correcteur=' . $this->getFilteredId() . '
-		AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")', $Nb);	
+		return SQL::singleColumn(
+			'SELECT COUNT(*) AS Nb
+			FROM Exercices
+			WHERE Correcteur=' . $this->getFilteredId() . '
+			AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")', $Nb
+		);	
 	}
 }
-Correcteur::$_Props = init_props('Correcteur');
+Correcteur::$Props = initProps('Correcteur');

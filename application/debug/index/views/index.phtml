@@ -1,10 +1,12 @@
 <?php 
-echo $this->Html_listAnchor(array(
-	'/debug/session' => 'Données session',
-	'/debug/sessionStruct' => 'Structure des données session',
-	'/debug/server' => 'Données serveur',
-	'/debug/page' => 'Structure par défaut d\'une page.',
-));
+echo $this->Html_listAnchor(
+	array(
+		'/debug/session' => 'Données session',
+		'/debug/sessionStruct' => 'Structure des données session',
+		'/debug/server' => 'Données serveur',
+		'/debug/page' => 'Structure par défaut d\'une page.',
+	)
+);
 
 echo UPLOAD_ERR_NO_FILE ;
 echo UPLOAD_ERR_INI_SIZE;

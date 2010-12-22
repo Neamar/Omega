@@ -23,9 +23,9 @@
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_list(array $Items, $Type='ul')
+function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 {
-	$R = '<' . $Type . ">\n";
+	$R = '<' . $Type . ($Id==''?'':' id="' . $Id . '"') . ">\n";
 	foreach($Items as $Item)
 	{
 		$R .= '	<li>' . $Item . "</li>\n";

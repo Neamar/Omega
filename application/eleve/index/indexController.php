@@ -49,7 +49,7 @@ class Eleve_IndexController extends IndexAbstractController
 		if(isset($_SESSION['Eleve']))
 		{
 			unset($_SESSION['Eleve']);
-			$this->View->setMessage("info", "Vous vous êtes déconnecté.",'eleve/deconnexion');
+			$this->View->setMessage("info", "Vous vous êtes déconnecté.", 'eleve/deconnexion');
 		}
 		
 		if(isset($_POST['connexion-eleve']))
@@ -70,7 +70,7 @@ class Eleve_IndexController extends IndexAbstractController
 					}
 					else
 					{
-						$this->View->setMessage("infos","Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
+						$this->View->setMessage("infos", "Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
 						$this->redirect('/eleve/');
 					}
 				}
@@ -94,12 +94,12 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.",'eleve/validation');
+			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
 		}
 		
 		if(isset($_POST['inscription-eleve']))
 		{
-			$ID = $this->create_account($_POST);
+			$ID = $this->createAccount($_POST);
 			if($ID != FAIL)
 			{
 				//Enregistrer le nouveau membre et le rediriger vers la page de connexion
@@ -107,7 +107,7 @@ class Eleve_IndexController extends IndexAbstractController
 					'mail'=>$_POST['email'],
 					'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 				);
-				External::template_mail($_POST['email'], '/eleve/validation', $Datas);
+				External::templateMail($_POST['email'], '/eleve/validation', $Datas);
 				$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
 				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 				$this->redirect('/eleve/connexion');
@@ -124,7 +124,7 @@ class Eleve_IndexController extends IndexAbstractController
 	 * Redirige vers /eleve/connexion
 	 * 
 	 */
-	public function validationAction_wd()
+	public function validationActionWd()
 	{
 		if(!isset($this->Data['data'],$this->Data['mail']))
 		{
@@ -154,13 +154,13 @@ class Eleve_IndexController extends IndexAbstractController
 	/**
 	 * Gère l'enregistrement dans la table Eleves en particulier.
 	 * 
-	 * @see IndexAbstractController::create_account_special()
+	 * @see IndexAbstractController::createAccountSpecial()
 	 * 
 	 * @param array $Datas les données envoyées
 	 * 
 	 * @return bool true sur un succès.
 	 */
-	protected function create_account_special(array $Datas)
+	protected function createAccountSpecial(array $Datas)
 	{
 		$ToInsert = array(
 			'ID'=>Sql::lastId(),
