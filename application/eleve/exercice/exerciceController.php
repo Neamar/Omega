@@ -129,7 +129,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				$ToInsert = array
 				(
-					'Hash' => substr($LongHash, -6),
+					'Hash' => substr($LongHash, 0, 6),
 					'LongHash' => $LongHash,
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
@@ -152,11 +152,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
-					//Créer les dossiers contenant les images :
+					//Créer les dossiers contenant les images et les miniatures :
 					mkdir(PATH . '/public/exercices/' . $LongHash);
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation/Thumbs/');
 					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
@@ -211,10 +214,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					//Dépassement de la taille maximale
 					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
 				}
+				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+				}
 				else
 				{
 					//Vérification de l'extension
-					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
+					$ExtensionFichier = Util::Extension($_FILES['fichiers']['name'][$i]);
 					if (!in_array($ExtensionFichier, $Extensions))
 					{
 						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
@@ -235,7 +242,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								'Exercice' => $this->Exercice->ID,
 								'Type' => 'SUJET',
 								'URL' => $URL,
-								'ThumbURL' => 'TODO',
+								'ThumbURL' => Thumbnail::create(PATH . $URL),
 								'NomUpload' => $_FILES['fichiers']['name'][$i],
 							);
 							
@@ -311,5 +318,6 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}
 		
 		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
+		$this->View->NbFiles = $NbFichiersPresents;
 	}
 }
