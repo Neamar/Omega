@@ -12,6 +12,14 @@ $SizeLimit = '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->SizeLi
 <?php
 echo $this->Doc_box('eleve', 'ajout', "Besoin d'aide pour compléter ce formulaire ?");
 ?>
+
+<?php 
+if($this->NbFiles > 0)
+{?>
+<p>Vous avez déjà envoyé <?php echo $this->NbFiles; ?> fichier<?php echo ($this->NbFiles==1?'':'s') ?> pour cet exercice.</p>
+<?php 
+}
+?>
 <div id="tabs">
 	<ul>
 		<li><a href="#ajout-noscript">Ajout sans Javascript</a></li>
