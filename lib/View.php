@@ -317,7 +317,7 @@ class View
 			if($this->issetMeta('messageDoc'))
 			{
 				$Parties = explode("/", $this->getMeta("messageDoc"));
-				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), $this->getMeta('messageClass'));
+				return $this->Doc_box($Parties[0], $Parties[1],$this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
 			}
 			else
 			{
