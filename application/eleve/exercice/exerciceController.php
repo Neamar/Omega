@@ -211,10 +211,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					//Dépassement de la taille maximale
 					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
 				}
+				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+				}
 				else
 				{
 					//Vérification de l'extension
-					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
+					$ExtensionFichier = Util::Extension($_FILES['fichiers']['name'][$i]);
 					if (!in_array($ExtensionFichier, $Extensions))
 					{
 						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';

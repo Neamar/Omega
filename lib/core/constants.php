@@ -163,7 +163,7 @@ define('MAX_EXERCICE_CREES', 10);
  * 
  * @var int
  */
-define('MAX_FICHIERS_EXERCICE', 25);
+define('MAX_FICHIERS_EXERCICE', 5);
 
 /**
  * Délai minimum (jours) entre deux virements
