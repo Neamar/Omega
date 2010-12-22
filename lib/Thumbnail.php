@@ -56,6 +56,8 @@ class Thumbnail
 	 * 
 	 * @param string $Filename le chemin absolu vers l'image à miniaturiser
 	 * @param string $Extension l'extension du fichier. Si non fournie, calculée via le nom.
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
 	 */
 	public static function createImage($Filename, $Extension = '')
 	{
@@ -121,12 +123,28 @@ class Thumbnail
 		);
 		
 		//Et sauvegarde.
-		$ThumbFilename = preg_replace('`/([^/]+)\.(jpg|png|jpeg|gif)$`','/Thumbs/$1.png', $Filename);
+		$ThumbFilename = str_replace(
+			PATH,
+			'',
+			preg_replace(
+				'`/([^/]+)\.(jpg|png|jpeg|gif)$`',
+				'/Thumbs/$1.png',
+				$Filename
+			)
+		);
 		imagepng($Thumb, $ThumbFilename, 8);
 		
 		return $ThumbFilename;
 	}
 	
+	/**
+	 * Appelé quand le système ne sait pas comment générer l'aperçu.
+	 * Renvoie une image générique.
+	 * 
+	 * @param string $Filename
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
+	 */
 	public static function createDefault($Filename)
 	{
 		return '/public/images/unavailable.png';
