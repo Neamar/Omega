@@ -1,0 +1,18 @@
+<h1>Récapitulatif des données envoyées</h1>
+<p class="intro">Vérifiez que vos données soient cohérentes, puis cliquez sur le bouton "Envoyer aux correcteurs".<br />
+En cas de souci, corrigez les problèmes avant d'envoyer.</p>
+
+<form method="post" action="" id="form_change-info">
+<p>Matière : <?php echo $this->Exercice_matiere($this->Matiere); ?><br />
+Classe : <?php echo $this->Exercice_classe($this->Classe, $this->NomClasse); ?></p>
+<?php 
+echo $this->Form_textareaLabelBr(
+	'infos',
+	'Informations associées à l\'exercice',
+	array(
+		'value' => $this->Infos,
+	)
+);
+echo $this->Form_submit('change-info', 'Modifier ces informations et revenir sur cette page');
+?>
+</form>

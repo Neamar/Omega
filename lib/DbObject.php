@@ -123,16 +123,15 @@ abstract class DbObject
 	 */
 	public function setAndSave(array $Changes)
 	{
-
 		$Class = get_class($this);
 		while($Class!=='DbObject')
 		{
 			//Récupérer les éléments à updater sur cette table
 			$CurrentChanges = array_intersect_key($Changes, $Class::$Props);
-			
 			if(count($CurrentChanges)!=0)
 			{
 				//Il y a des éléments à mettre à jour sur cette table !
+				var_dump($this->ID);
 				SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges);
 			}
 			

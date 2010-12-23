@@ -56,7 +56,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
 		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, NomClasse FROM Classes ORDER BY ID DESC', 'ID', 'NomClasse');
 		
 		//Charger la liste des types d'exercices pour le combobox :
 		$this->View->Types = SQL::queryAssoc('SELECT Type, Details FROM Types', 'Type', 'Details');
@@ -304,20 +304,49 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				
 				if($CanForward)
-				{
-					$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
-					
-					if(!$this->View->issetMeta('message'))
-					{
-						$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
-					}
-					
-					$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+				{					
+					$this->redirect('/eleve/exercice/recapitulatif/' . $this->Exercice->Hash);
 				}
 			}
 		}
 		
 		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
 		$this->View->NbFiles = $NbFichiersPresents;
+	}
+	
+	/**
+	 * Affiche le récaptiulatif de l'exercice avant son envoi.
+	 */
+	public function recapitulatifActionWd()
+	{
+		$this->canAccess(array('VIERGE'));
+		
+		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");
+		
+		if(isset($_POST['change-info']))
+		{
+			if($_POST['infos']=='')
+			{
+				$this->View->setMessage("warning", "Vous ne pouvez pas vider le champ information maintenant.");
+			}
+			else
+			{
+				$this->View->setMessage('info', "Les informations de l'exercice ont bien été modifiées.");
+				$this->Exercice->setAndSave(array('InfosEleve'=>$_POST['infos']));
+			}
+		}
+		if(isset($_POST['resume']))
+		{
+			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+						
+			$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
+			$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+		}
+		
+		//Récupérer les données pour la vue :
+		$this->View->Matiere = $this->Exercice->Matiere;
+		$this->View->Classe = $this->Exercice->Classe;
+		$this->View->NomClasse = $this->Exercice->NomClasse;
+		$this->View->Infos = $this->Exercice->InfosEleve;
 	}
 }

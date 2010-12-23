@@ -76,7 +76,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	 * 
 	 * @return uniquement si autorisé, sinon redirect.
 	 */
-	protected function canAccess(array $Status, $Message)
+	protected function canAccess(array $Status, $Message = "Vous ne pouvez pas (ou plus) accéder à cette page.")
 	{
 		if(!in_array($this->Exercice->Statut, $Status))
 		{

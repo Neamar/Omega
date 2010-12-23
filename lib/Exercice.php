@@ -28,7 +28,10 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE Hash="%ID%"';
+	const SQL_QUERY = 'SELECT Exercices.*, Classes.NomClasse
+	FROM %TABLE%
+	LEFT JOIN Classes ON (Classes.ID = %TABLE%.Classe)
+	WHERE Hash="%ID%"';
 	
 	public static $Props;
 	
@@ -71,6 +74,7 @@ class Exercice extends DbObject
 	public $Expiration;
 	public $Matiere;
 	public $Classe;
+	public $NomClasse;
 	public $Section;
 	public $Type;
 	public $Demande;

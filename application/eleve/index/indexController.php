@@ -99,6 +99,7 @@ class Eleve_IndexController extends IndexAbstractController
 		
 		if(isset($_POST['inscription-eleve']))
 		{
+			//TODO tester si la classe existe
 			$ID = $this->createAccount($_POST);
 			if($ID != FAIL)
 			{
@@ -115,7 +116,7 @@ class Eleve_IndexController extends IndexAbstractController
 		}
 
 		//Charger la liste des matières pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, NomClasse FROM Classes ORDER BY ID DESC', 'ID', 'NomClasse');
 	}
 	
 	/**
