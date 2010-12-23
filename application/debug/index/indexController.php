@@ -76,6 +76,15 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Exemples de dates
+	 * 
+	 */
+	public function dateAction()
+	{
+		$this->View->setTitle('Exemple de dates');
+	}
+	
+	/**
 	 * Page par défaut.
 	 * 
 	 */
