@@ -107,7 +107,6 @@ class Thumbnail
 			$ThumbHeight = self::WIDTH;
 			$ThumbWidth = self::HEIGHT;
 		}
-		echo 'W' . $ThumbWidth . 'H' . $ThumbHeight;
 		//Création de l'image.
 		imagecopyresampled(
 			$Thumb,
@@ -123,18 +122,14 @@ class Thumbnail
 		);
 		
 		//Et sauvegarde.
-		$ThumbFilename = str_replace(
-			PATH,
-			'',
-			preg_replace(
-				'`/([^/]+)\.(jpg|png|jpeg|gif)$`',
-				'/Thumbs/$1.png',
-				$Filename
-			)
+		$ThumbFilename = preg_replace(
+			'`/([^/]+)\.(jpg|png|jpeg|gif)$`',
+			'/Thumbs/$1.png',
+			$Filename
 		);
 		imagepng($Thumb, $ThumbFilename, 8);
 		
-		return $ThumbFilename;
+		return str_replace(PATH, '',$ThumbFilename);
 	}
 	
 	/**

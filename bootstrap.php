@@ -18,7 +18,7 @@
  * @param string data les données additionnelles.
  */
 
-
+//TODO : modifier SQL : Classes.Id en Classes.Classe pour une meilleure cohérence. 
 /**
  * Strict minimum à définir pour un site fonctionnel
  * 

@@ -131,7 +131,6 @@ abstract class DbObject
 			if(count($CurrentChanges)!=0)
 			{
 				//Il y a des éléments à mettre à jour sur cette table !
-				var_dump($this->ID);
 				SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges);
 			}
 			

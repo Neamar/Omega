@@ -30,6 +30,15 @@ echo $this->Form_selectLabelBr('matiere', 'Matière', $this->Matieres);
 
 <h3>Demande</h3>
 <?php
+//Nom de l'exercice
+echo $this->Form_inputLabelBr(
+	'titre',
+	'Nom de l\'exercice',
+	array(
+		'placeholder' => 'DM de maths décembre',
+		'maxlength' => 50,
+	));
+
 //Type de l'exercice
 echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 

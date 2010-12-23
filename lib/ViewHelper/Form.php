@@ -177,7 +177,7 @@ function ViewHelper_Form_checkbox($name, $label, $selected=false, $args=array())
 	{
 		$args['id'] = $name;
 	}
-	if($selected || (isset($_POST[$name]) && $_POST['name']=='on'))
+	if($selected || (isset($_POST[$name]) && $_POST[$name]=='on'))
 	{
 		$args['checked'] = 'checked';
 	}

@@ -91,6 +91,10 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle('Inscription élève');
 		
+		//Charger la liste des classes pour le combobox :
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, DetailsClasse FROM Classes ORDER BY ID DESC', 'ID', 'DetailsClasse');
+		
+		
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
@@ -99,24 +103,27 @@ class Eleve_IndexController extends IndexAbstractController
 		
 		if(isset($_POST['inscription-eleve']))
 		{
-			//TODO tester si la classe existe
-			$ID = $this->createAccount($_POST);
-			if($ID != FAIL)
+			if(!isset($this->View->Classes[$_POST['classe']]))
 			{
-				//Enregistrer le nouveau membre et le rediriger vers la page de connexion
-				$Datas = array(
-					'mail'=>$_POST['email'],
-					'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
-				);
-				External::templateMail($_POST['email'], '/eleve/validation', $Datas);
-				$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
-				$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
-				$this->redirect('/eleve/connexion');
+				$this->View->setMessage("error", "Sélectionnez une classe dans la liste déroulante.");
+			}
+			else
+			{
+				$ID = $this->createAccount($_POST);
+				if($ID != FAIL)
+				{
+					//Enregistrer le nouveau membre et le rediriger vers la page de connexion
+					$Datas = array(
+						'mail'=>$_POST['email'],
+						'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
+					);
+					External::templateMail($_POST['email'], '/eleve/validation', $Datas);
+					$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
+					$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
+					$this->redirect('/eleve/connexion');
+				}
 			}
 		}
-
-		//Charger la liste des matières pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, NomClasse FROM Classes ORDER BY ID DESC', 'ID', 'NomClasse');
 	}
 	
 	/**

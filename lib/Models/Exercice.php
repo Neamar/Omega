@@ -28,10 +28,11 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	const SQL_QUERY = 'SELECT Exercices.*, Classes.NomClasse
-	FROM %TABLE%
-	LEFT JOIN Classes ON (Classes.ID = %TABLE%.Classe)
-	WHERE Hash="%ID%"';
+	const SQL_QUERY = 'SELECT Exercices.*, Classes.DetailsClasse, Types.DetailsType
+FROM %TABLE%
+LEFT JOIN Classes ON (Classes.ID = %TABLE%.Classe)
+LEFT JOIN Types ON (Types.Type = %TABLE%.Type)
+WHERE Hash="%ID%"';
 	
 	public static $Props;
 	
@@ -68,15 +69,17 @@ class Exercice extends DbObject
 	
 	public $Hash;
 	public $LongHash;
+	public $Titre;
 	public $Createur;
 	public $Creation;
 	public $TimeoutEleve;
 	public $Expiration;
 	public $Matiere;
 	public $Classe;
-	public $NomClasse;
+	public $DetailsClasse;
 	public $Section;
 	public $Type;
+	public $DetailsType;
 	public $Demande;
 	public $InfosEleve;
 	public $Autoaccept;
@@ -185,7 +188,7 @@ class Exercice extends DbObject
 	
 	/**
 	 * Récupère la liste des fichiers associés à l'exercice dans un tableau associatif de la forme
-	 * URL => array(Type, ThumbURL, Description)
+	 * URL => array(Type, ThumbURL, NomUpload, Description)
 	 * 
 	 * @param array $Types le type des fichiers (SUJET, CORRIGE ou RECLAMATION). Tous par défaut.
 	 * 
@@ -195,7 +198,7 @@ class Exercice extends DbObject
 	{
 		$Types = $this->buildType($Types);
 		
-		$Query = 'SELECT Type, URL, ThumbURL, Description
+		$Query = 'SELECT Type, URL, ThumbURL, NomUpload, Description
 		FROM Exercices_Fichiers
 		WHERE Exercice = ' . $this->ID . '
 		AND Type IN ' . $Types . '

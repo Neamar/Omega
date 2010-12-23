@@ -56,10 +56,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
 		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, NomClasse FROM Classes ORDER BY ID DESC', 'ID', 'NomClasse');
+		$this->View->Classes = SQL::queryAssoc('SELECT ID, DetailsClasse FROM Classes ORDER BY ID DESC', 'ID', 'DetailsClasse');
 		
 		//Charger la liste des types d'exercices pour le combobox :
-		$this->View->Types = SQL::queryAssoc('SELECT Type, Details FROM Types', 'Type', 'Details');
+		$this->View->Types = SQL::queryAssoc('SELECT Type, DetailsType FROM Types', 'Type', 'DetailsType');
 		
 		//Créer la liste des demandes supportées :
 		$this->View->Demandes = array(
@@ -69,7 +69,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['creation-exercice']))
 		{
-			if(!isset($this->View->Classes[$_POST['classe']]))
+			if($_POST['titre'] == '')
+			{
+				$this->View->setMessage("error", "Vous devez donner un nom à votre article.");
+			}
+			elseif(!isset($this->View->Classes[$_POST['classe']]))
 			{
 				$this->View->setMessage("error", "Cette classe n'existe pas.");
 			}
@@ -131,6 +135,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				(
 					'Hash' => substr($LongHash, 0, 6),
 					'LongHash' => $LongHash,
+					'Titre' => $_POST['titre'],
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
 					'_Creation' => 'NOW()',
