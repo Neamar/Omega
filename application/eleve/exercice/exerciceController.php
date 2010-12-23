@@ -344,9 +344,6 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}
 		
 		//Récupérer les données pour la vue :
-		$this->View->Matiere = $this->Exercice->Matiere;
-		$this->View->Classe = $this->Exercice->Classe;
-		$this->View->NomClasse = $this->Exercice->NomClasse;
-		$this->View->Infos = $this->Exercice->InfosEleve;
+		$this->View->Exercice = $this->Exercice;
 	}
 }

@@ -1,5 +1,9 @@
 <?php 
 
+function ViewHelper_Exercice(Exercice $Exercice)
+{
+	
+}
 /**
  * Renvoie la matière correctement formatée
  * 

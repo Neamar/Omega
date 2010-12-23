@@ -64,12 +64,19 @@ if(!empty($_GET['data']))
  * 
  * @return string le code retour de l'inclusion du fichier contenant la classe
  */
+
 function __autoload($ClassName)
 {
+	$Models = array('DbObject','Exercice','Membre','Correcteur','Eleve',);
+	
 	$FileName = $ClassName . '.php';
 	if(substr($ClassName, -18)=='AbstractController')
 	{
 		return include LIB_PATH . '/AbstractController/' . $FileName;
+	}
+	if(in_array($ClassName, $Models))
+	{
+		return  include LIB_PATH . '/Models/' . $FileName;
 	}
 	
 	return include LIB_PATH . '/' . $FileName;
