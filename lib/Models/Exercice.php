@@ -198,7 +198,8 @@ class Exercice extends DbObject
 		$Query = 'SELECT Type, URL, ThumbURL, Description
 		FROM Exercices_Fichiers
 		WHERE Exercice = ' . $this->ID . '
-		AND Type IN ' . $Types;
+		AND Type IN ' . $Types . '
+		ORDER BY Type, ID';
 		
 		return Sql::queryAssoc($Query, 'URL');
 	}
@@ -220,6 +221,27 @@ class Exercice extends DbObject
 		AND Type IN ' . $Types;
 		
 		return Sql::singleColumn($Query, 'Nb');
+	}
+	
+	/**
+	 * Récupère le nombre de fichiers du type spécifié.
+	 * 
+	 * @param array $Types le type des fichiers (SUJET, CORRIGE ou RECLAMATION). Tous par défaut.
+	 * 
+	 * @return int le nombre d'éléments du type spécifié.
+	 */
+	public function getFilesCountByType()
+	{
+		$Types = $this->buildType($Types);
+		
+		$Query = 'SELECT Type, COUNT(*) AS Nb
+		FROM Exercices_Fichiers
+		WHERE Exercice = ' . $this->ID . '
+		GROUP BY Type';
+		
+		$R = Sql::queryAssoc($Query, 'Type','Nb');
+		$Defaults = array('SUJET'=>0,'CORRIGE'=>0,'RECLAMATION'=>0);
+		return array_merge($Defaults,$R);
 	}
 	
 	/**
