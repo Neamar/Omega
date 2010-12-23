@@ -183,7 +183,7 @@ class View
 		if(!function_exists($Helper))
 		{
 			list($File) = explode('_', $func);
-			include LIB_PATH . '/ViewHelper/' . $File . '.php';
+			include OO2FS::viewHelperPath($File);
 		}
 
 		return call_user_func_array($Helper, $args);

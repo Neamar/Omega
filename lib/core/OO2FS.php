@@ -108,5 +108,17 @@ class OO2FS
 	{
 		return $View . 'Action' . (empty($Data)?'':'Wd');
 	}
+	
+	/**
+	* Récupérer le chemin vers une aide vue
+	*
+	* @param string $ViewHelper le module d'aide de vue désiré
+	*
+	* @return string /lib/ViewHelper/{$ViewHelper}.php
+	*/
+	public static function viewHelperPath($ViewHelper)
+	{
+		return LIB_PATH . '/ViewHelper/' . $ViewHelper . '.php';
+	}
 
 }

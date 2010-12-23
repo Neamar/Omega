@@ -1,4 +1,21 @@
 <?php 
+/**
+ * Exercice.php - 23 déc. 2010
+ *
+ * Offrir des primitives de haut niveau pour l'affichage des Exercices.
+ *
+ * PHP Version 5
+ *
+ * @category  ViewHelper
+ * @package   Root
+ * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
+ * @copyright 2010 Matthieu Bacconnier
+ * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
+ * @link      http://edevoir.com
+ */
+
+//Ces fonctions nécessitent le chargement de l'aide de vue pour les dates.
+include OO2FS::viewHelperPath('Date');
 
 /**
  * Affiche les composantes de l'exercice
@@ -58,6 +75,10 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 			<li>Niveau scolaire : ' . ViewHelper_Exercice_classe($Exercice->DetailsClasse, $Exercice->Section) . '</li>
 			<li>Type de l\'exercice : <span class="type" title="' . $Exercice->Type . '">' . $Exercice->DetailsType . '</span> (<span class="demande" title="' . $Exercice->Demande . '">' . $Exercice->DetailsDemande . '</span>)</li>
 			<li>Statut : <span title="' . $Exercice->Statut . '">' . $Exercice->DetailsStatut . '</span></li>
+			<li>Dates utiles :
+			<ul>
+				<li>Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration) . '</li>
+			</ul></li>	
 		</ul>
 		
 		<p>Informations complémentaires :</p>

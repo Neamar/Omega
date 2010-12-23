@@ -2,7 +2,7 @@
 /**
  * Doc.php - 26 oct. 2010
  *
- * Offrir des primitives pour la gestion des liens de documentations
+ * Offrir des primitives de haut niveau pour la gestion des liens de documentations
  *
  * PHP Version 5
  *

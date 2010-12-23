@@ -2,7 +2,7 @@
 /**
  * Html.php - 26 oct. 2010
  *
- * Offrir des primitives de bas niveau pour la gestion des éléments HTML.
+ * Offrir des primitives de haut niveau pour la gestion des éléments HTML de documentation.
  *
  * PHP Version 5
  *
@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 //Ces fonctions nécessitent le chargement du contrôleur de documentation.
