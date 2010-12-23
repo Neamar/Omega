@@ -92,7 +92,7 @@ class Eleve_IndexController extends IndexAbstractController
 		$this->View->setTitle('Inscription élève');
 		
 		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, DetailsClasse FROM Classes ORDER BY ID DESC', 'ID', 'DetailsClasse');
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.

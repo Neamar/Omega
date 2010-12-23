@@ -56,16 +56,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
 		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, DetailsClasse FROM Classes ORDER BY ID DESC', 'ID', 'DetailsClasse');
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
 		//Charger la liste des types d'exercices pour le combobox :
 		$this->View->Types = SQL::queryAssoc('SELECT Type, DetailsType FROM Types', 'Type', 'DetailsType');
 		
 		//Créer la liste des demandes supportées :
-		$this->View->Demandes = array(
-			'COMPLET'=>'Corrigé complet',
-			'AIDE'=>'Pistes de résolution',
-		);
+		$this->View->Demandes = SQL::queryAssoc('SELECT Demande, DetailsDemande FROM Demandes', 'Demande', 'DetailsDemande');
 		
 		if(isset($_POST['creation-exercice']))
 		{

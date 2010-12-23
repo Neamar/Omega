@@ -30,7 +30,7 @@ class Exercice extends DbObject
 	const TABLE_NAME = 'Exercices';
 	const SQL_QUERY = 'SELECT Exercices.*, Classes.DetailsClasse, Types.DetailsType
 FROM %TABLE%
-LEFT JOIN Classes ON (Classes.ID = %TABLE%.Classe)
+LEFT JOIN Classes ON (Classes.Classe = %TABLE%.Classe)
 LEFT JOIN Types ON (Types.Type = %TABLE%.Type)
 WHERE Hash="%ID%"';
 	
