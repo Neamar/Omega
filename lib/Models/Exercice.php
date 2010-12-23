@@ -28,10 +28,12 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	const SQL_QUERY = 'SELECT Exercices.*, Classes.DetailsClasse, Types.DetailsType
+	const SQL_QUERY = 'SELECT Exercices.*, Classes.DetailsClasse, Types.DetailsType, Demandes.DetailsDemande, Statuts.DetailsStatut
 FROM %TABLE%
 LEFT JOIN Classes ON (Classes.Classe = %TABLE%.Classe)
 LEFT JOIN Types ON (Types.Type = %TABLE%.Type)
+LEfT JOIN Demandes ON (Demandes.Demande = %TABLE%.Demande)
+LEFT JOIN Statuts ON (Statuts.Statut = %TABLE%.Statut)
 WHERE Hash="%ID%"';
 	
 	public static $Props;
@@ -81,10 +83,12 @@ WHERE Hash="%ID%"';
 	public $Type;
 	public $DetailsType;
 	public $Demande;
+	public $DetailsDemande;
 	public $InfosEleve;
 	public $Autoaccept;
 	public $Modificateur;
 	public $Statut;
+	public $DetailsStatut;
 	public $Correcteur;
 	public $TimeoutCorrecteur;
 	public $InfosCorrecteur;

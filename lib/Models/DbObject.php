@@ -138,6 +138,7 @@ abstract class DbObject
 			$Class = get_parent_class($Class);
 		}
 		
+		//Mettre à jour l'objet (clé liées, calculs effectués par SQL...)
 		$this->update();
 	}
 	

@@ -56,8 +56,14 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 		<ul>
 			<li>Matière : ' . ViewHelper_Exercice_matiere($Exercice->Matiere) . '</li>
 			<li>Niveau scolaire : ' . ViewHelper_Exercice_classe($Exercice->DetailsClasse, $Exercice->Section) . '</li>
-			<li>Type de l\'exercice : <span title="' . $Exercice->Type . '">' . $Exercice->DetailsType . '</span></li>
+			<li>Type de l\'exercice : <span class="type" title="' . $Exercice->Type . '">' . $Exercice->DetailsType . '</span> (<span class="demande" title="' . $Exercice->Demande . '">' . $Exercice->DetailsDemande . '</span>)</li>
+			<li>Statut : <span title="' . $Exercice->Statut . '">' . $Exercice->DetailsStatut . '</span></li>
 		</ul>
+		
+		<p>Informations complémentaires :</p>
+		<p class="infoseleve">
+			' . $Exercice->InfosEleve . '
+		</p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
 		<p>Fichiers composant le sujet :</p>
