@@ -15,7 +15,15 @@
  */
 
 //Ces fonctions nécessitent le chargement de l'aide de vue pour les dates.
-include OO2FS::viewHelperPath('Date');
+if(!function_exists("ViewHelper_Date_countdown"))
+{
+	include OO2FS::viewHelperPath('Date');
+}
+//Ces fonctions nécessitent le chargement de l'aide de vue pour les listes.
+if(!function_exists("ViewHelper_Html_list"))
+{
+	include OO2FS::viewHelperPath('Html');
+}
 
 /**
  * Affiche les composantes de l'exercice
@@ -60,6 +68,11 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 		}
 	}
 	
+	//Récupérer les infos intéressantes.
+	$Infos = ViewHeper_Exercice_props($Exercice);
+	
+	
+	//Renvoyer tout ça.
 	$R = '
 	<div class="exercice" id="exercice-' . $Exercice->Hash . '" >
 		<ul>
@@ -70,16 +83,7 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 		</ul>
 		<div class="exercice-tab exercice-infos" id="infos-' . $Exercice->Hash . '">
 		<h2>' . $Exercice->Titre . '</h2>
-		<ul>
-			<li>Matière : ' . ViewHelper_Exercice_matiere($Exercice->Matiere) . '</li>
-			<li>Niveau scolaire : ' . ViewHelper_Exercice_classe($Exercice->DetailsClasse, $Exercice->Section) . '</li>
-			<li>Type de l\'exercice : <span class="type" title="' . $Exercice->Type . '">' . $Exercice->DetailsType . '</span> (<span class="demande" title="' . $Exercice->Demande . '">' . $Exercice->DetailsDemande . '</span>)</li>
-			<li>Statut : <span title="' . $Exercice->Statut . '">' . $Exercice->DetailsStatut . '</span></li>
-			<li>Dates utiles :
-			<ul>
-				<li>Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration) . '</li>
-			</ul></li>	
-		</ul>
+		' . ViewHelper_Html_list($Infos) . '
 		
 		<p>Informations complémentaires :</p>
 		<p class="infoseleve">
@@ -111,6 +115,62 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 	
 	return $R;
 }
+
+/**
+ * Renvoie toutes les propriétés intéressantes d'un exercice.
+ * 
+ * @param Exercice $Exercice l'exercice à prendre en compte
+ * 
+ * @return array un tableau à afficher.
+ */
+function ViewHeper_Exercice_props(Exercice $Exercice)
+{
+	$Infos = array();
+	
+	$Infos[] = 'Matière : ' . ViewHelper_Exercice_matiere($Exercice->Matiere);
+	$Infos[] = 'Niveau scolaire : ' . ViewHelper_Exercice_classe($Exercice->DetailsClasse, $Exercice->Section);
+	$Infos[] = 'Type de l\'exercice : <span class="type" title="' . $Exercice->Type . '">' . $Exercice->DetailsType . '</span> (<span class="demande" title="' . $Exercice->Demande . '">' . $Exercice->DetailsDemande . '</span>)';
+	$Infos[] = 'Statut : <span title="' . $Exercice->Statut . '">' . $Exercice->DetailsStatut . '</span>';
+	
+	$Dates = ViewHelper_Exercice_date($Exercice);
+	
+	if(count($Dates)>1)
+	{
+		$Infos[] = "Dates :\n" . ViewHelper_Html_list($Dates);
+	}
+	else
+	{
+		$Infos[] = $Dates[0];
+	}
+	
+	return $Infos;
+}
+
+/**
+ * Renvoie les dates intéressantes de l'exercice.
+ * Le critère "intéressant" dépendant de l'état de l'exercice.
+ * 
+ * @param Exercice $Exercice l'exercice à prendre en compte
+ * 
+ * @return array un tableau de dates intéressantes
+ */
+function ViewHelper_Exercice_date(Exercice $Exercice)
+{
+	$Dates = array();
+	
+	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
+	if($Exercice->isCancellable())
+	{
+		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
+	}
+	if(!is_null($Exercice->TimeoutCorrecteur))
+	{
+		$Dates[] = 'Annulation automatique correcteur : ' . ViewHelper_Date_countdown($Exercice->TimeoutCorrecteur);
+	}
+	
+	return $Dates;
+}
+
 /**
  * Renvoie la matière correctement formatée
  * 
