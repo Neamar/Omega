@@ -461,6 +461,7 @@ CREATE TABLE IF NOT EXISTS `Membres_Mails` (
 
 CREATE TABLE IF NOT EXISTS `Statuts` (
   `Statut` varchar(20) NOT NULL,
+  `DetailsStatut` varchar(255) NOT NULL,
   PRIMARY KEY (`Statut`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des statuts que peut prendre un exercice';
 
@@ -468,16 +469,16 @@ CREATE TABLE IF NOT EXISTS `Statuts` (
 -- Contenu de la table `Statuts`
 --
 
-INSERT INTO `Statuts` (`Statut`) VALUES
-('ANNULE'),
-('ATTENTE_CORRECTEUR'),
-('ATTENTE_ELEVE'),
-('ENVOYE'),
-('EN_COURS'),
-('REFUSE'),
-('REMBOURSE'),
-('TERMINE'),
-('VIERGE');
+INSERT INTO `Statuts` (`Statut`, `DetailsStatut`) VALUES
+('ANNULE', 'Annulé'),
+('ATTENTE_CORRECTEUR', 'En attente d''un correcteur'),
+('ATTENTE_ELEVE', 'En attente d''une réponse de l''élève'),
+('ENVOYE', 'Rendu envoyé à l''élève, en attente de sa réaction'),
+('EN_COURS', 'Un correcteur travaille actuellement sur le sujet.'),
+('REFUSE', 'Un administrateur examine actuellement le litige.'),
+('REMBOURSE', 'L''exercice a été remboursé à l''élève.'),
+('TERMINE', 'L''exercice est clos.'),
+('VIERGE', 'En attente des fichiers élèves.');
 
 -- --------------------------------------------------------
 
