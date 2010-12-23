@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Lun 20 Décembre 2010 à 19:00
+-- Généré le : Jeu 23 Décembre 2010 à 12:39
 -- Version du serveur: 5.1.41
 -- Version de PHP: 5.3.1
 
@@ -82,17 +82,16 @@ CREATE TABLE IF NOT EXISTS `Banque` (
 --
 
 CREATE TABLE IF NOT EXISTS `Classes` (
-  `ID` int(2) NOT NULL,
-  `Nom` varchar(15) NOT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `Nom` (`Nom`)
+  `Classe` int(2) NOT NULL,
+  `DetailsClasse` varchar(15) NOT NULL,
+  PRIMARY KEY (`Classe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des années scolaires (avec ordre)';
 
 --
 -- Contenu de la table `Classes`
 --
 
-INSERT INTO `Classes` (`ID`, `Nom`) VALUES
+INSERT INTO `Classes` (`Classe`, `DetailsClasse`) VALUES
 (5, 'Cinquième'),
 (-1, 'Post-bac'),
 (1, 'Première'),
@@ -146,6 +145,26 @@ CREATE TABLE IF NOT EXISTS `Correcteurs_Capacites` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `Demandes`
+--
+
+CREATE TABLE IF NOT EXISTS `Demandes` (
+  `Demande` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `DetailsDemande` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`Demande`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Demandes possibles pour un exercice';
+
+--
+-- Contenu de la table `Demandes`
+--
+
+INSERT INTO `Demandes` (`Demande`, `DetailsDemande`) VALUES
+('AIDE', 'Pistes de résolution'),
+('COMPLET', 'Corrigé complet');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `Eleves`
 --
 
@@ -161,10 +180,6 @@ CREATE TABLE IF NOT EXISTS `Eleves` (
 -- Contenu de la table `Eleves`
 --
 
-INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
-(3, 1, 'ES'),
-(4, 2, 'Littéraire'),
-(15, 0, 'S');
 
 -- --------------------------------------------------------
 
@@ -175,6 +190,8 @@ INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
 CREATE TABLE IF NOT EXISTS `Exercices` (
   `ID` int(2) NOT NULL AUTO_INCREMENT,
   `Hash` varchar(6) NOT NULL,
+  `LongHash` varchar(40) NOT NULL,
+  `Titre` varchar(50) NOT NULL,
   `Createur` int(11) NOT NULL,
   `IP` int(10) unsigned NOT NULL COMMENT 'Adresse IP du posteur',
   `Creation` datetime NOT NULL,
@@ -184,9 +201,9 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   `Classe` int(2) NOT NULL,
   `Section` varchar(20) DEFAULT NULL,
   `Type` varchar(15) NOT NULL,
-  `Demande` enum('COMPLET','AIDE') NOT NULL,
-  `InfosEleve` mediumtext,
-  `Autoaccept` int(11) DEFAULT NULL,
+  `Demande` varchar(10) NOT NULL,
+  `InfosEleve` mediumtext NOT NULL,
+  `AutoAccept` int(11) DEFAULT NULL,
   `Modificateur` int(11) NOT NULL DEFAULT '100',
   `Statut` varchar(20) NOT NULL DEFAULT 'VIERGE',
   `Correcteur` int(11) DEFAULT NULL,
@@ -207,8 +224,9 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   KEY `Statut` (`Statut`),
   KEY `TimeoutEleve` (`TimeoutEleve`),
   KEY `Expiration` (`Expiration`),
-  KEY `TimeoutCorrecteur` (`TimeoutCorrecteur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste des exercices' AUTO_INCREMENT=4 ;
+  KEY `TimeoutCorrecteur` (`TimeoutCorrecteur`),
+  KEY `Demande` (`Demande`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des exercices' AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `Exercices`
@@ -271,13 +289,14 @@ CREATE TABLE IF NOT EXISTS `Exercices_Fichiers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Exercice` int(2) NOT NULL,
   `Type` enum('SUJET','CORRIGE','RECLAMATION') NOT NULL,
-  `URL` varchar(50) NOT NULL,
+  `URL` varchar(80) NOT NULL,
+  `ThumbURL` varchar(80) NOT NULL,
   `NomUpload` varchar(255) NOT NULL COMMENT 'Nom original du fichier sur le disque dur de l''expéditeur',
   `Description` mediumtext NOT NULL,
-  `OCR` mediumtext,
+  `OCR` mediumtext NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Exercice` (`Exercice`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
 
 --
 -- Contenu de la table `Exercices_Fichiers`
@@ -408,16 +427,12 @@ CREATE TABLE IF NOT EXISTS `Membres` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Mail` (`Mail`,`Type`),
   KEY `Mail_2` (`Mail`,`Pass`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `Membres`
 --
 
-INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`, `RIB`, `Paypal`) VALUES
-(3, 'neamar@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2010-12-08 17:49:38', '2010-12-11 12:58:08', 'OK', 'ELEVE', NULL, NULL),
-(4, 'essai@neamar.fr', '9fee891593f8c384cdb7e964a18ed1f20a48f787', 0, '2010-12-11 10:55:17', '2010-12-11 10:55:17', 'EN_ATTENTE', 'ELEVE', NULL, NULL),
-(15, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 150, '2010-12-17 23:07:33', '2010-12-20 15:07:32', 'OK', 'ELEVE', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -472,7 +487,7 @@ INSERT INTO `Statuts` (`Statut`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Types` (
   `Type` varchar(15) NOT NULL,
-  `Details` varchar(255) NOT NULL DEFAULT 'NULL',
+  `DetailsType` varchar(255) NOT NULL DEFAULT 'NULL',
   PRIMARY KEY (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Types d''exercices : QCM, Exercice court...';
 
@@ -480,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `Types` (
 -- Contenu de la table `Types`
 --
 
-INSERT INTO `Types` (`Type`, `Details`) VALUES
+INSERT INTO `Types` (`Type`, `DetailsType`) VALUES
 ('CORRECTION', 'Correction de devoir'),
 ('COURS', 'Question de cours'),
 ('DM', 'Devoir Maison'),
@@ -543,29 +558,29 @@ ALTER TABLE `Correcteurs`
 -- Contraintes pour la table `Correcteurs_Capacites`
 --
 ALTER TABLE `Correcteurs_Capacites`
+  ADD CONSTRAINT `Correcteurs_Capacites_ibfk_4` FOREIGN KEY (`Finit`) REFERENCES `Classes` (`Classe`),
   ADD CONSTRAINT `Correcteurs_Capacites_ibfk_1` FOREIGN KEY (`Correcteur`) REFERENCES `Correcteurs` (`ID`),
   ADD CONSTRAINT `Correcteurs_Capacites_ibfk_2` FOREIGN KEY (`Matiere`) REFERENCES `Matieres` (`Matiere`),
-  ADD CONSTRAINT `Correcteurs_Capacites_ibfk_3` FOREIGN KEY (`Commence`) REFERENCES `Classes` (`ID`),
-  ADD CONSTRAINT `Correcteurs_Capacites_ibfk_4` FOREIGN KEY (`Finit`) REFERENCES `Classes` (`ID`);
+  ADD CONSTRAINT `Correcteurs_Capacites_ibfk_3` FOREIGN KEY (`Commence`) REFERENCES `Classes` (`Classe`);
 
 --
 -- Contraintes pour la table `Eleves`
 --
 ALTER TABLE `Eleves`
-  ADD CONSTRAINT `Eleves_ibfk_2` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`ID`),
+  ADD CONSTRAINT `Eleves_ibfk_4` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`Classe`),
   ADD CONSTRAINT `Eleves_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `Membres` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Exercices`
 --
 ALTER TABLE `Exercices`
-  ADD CONSTRAINT `Exercices_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `Classes` (`ID`),
+  ADD CONSTRAINT `Exercices_ibfk_10` FOREIGN KEY (`Demande`) REFERENCES `Demandes` (`Demande`),
   ADD CONSTRAINT `Exercices_ibfk_2` FOREIGN KEY (`Createur`) REFERENCES `Eleves` (`ID`),
   ADD CONSTRAINT `Exercices_ibfk_3` FOREIGN KEY (`Matiere`) REFERENCES `Matieres` (`Matiere`),
-  ADD CONSTRAINT `Exercices_ibfk_4` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`ID`),
-  ADD CONSTRAINT `Exercices_ibfk_5` FOREIGN KEY (`Type`) REFERENCES `Types` (`Type`),
   ADD CONSTRAINT `Exercices_ibfk_6` FOREIGN KEY (`Statut`) REFERENCES `Statuts` (`Statut`),
-  ADD CONSTRAINT `Exercices_ibfk_7` FOREIGN KEY (`Correcteur`) REFERENCES `Correcteurs` (`ID`);
+  ADD CONSTRAINT `Exercices_ibfk_7` FOREIGN KEY (`Correcteur`) REFERENCES `Correcteurs` (`ID`),
+  ADD CONSTRAINT `Exercices_ibfk_8` FOREIGN KEY (`Type`) REFERENCES `Types` (`Type`),
+  ADD CONSTRAINT `Exercices_ibfk_9` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`Classe`);
 
 --
 -- Contraintes pour la table `Exercices_Correcteurs`

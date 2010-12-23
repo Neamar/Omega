@@ -1,0 +1,16 @@
+<?php 
+if(isset($this->Actions))
+{
+	echo $this->Html_list($this->Actions);
+}
+else 
+{
+?>
+	<form method="post" action="">
+	<?php
+	echo $this->Form_submit('delete',"ATTENTION. Ceci va supprimer toutes les données actuellement enregistrées et remettre à zéro tous les comptes, exercices, ...");
+	?>
+	<p>Une fois ce bouton pressé, la suppression aura lieu. Elle peut prendre du temps, pas besoin de recliquer.</p>
+	</form>
+<?php 
+}?>
