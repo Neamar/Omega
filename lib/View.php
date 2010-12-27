@@ -23,7 +23,7 @@
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link     http://edevoir.com
- *
+ * @method string Exercice() Exercice(Exercice $Exercice, string $Tab) affiche un exercice
  */
 class View
 {

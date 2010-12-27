@@ -64,6 +64,9 @@ abstract class ExerciceAbstractController extends AbstractController
 
 				$this->redirect("/eleve/exercice/");
 			}
+			
+			//Récupérer les données pour la vue :
+			$this->View->Exercice = $this->Exercice;
 		}
 	}
 	
@@ -83,5 +86,18 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->View->setMessage("warning", $Message);
 			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);
 		}
+	}
+	
+	/**
+	 * Redirige vers une page de l'exercice actuel.
+	 * Si aucun paramètre n'est spécifié, redirige vers la page d'accueil de l'exercice.
+	 * 
+	 * @param string $URL la base de l'URL, auquel sera accolée le hash.
+	 * 
+	 * @return jamais.
+	 */
+	protected function redirectExercice($URL = '/eleve/exercice/index/')
+	{
+		$this->redirect($URL . $this->Exercice->Hash);
 	}
 }

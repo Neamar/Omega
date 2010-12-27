@@ -119,11 +119,11 @@ WHERE Hash="%ID%"';
 	 * Modifie le statut de l'exercice
 	 * 
 	 * @param string $Status
-	 * @param int $ChangeAuthor l'auteur du changement (id)
+	 * @param Membre $ChangeAuthor l'auteur du changement
 	 * @param string $ChangeMessage
 	 * @param array $Changes autres changements à apporter à l'objet en base de données
 	 */
-	public function setStatus($Status, $ChangeAuthor, $ChangeMessage, array $Changes=array())
+	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes=array())
 	{
 		if(!in_array($Status, self::$Workflow[$this->Statut]))
 		{
@@ -134,13 +134,7 @@ WHERE Hash="%ID%"';
 		
 		$this->setAndSave($Changes);
 		
-		$ToInsert = array(
-			'Exercice' => $this->getFilteredId(),
-			'Membre' => DbObject::filterID($ChangeAuthor),
-			'Action' => $ChangeMessage,
-			'Statut' => $Status);
-		
-		SQL::insert('Exercices_Logs', $ToInsert);
+		$this->log('Exercices_Logs', $ChangeMessage, $ChangeAuthor, $this, array('Statut' => $Status));
 	}
 	
 	public function getFilteredId()

@@ -164,6 +164,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation/Thumbs/');
 					
+					//Logger la création de l'exercice.
+					$Exercice = Exercice::load($ToInsert['Hash']);
+					$Exercice->log('Exercices_Logs', 'Création de l\'exercice.', $_SESSION['Eleve'], $Exercice, array('Statut' => 'VIERGE'));
+					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
@@ -341,7 +345,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}
 		if(isset($_POST['resume']))
 		{
-			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Envoi de l'exercice aux correcteurs.");
 						
 			$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
 			$this->redirectExercice();
@@ -357,5 +361,21 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
 		$this->View->setTitle('Annulation de « ' . $this->Exercice->Titre . ' »');
+		
+		if(isset($_POST['annulation']))
+		{
+			$Changes = array(
+				'_Correcteur' => 'NULL',
+				'_TimeoutCorrecteur' => 'NULL',
+				'_InfosCorrecteur' => 'NULL',
+				'Enchere' => '0',
+				'NbRefus' => min(MAX_REFUS, $this->Exercice->NbRefus + 1),
+			);
+			
+			$this->Exercice->setStatus('ANNULE', $_SESSION['Eleve'], 'Annulation de l\'exercice.', $Changes);
+			
+			$this->View->setMessage("info", "Votre exercice a été annulé.");
+			$this->redirect("/eleve/exercice/");
+		}
 	}
 }
