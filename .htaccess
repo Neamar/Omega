@@ -1,0 +1,19 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+#--------------------------------------------------
+
+# /eleve/
+RewriteRule ^([^/]+)/$ bootstrap.php?module=$1&controller=index&view=index&data=
+
+# /eleve/point/
+RewriteRule ^([^/]+)/([^/]+)/$ bootstrap.php?module=$1&controller=$2&view=index&data=
+
+# /eleve/inscription
+RewriteRule ^([^/]+)/([^/]+)$ bootstrap.php?module=$1&controller=index&view=$2&data=
+
+# /eleve/point/ajout
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=
+
+# /eleve/point/ajout/data
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/(.+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=$4
