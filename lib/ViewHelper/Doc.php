@@ -46,7 +46,7 @@ function ViewHelper_Doc_link($section, $page)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Doc_anchor($section,$page,$caption = null)
+function ViewHelper_Doc_anchor($section, $page, $caption = null)
 {
 	$title = Documentation_IndexController::getTitle($section, $page);
 	if(is_null($caption))
@@ -74,7 +74,7 @@ function ViewHelper_Doc_input($section, $page, $caption = null)
  * @param string $page
  * @param string $caption
  */
-function ViewHelper_Doc_box($section,$page,$caption, $class='doc-box')
+function ViewHelper_Doc_box($section, $page, $caption, $class='doc-box')
 {
 	return '<aside class="' . $class . '">
 	<p>' . $caption . '</p>

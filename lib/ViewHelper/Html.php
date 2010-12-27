@@ -25,6 +25,11 @@
  */
 function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 {
+	if(count($Items)==0)
+	{
+		return '';
+	}
+	
 	$R = '<' . $Type . ($Id==''?'':' id="' . $Id . '"') . ">\n";
 	foreach($Items as $Item)
 	{
@@ -45,6 +50,11 @@ function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
  */
 function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
 {
+	if(count($Items)==0)
+	{
+		return '';
+	}
+	
 	$R = '<' . $Type . ">\n";
 	foreach($Items as $URL => $Item)
 	{

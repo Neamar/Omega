@@ -41,7 +41,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function indexActionWd()
 	{
-		$this->View->setTitle('Accueil exercice #');
+		$this->View->setTitle('Accueil exercice « ' . $this->Exercice->Titre . ' »');
 	}
 	
 	/**
