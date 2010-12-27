@@ -327,6 +327,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function recapitulatifActionWd()
 	{
+		//TODO : ajouter la possibilité de modifier l'auto accept
+		//TODO : ajouter la possibilité de modifier la date d'annulation automatique
 		$this->canAccess(array('VIERGE'));
 		
 		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");

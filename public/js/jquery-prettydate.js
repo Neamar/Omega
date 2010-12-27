@@ -75,8 +75,3 @@ $.fn.prettyDate = function(options) {
 };
 
 })();
-
-$(function()
-{
-	$('time.date').prettyDate();
-});

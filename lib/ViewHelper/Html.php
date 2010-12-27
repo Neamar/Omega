@@ -64,3 +64,32 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
 	
 	return $R;
 }
+
+/**
+ * Génère un tableau dynamique AJAX.
+ * 
+ * @param string $URL l'URL renvoyant les ressources en JSON
+ * @param string $Titre le titre du tableau
+ * @param array $Colonnes les colonnes constituant le tableau
+ * @param string $JSCallback la fonction javascript de callback à utiliser. Aucune si non définie.
+ */
+function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = null)
+{
+	$R = '
+<table class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '">
+	<caption>' . $Titre . '</caption>
+<thead>
+<tr>';
+	foreach($Colonnes as $Colonne)
+	{
+		$R .= '	<th>' . $Colonne . "</th>\n";
+	}
+	
+	$R .= '</tr>
+</thead>
+<tbody>
+</tbody>
+</table>';
+	
+	return $R;
+}

@@ -69,3 +69,7 @@ echo $this->Html_list($Actions);
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>
+
+<h2>Actions sur l'exercice</h2>
+<?php 
+echo $this->Html_ajaxTable('/eleve/exercice/_action/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action')); ?>
