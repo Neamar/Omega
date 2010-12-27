@@ -142,7 +142,7 @@ abstract class AbstractController
 	{
 		$ResultatsSQL = Sql::query($Query);
 		$Resultats = array();
-		while($Resultat = mysql_fetch_assoc($ResultatsSQL))
+		while($Resultat = mysql_fetch_row($ResultatsSQL))
 		{
 			$Resultats[] = $Resultat;
 		}
@@ -211,7 +211,7 @@ abstract class AbstractController
 
 		if($this->IsAjax)
 		{
-			echo json_encode($V->toArray());
+			echo json_encode($V->Datas);
 		}
 		else
 		{

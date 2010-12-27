@@ -26,6 +26,31 @@ $(function()
 	{
 		Tables.each(function(){
 			Table = $(this);
+			function update()
+			{
+				$.ajax({
+					url: Table.data('source'),
+					success: function(data){
+						data = jQuery.parseJSON(data);
+						Lignes = '';
+						for(var i = 0 ; i < data.length ; i++)
+						{
+							Lignes += '<tr>';
+							
+							for(var j = 0 ; j < data[i].length ; j++)
+							{
+								Lignes += '<td>' + data[i][j] + '</td>';
+							}
+							Lignes += "</tr>\n";
+						}
+						
+						Table.find('tbody').html(Lignes);
+					}
+				});
+			}
+			
+			update();
+			setInterval(update, 60000);
 		});
 	}
 });

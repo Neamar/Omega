@@ -88,6 +88,11 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
 	$R .= '</tr>
 </thead>
 <tbody>
+<tr>
+	<td colspan="' . count($Colonnes) . '" style="text-align:center;">
+		<img src="/public/images/global/loader.gif" alt="Chargement en cours..." />
+	</td>
+</tr>
 </tbody>
 </table>';
 	
