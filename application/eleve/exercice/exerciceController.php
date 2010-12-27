@@ -39,7 +39,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 * Page d'accueil d'un exercice.
 	 * 
 	 */
-	public function indexAction_wd()
+	public function indexActionWd()
 	{
 		$this->View->setTitle('Accueil exercice #');
 	}
@@ -53,23 +53,24 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->addScript('/public/js/eleve/exercice/creation.js');
 		
 		//Charger la liste des matières pour le combobox :
-		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere','Matiere');
+		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
 		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT ID, Nom FROM Classes ORDER BY ID DESC', 'ID', 'Nom');
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
 		//Charger la liste des types d'exercices pour le combobox :
-		$this->View->Types = SQL::queryAssoc('SELECT Type, Details FROM Types', 'Type', 'Details');
+		$this->View->Types = SQL::queryAssoc('SELECT Type, DetailsType FROM Types', 'Type', 'DetailsType');
 		
 		//Créer la liste des demandes supportées :
-		$this->View->Demandes = array(
-			'COMPLET'=>'Corrigé complet',
-			'AIDE'=>'Pistes de résolution',
-		);
+		$this->View->Demandes = SQL::queryAssoc('SELECT Demande, DetailsDemande FROM Demandes', 'Demande', 'DetailsDemande');
 		
 		if(isset($_POST['creation-exercice']))
 		{
-			if(!isset($this->View->Classes[$_POST['classe']]))
+			if($_POST['titre'] == '')
+			{
+				$this->View->setMessage("error", "Vous devez donner un nom à votre article.");
+			}
+			elseif(!isset($this->View->Classes[$_POST['classe']]))
 			{
 				$this->View->setMessage("error", "Cette classe n'existe pas.");
 			}
@@ -129,8 +130,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				$ToInsert = array
 				(
-					'Hash' => substr($LongHash,-6),
+					'Hash' => substr($LongHash, 0, 6),
 					'LongHash' => $LongHash,
+					'Titre' => $_POST['titre'],
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
 					'_Creation' => 'NOW()',
@@ -152,11 +154,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
-					//Créer les dossiers contenant les images :
+					//Créer les dossiers contenant les images et les miniatures :
 					mkdir(PATH . '/public/exercices/' . $LongHash);
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation/Thumbs/');
 					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
@@ -171,7 +176,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	/**
 	 * Ajoute des fichiers à un exercice si possible.
 	 */
-	public function ajoutAction_wd()
+	public function ajoutActionWd()
 	{
 		$this->canAccess(array('VIERGE'), "Vous ne pouvez plus ajouter de fichiers sur cet exercice.");
 		
@@ -191,7 +196,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		{
 			$NbFiles = count($_FILES['fichiers']['name']);
 			$Messages = array();
-			$Extensions = explode('|',EXTENSIONS);
+			$Extensions = explode('|', EXTENSIONS);
 			
 			//Ajout des messages
 			for($i=0;$i<$NbFiles;$i++)
@@ -211,11 +216,15 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					//Dépassement de la taille maximale
 					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
 				}
+				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+				}
 				else
 				{
 					//Vérification de l'extension
-					$ExtensionFichier = strtolower(substr(strrchr($_FILES['fichiers']['name'][$i], '.'), 1));
-					if (!in_array($ExtensionFichier,$Extensions))
+					$ExtensionFichier = Util::Extension($_FILES['fichiers']['name'][$i]);
+					if (!in_array($ExtensionFichier, $Extensions))
 					{
 						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
 					}
@@ -235,7 +244,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								'Exercice' => $this->Exercice->ID,
 								'Type' => 'SUJET',
 								'URL' => $URL,
-								'ThumbURL' => 'TODO',
+								'ThumbURL' => Thumbnail::create(PATH . $URL),
 								'NomUpload' => $_FILES['fichiers']['name'][$i],
 							);
 							
@@ -266,7 +275,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			if(count($Messages)!=0)
 			{
 				$Messages[] = $Corrects;
-				$this->View->setMessage("error", implode("<br />\n",$Messages));
+				$this->View->setMessage("error", implode("<br />\n", $Messages));
 			}
 			elseif($_POST['next_page']!='resume')
 			{
@@ -287,26 +296,56 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					}
 					else
 					{
-						$this->View->setMessage("warning", "Attention, vous avez validé cet exercice sans aucun fichier.<br />
-						Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
-						S'il s'agit d'une erreur, vous pouvez <a href='/eleve/annulation/" . $this->Exercice->Hash . "'>annuler l'exercice</a>.");
+						$this->View->setMessage(
+							"warning",
+							"Attention, vous avez validé cet exercice sans aucun fichier.<br />
+							Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
+							S'il s'agit d'une erreur, vous pouvez <a href='/eleve/annulation/" . $this->Exercice->Hash . "'>annuler l'exercice</a>."
+						);
 					}
 				}
 				
 				if($CanForward)
-				{
-					$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
-					
-					if(!$this->View->issetMeta('message'))
-					{
-						$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
-					}
-					
-					$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+				{					
+					$this->redirect('/eleve/exercice/recapitulatif/' . $this->Exercice->Hash);
 				}
 			}
 		}
 		
 		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
+		$this->View->NbFiles = $NbFichiersPresents;
+	}
+	
+	/**
+	 * Affiche le récaptiulatif de l'exercice avant son envoi.
+	 */
+	public function recapitulatifActionWd()
+	{
+		$this->canAccess(array('VIERGE'));
+		
+		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");
+		
+		if(isset($_POST['change-info']))
+		{
+			if($_POST['infos']=='')
+			{
+				$this->View->setMessage("warning", "Vous ne pouvez pas vider le champ information maintenant.");
+			}
+			else
+			{
+				$this->View->setMessage('info', "Les informations de l'exercice ont bien été modifiées.");
+				$this->Exercice->setAndSave(array('InfosEleve'=>$_POST['infos']));
+			}
+		}
+		if(isset($_POST['resume']))
+		{
+			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+						
+			$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
+			$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+		}
+		
+		//Récupérer les données pour la vue :
+		$this->View->Exercice = $this->Exercice;
 	}
 }

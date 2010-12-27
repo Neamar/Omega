@@ -28,9 +28,15 @@
 class Exercice extends DbObject
 {
 	const TABLE_NAME = 'Exercices';
-	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE Hash="%ID%"';
+	const SQL_QUERY = 'SELECT Exercices.*, Classes.DetailsClasse, Types.DetailsType, Demandes.DetailsDemande, Statuts.DetailsStatut
+FROM %TABLE%
+LEFT JOIN Classes ON (Classes.Classe = %TABLE%.Classe)
+LEFT JOIN Types ON (Types.Type = %TABLE%.Type)
+LEfT JOIN Demandes ON (Demandes.Demande = %TABLE%.Demande)
+LEFT JOIN Statuts ON (Statuts.Statut = %TABLE%.Statut)
+WHERE Hash="%ID%"';
 	
-	public static $_Props;
+	public static $Props;
 	
 	/**
 	 * Génère un hash pour l'insertion d'un exercice.
@@ -51,7 +57,7 @@ class Exercice extends DbObject
 	 */
 	public static function filterID($ID=null)
 	{
-		return preg_replace('`[^a-zA-Z0-9]`','', $ID);
+		return preg_replace('`[^a-zA-Z0-9]`', '', $ID);
 	}
 	
 	protected $Foreign = array(
@@ -65,19 +71,24 @@ class Exercice extends DbObject
 	
 	public $Hash;
 	public $LongHash;
+	public $Titre;
 	public $Createur;
 	public $Creation;
 	public $TimeoutEleve;
 	public $Expiration;
 	public $Matiere;
 	public $Classe;
+	public $DetailsClasse;
 	public $Section;
 	public $Type;
+	public $DetailsType;
 	public $Demande;
+	public $DetailsDemande;
 	public $InfosEleve;
 	public $Autoaccept;
 	public $Modificateur;
 	public $Statut;
+	public $DetailsStatut;
 	public $Correcteur;
 	public $TimeoutCorrecteur;
 	public $InfosCorrecteur;
@@ -181,7 +192,7 @@ class Exercice extends DbObject
 	
 	/**
 	 * Récupère la liste des fichiers associés à l'exercice dans un tableau associatif de la forme
-	 * URL => array(Type, ThumbURL, Description)
+	 * URL => array(Type, ThumbURL, NomUpload, Description)
 	 * 
 	 * @param array $Types le type des fichiers (SUJET, CORRIGE ou RECLAMATION). Tous par défaut.
 	 * 
@@ -191,10 +202,11 @@ class Exercice extends DbObject
 	{
 		$Types = $this->buildType($Types);
 		
-		$Query = 'SELECT Type, URL, ThumbURL, Description
+		$Query = 'SELECT Type, URL, ThumbURL, NomUpload, Description
 		FROM Exercices_Fichiers
 		WHERE Exercice = ' . $this->ID . '
-		AND Type IN ' . $Types;
+		AND Type IN ' . $Types . '
+		ORDER BY Type, ID';
 		
 		return Sql::queryAssoc($Query, 'URL');
 	}
@@ -219,6 +231,27 @@ class Exercice extends DbObject
 	}
 	
 	/**
+	 * Récupère le nombre de fichiers du type spécifié.
+	 * 
+	 * @param array $Types le type des fichiers (SUJET, CORRIGE ou RECLAMATION). Tous par défaut.
+	 * 
+	 * @return int le nombre d'éléments du type spécifié.
+	 */
+	public function getFilesCountByType()
+	{
+		$Types = $this->buildType($Types);
+		
+		$Query = 'SELECT Type, COUNT(*) AS Nb
+		FROM Exercices_Fichiers
+		WHERE Exercice = ' . $this->ID . '
+		GROUP BY Type';
+		
+		$R = Sql::queryAssoc($Query, 'Type','Nb');
+		$Defaults = array('SUJET'=>0,'CORRIGE'=>0,'RECLAMATION'=>0);
+		return array_merge($Defaults,$R);
+	}
+	
+	/**
 	 * Construit un tableau de type utilisable avec MySQL.
 	 * 
 	 * @param array $Types
@@ -235,4 +268,4 @@ class Exercice extends DbObject
 	}
 }
 
-Exercice::$_Props = init_props('Exercice');
+Exercice::$Props = initProps('Exercice');

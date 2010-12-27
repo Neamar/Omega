@@ -4,38 +4,55 @@
 <p class="see-link"><a href="/eleve/connexion">Déjà membre ?</a></p>
 
 <?php 
-echo $this->Doc_box('eleve','inscription','Besoin d\'aide pour compléter ce formulaire ?');
+echo $this->Doc_box('eleve', 'inscription', 'Besoin d\'aide pour compléter ce formulaire ?');
 ?>
 <form id="form_inscription-eleve" method="post" action="">
 
 <?php
-echo $this->Form_inputLabelBr('email', 'Votre adresse mail',
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
 	array(
 		'type'=>'email',
 		'placeholder'=>'nom@fai.fr',
-	));
-echo $this->Form_inputLabelBr('password', 'Votre mot de passe',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
 	array(
 		'type'=>'password',
-	));
-echo $this->Form_inputLabelBr('password_confirm', 'Confirmez votre mot de passe',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password_confirm',
+	'Confirmez votre mot de passe',
 	array(
 		'type'=>'password',
-	));
+	)
+);
 	
-echo $this->Form_selectLabelBr('classe','Votre niveau scolaire', $this->Classes, 2);
+echo $this->Form_selectLabelBr(
+	'classe',
+	'Votre niveau scolaire',
+	$this->Classes,
+	2
+);
 
-echo $this->Form_inputLabelBr('section', 'Section (si nécessaire)',
+echo $this->Form_inputLabelBr(
+	'section',
+	'Section (si nécessaire)',
 	array(
 		'placeholder'=>'S, ES, L...'
-	));
+	)
+);
 ?>
 
 CGU Élèves<br />
 
 <?php 
-echo $this->Form_checkbox('cgu',"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
+echo $this->Form_checkbox('cgu', "J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
 //TODO : ajouter CAPTCHA.
-echo $this->Form_submit('inscription-eleve',"M'inscrire");
+echo $this->Form_submit('inscription-eleve', "M'inscrire");
 ?>
 </form>

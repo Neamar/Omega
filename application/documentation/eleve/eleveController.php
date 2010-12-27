@@ -15,7 +15,7 @@
  */
 
 //Charger la base.
-include(APPLICATION_PATH . '/documentation/index/indexController');
+include APPLICATION_PATH . '/documentation/index/indexController';
 
 /**
  * Contrôleur de documentation générique.
@@ -27,4 +27,6 @@ include(APPLICATION_PATH . '/documentation/index/indexController');
  * @link     http://edevoir.com
  *
  */
-class Documentation_EleveController extends Documentation_IndexController {}
+class Documentation_EleveController extends Documentation_IndexController
+{
+}

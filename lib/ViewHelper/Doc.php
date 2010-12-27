@@ -2,7 +2,7 @@
 /**
  * Html.php - 26 oct. 2010
  *
- * Offrir des primitives de bas niveau pour la gestion des éléments HTML.
+ * Offrir des primitives de haut niveau pour la gestion des éléments HTML de documentation.
  *
  * PHP Version 5
  *
@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 //Ces fonctions nécessitent le chargement du contrôleur de documentation.
@@ -24,7 +24,7 @@ include OO2FS::controllerPath('index', 'documentation');
  * @param string $section
  * @param string $page
  */
-function ViewHelper_Doc_Link($section, $page)
+function ViewHelper_Doc_link($section, $page)
 {
 	if($section == 'index')
 	{
@@ -46,14 +46,14 @@ function ViewHelper_Doc_Link($section, $page)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Doc_Anchor($section,$page,$caption = null)
+function ViewHelper_Doc_anchor($section,$page,$caption = null)
 {
 	$title = Documentation_IndexController::getTitle($section, $page);
 	if(is_null($caption))
 	{
 		$caption = $title;
 	}
-	return '<a href="' . ViewHelper_Doc_Link($section, $page) . '" title="Accès à la documentation : ' . $title . '" class="doc-link">' . $caption . '</a>';
+	return '<a href="' . ViewHelper_Doc_link($section, $page) . '" title="Accès à la documentation : ' . $title . '" class="doc-link">' . $caption . '</a>';
 }
 
 /**
@@ -63,9 +63,9 @@ function ViewHelper_Doc_Anchor($section,$page,$caption = null)
  * @param string $page la page de la section (exemple : inscription)
  * @param string $caption le titre de la page ; si non spécifié, le titre de la page spécifiée.
  */
-function ViewHelper_Doc_Input($section, $page, $caption = null)
+function ViewHelper_Doc_input($section, $page, $caption = null)
 {
-	return '<span class="doc-input">' . ViewHelper_Doc_Anchor($section, $page, $caption) . '</span>';
+	return '<span class="doc-input">' . ViewHelper_Doc_anchor($section, $page, $caption) . '</span>';
 }
 /**
  * Afifche une boîte de documentation avec le texte $caption et un lien vers l'aide.
@@ -74,12 +74,12 @@ function ViewHelper_Doc_Input($section, $page, $caption = null)
  * @param string $page
  * @param string $caption
  */
-function ViewHelper_Doc_Box($section,$page,$caption, $class='doc-box')
+function ViewHelper_Doc_box($section,$page,$caption, $class='doc-box')
 {
 	return '<aside class="' . $class . '">
 	<p>' . $caption . '</p>
 	
-	<p class="doc-box-link">' . ViewHelper_Doc_Anchor($section, $page) . '</p>
+	<p class="doc-box-link">' . ViewHelper_Doc_anchor($section, $page) . '</p>
 	
 </aside>
 ';

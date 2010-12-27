@@ -34,7 +34,7 @@ class External
 	 * 
 	 * @var array
 	 */
-	private static $Datas;
+	private static $_Datas;
 	
 	/**
 	 * Teste si l'adresse mail provient d'un fournisseur de jetable.
@@ -48,7 +48,7 @@ class External
 		$Jetables = array('yopmail','ephemail','jetable','trash','brefmail','uggsrock','haltospam','kleemail','email-jetable','destroy-spam','justonemail','letmymail','onemoremail','cool.fr','nospam','nomail','mega.zik','speed.1s','courriel.fr','moncourrier','monemail','monmail','filzmail');
 		foreach($Jetables as $Jetable)
 		{
-			if(strpos($_POST['email'],'@' . $Jetable)!==false)
+			if(strpos($_POST['email'], '@' . $Jetable)!==false)
 			{
 				return true;
 			}
@@ -85,19 +85,19 @@ class External
 	 * @param string $template le nom du template sans html, par exemple /eleve/validation
 	 * @param array $Datas
 	 */
-	public static function template_mail($to, $template, array $Datas)
+	public static function templateMail($to, $template, array $Datas)
 	{
 		//Enregistrer les données
-		External::$Datas = $Datas;
+		External::$_Datas = $Datas;
 		
 		//Lire le fichier
-		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.', '',$template) . '.html');
+		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.', '', $template) . '.html');
 		
 		//Le parser
-		$File = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::template_replace', $File);
+		$File = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::_templateReplace', $File);
 		
 		//Réucpérer ses composantes
-		$Items = explode("\n",$File,2);
+		$Items = explode("\n", $File, 2);
 		$subject = $Items[0];
 		$message = $Items[1];
 		
@@ -105,11 +105,11 @@ class External
 		self::mail($to, $subject, $message);
 	}
 	
-	private static function template_replace($Matches)
+	private static function _templateReplace($Matches)
 	{
-		if(isset(External::$Datas[$Matches[1]]))
+		if(isset(External::$_Datas[$Matches[1]]))
 		{
-			return External::$Datas[$Matches[1]];
+			return External::$_Datas[$Matches[1]];
 		}
 		else
 		{

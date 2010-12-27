@@ -60,7 +60,7 @@ abstract class ExerciceAbstractController extends AbstractController
 				(isset($_SESSION['Correcteur']) && $this->Exercice->Correcteur != $_SESSION['Correcteur'])
 			)))
 			{
-				$this->View->setMessage("warning","Impossible d'accéder à l'exercice " . $Data['data'],'eleve/acces_impossible');
+				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
 				$this->redirect("/eleve/exercice/");
 			}
@@ -76,9 +76,9 @@ abstract class ExerciceAbstractController extends AbstractController
 	 * 
 	 * @return uniquement si autorisé, sinon redirect.
 	 */
-	protected function canAccess(array $Status, $Message)
+	protected function canAccess(array $Status, $Message = "Vous ne pouvez pas (ou plus) accéder à cette page.")
 	{
-		if(!in_array($this->Exercice->Statut,$Status))
+		if(!in_array($this->Exercice->Statut, $Status))
 		{
 			$this->View->setMessage("warning", $Message);
 			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);

@@ -18,13 +18,13 @@
  * @param string data les données additionnelles.
  */
 
-
+//TODO : modifier SQL : Classes.Id en Classes.Classe pour une meilleure cohérence. 
 /**
  * Strict minimum à définir pour un site fonctionnel
  * 
  */
 
-$File = str_replace('\\','/',__FILE__);
+$File = str_replace('\\', '/', __FILE__);
 define('PATH', substr($File, 0, strrpos($File, '/')));
 include PATH . '/lib/core/constants.php';
 include PATH . '/lib/core/OO2FS.php';
@@ -64,12 +64,19 @@ if(!empty($_GET['data']))
  * 
  * @return string le code retour de l'inclusion du fichier contenant la classe
  */
+
 function __autoload($ClassName)
 {
+	$Models = array('DbObject','Exercice','Membre','Correcteur','Eleve',);
+	
 	$FileName = $ClassName . '.php';
 	if(substr($ClassName, -18)=='AbstractController')
 	{
 		return include LIB_PATH . '/AbstractController/' . $FileName;
+	}
+	if(in_array($ClassName, $Models))
+	{
+		return  include LIB_PATH . '/Models/' . $FileName;
 	}
 	
 	return include LIB_PATH . '/' . $FileName;

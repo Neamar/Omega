@@ -2,7 +2,7 @@
 /**
  * Doc.php - 26 oct. 2010
  *
- * Offrir des primitives pour la gestion des liens de documentations
+ * Offrir des primitives de haut niveau pour la gestion des liens de documentations
  *
  * PHP Version 5
  *
@@ -11,7 +11,7 @@
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link      http://devoirminute.com
+ * @link      http://edevoir.com
  */
 
 /**
@@ -23,9 +23,9 @@
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_list(array $Items, $Type='ul')
+function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 {
-	$R = '<' . $Type . ">\n";
+	$R = '<' . $Type . ($Id==''?'':' id="' . $Id . '"') . ">\n";
 	foreach($Items as $Item)
 	{
 		$R .= '	<li>' . $Item . "</li>\n";

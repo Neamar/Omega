@@ -32,13 +32,13 @@ class View
 	 * La liste des données contenues par la vue
 	 * @var array
 	 */
-	protected $_Datas;
+	protected $Datas;
 	
 	/**
 	 * Les méta données de la vue : le contrôleur parent, le nom, le titre de la page...
 	 * @var array
 	 */
-	protected $_Metas;
+	protected $Metas;
 	
 	/**
 	 * Le contrôleur possédant cette vue
@@ -54,12 +54,13 @@ class View
 	 */
 	public function __construct($Name, AbstractController $Controller)
 	{
-		$this->_Datas = array();
-		$this->_Metas = array(
+		$this->Datas = array();
+		$this->Metas = array(
 			'name'=>$Name,
 			'script'=>array(
 				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
 				'/public/js/jquery-ui.min.js'=>true,
+				'/public/js/jquery-prettydate.js'=>true,
 			),
 			'meta'=>array(),
 			'style'=>array(
@@ -78,7 +79,7 @@ class View
 	 */
 	public function toArray()
 	{
-		return $this->_Datas;
+		return $this->Datas;
 	}
 
 	/**
@@ -90,7 +91,7 @@ class View
 	 */
 	public function __get($Key)
 	{
-		return $this->_Datas[$Key];
+		return $this->Datas[$Key];
 	}
 	
 	/**
@@ -102,7 +103,7 @@ class View
 	 */
 	public function getMeta($Key)
 	{
-		return $this->_Metas[$Key];
+		return $this->Metas[$Key];
 	}
 
 	/**
@@ -113,7 +114,7 @@ class View
 	 */
 	public function __set($Key,$Value)
 	{
-		$this->_Datas[$Key] = $Value;
+		$this->Datas[$Key] = $Value;
 	}
 	
 	/**
@@ -124,7 +125,7 @@ class View
 	 */
 	public function setMeta($Key,$Value)
 	{
-		$this->_Metas[$Key] = $Value;
+		$this->Metas[$Key] = $Value;
 	}
 	
 	/**
@@ -136,7 +137,7 @@ class View
 	 */
 	public function __isset($Key)
 	{
-		return isset($this->_Datas[$Key]);
+		return isset($this->Datas[$Key]);
 	}
 	
 	/**
@@ -148,7 +149,7 @@ class View
 	 */
 	public function issetMeta($Key)
 	{
-		return isset($this->_Metas[$Key]);
+		return isset($this->Metas[$Key]);
 	}
 
 	/**
@@ -158,7 +159,7 @@ class View
 	 */
 	public function __unset($Key)
 	{
-		unset($this->_Datas[$Key]);
+		unset($this->Datas[$Key]);
 	}
 	
 	/**
@@ -168,7 +169,7 @@ class View
 	 */
 	public function unsetMeta($Key)
 	{
-		unset($this->_Metas[$Key]);
+		unset($this->Metas[$Key]);
 	}
 
 	/**
@@ -183,7 +184,7 @@ class View
 		if(!function_exists($Helper))
 		{
 			list($File) = explode('_', $func);
-			include LIB_PATH . '/ViewHelper/' . $File . '.php';
+			include OO2FS::viewHelperPath($File);
 		}
 
 		return call_user_func_array($Helper, $args);
@@ -218,7 +219,7 @@ class View
 	 */
 	public function addScript($Src)
 	{
-		$this->_Metas['script'][$Src] = true;
+		$this->Metas['script'][$Src] = true;
 	}
 	
 	/**
@@ -228,7 +229,7 @@ class View
 	 */
 	public function removeScript($Src)
 	{
-		unset($this->_Metas['script'][$Src]);
+		unset($this->Metas['script'][$Src]);
 	}
 	
 	/**
@@ -239,7 +240,7 @@ class View
 	 */
 	public function addMeta($Meta, $Valeur)
 	{
-		$this->_Metas['meta'][$Meta] = $Valeur;
+		$this->Metas['meta'][$Meta] = $Valeur;
 	}
 	
 	/**
@@ -249,7 +250,7 @@ class View
 	 */
 	public function removeMeta($Meta)
 	{
-		unset($this->_Metas['meta'][$Meta]);
+		unset($this->Metas['meta'][$Meta]);
 	}
 	
 	/**
@@ -259,7 +260,7 @@ class View
 	 */
 	public function addStyle($Src)
 	{
-		$this->_Metas['style'][$Src] = true;
+		$this->Metas['style'][$Src] = true;
 	}
 	
 	/**
@@ -269,7 +270,7 @@ class View
 	 */
 	public function removeStyle($Src)
 	{
-		unset($this->_Metas['style'][$Src]);
+		unset($this->Metas['style'][$Src]);
 	}
 	
 	/**
@@ -287,17 +288,17 @@ class View
 	{
 		$Head = '	<title>' . $this->getMeta('title') . '</title>' . "\n";
 		
-		foreach($this->_Metas['meta'] as $Meta=> $Value)
+		foreach($this->Metas['meta'] as $Meta=> $Value)
 		{
 			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
 		}
 		
-		foreach($this->_Metas['style'] as $URL=>$_)
+		foreach($this->Metas['style'] as $URL=>$_)
 		{
 			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
 		}
 		
-		foreach($this->_Metas['script'] as $URL=>$_)
+		foreach($this->Metas['script'] as $URL=>$_)
 		{
 			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
 		}
@@ -316,8 +317,8 @@ class View
 		{
 			if($this->issetMeta('messageDoc'))
 			{
-				$Parties = explode("/",$this->getMeta("messageDoc"));
-				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), $this->getMeta('messageClass'));
+				$Parties = explode("/", $this->getMeta("messageDoc"));
+				return $this->Doc_box($Parties[0], $Parties[1],$this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
 			}
 			else
 			{
@@ -331,7 +332,7 @@ class View
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
-		return $this->Html_List($RibbonParts);
+		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
 	}
 
 	

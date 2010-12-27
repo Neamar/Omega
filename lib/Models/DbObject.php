@@ -33,7 +33,7 @@ abstract class DbObject
 	const TABLE_NAME = 'DbObjects';
 	const SQL_QUERY = 'SELECT * FROM %TABLE% WHERE ID=%ID%';
 	
-	public static $_Props;
+	public static $Props;
 	
 	protected $Foreign = array(
 		'Nom'=>'Objet');
@@ -123,13 +123,11 @@ abstract class DbObject
 	 */
 	public function setAndSave(array $Changes)
 	{
-
 		$Class = get_class($this);
 		while($Class!=='DbObject')
 		{
 			//Récupérer les éléments à updater sur cette table
-			$CurrentChanges = array_intersect_key($Changes, $Class::$_Props);
-			
+			$CurrentChanges = array_intersect_key($Changes, $Class::$Props);
 			if(count($CurrentChanges)!=0)
 			{
 				//Il y a des éléments à mettre à jour sur cette table !
@@ -140,6 +138,7 @@ abstract class DbObject
 			$Class = get_parent_class($Class);
 		}
 		
+		//Mettre à jour l'objet (clé liées, calculs effectués par SQL...)
 		$this->update();
 	}
 	
@@ -210,14 +209,14 @@ abstract class DbObject
  * 
  * @return array les paramètres explicitement déclarés par la classe (sans les paramètres hérités)
  */
-function init_props($ClassName)
+function initProps($ClassName)
 {
-	$Props = get_props($ClassName);
+	$Props = getProps($ClassName);
 	
 	$ParentClass = get_parent_class($ClassName);
 	if($ParentClass !==false)
 	{
-		$PropsParent = get_props($ParentClass);
+		$PropsParent = getProps($ParentClass);
 		$InnerProps = array_diff_assoc($Props, $PropsParent);
 	}
 	else
@@ -229,7 +228,7 @@ function init_props($ClassName)
 }
 
 
-function get_props($ClassName)
+function getProps($ClassName)
 {
 	$R = new ReflectionClass($ClassName);
 	$RProps = $R->getProperties();
@@ -244,4 +243,4 @@ function get_props($ClassName)
 	return $Props;
 }
 
-DbObject::$_Props = init_props('DbObject');
+DbObject::$Props = initProps('DbObject');

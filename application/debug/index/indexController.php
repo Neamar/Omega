@@ -76,6 +76,15 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Exemples de dates
+	 * 
+	 */
+	public function dateAction()
+	{
+		$this->View->setTitle('Exemple de dates');
+	}
+	
+	/**
 	 * Page par défaut.
 	 * 
 	 */
@@ -83,6 +92,96 @@ class Debug_IndexController extends AbstractController
 	{
 		$this->View->setTitle('Exemple de contenu HTML');
 		
-		$this->View->setMessage("error", "Texte du message d'erreur","foo/bar");
+		$this->View->setMessage("error", "Texte du message d'erreur", "foo/bar");
+	}
+	
+	/**
+	 * Supprime toutes les tables de la base de données et les recrée à neuf via le fichier /lib/default.sql.
+	 */
+	public function cleanAction()
+	{
+		$this->View->setTitle('Reset des données');
+		
+		
+		if(isset($_POST['delete']))
+		{
+			$Actions = array();
+			
+			/*
+			 * Première partie : suppression de toutes les données de la base
+			 */
+			$Actions[] = 'DROP DATABASE.';
+			$MaxIterations = 10; 
+			while($MaxIterations > 0)
+			{
+				$MaxIterations--;
+				$TablesRestantes = array();
+				$Tables = SQL::query('SHOW TABLES');
+				while($Table = mysql_fetch_row($Tables))
+				{
+					$TablesRestantes[] = $Table[0];
+				}
+				SQL::queryNoFail('DROP TABLE ' . implode(', ',$TablesRestantes));
+				
+				if(count($TablesRestantes)==0)
+				{
+					break;
+				}
+				else
+				{
+					$Actions[] = 'Suppression de ' . count($TablesRestantes) . ' tables.<br />';
+				}
+			}
+			$Actions[] = 'Base de données nettoyée.';
+			
+			/*
+			 * Seconde partie : suppression de tous les dossiers d'exercices
+			 */
+			$Actions[] = 'DROP Exercices';
+			 function rrmdir($dir)
+			 {
+		 		$objects = scandir($dir);
+		 		foreach ($objects as $object)
+		 		{
+		 			if ($object != "." && $object != "..")
+		 			{
+		 				if (filetype($dir . "/" . $object) == "dir")
+		 				{
+		 					rrmdir($dir."/".$object);
+		 				}
+		 				else
+		 				{
+							unlink($dir."/".$object);
+		 				}
+		 			}
+		 		}
+		 		reset($objects);
+		 		rmdir($dir);
+			 }
+			 rrmdir(PATH . '/public/exercices');
+			 $Actions[] = 'Exercices supprimés.';
+			 mkdir(PATH . '/public/exercices');
+			 $Actions[] = 'Dossier exercice créé et prêt à servir.';
+			 
+			 /*
+			 * Troisième partie : reconstruction de la DB.
+			 */
+			 $Actions[] = 'REBUILD DATABASE';
+			 
+			 $Requetes = explode(';', file_get_contents(DATA_PATH . '/default.sql'));
+			 foreach($Requetes as $Requete)
+			 {
+			 	if(trim($Requete) != '')
+			 	{
+			 		Sql::query($Requete);
+			 	}
+			 }
+			 $Actions[] = count($Requetes) . ' requeêtes exécutées.';
+			 $Actions[] = 'Reprise des valeurs par défaut.';
+			 
+			 
+			 $Actions[] = 'Fin du nettoyage.';
+			 $this->View->Actions = $Actions;
+		}
 	}
 }

@@ -9,6 +9,8 @@ Changements récents :
 1. Top Barre  --------------------------------  Première barre haut
 2. Logo  -------------------------------------  Le logo
 3. Content  ----------------------------------  Le contenu du haut (logo/menu)
+4. Forms  ------------------------------------  Les formulaires (label, input, submit etc..)
+5. Footer  -----------------------------------  HiHa !
 
 **********************************************************************************************/
 
@@ -43,14 +45,21 @@ padding-top:20px;
 padding-bottom:40px;
 }
 	#top p {
-	background: url('../../images/index/house.png') top left scroll no-repeat;
+	background: url('/public/images/index/house.png') top left scroll no-repeat;
 	padding-left:25px;
-	font:bold 18px/1.2em "Gill Sans MT", Georgia, serif;
+	margin-left:12px;
+	font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
+	letter-spacing:0.2px;
 	color:#e8e8e8;
 	float:left;
+	line-height:22px;
 	}
 		#top p span{
 		color:#ff9c00;
+		-webkit-transform: rotate(-15deg);
+		-moz-transform: rotate(-15deg);
+		-o-transform: rotate(-15deg);
+		writing-mode: tb-rl;
 		}
 
 #top ul {
@@ -62,8 +71,10 @@ padding-right:50px;
 	color:#f4f4f4;
 	display:inline;
 	padding:0 8px 0 3px;
-	background: url('../../images/index/sep01.png') top right scroll no-repeat;
 	}
+		#top ul li:first-child{
+		background: url('/public/images/index/sep01.png') top right scroll no-repeat;
+		}
 	#top ul li a:hover{
 	color:#ffc000;
 	}
@@ -73,16 +84,15 @@ padding-right:50px;
 		top:-18px;
 		height:10px;
 		width:19px;
-		background: url('../../images/index/curseur2.png') top left scroll no-repeat;
+		background: url('/public/images/index/curseur2.png') top left scroll no-repeat;
 		}
-	
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 2. Logo -------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 header hgroup#logo{
 position:absolute;
 top:87px;
-background: url('../../images/index/logo.png') top left scroll no-repeat;
+background: url('/public/images/index/logo.png') top left scroll no-repeat;
 width:249px;
 height:54px;
 z-index:15;
@@ -93,7 +103,7 @@ z-index:15;
 	content: "";
 	height:171px;
 	width:341px;
-	background: url('../../images/index/rosa.png') top left scroll no-repeat;
+	background: url('/public/images/index/rosa.png') top left scroll no-repeat;
 	z-index:5;
 	}
 	#banner h2, #banner h1 {
@@ -101,7 +111,6 @@ z-index:15;
 	margin:0;
 	line-height:0;
 	}
-
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 3. Content ----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -147,18 +156,18 @@ z-index:10;
 				#content nav ul li a:hover{
 				color:#898989;
 				display:block;
-				background: url('../../images/index/link-right-h.png') bottom center no-repeat;
+				background: url('/public/images/index/link-right-h.png') bottom center no-repeat;
 				}
 				#content nav ul li a span:hover{
 				display:block;
-				background: url('../../images/index/link-lefts-h.png') bottom center no-repeat;
+				background: url('/public/images/index/link-lefts-h.png') bottom center no-repeat;
 				}
 			#content nav ul li a.active{
 			display:block;
 			height:29px;
 			color:#fff;
 			text-shadow: #fd6b0e 1px 1px 1px;
-			background: url('../../images/index/menu-left.png') top left no-repeat;
+			background: url('/public/images/index/menu-left.png') top left no-repeat;
 			text-decoration:none;
 			padding-left:8px;
 			}
@@ -168,20 +177,20 @@ z-index:10;
 				content: "";
 				height:10px;
 				width:19px;
-				background: url('../../images/index/curseur.png') top left scroll no-repeat;
+				background: url('/public/images/index/curseur.png') top left scroll no-repeat;
 				}
 				#content nav ul li a.active:hover{
-				background: url('../../images/index/menu-left-h.png') top left no-repeat;
+				background: url('/public/images/index/menu-left-h.png') top left no-repeat;
 				}
 				
 			#content nav ul li a.active span{
 			display:block;
 			height:29px;
 			padding-right:8px;
-			background: url('../../images/index/menu-right.png') top right no-repeat;
+			background: url('/public/images/index/menu-right.png') top right no-repeat;
 			}
 				#content nav ul li a.active span:hover {
-				background: url('../../images/index/menu-right-h.png') top right no-repeat;
+				background: url('/public/images/index/menu-right-h.png') top right no-repeat;
 				}
 				
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -190,6 +199,17 @@ z-index:10;
 /* ------------------------------------- Contenu global --*/
 #content-form {
 margin-top:20px;
+position:relative;
+}
+#content-form:before {
+position:absolute;
+top:2px;
+left:430px;
+margin:auto;
+content: "";
+width:40px;
+height:230px;
+background: url('/public/images/index/sep02.png') top left scroll no-repeat;
 }
 	#content-form h1 {
 	color:#5c5b5b;
@@ -207,7 +227,8 @@ margin-top:20px;
 	}
 
 #content-form input {
-background: url('../../images/index/input.png') no-repeat;
+background: url('/public/images/index/input-sp.png') no-repeat; /*input*/
+background-position: 0px -1px;
 border:0;
 height:27px;
 margin-bottom:9px;
@@ -215,13 +236,15 @@ width:200px;
 padding-left:5px;
 }
 	#content-form input:hover {
-	background: url('../../images/index/input-h.png') no-repeat;
+	background: url('/public/images/index/input-sp.png') no-repeat; /*input-h*/
+	background-position: 0px -31px;
 	}
 	#content-form input:focus {
-	background: url('../../images/index/input-f.png') no-repeat;
+	background: url('/public/images/index/input-sp.png') no-repeat; /*input-f*/
+	background-position: 0px -62px;
 	}
 
-/* ------------------------------------- Formulaire élève --*/
+/* ------------------------------------- Formulaire élève / correcteur --*/
 #eleve_form, #correcteur_form {
 position:relative;
 float:left;
@@ -236,28 +259,31 @@ color:#5c5b5b;
 	#eleve_form p a:hover, #correcteur_form p a:hover {
 	color:#8c5b00;
 	}
-
+	
+/* ------------------------------------- Formulaire élève --*/
 #eleve_form {
 margin-right:150px;
 margin-left:65px;
 }
 	#eleve_form h1 {
-	background: url('../../images/index/eleve.png') left no-repeat;
-	padding-left:22px;
+	background: url('/public/images/index/eleve2.png') left no-repeat;
+	padding-left:26px;
 	}
 	#connexion-eleve {
 	margin-left:9px;
 	}
-
+	
+/* ------------------------------------- Formulaire correcteur --*/
 #correcteur_form h1 {
 font-size:29px;
-background: url('../../images/index/correct.png') left no-repeat;
+background: url('/public/images/index/correct.png') left no-repeat;
 padding-left:22px;
 }
 	#connexion-correcteur {
 	margin-left:15px;
 	}
-/* ------------------------------------- Bouton d'envoie --*/
+	
+/* ------------------------------------- Bouton d'envoie, il fait mal celui-là --*/
 #content-form input[type="submit"] {
 margin-left:207px;
 display: inline-block;
@@ -270,7 +296,6 @@ text-decoration: none;
 font:bold 14px Arial, Helvetica, sans-serif;
 text-transform:uppercase;
 color:#fff;
-
 text-shadow: 1px 1px 1px #f97300;
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px; 
@@ -282,8 +307,7 @@ text-shadow: 1px 1px 1px #f97300;
 			box-shadow: inset 0px 0px 7px #ef9816;
 width:100px;
 height:40px;
-
-background: #feb229 url("../../images/index/gradient-bg-index.png") repeat-x top;
+background: #feb229 url("/public/images/index/gradient-bg-index.png") repeat-x top;
 -o-background-size: 100% 100%;
 -moz-background-size: 100% 100%;
 -webkit-background-size: 100% 100%;
@@ -291,12 +315,12 @@ background-size: 100% 100%;
 /* Internet Explorer */
 *background: #feb229;
 background: #feb229\0/;
-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../images/index/gradient-bg-index.png", sizingMethod="scale");
+filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/index/gradient-bg-index.png", sizingMethod="scale");
 }
 @media all and (min-width: 0px) {
     #content-form input[type=submit] {
         /* Opera */
-        background: #feb229 url("../../images/index/gradient-bg-index.svg");
+        background: #feb229 url("/public/images/index/gradient-bg-index.svg");
         /* Navigateurs récents */
         background-image: -moz-linear-gradient(
             top,
@@ -313,7 +337,6 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../images/ind
         );
     }
 }
-
 	#content-form input[type=submit]:active {
 	background: #fca70c;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fca70c), to(#fbb93e));
@@ -323,8 +346,6 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../images/ind
 		background: -webkit-gradient(linear, left top, left bottom, from(#fbb93e), to(#fca70c));
 		background: -moz-linear-gradient(top,  #fbb93e,  #fca70c);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fbb93e', endColorstr='#fca70c');}
-
-
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
