@@ -134,13 +134,14 @@ abstract class AbstractController
 	 * Méthode de base pour toutes les pages AJAX.
 	 * Une fois appellée, cette méthode prend la main et reroute la requête pour un traitement AJAX.
 	 * 
-	 * @param string $Query
+	 * @param string $Query la requête (brute) à effectuer
+	 * @param string $OrderBy l'ordre de tri, la date décroissante par défaut
 	 * 
 	 * @return array un tableau de résultat contenant la requête.
 	 */
-	protected function ajax($Query)
+	protected function ajax($Query, $OrderBy = 'Date DESC')
 	{
-		$ResultatsSQL = Sql::query($Query);
+		$ResultatsSQL = Sql::query($Query . "\nORDER BY " . $OrderBy);
 		$Resultats = array();
 		while($Resultat = mysql_fetch_row($ResultatsSQL))
 		{

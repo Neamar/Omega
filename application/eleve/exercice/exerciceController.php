@@ -386,7 +386,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function _actionsActionWd()
 	{
-		$this->ajax('SELECT Date, Action
+		$this->ajax('SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
 		FROM Exercices_Logs
 		WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID));
 	}
