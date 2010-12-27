@@ -36,6 +36,7 @@ class Documentation_IndexController extends AbstractController
 		(
 			'index' => "Accueil de la documentation",
 			'fonctionnement' => "Fonctionnement du site",
+			'tex' => "Comment insérer des formules mathématiques dans un élément de la FAQ ?",
 		),
 		'eleve' => array
 		(
