@@ -130,7 +130,27 @@ abstract class AbstractController
 		return $this->Module;
 	}
 
-
+	/**
+	 * Méthode de base pour toutes les pages AJAX.
+	 * Une fois appellée, cette méthode prend la main et reroute la requête pour un traitement AJAX.
+	 * 
+	 * @param string $Query
+	 * 
+	 * @return array un tableau de résultat contenant la requête.
+	 */
+	protected function ajax($Query)
+	{
+		$ResultatsSQL = Sql::query($Query);
+		$Resultats = array();
+		while($Resultat = mysql_fetch_assoc($ResultatsSQL))
+		{
+			$Resultats[] = $Resultat;
+		}
+		
+		$this->View->Datas = $Resultats;
+		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
+		return $Resultats;
+	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée
 	 *

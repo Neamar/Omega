@@ -380,4 +380,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			$this->redirect("/eleve/exercice/");
 		}
 	}
+	
+	/**
+	 * Liste les actions d'un exercice
+	 */
+	public function _actionsActionWd()
+	{
+		$this->ajax('SELECT Date, Action
+		FROM Exercices_Logs
+		WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID));
+	}
 }
