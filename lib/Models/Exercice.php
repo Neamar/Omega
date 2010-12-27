@@ -39,6 +39,23 @@ WHERE Hash="%ID%"';
 	public static $Props;
 	
 	/**
+	 * Quelles sont les différentes possibilités de changement de statut.
+	 * Sorte de diagramme d'état entre les différentes étapes.
+	 * 
+	 * @var array
+	 */
+	public static $Workflow = array(
+		'VIERGE' 				=> array('ANNULE', 'ATTENTE_CORRECTEUR'),
+		'ATTENTE_CORRECTEUR'	=> array('ANNULE', 'ATTENTE_ELEVE'),
+		'ATTENTE_ELEVE'			=> array('ANNULE', 'ATTENTE_CORRECTEUR', 'EN_COURS'),
+		'EN_COURS'				=> array('ENVOYE', 'ANNULE'),
+		'ENVOYE'				=> array('TERMINE', 'REFUSE'),
+		'REFUSE'				=> array('TERMINE', 'REMBOURSE'),
+		'TERMINE'				=> array(),
+		'ANNULE'				=> array(),
+	);
+	
+	/**
 	 * Génère un hash pour l'insertion d'un exercice.
 	 * 
 	 * @return string(40) un hash.
@@ -108,6 +125,11 @@ WHERE Hash="%ID%"';
 	 */
 	public function setStatus($Status, $ChangeAuthor, $ChangeMessage, array $Changes=array())
 	{
+		if(!in_array($Status, self::$Workflow[$this->Statut]))
+		{
+			Debug::fail('Impossible de passer du statut ' . $this->Statut . ' au statut ' . $Status);
+		}
+		
 		$Changes['Statut'] = $Status;
 		
 		$this->setAndSave($Changes);
