@@ -46,6 +46,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Création d'un nouvel exercice
+	 * ∅ => VIERGE
 	 */
 	public function creationAction()
 	{
@@ -307,7 +308,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if($CanForward)
 				{					
-					$this->redirect('/eleve/exercice/recapitulatif/' . $this->Exercice->Hash);
+					$this->redirectExercice('/eleve/exercice/recapitulatif/');
 				}
 			}
 		}
@@ -317,7 +318,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Affiche le récaptiulatif de l'exercice avant son envoi.
+	 * Affiche le récaptiulatif de l'exercice avant son envoi aux correcteurs
+	 * VIERGE => ATTENTE_CORRECTEUR
 	 */
 	public function recapitulatifActionWd()
 	{
@@ -341,11 +343,19 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		{
 			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
 						
-			$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
-			$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+			$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
+			$this->redirectExercice();
 		}
+	}
+	
+	/**
+	 * Annule un exercice.
+	 * (VIERGE|ATTENTE_CORRECTEUR|ATTENTE_ÉLÈVE) => ANNULÉ
+	 */
+	public function annulationActionWd()
+	{
+		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
-		//Récupérer les données pour la vue :
-		$this->View->Exercice = $this->Exercice;
+		$this->View->setTitle('Annulation de « ' . $this->Exercice->Titre . ' »');
 	}
 }

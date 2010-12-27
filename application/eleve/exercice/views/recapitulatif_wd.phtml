@@ -18,3 +18,7 @@ echo $this->Form_submit('change-info', 'Modifier ces informations, puis revenir 
 <p><a href="/eleve/exercice/ajout/<?php echo $this->Exercice->Hash ?>">Retourner à l'ajout de fichiers.</a></p>
 
 <?php echo $this->Exercice($this->Exercice); ?>
+
+<?php 
+echo $this->Form('recapitulatif-ok','resume',"Envoyer cet exercice aux correcteurs et attendre leurs offres.");
+?>
