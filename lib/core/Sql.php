@@ -317,7 +317,7 @@ class Sql
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://devoirminute.com
+ * @link     http://edevoir.com
  *
  */
 class SqlParam
