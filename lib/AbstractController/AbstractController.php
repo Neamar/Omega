@@ -198,7 +198,7 @@ abstract class AbstractController
 		$ConcatController = new $ControllerName();
 		$ConcatController->$ViewName();
 
-		//TODO : View n'est plus un array.
+		//FIXME : View n'est plus un array.
 		$this->View = array_merge($this->View, $ConcatController->getView());
 	}
 

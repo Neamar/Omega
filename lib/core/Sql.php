@@ -116,7 +116,7 @@ class Sql
 		$R = mysql_query($Query);
 		if($R===false)
 		{
-			//TODO : virer en production.
+			//TODO : virer en production
 			echo '<pre>' . $Query . '</pre>';
 			throw new Exception("Erreur SQL", 125);
 		}

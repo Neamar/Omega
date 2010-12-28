@@ -97,10 +97,8 @@ class Thumbnail
 		}
 		elseif($Width < $Height)
 		{
-			exit('GNU');
-			//TODO à revoir
 			$ThumbHeight = self::HEIGHT;
-			$ThumbWidth = $Width * (self::WIDTH / $Width);
+			$ThumbWidth = $Width * ($ThumbHeight / $Height);
 		}
 		else
 		{
