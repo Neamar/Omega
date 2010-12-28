@@ -1,0 +1,9 @@
+﻿Un système de majoration par exercice est mis en place lorsque le flux d’exercices envoyés est trop important. Celui-ci fonctionne de la manière suivante :
+\item Lorsqu’un élève poste un exercice, le site regarde combien de jours sur les %CALCUL_CUMUL% derniers jours l’élève a déjà posté un (ou plusieurs) exercice(s). On majore ensuite de %POURCENTAGE_SURACTIVITE%% par jour les propositions correcteurs. Ce surplus, qui ne prend donc en compte que les %CALCUL_CUMUL% derniers jours d’activité, est majoré par %POURCENTAGE_MAX_SURACTIVITE%%. Autrement dit, un exercice de 10€ ne pourra pas coûter après majoration plus de 15€ en cas de sur-sur-activité.
+\item Ce calcul de majoration prend en compte le nombre de jours où l’élève a posté un exercice dans les %CALCUL_CUMUL% derniers jours, et pas le nombre d’exercices postés. Autrement dit, qu’un élève poste un exercice lundi et un exercice mardi, ou dix exercices lundi et dix exercices mardi, la surcharge sera la même pour mercredi (soit deux fois %POURCENTAGE_SURACTIVITE%%).
+\item Ce supplément retombe automatiquement à zéro après %CALCUL_CUMUL% jours, puisque son calcul repose sur l’activité des %CALCUL_CUMUL% derniers jours.
+
+\subsection{Pourquoi cette mesure ?}
+
+Cette mesure vise à dissuader les élèves d’abuser du service que leur rend \b{eDevoir}. En effet, notre site ne saurait se substituer au travail personnel de chacun et surtout à celui des parents dans la pédagogie d’apprentissage de leurs enfants. Plutôt qu’une solution de facilité, \b{Devoir} se pose en véritable soutien pour les élèves ou parents en difficulté devant un exercice.
+Il sera laissé à l'appréciation de chacun de savoir utiliser cette aide avec parcimonie.
