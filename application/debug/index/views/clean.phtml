@@ -5,12 +5,8 @@ if(isset($this->Actions))
 }
 else 
 {
+	echo $this->Form('clean-all', 'delete', "ATTENTION. Ceci va supprimer toutes les données actuellement enregistrées et remettre à zéro tous les comptes, exercices, ...");
 ?>
-	<form method="post" action="">
-	<?php
-	echo $this->Form_submit('delete',"ATTENTION. Ceci va supprimer toutes les données actuellement enregistrées et remettre à zéro tous les comptes, exercices, ...");
-	?>
 	<p>Une fois ce bouton pressé, la suppression aura lieu. Elle peut prendre du temps, pas besoin de recliquer.</p>
-	</form>
 <?php 
 }?>

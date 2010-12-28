@@ -41,11 +41,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function indexActionWd()
 	{
-		$this->View->setTitle('Accueil exercice #');
+		$this->View->setTitle('Accueil exercice « ' . $this->Exercice->Titre . ' »');
 	}
 	
 	/**
 	 * Création d'un nouvel exercice
+	 * ∅ => VIERGE
 	 */
 	public function creationAction()
 	{
@@ -162,6 +163,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation/Thumbs/');
+					
+					//Logger la création de l'exercice.
+					$Exercice = Exercice::load($ToInsert['Hash']);
+					$Exercice->log('Exercices_Logs', 'Création de l\'exercice.', $_SESSION['Eleve'], $Exercice, array('Statut' => 'VIERGE'));
 					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
@@ -307,7 +312,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				if($CanForward)
 				{					
-					$this->redirect('/eleve/exercice/recapitulatif/' . $this->Exercice->Hash);
+					$this->redirectExercice('/eleve/exercice/recapitulatif/');
 				}
 			}
 		}
@@ -317,10 +322,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Affiche le récaptiulatif de l'exercice avant son envoi.
+	 * Affiche le récaptiulatif de l'exercice avant son envoi aux correcteurs
+	 * VIERGE => ATTENTE_CORRECTEUR
 	 */
 	public function recapitulatifActionWd()
 	{
+		//TODO : ajouter la possibilité de modifier l'auto accept
+		//TODO : ajouter la possibilité de modifier la date d'annulation automatique
 		$this->canAccess(array('VIERGE'));
 		
 		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");
@@ -339,13 +347,47 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}
 		if(isset($_POST['resume']))
 		{
-			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve']->ID, "Création de l'exercice.");
+			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Envoi de l'exercice aux correcteurs.");
 						
-			$this->View->setMessage('info', "Votre exercice a bien été envoyé !");
-			$this->redirect('/eleve/exercice/index/' . $this->Exercice->Hash);
+			$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
+			$this->redirectExercice();
 		}
+	}
+	
+	/**
+	 * Annule un exercice.
+	 * (VIERGE|ATTENTE_CORRECTEUR|ATTENTE_ÉLÈVE) => ANNULÉ
+	 */
+	public function annulationActionWd()
+	{
+		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
-		//Récupérer les données pour la vue :
-		$this->View->Exercice = $this->Exercice;
+		$this->View->setTitle('Annulation de « ' . $this->Exercice->Titre . ' »');
+		
+		if(isset($_POST['annulation']))
+		{
+			$Changes = array(
+				'_Correcteur' => 'NULL',
+				'_TimeoutCorrecteur' => 'NULL',
+				'_InfosCorrecteur' => 'NULL',
+				'Enchere' => '0',
+				'NbRefus' => min(MAX_REFUS, $this->Exercice->NbRefus + 1),
+			);
+			
+			$this->Exercice->setStatus('ANNULE', $_SESSION['Eleve'], 'Annulation de l\'exercice.', $Changes);
+			
+			$this->View->setMessage("info", "Votre exercice a été annulé.");
+			$this->redirect("/eleve/exercice/");
+		}
+	}
+	
+	/**
+	 * Liste les actions d'un exercice
+	 */
+	public function _actionsActionWd()
+	{
+		$this->ajax('SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
+		FROM Exercices_Logs
+		WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID));
 	}
 }

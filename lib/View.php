@@ -23,7 +23,7 @@
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link     http://edevoir.com
- *
+ * @method string Exercice() Exercice(Exercice $Exercice, string $Tab) affiche un exercice
  */
 class View
 {
@@ -60,7 +60,7 @@ class View
 			'script'=>array(
 				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
 				'/public/js/jquery-ui.min.js'=>true,
-				'/public/js/jquery-prettydate.js'=>true,
+				'/public/js/default.js'=>true,
 			),
 			'meta'=>array(),
 			'style'=>array(

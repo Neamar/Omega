@@ -130,7 +130,28 @@ abstract class AbstractController
 		return $this->Module;
 	}
 
-
+	/**
+	 * Méthode de base pour toutes les pages AJAX.
+	 * Une fois appellée, cette méthode prend la main et reroute la requête pour un traitement AJAX.
+	 * 
+	 * @param string $Query la requête (brute) à effectuer
+	 * @param string $OrderBy l'ordre de tri, la date décroissante par défaut
+	 * 
+	 * @return array un tableau de résultat contenant la requête.
+	 */
+	protected function ajax($Query, $OrderBy = 'Date DESC')
+	{
+		$ResultatsSQL = Sql::query($Query . "\nORDER BY " . $OrderBy);
+		$Resultats = array();
+		while($Resultat = mysql_fetch_row($ResultatsSQL))
+		{
+			$Resultats[] = $Resultat;
+		}
+		
+		$this->View->Datas = $Resultats;
+		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
+		return $Resultats;
+	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée
 	 *
@@ -191,7 +212,7 @@ abstract class AbstractController
 
 		if($this->IsAjax)
 		{
-			echo json_encode($V->toArray());
+			echo json_encode($V->Datas);
 		}
 		else
 		{

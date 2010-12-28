@@ -39,6 +39,23 @@ WHERE Hash="%ID%"';
 	public static $Props;
 	
 	/**
+	 * Quelles sont les différentes possibilités de changement de statut.
+	 * Sorte de diagramme d'état entre les différentes étapes.
+	 * 
+	 * @var array
+	 */
+	public static $Workflow = array(
+		'VIERGE' 				=> array('ANNULE', 'ATTENTE_CORRECTEUR'),
+		'ATTENTE_CORRECTEUR'	=> array('ANNULE', 'ATTENTE_ELEVE'),
+		'ATTENTE_ELEVE'			=> array('ANNULE', 'ATTENTE_CORRECTEUR', 'EN_COURS'),
+		'EN_COURS'				=> array('ENVOYE', 'ANNULE'),
+		'ENVOYE'				=> array('TERMINE', 'REFUSE'),
+		'REFUSE'				=> array('TERMINE', 'REMBOURSE'),
+		'TERMINE'				=> array(),
+		'ANNULE'				=> array(),
+	);
+	
+	/**
 	 * Génère un hash pour l'insertion d'un exercice.
 	 * 
 	 * @return string(40) un hash.
@@ -102,23 +119,22 @@ WHERE Hash="%ID%"';
 	 * Modifie le statut de l'exercice
 	 * 
 	 * @param string $Status
-	 * @param int $ChangeAuthor l'auteur du changement (id)
+	 * @param Membre $ChangeAuthor l'auteur du changement
 	 * @param string $ChangeMessage
 	 * @param array $Changes autres changements à apporter à l'objet en base de données
 	 */
-	public function setStatus($Status, $ChangeAuthor, $ChangeMessage, array $Changes=array())
+	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes=array())
 	{
+		if(!in_array($Status, self::$Workflow[$this->Statut]))
+		{
+			Debug::fail('Impossible de passer du statut ' . $this->Statut . ' au statut ' . $Status);
+		}
+		
 		$Changes['Statut'] = $Status;
 		
 		$this->setAndSave($Changes);
 		
-		$ToInsert = array(
-			'Exercice' => $this->getFilteredId(),
-			'Membre' => DbObject::filterID($ChangeAuthor),
-			'Action' => $ChangeMessage,
-			'Statut' => $Status);
-		
-		SQL::insert('Exercices_Logs', $ToInsert);
+		$this->log('Exercices_Logs', $ChangeMessage, $ChangeAuthor, $this, array('Statut' => $Status));
 	}
 	
 	public function getFilteredId()

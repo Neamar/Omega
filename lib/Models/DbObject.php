@@ -128,10 +128,14 @@ abstract class DbObject
 		{
 			//Récupérer les éléments à updater sur cette table
 			$CurrentChanges = array_intersect_key($Changes, $Class::$Props);
+
 			if(count($CurrentChanges)!=0)
 			{
 				//Il y a des éléments à mettre à jour sur cette table !
-				SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges);
+				if(!SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges))
+				{
+					Debug::fail('Erreur au setAndSave : ' . Sql::error());
+				}
 			}
 			
 			//Remonter d'un cran :
@@ -178,7 +182,7 @@ abstract class DbObject
 		
 		if(!is_null($Exercice))
 		{
-			$Values['Exercice'] = $Exercice->getFilteredId();
+			$Values['Exercice'] = intval($Exercice->ID);
 		}
 		
 		if(!SQL::insert($Table, $Values))

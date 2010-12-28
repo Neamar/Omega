@@ -1,2 +1,76 @@
+<?php
+/*
+ * Quelques actions communes.
+ */
+$Annulation = array('Annuler l\'exercice.', "Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.", 'suractivite');
 
-Accueil exercice spécifique
+/**
+ * Liste des actions possibles.
+ * Structure :
+ * Statut =>
+ * 	action =>
+ * 		lien => caption[[, explication], documentation]
+ * 
+ * @var array
+ */
+$ListeActions = array(
+	'VIERGE' => array(
+		'recapitulatif' => array('Mettre l\'exercice à disposition des correcteurs', 'Vous pouvez vérifier que toutes les informations nécessaires sont présentes, puis envoyer l\'exercice pour attendre une offre correcteur.', 'attente_correcteur'),
+		'annulation' => $Annulation,
+		'ajout' => array('Ajouter des fichiers', 'Vous pouvez continuer à ajouter des fichiers sur votre exercice.'),
+	),
+	'ATTENTE_CORRECTEUR' => array(
+		'annulation' => $Annulation,
+	),
+	'ANNULE' => array(),
+);
+
+/**
+ * Liste des messages à afficher en fonction du statut.
+ * 
+ * @var array
+ */
+$ListeMessage = array(
+	'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
+	'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
+	'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+);
+?>
+
+<h1>Accueil de l'exercice «&nbsp;<?php echo $this->Exercice->Titre; ?>&nbsp;»</h1>
+<p class="intro"><?php echo $ListeMessage[$this->Exercice->Statut]?></p>
+<h2>Options de l'exercice</h2>
+<?php
+$Actions = $ListeActions[$this->Exercice->Statut];
+foreach($Actions as $URL => &$Action)
+{
+	if(is_array($Action))
+	{
+		$Texte = '<a href="/eleve/exercice/' . $URL . '/' . $this->Exercice->Hash . '">' . $Action[0] . '</a><br />
+<p class="exercice-action-detail">' . $Action[1];
+		if(isset($Action[2]))
+		{
+			$Texte .= '<br />' . $this->Doc_anchor('eleve', $Action[2]);
+		}
+		
+		$Action = $Texte . '</p>';
+	}
+	else
+	{
+		$Action = '<a href="' . $URL . '">' . $Action . '</a>';
+	}
+}
+//TODO : un select "quickjump" pour activer rapidement différentes options.
+
+echo $this->Html_list($Actions);
+?>
+
+<h2>Affichage de l'exercice</h2>
+<?php 
+echo $this->Exercice($this->Exercice);
+?>
+
+<h2>Actions sur l'exercice</h2>
+<?php 
+echo $this->Html_ajaxTable('/eleve/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
+?>

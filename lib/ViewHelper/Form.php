@@ -102,6 +102,21 @@ function ViewHelper_Form_submit($name, $value)
 }
 
 /**
+ * Génère un formulaire basique avec un simple bouton submit (action = la page actuelle)
+ * 
+ * @param string $form_id l'identifiant du formulaire. Form_ sera automatiquement ajouté devant.
+ * @param string $name le nom du bouton
+ * @param unknown_type $value la valeur du bouton
+ */
+function ViewHelper_Form($form_id, $name, $value)
+{
+	return '
+<form method="post" action="" id="form_' . $form_id . '">
+' . ViewHelper_Form_submit($name, $value) . '
+</form>';
+}
+
+/**
  * Génère un select avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
