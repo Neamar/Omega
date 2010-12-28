@@ -41,14 +41,16 @@ class Thumbnail
 	public static function create($Filename)
 	{
 		$Images = array('jpg', 'png', 'jpeg', 'gif');
-		$Extension = Util::Extension($Filename);
+		$Extension = Util::extension($Filename);
 		
 		if(in_array($Extension, $Images))
 		{
 			return self::createImage($Filename);
 		}
 		else
+		{
 			return self::createDefault($Filename);
+		}
 	}
 	
 	/**
@@ -85,7 +87,7 @@ class Thumbnail
 		
 		$Thumb = imagecreatetruecolor(self::WIDTH, self::HEIGHT);
 		imagesavealpha($Thumb, true);
-		imagefill($Thumb , 0,0 , imagecolorallocatealpha($Thumb, 255, 255, 255,127));
+		imagefill($Thumb, 0, 0, imagecolorallocatealpha($Thumb, 255, 255, 255, 127));
 		
 		$Width = imagesx($Source);
 		$Height = imagesy($Source);

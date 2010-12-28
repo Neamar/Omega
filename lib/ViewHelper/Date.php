@@ -26,7 +26,7 @@ function ViewHelper_Date_countdown($Date)
 		$Date = strtotime($Date);
 	}
 	
-	return '<time datetime="' . date('Y-m-d\TH:00+01:00',$Date) . '" class="date">' . date('d/m/y à H\h', $Date) . '</time>';
+	return '<time datetime="' . date('Y-m-d\TH:00+01:00', $Date) . '" class="date">' . date('d/m/y à H\h', $Date) . '</time>';
 }
 
 /**
@@ -41,5 +41,5 @@ function ViewHelper_Date_countdownFull($Date)
 		$Date = strtotime($Date);
 	}
 	
-	return '<time datetime="' . date('Y-m-d\TH:i+01:00',$Date) . '" class="date">' . date('d/m/y à H\hi\m', $Date) . '</time>';
+	return '<time datetime="' . date('Y-m-d\TH:i+01:00', $Date) . '" class="date">' . date('d/m/y à H\hi\m', $Date) . '</time>';
 }

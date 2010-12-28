@@ -228,7 +228,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				else
 				{
 					//Vérification de l'extension
-					$ExtensionFichier = Util::Extension($_FILES['fichiers']['name'][$i]);
+					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
 					if (!in_array($ExtensionFichier, $Extensions))
 					{
 						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';

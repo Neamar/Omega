@@ -106,7 +106,7 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 	$(function()
 	{
 		$("#exercice-' . $Exercice->Hash . '").tabs({
-			disabled: [' . implode(',',$Disabled) . '],
+			disabled: [' . implode(',', $Disabled) . '],
 		});
 	});
 	</script>
