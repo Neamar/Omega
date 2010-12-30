@@ -120,6 +120,7 @@ class Documentation_IndexController extends AbstractController
 		Typo::setTexteFromFile($URL);
 		$HTML = Typo::Parse();
 		
+		$HTML = preg_replace_callback('`\%([A-Z_]+)\%`', 'Documentation_IndexController::parseConstants', $HTML);
 		return $HTML;
 	}
 	
@@ -141,5 +142,10 @@ class Documentation_IndexController extends AbstractController
 		{
 			return 'Page inconnue.';
 		}
+	}
+	
+	public static function parseConstants(array $Constante)
+	{
+		return constant($Constante[1]);
 	}
 }
