@@ -6,7 +6,7 @@
 <?php 
 echo $this->Doc_box('correcteur', 'inscription', 'Besoin d\'aide pour compléter ce formulaire ?');
 ?>
-<form id="form_inscription-correcteur" method="post" action="">
+<form id="form_inscription-correcteur" method="post" enctype="multipart/form-data" action="">
 
 <?php
 echo $this->Form_inputLabelBr(
@@ -48,13 +48,13 @@ echo $this->Form_inputLabelBr(
 	)
 );
 
-echo $this->Form_inputLabelBr(
+echo $this->Form_inputLabel(
 	'telephone',
 	'Votre numéro de téléphone',
 	array(
 		'placeholder'=>'06 00 00 00 00',
 	)
-);
+) . $this->Doc_inputBr('correcteur', 'champ_telephone');
 
 echo $this->Form_inputLabel(
 	'cv',
