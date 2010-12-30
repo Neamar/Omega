@@ -44,6 +44,43 @@ class Correcteur_IndexController extends IndexAbstractController
 	public function connexionAction()
 	{
 		$this->View->setTitle('Connexion correcteur');
+		
+		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
+		if(isset($_SESSION['Correcteur']))
+		{
+			unset($_SESSION['Correcteur']);
+			$this->View->setMessage("info", "Vous vous êtes déconnecté.", 'eleve/deconnexion');
+		}
+		
+		if(isset($_POST['connexion-correcteur']))
+		{
+			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			{
+				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			}
+			else
+			{
+				$Correcteur = $this->logMe($_POST['email'], $_POST['password'], 'Correcteur');
+				if(!is_null($Correcteur))
+				{
+					if($Correcteur->Statut == 'EN_ATTENTE')
+					{
+						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation de notre part. Vous serez informé par mail sous 48h ouvrées.", 'correcteur/validation');
+						unset($_SESSION['Correcteur']); 
+					}
+					else
+					{
+						$this->View->setMessage("infos", "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
+						$this->redirect('/correcteur/');
+					}
+				}
+				else
+				{
+					//TODO : Bloquer après trois connexions ?
+					$this->View->setMessage("error", "Identifiants incorrects.", 'eleve/probleme_connexion');
+				}
+			}
+		}
 	}
 	
 	/**

@@ -114,7 +114,7 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function logMe($Mail, $Pass, $Type)
 	{
-		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT")';
+		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT" AND Type="' . Sql::escape($Type) . '")';
 		
 		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	

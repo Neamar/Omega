@@ -33,7 +33,10 @@ class Correcteur extends Membre
 	WHERE %TABLE%.ID=%ID%';
 	
 	public static $Props;
-
+	
+	public $Nom;
+	public $Prenom;
+	public $Telephone;
 	public $Siret;
 	public $SiretOK;
 	
