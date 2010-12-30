@@ -1,0 +1,16 @@
+<?php 
+foreach($this->Files as $Module => $Pages)
+{
+	?>
+	<h1><?php echo $Module ?></h1>
+	<?php
+	foreach($Pages as $URL => $Page)
+	{
+		?>
+		<h2><a href="/documentation/<?php echo $Module . '/' . $URL ?>"><?php echo $Page['Titre'] ?></a></h2>
+		<?php 
+		Typo::setTexteFromFile($Page['Fichier']);
+		echo Typo::Parse();?>
+		<?php
+	}
+}

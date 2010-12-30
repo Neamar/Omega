@@ -1,21 +1,21 @@
 <?php
 
-//Le parsage du texte s'effectue  en 4 étapes
+//Le parsage du texte s'effectue  en 4 Ã©tapes
 function Typo_Parser($Texte)
 {
-	// 1 : Passer le texte au pré-parser pour effectuer les REPLACE
+	// 1 : Passer le texte au prÃ©-parser pour effectuer les REPLACE
 	$Texte=Typo_MOC($Texte);
-	// 2 : Échapper ce qui doit l'être : liens, mathématiques, entités HTML...
+	// 2 : Ã‰chapper ce qui doit l'Ãªtre : liens, mathÃ©matiques, entitÃ©s HTML...
 	$Texte=Typo_Escape($Texte);
 
 
-	//Si mode debug activé :
+	//Si mode debug activÃ© :
 	if(isset(TYPO::$Options[DEBUG_MODE]))
 		return $Texte;
 
 	// 3 : Parser le texte.
 	$Texte=Typo_Parse($Texte);
-	// 4 : Déséchapper pour pouvoir renvoyer le texte.
+	// 4 : DÃ©sÃ©chapper pour pouvoir renvoyer le texte.
 	$Texte=Typo_unEscape($Texte);
 
 	return $Texte;
@@ -23,10 +23,10 @@ function Typo_Parser($Texte)
 
 function Typo_Escape(&$texte)
 {
-	//Protéger d'une attaque XSS.
+	//ProtÃ©ger d'une attaque XSS.
 	$texte=str_replace(array('<','>'),array('&lt;','&gt;'),$texte);
 
-	//Protection des champs à échapper.
+	//Protection des champs Ã  Ã©chapper.
 	foreach(Typo::$Escape_And_Prepare as $Regexp=>&$Escaping)
 	{
 		$Escaping['_Occurrences']=array();
@@ -54,7 +54,7 @@ function Typo_Escape(&$texte)
 
 function Typo_unEscape(&$texte)
 {
-	//Déséchapper ce qui doit l'être.
+	//DÃ©sÃ©chapper ce qui doit l'Ãªtre.
 	foreach(Typo::$Escape_And_Prepare as $Regexp=>&$Escaping)
 	{
 		foreach($Escaping['_Occurrences'] as $ID=>$Occurrence)
@@ -72,7 +72,7 @@ function Typo_unEscape(&$texte)
 
 function Typo_MOC(&$texte)
 {//Meta Object Compiler.
-//Processe le texte pour effectuer les modifications nécessaires.
+//Processe le texte pour effectuer les modifications nÃ©cessaires.
 //Syntaxe : {{NOM|Options|Texte}}
 preg_match_all('#{{\[REPLACE\|(.+)\|(.+)\]}}#',$texte,$REPLACE,PREG_SET_ORDER);
 foreach($REPLACE as $MocExpr)
@@ -86,9 +86,9 @@ foreach($REPLACE as $MocExpr)
 preg_match_all('#{{\[REG-REPLACE\|(.+)\|(.+)\]}}#',$texte,$REPLACE,PREG_SET_ORDER);
 foreach($REPLACE as $MocExpr)
 {
-	//Supprimer la MOC (en échappant le délimiteur):
+	//Supprimer la MOC (en Ã©chappant le dÃ©limiteur):
 	$texte=preg_replace("#\n?" . preg_quote($MocExpr[0],'#') . "\n?#",'',$texte);
-	//Puis effectuer les remplacements selon l'expression régulière.
+	//Puis effectuer les remplacements selon l'expression rÃ©guliÃ¨re.
 	$texte=preg_replace($MocExpr[1],$MocExpr[2],$texte);
 
 }
@@ -103,20 +103,20 @@ function Typo_Parse($texte)
 
 
 
-//Ponctuez-moi tout ça !
+//Ponctuez-moi tout Ã§a !
 	$texte=preg_replace(array_keys(Typo::$Ponctuation),array_values(Typo::$Ponctuation),$texte);
 
 
 
-//Caractères spéciaux
-	$SpecialChar=array_merge(Typo::$SpecialChar,Typo::$_SpecialChar);//Créer le tableau à partir des deux tableaux : le premier contient des données qui peuvent avoir été modifiées par l'utilisateur, le second contient les remplacement inhérents au texte HTML.
+//CaractÃ¨res spÃ©ciaux
+	$SpecialChar=array_merge(Typo::$SpecialChar,Typo::$_SpecialChar);//CrÃ©er le tableau Ã  partir des deux tableaux : le premier contient des donnÃ©es qui peuvent avoir Ã©tÃ© modifiÃ©es par l'utilisateur, le second contient les remplacement inhÃ©rents au texte HTML.
 	$texte=str_replace(array_keys($SpecialChar),array_values($SpecialChar),$texte);
 
 
 
 
 
-//Footnote : préparer dès maintenant.
+//Footnote : prÃ©parer dÃ¨s maintenant.
 	if(isset(Typo::$Options[ALLOW_FOOTNOTE]))
 		$texte=Typo::preg_replace_wb('#\\\\footnote{(.+)}#isU','@[FN:$1' . "\n" . ']@',$texte);
 
@@ -154,7 +154,7 @@ function Typo_Parse($texte)
 
 
 //////////
-//Début du parsage "important"
+//DÃ©but du parsage "important"
 //////////
 	$texte=Typo_parseLines($texte);
 
@@ -193,7 +193,7 @@ function Typo_Parse($texte)
 
 
 
-//C'est fini, le texte est prêt à être renvoyé.
+//C'est fini, le texte est prÃªt Ã  Ãªtre renvoyÃ©.
 	return $texte;
 	}
 
@@ -202,10 +202,10 @@ function Typo_Parse($texte)
 function Typo_parseLines($texte)
 {
 	//Mise en paragraphe
-	$arrTexte=explode("\n",str_replace("\r",'',$texte));//Passer en mode "End Of Line \n", et couper le texte à chaque saut de ligne.
+	$arrTexte=explode("\n",str_replace("\r",'',$texte));//Passer en mode "End Of Line \n", et couper le texte Ã  chaque saut de ligne.
 	$NbLignes=count($arrTexte);
 	$texte='';
-	$parOpen=false;//Détermine si un paragraphe est ouvert.
+	$parOpen=false;//DÃ©termine si un paragraphe est ouvert.
 	$listeOpen=false;
 	$envOpen=false;
 
@@ -224,7 +224,7 @@ function Typo_parseLines($texte)
 			}
 			if($listeOpen)
 			{
-				$texte .='</ul>' . "\n";;//Fermer la dernière liste.
+				$texte .='</ul>' . "\n";;//Fermer la derniÃ¨re liste.
 				$listeOpen=false;
 			}
 			$envContent='';
@@ -250,7 +250,7 @@ function Typo_parseLines($texte)
 			$texte .= "\n" . $envContent . "\n";
 			$envOpen=true;
 		}
-//Éléments de liste
+//Ã‰lÃ©ments de liste
 		if(preg_match('#^\s*\\\\item\s(.+)$#i',$Ligne,$ListItem))
 		{//Item de liste
 			if(!$listeOpen)
@@ -265,14 +265,14 @@ function Typo_parseLines($texte)
 			$Ligne='';
 		}
 		elseif($listeOpen)
-		{//Pas d'item détécté, mais que l'on est quand même en environnement liste :
+		{//Pas d'item dÃ©tÃ©ctÃ©, mais que l'on est quand mÃªme en environnement liste :
 			$listeOpen=false;
 			$texte .='</ul>' . "\n";
 		}
 
 //Paragraphes standards
 		if($listeOpen || $envOpen)
-		{/*Ne rien faire si on est en mode liste : la ligne a déjà été traitée*/}
+		{/*Ne rien faire si on est en mode liste : la ligne a dÃ©jÃ  Ã©tÃ© traitÃ©e*/}
 		elseif(preg_match('#^(~+)(.*)$#',$Ligne,$Coupure))
 		{//~~~~~ indique un trait horizontal, une rupture dans le rythme.
 			if($parOpen)
@@ -282,13 +282,13 @@ function Typo_parseLines($texte)
 			else
 				$texte .='<hr />';
 			$parOpen=false;
-			if($Coupure[2]!='')//Il y a du texte après, le réinjecter.
+			if($Coupure[2]!='')//Il y a du texte aprÃ¨s, le rÃ©injecter.
 			{
 				$arrTexte[$i]=$Coupure[2];
 				$i--;
 			}
 		}
-		elseif(preg_match('#^\s*\$(.+)\$\s*$#',$Ligne,$Formule))//Ne tester qu'un seul $ car le premier $ aura été remplacé lors de l'échappement
+		elseif(preg_match('#^\s*\$(.+)\$\s*$#',$Ligne,$Formule))//Ne tester qu'un seul $ car le premier $ aura Ã©tÃ© remplacÃ© lors de l'Ã©chappement
 		{
 			if($parOpen)
 				FermeParagraphe($texte);
@@ -332,10 +332,10 @@ function Typo_parseLines($texte)
 	if($parOpen)
 		FermeParagraphe($texte);//Fermer le dernier paragraphe.
 	if($listeOpen)
-		$texte .='</ul>' . "\n";;//Fermer la dernière liste.
+		$texte .='</ul>' . "\n";;//Fermer la derniÃ¨re liste.
 
 	if(preg_match('#\\\\(.+)(\\[|{)#',$texte,$Match))
-		Typo::RaiseError('Attention, une balise inconnue (ou mal utilisée) a été trouvée : <strong>' . $Match[0] . '</strong>.');
+		Typo::RaiseError('Attention, une balise inconnue (ou mal utilisÃ©e) a Ã©tÃ© trouvÃ©e : <strong>' . $Match[0] . '</strong>.');
 	return $texte;
 }
 

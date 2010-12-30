@@ -1,5 +1,5 @@
 <?php
-/*Une classe qui permet de convertir un texte "brut" en texte « typographiquement correct » : paragraphes, ponctuations et autres petites choses.*/
+/*Une classe qui permet de convertir un texte "brut" en texte Â« typographiquement correct Â» : paragraphes, ponctuations et autres petites choses.*/
 include('Parser.php');
 
 define('P_UNGREEDY',1);
@@ -7,32 +7,32 @@ define('ALLOW_SECTIONING',2);
 define('ALLOW_FOOTNOTE',3)/*=FOOTNOTE_DEFAULT*/;
 	define('FOOTNOTE_DEFAULT','%n');
 	define('FOOTNOTE_SCIENCE','(%n)');
-define('PARSE_MATH',4);//Utiliser le parseur mathématique
-define('RAISE_NO_ERROR',5);//Option pour ne pas afficher les erreurs. Déconseillée dans la majorité des cas !
-define('FIX_MISMATCHED_DELIMITERS',6);//Option pour tenter une correction des accolades mal fermées. Déconseillée dans la majorité des cas !
+define('PARSE_MATH',4);//Utiliser le parseur mathÃ©matique
+define('RAISE_NO_ERROR',5);//Option pour ne pas afficher les erreurs. DÃ©conseillÃ©e dans la majoritÃ© des cas !
+define('FIX_MISMATCHED_DELIMITERS',6);//Option pour tenter une correction des accolades mal fermÃ©es. DÃ©conseillÃ©e dans la majoritÃ© des cas !
 define('DEBUG_MODE',7);
 define('GESHI_PATH',substr(__FILE__,0,strrpos(__FILE__,'/')) . '/../../lib/geshi.php');
 
 class Typo
 {
 	public static $Footnotes;
-	//Le nombre de footnotes, permet d'éviter la répétion des mêmes numéros quand plusisuers textes sont parsés sur la même page.
+	//Le nombre de footnotes, permet d'Ã©viter la rÃ©pÃ©tion des mÃªmes numÃ©ros quand plusisuers textes sont parsÃ©s sur la mÃªme page.
 	public static $RecNbFootNote=0;
-	// Déclarations des données membres
+	// DÃ©clarations des donnÃ©es membres
 	 private static $Texte='';
 	 public static $Options=array(
 		ALLOW_SECTIONING=>true,
 		ALLOW_FOOTNOTE=>FOOTNOTE_DEFAULT,
 	);
 
-//Définition des balises supportées. Il est extrêmement simple d'ajouter ses propres balises, ou de modifier celles existants, puisque le tableau est en public.
+//DÃ©finition des balises supportÃ©es. Il est extrÃªmement simple d'ajouter ses propres balises, ou de modifier celles existants, puisque le tableau est en public.
 	public static $Balise;
 
 
-//Caractères spéciaux supportés et reconnus.
-	//Ce premier tableau contient les remplacements qui doivent être effectués en interne, il est préférable de ne pas y toucher.
+//CaractÃ¨res spÃ©ciaux supportÃ©s et reconnus.
+	//Ce premier tableau contient les remplacements qui doivent Ãªtre effectuÃ©s en interne, il est prÃ©fÃ©rable de ne pas y toucher.
 	public static $_SpecialChar;
-	//Ce second tableau est modifiable (portée public). Vous aurez peut être besoin d'y ajouter vos propres caractères.
+	//Ce second tableau est modifiable (portÃ©e public). Vous aurez peut Ãªtre besoin d'y ajouter vos propres caractÃ¨res.
 	public static $SpecialChar;
 
 	public static $Ponctuation;
@@ -41,26 +41,26 @@ class Typo
 	public static $EscapeString='[@=INTERNAL-%n-%c=@]';
 	public static $Escape_And_Prepare=array
 	(
-	'#\\\\begin\[[a-z]+\]{code}\s([^ù]+)\s\\\\end{code}#isU'=>array//Indique un code source
+	'#\\\\begin\[[a-z]+\]{code}\s([^Ã¹]+)\s\\\\end{code}#isU'=>array//Indique un code source
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>1,
-		'Protect'=>'CODEù',
+		'Protect'=>'CODEÃ¹',
 		),
-	'#\\\\verbatim{([^@]+)}#isU'=>array//Verbatim indique un texte qui ne doit pas être modifié. Pas environnement, pour inline. Doit être en premier pour éviter d'autres échappements à l'intérieur.
+	'#\\\\verbatim{([^@]+)}#isU'=>array//Verbatim indique un texte qui ne doit pas Ãªtre modifiÃ©. Pas environnement, pour inline. Doit Ãªtre en premier pour Ã©viter d'autres Ã©chappements Ã  l'intÃ©rieur.
 		(
 		'Protect'=>'VERBATIM-INLINE',
 		'RegexpCode'=>1,
 		),
-	'#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU'=>array//Idem pour les environnements mathématiques. À échapper avant la suite !
+	'#(^|[^\\\\])(\$([^Ã¹\n\$]+)\$)#iU'=>array//Idem pour les environnements mathÃ©matiques. Ã€ Ã©chapper avant la suite !
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>2,
-		'Protect'=>'MATHù',
+		'Protect'=>'MATHÃ¹',
 		'Replace'=>'<math>%n</math>',
 		'Modifications'=>array('$'=>'','&amp;'=>'&'),
 		),
-	'#\\\\(~|\{|\}|\[|\]|\$|\&|\"|oe|ae|\.|,|;|:|!|\?)#iU'=>array//Certains caractères doivent être échappés : l'accolade par exemple.
+	'#\\\\(~|\{|\}|\[|\]|\$|\&|\"|oe|ae|\.|,|;|:|!|\?)#iU'=>array//Certains caractÃ¨res doivent Ãªtre Ã©chappÃ©s : l'accolade par exemple.
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>0,
@@ -68,13 +68,13 @@ class Typo
 		'Modifications'=>array('\\'=>''),
 		),
 
-	'#&(\#?[0-9A-Z]+);#iU'=>array//Échapper les entités HTML
+	'#&(\#?[0-9A-Z]+);#iU'=>array//Ã‰chapper les entitÃ©s HTML
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>0,
 		'Protect'=>'HTML-ENTITY',
 		),
-	'#\\\\(lien|link|l)\[([^\[]+)\]{(.+)}#iU'=>array//Les liens ne doivent pas être parsés, sinon http://neamar.fr/i.php?test devient http : //neamar. fr /i. php&nbsp;? test
+	'#\\\\(lien|link|l)\[([^\[]+)\]{(.+)}#iU'=>array//Les liens ne doivent pas Ãªtre parsÃ©s, sinon http://neamar.fr/i.php?test devient http : //neamar. fr /i. php&nbsp;? test
 		(
 		'RegexpCode'=>2,
 		'Protect'=>'LINK',
@@ -86,7 +86,7 @@ class Typo
 		'Protect'=>'IMAGE',
 		'Modifications'=>array('&'=>'&amp;'),
 		),
-	'#\\\\begin{verbatim}\s(.[^@].+)\s\\\\end{verbatim}#isU'=>array//Verbatim indique un texte qui ne doit pas être modifié. Environnement.
+	'#\\\\begin{verbatim}\s(.[^@].+)\s\\\\end{verbatim}#isU'=>array//Verbatim indique un texte qui ne doit pas Ãªtre modifiÃ©. Environnement.
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>1,
@@ -98,7 +98,7 @@ class Typo
 ///////////////////////////////////////////////////////////// GESTION DES OPTIONS AVANT LE PARSAGE DU TEXTE
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//Enregistrer un texte. LE texte pourra ensuite être rendu avec Parse() ou afficher dans un IDE pour modification.
+	//Enregistrer un texte. LE texte pourra ensuite Ãªtre rendu avec Parse() ou afficher dans un IDE pour modification.
 	 public static function setTexte($TexteToParse)
 	 {
 			if(is_string($TexteToParse))
@@ -111,7 +111,7 @@ class Typo
 				self::$Texte=$TexteToParse;
 			}
 			else
-				self::RaiseError('Le texte doit être un string.');
+				self::RaiseError('Le texte doit Ãªtre un string.');
 	 }
 
 	//Charger un texte depuis un fichier.
@@ -157,7 +157,7 @@ class Typo
 		if(is_file($File))
 			include($File);
 		else
-			Typo::RaiseError('Impossible de charger la langue <strong>' . $LNG . '</strong>. Le fichier associé n\'existe pas.');
+			Typo::RaiseError('Impossible de charger la langue <strong>' . $LNG . '</strong>. Le fichier associÃ© n\'existe pas.');
 	}
 
 	//La fonction la plus utile, le parsage du texte et son renvoi.
@@ -166,16 +166,16 @@ class Typo
 		if(self::$Texte!='')
 			return Typo_Parser(self::$Texte);
 		else
-			self::RaiseError('Aucun texte chargé.');
+			self::RaiseError('Aucun texte chargÃ©.');
 	}
 
-	//Parsage linéaire, c-à-d que toutes les balises HTML sons supprimées. Seul reste le texte et les entités HTML.
+	//Parsage linÃ©aire, c-Ã -d que toutes les balises HTML sons supprimÃ©es. Seul reste le texte et les entitÃ©s HTML.
 	public static function parseLinear($ShowWarning=false)
 	{//Retourne le texte sans les balises entourantes.
 		return str_replace("\n",'',preg_replace('#<([A-Z][A-Z0-9]*)\b[^>]*>(.*)</\1>#Ui','$2',self::Parse()));
 	}
 
-	//Créer un IDE pour la modification du texte.
+	//CrÃ©er un IDE pour la modification du texte.
 	public static function renderIDE($Param=array())
 	{
 		include_once('IDE.php');
@@ -186,13 +186,13 @@ class Typo
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////// FONCTIONS STATIQUES UTILISÉES LORS DE LA GÉNÉRATION DU TEXTE
+///////////////////////////////////////////////////////////// FONCTIONS STATIQUES UTILISÃ‰ES LORS DE LA GÃ‰NÃ‰RATION DU TEXTE
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Gestionnaire de note de bas de page
 	public static function FootNote_handler($Partie)
 	{
-		//Si deux footnotes ont le même texte, le numéro reste le même.
+		//Si deux footnotes ont le mÃªme texte, le numÃ©ro reste le mÃªme.
 		if(!in_array($Partie[1],Typo::$Footnotes))
 		{
 			Typo::$Footnotes[]=$Partie[1];
@@ -205,7 +205,7 @@ class Typo
 			$Identifier='-' . floor(rand(0,1000));
 		}
 
-		$Caption=str_replace('%n',$NbFootNote,Typo::$Options[ALLOW_FOOTNOTE]);//Récupérer le style d'affichage du footnote.
+		$Caption=str_replace('%n',$NbFootNote,Typo::$Options[ALLOW_FOOTNOTE]);//RÃ©cupÃ©rer le style d'affichage du footnote.
 		$Partie[1]=str_replace('"','\'',preg_replace('#\<([^\<]+)\>#','',$Partie[1]));
 		$Partie[1]=preg_replace('#\[@=INTERNAL-(.+)-(.+)\]#iU','[cliquez pour voir]',$Partie[1]);
 		return '<sup><a class="footnote" id="Note-' . $NbFootNote . $Identifier . '" href="#Ref-' . $NbFootNote . '" title="' . str_replace(array("\n",'\\'),'',$Partie[1]) .'">' . $Caption . '</a></sup>';
@@ -213,7 +213,7 @@ class Typo
 
 	//Gestionnaire des chiffres.
 	public static function FormaterNombres($Nombre)
-	{//[1] : avant le chiffre, [2] : le chiffre avec les espaces éventuels.
+	{//[1] : avant le chiffre, [2] : le chiffre avec les espaces Ã©ventuels.
 		if(strpos($Nombre[2],' ')===false && $Nombre[2]<2500 && $Nombre[1]!=','  && $Nombre[1]!='.')//Ne pas mettre en forme les dates
 			return $Nombre[0];
 		else
@@ -221,17 +221,17 @@ class Typo
  			//On ne peut pas passer par number_format qui formate les leading zeros.
 			$NombreAFormater=str_replace(' ','',$Nombre[2]); $NombreFormate=''; $j=0;
 
-			//S'il s'agit d ela partie décimale d'un chiffre, la règle pour l'ajout d'espace est inversée.
+			//S'il s'agit d ela partie dÃ©cimale d'un chiffre, la rÃ¨gle pour l'ajout d'espace est inversÃ©e.
 			if($Nombre[1]==',')
 				$NombreAFormater=strrev($NombreAFormater);
 
-			//Boucle à l'envers (il faut commencer par la fin pour placer correctement les espaces)
+			//Boucle Ã  l'envers (il faut commencer par la fin pour placer correctement les espaces)
 			for($i=strlen($NombreAFormater)-1;$i>=0;$i--)
 			{
 				$j++;
 				$NombreFormate .= $NombreAFormater[$i];
 				if($j % 3 == 0 && $i!=0)
-					$NombreFormate .='@';//On doit passer par un caractère unique car on ne sait pas si on appliquera un strrev à la fin.
+					$NombreFormate .='@';//On doit passer par un caractÃ¨re unique car on ne sait pas si on appliquera un strrev Ã  la fin.
 			}
 
 			if($Nombre[1]!=',')
@@ -243,32 +243,32 @@ class Typo
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////// FONCTIONS TECHNIQUES UTILISÉES POUR L'INTERFAÇAGE PHP
+///////////////////////////////////////////////////////////// FONCTIONS TECHNIQUES UTILISÃ‰ES POUR L'INTERFAÃ‡AGE PHP
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//Déclencher une erreur : balise inconnue, impossible de charger un environnement...
+	//DÃ©clencher une erreur : balise inconnue, impossible de charger un environnement...
 	public static function RaiseError($e)
 	{
 		if(!isset(self::$Options[RAISE_NO_ERROR]))
-			echo('<p><strong>ERREUR dans la classe <em>Typo</em></strong> : ' . $e . '</p>');
+			echo('<p style="border:1px solid red;"><strong>ERREUR dans la classe <em>Typo</em></strong> : ' . $e . '</p>');
 	}
 
 	public static function preg_match_wb($Regexp,$Texte,&$Resultat)
 	{
-		if(preg_match($Regexp,$Texte,$Resultat))//Effectuer la requête initiale.
+		if(preg_match($Regexp,$Texte,$Resultat))//Effectuer la requÃªte initiale.
 		{
 			foreach($Resultat as $n=>$Match)
-			{//Pour chaque parenthèse capturante
+			{//Pour chaque parenthÃ¨se capturante
 				if($n>0 && strpos($Match,'{')!==false)
-				{//On a une accolade ouvrante présente : il va falloir mettre les mains dans le cambouis
+				{//On a une accolade ouvrante prÃ©sente : il va falloir mettre les mains dans le cambouis
 					$InitialMatch=$Match;
 					$Offset=strpos($Texte,$Resultat[0]);
-					$Offset=strpos($Texte,$Match,$Offset);//Cette fois, on a positionné le curseur au bon endroit : on est prêt à chercher.
+					$Offset=strpos($Texte,$Match,$Offset);//Cette fois, on a positionnÃ© le curseur au bon endroit : on est prÃªt Ã  chercher.
 					$Depart=$Offset;
 					$Taille=strlen($Texte);
 					$NestingLevel=0;
 					while($NestingLevel>=0 && $Offset<$Taille-1)
-					{//Parcourir la chaine à la recherche d'accolades, jusqu'à ce qu'on trouve l'accolade fermante correspondante.
+					{//Parcourir la chaine Ã  la recherche d'accolades, jusqu'Ã  ce qu'on trouve l'accolade fermante correspondante.
 						$Offset++;
 						if($Texte[$Offset]=='{')
 							$NestingLevel++;
@@ -285,7 +285,7 @@ class Typo
 			return false;
 	}
 
-	//Les commentaires des cette section sont en anglais car j'ai rédigé un article sur cette section : http://neamar.fr/Res/RegexpWithBraces/
+	//Les commentaires des cette section sont en anglais car j'ai rÃ©digÃ© un article sur cette section : http://neamar.fr/Res/RegexpWithBraces/
 	public static function preg_replace_wb($pattern,$replacement,&$subject)
 	{
 		preg_match_all($pattern,$subject,$MatchingString,PREG_SET_ORDER);//$MatchingString now hold all strings matching $pattern.
@@ -340,6 +340,6 @@ class Typo
 }
 
 
-//Charger les options par défaut
+//Charger les options par dÃ©faut
 Typo::switchLanguage('fr');
 ?>
