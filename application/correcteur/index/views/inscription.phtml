@@ -1,1 +1,89 @@
 <h1>Inscription correcteur</h1>
+<p class="info">L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences.</p>
+
+<p class="see-link"><a href="/eleve/connexion">Déjà membre ?</a></p>
+
+<?php 
+echo $this->Doc_box('correcteur', 'inscription', 'Besoin d\'aide pour compléter ce formulaire ?');
+?>
+<form id="form_inscription-correcteur" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
+	array(
+		'type'=>'email',
+		'placeholder'=>'nom@fai.fr',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
+	array(
+		'type'=>'password',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password_confirm',
+	'Confirmez votre mot de passe',
+	array(
+		'type'=>'password',
+	)
+);
+	
+echo $this->Form_inputLabelBr(
+	'nom',
+	'Votre nom',
+	array(
+		'placeholder'=>'Dupont',
+	)
+);
+
+echo $this->Form_inputLabelBr(
+	'prenom',
+	'Votre prénom',
+	array(
+		'placeholder'=>'Jean',
+	)
+);
+
+echo $this->Form_inputLabelBr(
+	'telephone',
+	'Votre numéro de téléphone',
+	array(
+		'placeholder'=>'06 00 00 00 00',
+	)
+);
+
+echo $this->Form_inputLabel(
+	'cv',
+	'Votre CV (PDF uniquement)',
+	array(
+		'type'=>'file',
+	)
+) . $this->Doc_inputBr('correcteur', 'pourquoi_cv');
+
+echo $this->Doc_box(
+	'correcteur',
+	'comment_autoentreprise',
+	"Vous devez nous fournir un numéro de SIRET valide. Si vous venez de vous inscrire en tant qu'auto-entrepreneur et que vous n'avez pas encore reçu votre numéro, vous pouvez laisser ce champ vide.<br />
+	<strong>Attention, aucun paiement ne pourra être effectué tant que vous n'aurez pas fourni ce numéro.</strong>"
+);
+
+echo $this->Form_inputLabel(
+	'siret',
+	'Votre numéro de SIRET',
+	array(
+		'placeholder'=>'000 000 000 00000',
+	)
+) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
+?>
+CGU Correcteurs<br />
+
+<?php 
+echo $this->Form_checkbox('cgu', "J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
+//TODO : ajouter CAPTCHA.
+echo $this->Form_submit('inscription-correcteur', "Me proposer comme correcteur");
+?>
+</form>
