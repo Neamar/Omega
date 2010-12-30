@@ -44,9 +44,14 @@ if($this->NbFiles > 0)
 		<?php 
 		echo $SizeLimit . "\n";
 		for($i=0; $i < $this->NbFilesUpload; $i++)
-		{?>
-			<input type="file" name="fichiers[]" id="fichiers-noscript" accept="<?php echo EXTENSIONS ?>" /><br />
-			<?php
+		{
+			//TODO : <input type="file" name="fichiers[]" id="fichiers-noscript" /><br />
+			echo $this->Form_input(
+				'fichiers[]',
+				array(
+					'type'=>'file',
+				)
+			) . "<br />\n";
 		}
 		?>
 		
