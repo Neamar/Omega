@@ -103,8 +103,6 @@ class Debug_IndexController extends AbstractController
 		$this->View->setTitle('Documentation eDevoir');
 		include OO2FS::controllerPath('index', 'documentation');
 		
-		Documentation_IndexController::initTypo();
-		
 		$Files = array();
 		foreach(Documentation_IndexController::$Pages as $Section => $Pages)
 		{

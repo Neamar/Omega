@@ -26,6 +26,11 @@
  */
 class Documentation_IndexController extends AbstractController
 {
+	/**
+	 * Liste des pages de documentation 
+	 * 
+	 * @var array
+	 */
 	public static $Pages = array
 	(
 		'foo' => array
@@ -87,12 +92,35 @@ class Documentation_IndexController extends AbstractController
 		),
 	);
 	
+	/**
+	 * Initialise le Typographe pour une utilisation avec la documentation.
+	 */
 	public static function initTypo()
 	{
 		include PATH . '/lib/Typo/Typo.php';
 		Typo::addOption(PARSE_MATH);
 		Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.html">$2</a>');
 		Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
+	}
+	
+	/**
+	 * Renvoie le contenu d'un fichier mis en forme.
+	 * 
+	 * @param string $URL
+	 * 
+	 * @return string du HMTL.
+	 */
+	public static function parseFile($URL)
+	{
+		if(!class_exists('Typo',false))
+		{
+			self::initTypo();
+		}
+		
+		Typo::setTexteFromFile($URL);
+		$HTML = Typo::Parse();
+		
+		return $HTML;
 	}
 	
 	/**
