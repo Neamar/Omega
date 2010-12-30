@@ -1,0 +1,193 @@
+em em
+{/*Deux mises en emphase ramènenent à l'état standard*/
+	font-style:normal;
+}
+
+em em em, em.italique
+{/*Trois mises en emphase : retour à l'italique ou forçage de l'italique.*/
+	font-style:italic;
+}
+
+em.emph1 {color:blue;}
+em.emph2 {color:red;}
+em.emph3 {color:green;}
+em.emph4 {color:maroon;}
+em.emph5 {color:purple;}
+em.emph6 {color:navy;}
+
+
+abbr, acronym
+{/*Afficher un curseur en forme. de point d'interrogation sur les acronymes*/
+	border-bottom: 1px dotted #333;
+	cursor: help;
+}
+
+sup a
+{/*Masquer le style des liens pour les liens en footnote.*/
+	text-decoration:none;
+	color:black;
+}
+
+table
+{
+	margin:auto;
+}
+
+li
+{
+	clear:left;
+}
+
+
+
+/*/////////////////////////////////////
+//ENVIRONNEMENTS
+/////////////////////////////////////*/
+.abstract
+{
+	margin:10px;
+	padding:20px;
+	font-size:.9em;
+	border-left:1px solid gray;
+	border-right:1px solid gray;
+	font-style:italic;
+}
+
+.abstract:before
+{
+	display:block;
+	content:"RÉSUMÉ";
+	text-align:center;
+}
+
+table.quizz
+{
+	cursor:help;
+}
+
+table.quizz caption
+{
+	border:none;
+}
+
+table.quizz tr .answer
+{
+	visibility:hidden;
+}
+
+table.quizz tr:hover .answer
+{
+	visibility:visible;
+}
+
+form.qcm h5
+{
+	text-align:center;
+}
+
+form.qcm .qcm_wrapper
+{
+	margin:auto;
+	-webkit-column-count:2;
+	-moz-column-count:2;
+	-moz-column-gap: 1em;
+	-moz-column-rule:1px solid gray;
+	column-count: 2;
+	column-gap: 1em;
+	column-rule:1px solid gray;
+}
+
+form.qcm fieldset
+{
+	border:1px dashed green;
+}
+
+form.qcm fieldset legend
+{
+	font-size:.8em;
+}
+
+form.qcm div.qcm_answer
+{
+	padding-left:10px;
+	margin-left:10px;
+	border-left:1px solid gray;
+}
+
+.verse p
+{
+	text-align:center;
+	font-style:italic;
+	text-indent:0;
+}
+
+
+
+
+/* Classes sur quelques éléments. */
+span.quickref
+{
+	border:1px dotted green;
+	background-color:#abffab;
+	font-family:Courrier;
+	margin:4px;
+}
+
+span.roman
+{
+	text-transform:lowercase;
+	font-variant:small-caps;
+}
+
+p.displaymath
+{
+	text-align:center;
+}
+
+hr.court
+{
+	width:40%;
+}
+
+hr.footnote
+{/*La barre de séparation des notes de bas de page.*/
+	margin-left:0;
+	margin-bottom:0;
+}
+
+hr.footnote + ol
+{/*Le contenu des notes est légérement plus petit que le reste du texte.*/
+	font-size:85%;
+	margin-top:1px;
+	list-style-type: none;
+}
+
+hr.footnote + ol li
+{/*Le contenu des notes est légérement plus petit que le reste du texte.*/
+	line-height:1em;
+}
+
+
+
+
+
+
+
+
+
+/* Et enfin, des classes abstraites qui peuvent s'appliquer partout. */
+.ss
+{/*Fonte sans serif (sans les empattements sur les lettres)*/
+	font-family:sans-serif;
+}
+
+.ms
+{/*Fonte monospace (espacement constant). Obsolet (remplacé par <tt>) mais gardé pour compatibilité*/
+	font-family:monospace;
+}
+
+.century
+{
+	text-transform:lowercase;
+	font-variant:small-caps;
+}
