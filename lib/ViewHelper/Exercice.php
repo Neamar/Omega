@@ -31,7 +31,7 @@ if(!function_exists("ViewHelper_Html_list"))
  * @param Exercice $Exercice
  * @param string $Tab l'onglet ouvert par défaut
  */
-function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
+function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 {
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
 	$Files = $Exercice->getFiles();

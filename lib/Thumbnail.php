@@ -129,7 +129,7 @@ class Thumbnail
 		);
 		imagepng($Thumb, $ThumbFilename, 8);
 		
-		return str_replace(PATH, '',$ThumbFilename);
+		return str_replace(PATH, '', $ThumbFilename);
 	}
 	
 	/**
