@@ -31,9 +31,9 @@ abstract class IndexAbstractController extends AbstractController
 	 * Appelle la fonction create_account_special() qui gère les opérations spécifiques (tables héritées)
 	 * 
 	 * @param array $Data les données envoyées
-	 * 
+	 * @param string $Type (ELEVE|CORRECTEUR)
 	 */
-	protected function createAccount(array $Datas)
+	protected function createAccount(array $Datas, $Type)
 	{
 		if(!filter_var($Datas['email'], FILTER_VALIDATE_EMAIL))
 		{
@@ -60,10 +60,11 @@ abstract class IndexAbstractController extends AbstractController
 			//Commencer une transaction pour garantir l'intégrité :
 			SQL::start();
 			$ToInsert = array(
-				'Mail'=> $Datas['email'],
-				'Pass'=>sha1(SALT . $Datas['password']),
-				'_Creation'=>'NOW()',
-				'_Connexion'=>'NOW()',
+				'Mail' => $Datas['email'],
+				'Pass' => sha1(SALT . $Datas['password']),
+				'_Creation' => 'NOW()',
+				'_Connexion' => 'NOW()',
+				'Type' => $Type,
 			);
 			if(!Sql::insert('Membres', $ToInsert))
 			{

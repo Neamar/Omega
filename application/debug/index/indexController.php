@@ -147,21 +147,33 @@ class Debug_IndexController extends AbstractController
 					{
 						if (filetype($dir . "/" . $object) == "dir")
 						{
-							rrmdir($dir."/".$object);
+							rrmdir($dir . "/" . $object);
 						}
 						else
 						{
-							unlink($dir."/".$object);
+							unlink($dir . "/" . $object);
 						}
 					}
 				}
 				reset($objects);
 				rmdir($dir);
 			}
-			rrmdir(PATH . '/public/exercices');
-			$Actions[] = 'Exercices supprimés.';
+			
+			if(is_dir(PATH . '/public/exercices'))
+			{
+				rrmdir(PATH . '/public/exercices');
+				$Actions[] = 'Exercices supprimés.';
+			}
 			mkdir(PATH . '/public/exercices');
 			$Actions[] = 'Dossier exercice créé et prêt à servir.';
+			
+			if(is_dir(PATH . '/data/CV'))
+			{
+				rrmdir(PATH . '/data/CV');
+				$Actions[] = 'CV supprimés.';
+			}
+			mkdir(PATH . '/data/CV');
+			$Actions[] = 'Dossier CV créé et prêt à servir.';
 			
 			/*
 			* Troisième partie : reconstruction de la DB.

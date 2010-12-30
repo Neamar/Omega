@@ -109,7 +109,7 @@ class Eleve_IndexController extends IndexAbstractController
 			}
 			else
 			{
-				$ID = $this->createAccount($_POST);
+				$ID = $this->createAccount($_POST, 'ELEVE');
 				if($ID != FAIL)
 				{
 					//Enregistrer le nouveau membre et le rediriger vers la page de connexion
