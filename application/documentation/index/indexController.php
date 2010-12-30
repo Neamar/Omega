@@ -26,7 +26,7 @@
  */
 class Documentation_IndexController extends AbstractController
 {
-	private static $_Pages = array
+	public static $Pages = array
 	(
 		'foo' => array
 		(
@@ -87,6 +87,14 @@ class Documentation_IndexController extends AbstractController
 		),
 	);
 	
+	public static function initTypo()
+	{
+		include PATH . '/lib/Typo/Typo.php';
+		Typo::addOption(PARSE_MATH);
+		Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.html">$2</a>');
+		Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
+	}
+	
 	/**
 	 * Récupère le titre d'une page.
 	 * 
@@ -97,9 +105,9 @@ class Documentation_IndexController extends AbstractController
 	 */
 	public static function getTitle($section, $page)
 	{
-		if(isset(self::$_Pages[$section][$page]))
+		if(isset(self::$Pages[$section][$page]))
 		{
-			return self::$_Pages[$section][$page];
+			return self::$Pages[$section][$page];
 		}
 		else
 		{

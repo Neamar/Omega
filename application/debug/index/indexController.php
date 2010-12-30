@@ -96,6 +96,37 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Affiche toute la documentation.
+	 */
+	public function alldocAction()
+	{
+		$this->View->setTitle('Documentation eDevoir');
+		include OO2FS::controllerPath('index', 'documentation');
+		
+		Documentation_IndexController::initTypo();
+		
+		$Files = array();
+		foreach(Documentation_IndexController::$Pages as $Section => $Pages)
+		{
+			$Files[$Section] = array();
+			
+			foreach($Pages as $URL => $Titre)
+			{
+				if(is_file(APPLICATION_PATH . '/documentation/' . $Section . '/views/' . $URL . '.tex'))
+				{
+					$Files[$Section][$URL] = array(
+						'Titre' => $Titre,
+						'Fichier' => APPLICATION_PATH . '/documentation/' . $Section . '/views/' . $URL . '.tex'
+					);
+				}
+			}
+		}
+		
+		$this->View->Files = $Files;
+		$this->View->addStyle('/public/css/documentation/Typo.css');
+	}
+	
+	/**
 	 * Supprime toutes les tables de la base de données et les recrée à neuf via le fichier /lib/default.sql.
 	 */
 	public function cleanAction()
