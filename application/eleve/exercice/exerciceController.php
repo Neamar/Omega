@@ -2,7 +2,7 @@
 /**
  * exerciceController.php - 26 oct. 2010
  * 
- * Actions de base pour un élève.
+ * Actions pour un élève sur un exercice
  * 
  * PHP Version 5
  * 
@@ -15,7 +15,7 @@
  */
 
 /**
- * Contrôleur d'index du module élève.
+ * Contrôleur d'exercice du module élève.
  * 
  * @category Controller
  * @package  Root
