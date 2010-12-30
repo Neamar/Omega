@@ -109,6 +109,9 @@ INSERT INTO `Classes` (`Classe`, `DetailsClasse`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Correcteurs` (
   `ID` int(11) NOT NULL,
+  `Prenom` varchar(50) NOT NULL,
+  `Nom` varchar(50) NOT NULL,
+  `Telephone` varchar(10) NOT NULL,
   `Siret` int(14) DEFAULT NULL,
   `SiretOK` binary(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
