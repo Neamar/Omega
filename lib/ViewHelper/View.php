@@ -24,13 +24,11 @@
  * 
  * @return string le contenu de la vue
  */
-function ViewHelper_View_render($URL, View $ViewObject)
+function ViewHelper_View_render(View $ViewObject)
 {
 	ob_start();
-
-	list($Module,$Controller,$View,$Data) = AbstractController::fromURL($URL);
 	
-	$ViewObject->renderContent(OO2FS::viewPath($View, $Data, $Controller, $Module));
+	$ViewObject->renderContent();
 	
 	return ob_get_clean();
 }

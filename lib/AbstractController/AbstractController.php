@@ -185,6 +185,8 @@ abstract class AbstractController
 	 * Contrat, ne vérifie pas la récursion.
 	 * 
 	 * @param string $URL l'URL dont les données doivent être concaténées.
+	 * 
+	 * @return View la vue nouvelle crée.
 	 */
 	public function concat($URL)
 	{
@@ -202,7 +204,7 @@ abstract class AbstractController
 		$ConcatController = new $ControllerName($Module, $Controller, $View, $Data);
 		$ConcatController->$ViewName();
 
-		$this->View->merge($ConcatController->getView());
+		return $ConcatController->getView();
 	}
 
 	/**

@@ -381,21 +381,11 @@ class View
 	/**
 	 * Écrit le contenu du fichier vue sur la sortie standard
 	 * 
-	 * @param string $OverrideView faut-il écraser le fichier de vue standard ? (par exemple, dans le cas d'un merge)
-	 * @see /lib/ViewHelper/View.php
-	 * 
 	 * @return void tout est écrit.
 	 */
-	public function renderContent($OverrideView = null)
+	public function renderContent()
 	{
-		if(!is_null($OverrideView))
-		{
-			include $OverrideView;
-		}
-		else
-		{
 			include $this->getMeta('viewFile');
-		}
 	}
 	
 	/**
