@@ -367,12 +367,36 @@ class View
 		}
 	}
 	
+	/**
+	 * Renvoie le contenu du ruban à afficher sur la page.
+	 * 
+	 * @return string une liste HTML.
+	 */
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
 		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
 	}
 
+	/**
+	 * Écrit le contenu du fichier vue sur la sortie standard
+	 * 
+	 * @param string $OverrideView faut-il écraser le fichier de vue standard ? (par exemple, dans le cas d'un merge)
+	 * @see /lib/ViewHelper/View.php
+	 * 
+	 * @return void tout est écrit.
+	 */
+	public function renderContent($OverrideView = null)
+	{
+		if(!is_null($OverrideView))
+		{
+			include $OverrideView;
+		}
+		else
+		{
+			include $this->getMeta('viewFile');
+		}
+	}
 	
 	/**
 	 * Écrit la vue sur la sortie standard

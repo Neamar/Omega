@@ -227,7 +227,7 @@ abstract class AbstractController
 	 * Découpe une URL pour renvoyer le contrôleur à appeler
 	 *
 	 * @param string $URL une URL à décortiquer
-	 * @return array Un tableau récupérable avec list($module,$controleur,$vue,$data) = fromURL();
+	 * @return array Un tableau récupérable avec list($Module,$Controller,$View,$Data) = AbstractController::fromURL();
 	 */
 	public static function fromURL($URL)
 	{
