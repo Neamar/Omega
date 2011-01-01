@@ -180,26 +180,29 @@ abstract class AbstractController
 
 	/**
 	 * Concatène un autre contrôleur avec l'actuel.
-	 * En cas de conflits, les données du nouveau contrôleur remplacent celles de l'ancien.
-	 * Attention, ne fais pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
+	 * En cas de conflits, les données de l'ancien contrôleur ont la priorité.
+	 * Attention, ne fait pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
+	 * 
 	 * @param string $View la vue
-	 * @param string $Data les données
+	 * @param string $Data les données à passer à la vue
 	 * @param string $Controller le contrôleur
 	 * @param string $Module le module
 	 */
-	public function concat($View,$Data=null, $Controller=null, $Module=null)
+	public function concat($View, $Data=null, $Controller=null, $Module=null)
 	{
 		$ControllerPath = OO2FS::controllerPath($Controller, $Module);
 		$ControllerName = OO2FS::controllerClass($Controller, $Module);
 		$ViewName = OO2FS::viewFunction($View, $Data, $Controller, $Module);
 
-		include $ControllerPath;
-
+		if(!class_exists($ControllerName, false))
+		{
+			include $ControllerPath;
+		}
+		
 		$ConcatController = new $ControllerName();
 		$ConcatController->$ViewName();
 
-		//FIXME : View n'est plus un array.
-		$this->View = array_merge($this->View, $ConcatController->getView());
+		$this->View->merge($ConcatController->getView());
 	}
 
 	/**

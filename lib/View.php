@@ -81,6 +81,16 @@ class View
 	{
 		return $this->Datas;
 	}
+	
+	/**
+	 * Récupérer la liste des méta-données contenues dans la vue sous forme d'un tableau associatif.
+	 *
+	 * @return array toutes les méta-données de la vue
+	 */
+	public function metaToArray()
+	{
+		return $this->Metas;
+	}
 
 	/**
 	 * Récupère une valeur de la vue.
@@ -271,6 +281,34 @@ class View
 	public function removeStyle($Src)
 	{
 		unset($this->Metas['style'][$Src]);
+	}
+	
+	/**
+	 * Fusionne les données de la vue actuelle avec la vue passée en paramètres.
+	 * En cas de doublons, la préséance va à la vue principale.
+	 * Attention : ne fusionne que les données, pas les metas (messages et autres)
+	 * 
+	 * @param View $View la vue à fusionner.
+	 */
+	public function merge(View $View)
+	{
+		$ViewArray = $View->toArray();
+		foreach($ViewArray as $Key => $Data)
+		{
+			if(!isset($this->$Key))
+			{
+				$this->$Key = $Data;
+			}
+		}
+		
+		$ViewArray = $View->metaToArray();
+		foreach($ViewArray as $Key => $Data)
+		{
+			if(!$this->issetMeta($Key))
+			{
+				$this->setMeta($Key, $Data);
+			}
+		}
 	}
 	
 	/**
