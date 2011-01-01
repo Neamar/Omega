@@ -43,30 +43,6 @@ include PATH . '/lib/core/Sql.php';
 session_start();
 
 
-
-$ModulePath = OO2FS::modulePath($_GET['module']);
-$ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
-$ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
-$ViewPath = OO2FS::viewPath($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
-$ViewName = OO2FS::viewFunction($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
-
-//Traiter les données si existantes
-if(!empty($_GET['data']))
-{
-	$Components = explode('/', $_GET['data']);
-	if(count($Components) % 2 == 1)
-	{
-		array_unshift($Components, 'data');
-	}
-	$Components = array_chunk($Components, 2);
-	
-	$_GET['data']=array();
-	foreach($Components as $Component)
-	{
-		$_GET['data'][$Component[0]] = $Component[1];	
-	}
-	unset($Components, $Component);
-}
 /**
  * Définition de l'autoload
  * 
@@ -93,6 +69,19 @@ function __autoload($ClassName)
 }
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);
+
+
+/**
+ * Lecture des données de la requête
+ * 
+ */
+$ModulePath = OO2FS::modulePath($_GET['module']);
+$ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
+$ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
+$ViewPath = OO2FS::viewPath($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
+$ViewName = OO2FS::viewFunction($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
+
+$_GET['data']= AbstractController::buildData($_GET['data']);
 
 //Connecter le serveur SQL
 Sql::connect();

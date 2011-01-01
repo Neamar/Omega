@@ -109,7 +109,7 @@ abstract class AbstractController
 	 */
 	public function getView()
 	{
-		return $this->View();
+		return $this->View;
 	}
 	
 	/**
@@ -247,23 +247,53 @@ abstract class AbstractController
 		// /eleve/points/
 		else if($Size==3 && $Parts[2] == '')
 		{
-			return array($Parts[0], $Parts[1], 'index',null);
+			return array($Parts[0], $Parts[1], 'index', null);
 		}
 		// /eleve/points/ajout
 		else if($Size==3)
 		{
-			return array($Parts[0], $Parts[1], $Parts[2],null);
+			return array($Parts[0], $Parts[1], $Parts[2], null);
 		}
 		// /eleve/point/ajout/paypal
 		else if($Size==4)
 		{
-			return array($Parts[0], $Parts[1], $Parts[2], $Parts[3]);
+			return array($Parts[0], $Parts[1], $Parts[2], self::buildData($Parts[3]));
 		}
 		// Inconnu :(
 		else
 		{
 			Debug::fail('URL indécodable.');
 		}
+	}
+	
+	/**
+	 * Construit des données utilisables (type tableau) à partir d'une chaîne.
+	 * 
+	 * @param string $DatasString
+	 * 
+	 * @return array le tableau de données
+	 */
+	public static function buildData($DatasString)
+	{
+		$Datas = array();
+		//Traiter les données si existantes
+		if(!empty($DatasString))
+		{
+			$Components = explode('/', $DatasString);
+			if(count($Components) % 2 == 1)
+			{
+				array_unshift($Components, 'data');
+			}
+			$Components = array_chunk($Components, 2);
+			
+
+			foreach($Components as $Component)
+			{
+				$Datas[$Component[0]] = $Component[1];	
+			}
+		}
+		
+		return $Datas;
 	}
 
 
