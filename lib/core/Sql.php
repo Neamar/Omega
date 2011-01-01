@@ -118,6 +118,8 @@ class Sql
 		{
 			//TODO : virer en production
 			echo '<pre>' . $Query . '</pre>';
+			echo '<p style="color:red">' . mysql_error() . '</p>';
+			
 			throw new Exception("Erreur SQL", 125);
 		}
 		return $R;

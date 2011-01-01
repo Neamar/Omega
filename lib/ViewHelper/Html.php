@@ -43,12 +43,13 @@ function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 /**
  * Génère une liste avec les items spécifiés transformés en URL
  * 
- * @param array $items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
- * @param string $type ul ou ol.
+ * @param array $Items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
+ * @param string $Type ul ou ol.
+ * @param string $BaseURL l'URL de base à utiliser
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
+function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
 {
 	if(count($Items)==0)
 	{
@@ -58,7 +59,7 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
 	$R = '<' . $Type . ">\n";
 	foreach($Items as $URL => $Item)
 	{
-		$R .= '	<li><a href="' . $URL . '">' . $Item . "</a></li>\n";
+		$R .= '	<li><a href="' . $BaseURL . $URL . '">' . $Item . "</a></li>\n";
 	}
 	$R .= '</' . $Type . ">\n";
 	

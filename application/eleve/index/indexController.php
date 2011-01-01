@@ -34,7 +34,7 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle('Accueil élève');
 		
-		$this->View->exo = $this->concat('/eleve/exercice/index/8b1db3');
+		$this->View->exo = $this->concat('/eleve/exercice/');
 
 	}
 	

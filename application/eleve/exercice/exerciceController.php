@@ -33,6 +33,16 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil exercice');
+		
+		$this->View->ExercicesActifs = Sql::queryAssoc(
+		'SELECT Hash, Titre
+		FROM Exercices
+		WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
+		AND Statut IN("ANNULE", "TERMINE", "REMBOURSE")',
+		'Hash',
+		'Titre');
+		
+		
 	}
 	
 	/**
@@ -390,6 +400,19 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
 			FROM Exercices_Logs
 			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+		);
+	}
+	
+	/**
+	 * Liste les actions des exercices
+	 */
+	public function _actionsAction()
+	{
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			FROM Exercices_Logs
+			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
+			WHERE CREATEUR = ' . $_SESSION['Eleve']->getFilteredId()
 		);
 	}
 }
