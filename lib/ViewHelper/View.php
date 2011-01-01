@@ -16,7 +16,8 @@
 
 /**
  * Renvoie un objet countdown mettant à jour dynamiquement le temps restant avant l'échéance indiquée.
- * Attention : ne traite pas les erreurs en cas de paramètres incorrects.
+ * Contrat, ne traite pas les erreurs en cas de paramètres incorrects.
+ * Contrat, ne traite pas la récursion.
  * 
  * @param string $URL l'url à intégrer
  * @param View $ViewObject la vue contenant les données

@@ -181,15 +181,15 @@ abstract class AbstractController
 	/**
 	 * Concatène un autre contrôleur avec l'actuel.
 	 * En cas de conflits, les données de l'ancien contrôleur ont la priorité.
-	 * Attention, ne fait pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
+	 * Contrat, ne fait pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
+	 * Contrat, ne vérifie pas la récursion.
 	 * 
-	 * @param string $View la vue
-	 * @param string $Data les données à passer à la vue
-	 * @param string $Controller le contrôleur
-	 * @param string $Module le module
+	 * @param string $URL l'URL dont les données doivent être concaténées.
 	 */
-	public function concat($View, $Data=null, $Controller=null, $Module=null)
+	public function concat($URL)
 	{
+		list($Module,$Controller,$View,$Data) = AbstractController::fromURL($URL);
+		
 		$ControllerPath = OO2FS::controllerPath($Controller, $Module);
 		$ControllerName = OO2FS::controllerClass($Controller, $Module);
 		$ViewName = OO2FS::viewFunction($View, $Data, $Controller, $Module);
@@ -199,7 +199,7 @@ abstract class AbstractController
 			include $ControllerPath;
 		}
 		
-		$ConcatController = new $ControllerName();
+		$ConcatController = new $ControllerName($Module, $Controller, $View, $Data);
 		$ConcatController->$ViewName();
 
 		$this->View->merge($ConcatController->getView());

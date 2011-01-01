@@ -33,6 +33,8 @@ class Eleve_IndexController extends IndexAbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil élève');
+		
+		$this->concat('/eleve/exercice/index/8b1db3');
 
 	}
 	
