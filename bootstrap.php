@@ -3,6 +3,17 @@
  * bootstrap.php - 26 oct. 2010
  * 
  * Fichier de base du site pour toutes les requêtes dynamiques.
+ *
+ * Fonctionnement d'une requête :
+ * - On extrait toutes les composantes de l'URL
+ * - On vérifie leurs validités respectives
+ * - On charge le fichier de module pour vérifier que l'utilisateur a le droit d'afficher la page
+ * - On appelle ensuite l'action qui sert à la fois de module et de contrôleur MVC
+ * - On rend la vue :
+ * 	- on appelle la méthode render() de la vue associée au contrôleur
+ * 	- cette méthode charge template.phtml :
+ * 		- template.phtml construit la page en appelant les méthodes appropriées : renderRibbon, renderHead() de la vue
+ * 		- template.phtml inclut le fichier de vue
  * 
  * PHP Version 5
  * 
