@@ -284,6 +284,16 @@ class View
 	}
 	
 	/**
+	 * Définit le fichier de vue à utiliser.
+	 * 
+	 * @param unknown_type $URL
+	 */
+	public function setFile($URL)
+	{
+		$this->setMeta('viewFile', $URL);
+	}
+	
+	/**
 	 * Fusionne les données de la vue actuelle avec la vue passée en paramètres.
 	 * En cas de doublons, la préséance va à la vue principale.
 	 * Attention : ne fusionne que les données, pas les metas (messages et autres)

@@ -9,6 +9,6 @@ foreach($this->Files as $Module => $Pages)
 		?>
 		<h2><a href="/documentation/<?php echo $Module . '/' . $URL ?>"><?php echo $Page['Titre'] ?></a></h2>
 		<?php 
-		echo Documentation_IndexController::parseFile($Page['Fichier']);
+		echo $this->Html_fromTex($Page['Fichier']);
 	}
 }

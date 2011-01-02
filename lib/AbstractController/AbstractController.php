@@ -77,7 +77,7 @@ abstract class AbstractController
 		$this->Data = $Data;
 
 		$this->View = new View($View, $this);
-		$this->View->setMeta('viewFile', OO2FS::viewPath($View, $Data, $Controller, $Module));
+		$this->View->setFile(OO2FS::viewPath($View, $Data, $Controller, $Module));
 
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')

@@ -93,38 +93,6 @@ class Documentation_IndexController extends AbstractController
 	);
 	
 	/**
-	 * Initialise le Typographe pour une utilisation avec la documentation.
-	 */
-	public static function initTypo()
-	{
-		include PATH . '/lib/Typo/Typo.php';
-		Typo::addOption(PARSE_MATH);
-		Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.html">$2</a>');
-		Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
-	}
-	
-	/**
-	 * Renvoie le contenu d'un fichier mis en forme.
-	 * 
-	 * @param string $URL
-	 * 
-	 * @return string du HMTL.
-	 */
-	public static function parseFile($URL)
-	{
-		if(!class_exists('Typo',false))
-		{
-			self::initTypo();
-		}
-		
-		Typo::setTexteFromFile($URL);
-		$HTML = Typo::Parse();
-		
-		$HTML = preg_replace_callback('`\%([A-Z_]+)\%`', 'Documentation_IndexController::parseConstants', $HTML);
-		return $HTML;
-	}
-	
-	/**
 	 * Récupère le titre d'une page.
 	 * 
 	 * @param string $section
@@ -144,8 +112,40 @@ class Documentation_IndexController extends AbstractController
 		}
 	}
 	
-	public static function parseConstants(array $Constante)
+	/**
+	 * Gère la documentation au format TeX
+	 * 
+	 * @param string $methodName le nom à utiliser, e.g. confidentialiteAction
+	 * @param array $args les arguments (vides)
+	 * @throws Exception si la méthode ou le fichier n'existe pas
+	 */
+	public function __call($methodName, array $args)
 	{
-		return constant($Constante[1]);
+		if(!substr($methodName, -6) == 'Action')
+		{
+			throw new Exception("Méthode " . $methodName . " inconnue.", 1);
+			return;
+		}
+		
+		$Action = substr($methodName, 0, -6);
+		$TexPath = APPLICATION_PATH . '/documentation/' . $this->Controller . '/views/' . $Action . '.tex';
+		
+		if(!isset(self::$Pages[$this->Controller][$Action]))
+		{
+			throw new Exception("Page " . $methodName . " inconnue.", 1);
+		}
+		elseif(!file_exists($TexPath))
+		{
+			throw new Exception("Méthode " . $methodName . " inconnue (aucun fichier).", 1);
+		}
+		else
+		{
+			//Dévier la vue vers la vue générique pour les fichiers TeX
+			$this->View->setFile(OO2FS::viewPath('generic', null, 'documentation', 'index'));
+			$this->View->setMeta('texPath', $TexPath);
+			
+			//Renseigner le titre :
+			$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
+		}
 	}
 }

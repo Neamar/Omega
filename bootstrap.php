@@ -125,7 +125,7 @@ if(!is_file($ControllerPath))
 
 //Charger le contrôleur :
 include $ControllerPath;
-if(!method_exists($ControllerName, $ViewName))
+if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName, '__call'))
 {
 	exit('Vue incorrecte : ' . $ViewName);
 }	
