@@ -33,10 +33,6 @@ class Documentation_IndexController extends AbstractController
 	 */
 	public static $Pages = array
 	(
-		'foo' => array
-		(
-			'bar' => "Titre de la page d'aide"
-		),
 		'index' => array
 		(
 			'index' => "Accueil de la documentation",
@@ -110,6 +106,12 @@ class Documentation_IndexController extends AbstractController
 		{
 			return 'Page inconnue.';
 		}
+	}
+	public function indexAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
+		
+		$this->View->Pages = self::$Pages;
 	}
 	
 	/**

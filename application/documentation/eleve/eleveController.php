@@ -29,4 +29,15 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
  */
 class Documentation_EleveController extends Documentation_IndexController
 {
+	
+	/**
+	 * Accueil du module eleve.
+	 * @see Documentation_IndexController::indexAction()
+	 */
+	public function indexAction()
+	{
+		parent::indexAction();
+		
+		$this->View->Pages = self::$Pages[$this->Controller];
+	}
 }
