@@ -70,6 +70,13 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 	}
 	
+	public function sujetActionWd()
+	{
+		$this->View->setTitle("Affichage du sujet");
+
+		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
+	}
+	
 	/**
 	 * Vérifie que l'exercice associé à la page est dans un des statuts tolérés.
 	 * Sinon, affiche un message d'erreur et redirige vers l'accueil de l'exercice.

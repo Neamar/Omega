@@ -91,7 +91,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		</p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
-		<p>Fichiers composant le sujet :</p>
+		<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
 		<p>' . $Content['SUJET'] . '</p>
 		</div>
 		<div class="exercice-tab exercice-corrige" id="corrige-' . $Exercice->Hash . '">
