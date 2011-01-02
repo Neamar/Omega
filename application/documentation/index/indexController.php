@@ -107,11 +107,35 @@ class Documentation_IndexController extends AbstractController
 			return 'Page inconnue.';
 		}
 	}
+	
+	/**
+	 * Accueil de la documentation.
+	 */
 	public function indexAction()
 	{
 		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
 		
 		$this->View->Pages = self::$Pages;
+	}
+	
+	/**
+	 * Liste des matières supportées
+	 */
+	public function matieresAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['matieres']);
+		
+		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+	}
+	
+	/**
+	 * Liste des niveaux supportés
+	 */
+	public function niveauxAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['niveaux']);
+		
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 	}
 	
 	/**
