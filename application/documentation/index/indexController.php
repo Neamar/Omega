@@ -141,8 +141,8 @@ class Documentation_IndexController extends AbstractController
 		else
 		{
 			//Dévier la vue vers la vue générique pour les fichiers TeX
-			$this->View->setFile(OO2FS::viewPath('generic', null, 'documentation', 'index'));
-			$this->View->setMeta('texPath', $TexPath);
+			$this->View->setFile(OO2FS::viewPath('generic', null, 'index', 'documentation'));
+			$this->View->texPath = $TexPath;
 			
 			//Renseigner le titre :
 			$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
