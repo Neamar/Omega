@@ -29,7 +29,7 @@ class Thumbnail
 {
 	const EXTENSION = 'png';
 	const WIDTH = 150;
-	const HEIGHT = 150;
+	const HEIGHT = 212;
 	
 	/**
 	 * Crée une miniature du fichier $Filename passé en paramètre.
@@ -46,6 +46,10 @@ class Thumbnail
 		if(in_array($Extension, $Images))
 		{
 			return self::createImage($Filename);
+		}
+		elseif($Extension == 'pdf')
+		{
+			return self::createPdf($Filename);
 		}
 		else
 		{
@@ -122,13 +126,34 @@ class Thumbnail
 		);
 		
 		//Et sauvegarde.
-		$ThumbFilename = preg_replace(
-			'`/([^/]+)\.(jpg|png|jpeg|gif)$`',
-			'/Thumbs/$1.png',
-			$Filename
-		);
+		$ThumbFilename = self::getThumbFileName($Filename);
 		imagepng($Thumb, $ThumbFilename, 8);
 		
+		return str_replace(PATH, '', $ThumbFilename);
+	}
+	
+	/**
+	 * Crée une miniature de la première page du PDF fourni
+	 * 
+	 * @param string $Filename le fichier
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
+	 */
+	public static function createPdf($Filename)
+	{
+		$ThumbFilename = self::getThumbFileName($Filename);
+		
+		//Générer l'aperçu de la première page
+		if(1)
+		{
+			$ThumbFilename = str_replace('.png','.gif',$ThumbFilename);
+			exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
+		}
+		else
+		{
+			exec('convert ' . escapeshellarg($Filename) . '[0] -thumbnail 150x212! ' . $ThumbFilename .  '>> /dev/null');
+		}
+	
 		return str_replace(PATH, '', $ThumbFilename);
 	}
 	
@@ -143,5 +168,16 @@ class Thumbnail
 	public static function createDefault($Filename)
 	{
 		return '/public/images/unavailable.png';
+	}
+	
+	protected static function getThumbFileName($Filename)
+	{
+		$ThumbFilename = preg_replace(
+			'`/([^/]+)\.(' . EXTENSIONS . ')$`',
+			'/Thumbs/$1.png',
+			$Filename
+		);
+		
+		return $ThumbFilename;
 	}
 }
