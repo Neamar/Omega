@@ -109,7 +109,8 @@ function initTypo()
 {
 	include PATH . '/lib/Typo/Typo.php';
 	Typo::addOption(PARSE_MATH);
-	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.html">$2</a>');
+	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
+	Typo::addBalise('#\\\\doc\[index/([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
 	Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
 }
 
