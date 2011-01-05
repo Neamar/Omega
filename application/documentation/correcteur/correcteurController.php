@@ -29,4 +29,12 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
  */
 class Documentation_CorrecteurController extends Documentation_IndexController
 {
+	/**
+	 * Overrider le index/matieres
+	 * @see Documentation_IndexController::matieresAction()
+	 */
+	public function matieresAction()
+	{
+		$this->__call('matieresAction', array());
+	}
 }
