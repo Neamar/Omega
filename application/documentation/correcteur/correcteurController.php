@@ -15,7 +15,7 @@
  */
 
 //Charger la base.
-include APPLICATION_PATH . '/documentation/index/indexController';
+include APPLICATION_PATH . '/documentation/index/indexController.php';
 
 /**
  * Contrôleur de documentation générique.
