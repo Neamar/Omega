@@ -1,0 +1,27 @@
+<h1>Connexion correcteur</h1>
+<p class="intro">Connectez-vous pour accéder au site.</p>
+<p class="see-link"><a href="/correcteur/inscription">Vous n'êtes pas encore inscrit ?</a></p>
+
+<form id="form_connexion-correcteur" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
+	array(
+		'type'=>'email',
+		'placeholder'=>'nom@fai.fr',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
+	array(
+		'type'=>'password',
+	)
+);
+echo $this->Form_submit('connexion-correcteur', "Connexion");
+?>
+</form>
+
+<p class="see-link"><a href="/correcteur/recuperation">Mot de passe perdu ?</a></p>

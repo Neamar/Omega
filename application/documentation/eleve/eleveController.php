@@ -15,7 +15,7 @@
  */
 
 //Charger la base.
-include APPLICATION_PATH . '/documentation/index/indexController';
+include APPLICATION_PATH . '/documentation/index/indexController.php';
 
 /**
  * Contrôleur de documentation générique.
@@ -29,4 +29,15 @@ include APPLICATION_PATH . '/documentation/index/indexController';
  */
 class Documentation_EleveController extends Documentation_IndexController
 {
+	
+	/**
+	 * Accueil du module eleve.
+	 * @see Documentation_IndexController::indexAction()
+	 */
+	public function indexAction()
+	{
+		parent::indexAction();
+		
+		$this->View->Pages = self::$Pages[$this->Controller];
+	}
 }

@@ -20,7 +20,6 @@
 /**
  * Fonctions utilisées un peu partout.
  * 
- *
  * @category Default
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
@@ -37,7 +36,7 @@ class Util
 	 * 
 	 * @return string l'extension en minuscule
 	 */
-	public static function Extension($Filename)
+	public static function extension($Filename)
 	{
 		return strtolower(substr(strrchr($Filename, '.'), 1));
 	}

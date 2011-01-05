@@ -16,6 +16,9 @@ RewriteRule ^([a-z]+)$ /$1/ [L,R=301]
 #--------------------------------------------------
 # Passage URL / MVCD
 #--------------------------------------------------
+# /doc.htm
+RewriteRule ^([a-zA-Z_]+)\.htm$ bootstrap.php?module=documentation&controller=index&view=$1&data=
+
 # /eleve/
 RewriteRule ^([^/]+)/$ bootstrap.php?module=$1&controller=index&view=index&data=
 
@@ -30,3 +33,9 @@ RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ bootstrap.php?module=$1&controller=$2&view
 
 # /eleve/point/ajout/data
 RewriteRule ^([^/]+)/([^/]+)/([^/]+)/(.+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=$4
+
+
+#--------------------------------------------------
+# Protection des données
+#--------------------------------------------------
+RewriteRule ^data/.* - [L,F]

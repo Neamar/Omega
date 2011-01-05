@@ -1,2 +1,9 @@
+<h1>Accueil élève</h1>
+<p class="info">Bienvenue <?php echo $_SESSION['Eleve']->Mail ?> ! Cette page offre un récapitulatif de votre compte : vos derniers exercices, votre compte... ainsi, bien sûr, que la possibilité de créer un nouvel exercice.</p>
 
-Accueil élève
+<h2>Créer un nouvel exercice</h2>
+<a href="/eleve/exercice/creation">Créer un nouvel exercice</a>
+
+<?php 
+echo $this->View_render($this->exo, 1);
+?>

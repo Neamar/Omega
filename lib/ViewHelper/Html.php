@@ -43,12 +43,13 @@ function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 /**
  * Génère une liste avec les items spécifiés transformés en URL
  * 
- * @param array $items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
- * @param string $type ul ou ol.
+ * @param array $Items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
+ * @param string $Type ul ou ol.
+ * @param string $BaseURL l'URL de base à utiliser
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
+function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
 {
 	if(count($Items)==0)
 	{
@@ -58,7 +59,7 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul')
 	$R = '<' . $Type . ">\n";
 	foreach($Items as $URL => $Item)
 	{
-		$R .= '	<li><a href="' . $URL . '">' . $Item . "</a></li>\n";
+		$R .= '	<li><a href="' . $BaseURL . $URL . '">' . $Item . "</a></li>\n";
 	}
 	$R .= '</' . $Type . ">\n";
 	
@@ -97,4 +98,47 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
 </table>';
 	
 	return $R;
+}
+
+	
+/**
+ * Initialise le Typographe pour une utilisation avec la documentation.
+ * @see ViewHelper_Html_fromTex
+ */
+function initTypo()
+{
+	include PATH . '/lib/Typo/Typo.php';
+	Typo::addOption(PARSE_MATH);
+	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
+	Typo::addBalise('#\\\\doc\[index/([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
+	Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
+}
+
+/**
+ * Renvoie le contenu d'un fichier TeX mis en forme HTML.
+ * 
+ * @param string $URL
+ * 
+ * @return string du HMTL.
+ */
+function ViewHelper_Html_fromTex($URL)
+{
+	if(!class_exists('Typo',false))
+	{
+		initTypo();
+	}
+	
+	Typo::setTexteFromFile($URL);
+	$HTML = Typo::Parse();
+	
+	$HTML = preg_replace_callback(
+		'`\%([A-Z_]+)\%`',
+		create_function
+		(
+			'$Constante',
+			'return constant($Constante[1]);'
+		),
+		$HTML
+	);
+	return $HTML;
 }

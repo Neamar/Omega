@@ -33,6 +33,8 @@ class Eleve_IndexController extends IndexAbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil élève');
+		
+		$this->View->exo = $this->concat('/eleve/exercice/');
 
 	}
 	
@@ -109,7 +111,7 @@ class Eleve_IndexController extends IndexAbstractController
 			}
 			else
 			{
-				$ID = $this->createAccount($_POST);
+				$ID = $this->createAccount($_POST, 'ELEVE');
 				if($ID != FAIL)
 				{
 					//Enregistrer le nouveau membre et le rediriger vers la page de connexion

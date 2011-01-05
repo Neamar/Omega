@@ -2,7 +2,7 @@
 /**
  * exerciceController.php - 26 oct. 2010
  * 
- * Actions de base pour un élève.
+ * Actions pour un élève sur un exercice
  * 
  * PHP Version 5
  * 
@@ -15,7 +15,7 @@
  */
 
 /**
- * Contrôleur d'index du module élève.
+ * Contrôleur d'exercice du module élève.
  * 
  * @category Controller
  * @package  Root
@@ -33,6 +33,16 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle('Accueil exercice');
+		
+		$this->View->ExercicesActifs = Sql::queryAssoc(
+		'SELECT Hash, Titre
+		FROM Exercices
+		WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
+		AND Statut IN("ANNULE", "TERMINE", "REMBOURSE")',
+		'Hash',
+		'Titre');
+		
+		
 	}
 	
 	/**
@@ -228,7 +238,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				else
 				{
 					//Vérification de l'extension
-					$ExtensionFichier = Util::Extension($_FILES['fichiers']['name'][$i]);
+					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
 					if (!in_array($ExtensionFichier, $Extensions))
 					{
 						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
@@ -386,8 +396,23 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function _actionsActionWd()
 	{
-		$this->ajax('SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
-		FROM Exercices_Logs
-		WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID));
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
+			FROM Exercices_Logs
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+		);
+	}
+	
+	/**
+	 * Liste les actions des exercices
+	 */
+	public function _actionsAction()
+	{
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			FROM Exercices_Logs
+			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
+			WHERE CREATEUR = ' . $_SESSION['Eleve']->getFilteredId()
+		);
 	}
 }

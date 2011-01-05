@@ -77,7 +77,7 @@ abstract class AbstractController
 		$this->Data = $Data;
 
 		$this->View = new View($View, $this);
-		$this->View->setMeta('viewFile', OO2FS::viewPath($View, $Data, $Controller, $Module));
+		$this->View->setFile(OO2FS::viewPath($View, $Data, $Controller, $Module));
 
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')
@@ -109,7 +109,7 @@ abstract class AbstractController
 	 */
 	public function getView()
 	{
-		return $this->View();
+		return $this->View;
 	}
 	
 	/**
@@ -180,26 +180,31 @@ abstract class AbstractController
 
 	/**
 	 * Concatène un autre contrôleur avec l'actuel.
-	 * En cas de conflits, les données du nouveau contrôleur remplacent celles de l'ancien.
-	 * Attention, ne fais pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
-	 * @param string $View la vue
-	 * @param string $Data les données
-	 * @param string $Controller le contrôleur
-	 * @param string $Module le module
+	 * En cas de conflits, les données de l'ancien contrôleur ont la priorité.
+	 * Contrat, ne fait pas de tests : l'appel avec des paramètres incorrects fera une erreur probablement critique.
+	 * Contrat, ne vérifie pas la récursion.
+	 * 
+	 * @param string $URL l'URL dont les données doivent être concaténées.
+	 * 
+	 * @return View la vue nouvelle crée.
 	 */
-	public function concat($View,$Data=null, $Controller=null, $Module=null)
+	public function concat($URL)
 	{
+		list($Module,$Controller,$View,$Data) = AbstractController::fromURL($URL);
+		
 		$ControllerPath = OO2FS::controllerPath($Controller, $Module);
 		$ControllerName = OO2FS::controllerClass($Controller, $Module);
 		$ViewName = OO2FS::viewFunction($View, $Data, $Controller, $Module);
 
-		include $ControllerPath;
-
-		$ConcatController = new $ControllerName();
+		if(!class_exists($ControllerName, false))
+		{
+			include $ControllerPath;
+		}
+		
+		$ConcatController = new $ControllerName($Module, $Controller, $View, $Data);
 		$ConcatController->$ViewName();
 
-		//TODO : View n'est plus un array.
-		$this->View = array_merge($this->View, $ConcatController->getView());
+		return $ConcatController->getView();
 	}
 
 	/**
@@ -224,7 +229,7 @@ abstract class AbstractController
 	 * Découpe une URL pour renvoyer le contrôleur à appeler
 	 *
 	 * @param string $URL une URL à décortiquer
-	 * @return array Un tableau récupérable avec list($module,$controleur,$vue,$data) = fromURL();
+	 * @return array Un tableau récupérable avec list($Module,$Controller,$View,$Data) = AbstractController::fromURL();
 	 */
 	public static function fromURL($URL)
 	{
@@ -244,23 +249,53 @@ abstract class AbstractController
 		// /eleve/points/
 		else if($Size==3 && $Parts[2] == '')
 		{
-			return array($Parts[0], $Parts[1], 'index',null);
+			return array($Parts[0], $Parts[1], 'index', null);
 		}
 		// /eleve/points/ajout
 		else if($Size==3)
 		{
-			return array($Parts[0], $Parts[1], $Parts[2],null);
+			return array($Parts[0], $Parts[1], $Parts[2], null);
 		}
 		// /eleve/point/ajout/paypal
 		else if($Size==4)
 		{
-			return array($Parts[0], $Parts[1], $Parts[2], $Parts[3]);
+			return array($Parts[0], $Parts[1], $Parts[2], self::buildData($Parts[3]));
 		}
 		// Inconnu :(
 		else
 		{
 			Debug::fail('URL indécodable.');
 		}
+	}
+	
+	/**
+	 * Construit des données utilisables (type tableau) à partir d'une chaîne.
+	 * 
+	 * @param string $DatasString
+	 * 
+	 * @return array le tableau de données
+	 */
+	public static function buildData($DatasString)
+	{
+		$Datas = array();
+		//Traiter les données si existantes
+		if(!empty($DatasString))
+		{
+			$Components = explode('/', $DatasString);
+			if(count($Components) % 2 == 1)
+			{
+				array_unshift($Components, 'data');
+			}
+			$Components = array_chunk($Components, 2);
+			
+
+			foreach($Components as $Component)
+			{
+				$Datas[$Component[0]] = $Component[1];	
+			}
+		}
+		
+		return $Datas;
 	}
 
 

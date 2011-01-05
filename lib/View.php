@@ -81,6 +81,16 @@ class View
 	{
 		return $this->Datas;
 	}
+	
+	/**
+	 * Récupérer la liste des méta-données contenues dans la vue sous forme d'un tableau associatif.
+	 *
+	 * @return array toutes les méta-données de la vue
+	 */
+	public function metaToArray()
+	{
+		return $this->Metas;
+	}
 
 	/**
 	 * Récupère une valeur de la vue.
@@ -274,6 +284,44 @@ class View
 	}
 	
 	/**
+	 * Définit le fichier de vue à utiliser.
+	 * 
+	 * @param unknown_type $URL
+	 */
+	public function setFile($URL)
+	{
+		$this->setMeta('viewFile', $URL);
+	}
+	
+	/**
+	 * Fusionne les données de la vue actuelle avec la vue passée en paramètres.
+	 * En cas de doublons, la préséance va à la vue principale.
+	 * Attention : ne fusionne que les données, pas les metas (messages et autres)
+	 * 
+	 * @param View $View la vue à fusionner.
+	 */
+	public function merge(View $View)
+	{
+		$ViewArray = $View->toArray();
+		foreach($ViewArray as $Key => $Data)
+		{
+			if(!isset($this->$Key))
+			{
+				$this->$Key = $Data;
+			}
+		}
+		
+		$ViewArray = $View->metaToArray();
+		foreach($ViewArray as $Key => $Data)
+		{
+			if(!$this->issetMeta($Key))
+			{
+				$this->setMeta($Key, $Data);
+			}
+		}
+	}
+	
+	/**
 	 * Écrit le contenu de la balise <head>
 	 * 
 	 * Dans l'ordre :
@@ -318,7 +366,7 @@ class View
 			if($this->issetMeta('messageDoc'))
 			{
 				$Parties = explode("/", $this->getMeta("messageDoc"));
-				return $this->Doc_box($Parties[0], $Parties[1],$this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
+				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
 			}
 			else
 			{
@@ -329,12 +377,26 @@ class View
 		}
 	}
 	
+	/**
+	 * Renvoie le contenu du ruban à afficher sur la page.
+	 * 
+	 * @return string une liste HTML.
+	 */
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
 		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
 	}
 
+	/**
+	 * Écrit le contenu du fichier vue sur la sortie standard
+	 * 
+	 * @return void tout est écrit.
+	 */
+	public function renderContent()
+	{
+			include $this->getMeta('viewFile');
+	}
 	
 	/**
 	 * Écrit la vue sur la sortie standard

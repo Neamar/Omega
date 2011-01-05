@@ -31,7 +31,7 @@ if(!function_exists("ViewHelper_Html_list"))
  * @param Exercice $Exercice
  * @param string $Tab l'onglet ouvert par défaut
  */
-function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
+function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 {
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
 	$Files = $Exercice->getFiles();
@@ -91,7 +91,7 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 		</p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
-		<p>Fichiers composant le sujet :</p>
+		<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
 		<p>' . $Content['SUJET'] . '</p>
 		</div>
 		<div class="exercice-tab exercice-corrige" id="corrige-' . $Exercice->Hash . '">
@@ -106,7 +106,7 @@ function ViewHelper_Exercice(Exercice $Exercice, $Tab = 'Sujet')
 	$(function()
 	{
 		$("#exercice-' . $Exercice->Hash . '").tabs({
-			disabled: [' . implode(',',$Disabled) . '],
+			disabled: [' . implode(',', $Disabled) . '],
 		});
 	});
 	</script>

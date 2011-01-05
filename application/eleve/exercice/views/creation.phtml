@@ -37,7 +37,8 @@ echo $this->Form_inputLabelBr(
 	array(
 		'placeholder' => 'DM de maths décembre',
 		'maxlength' => 50,
-	));
+	)
+);
 
 //Type de l'exercice
 echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
@@ -68,7 +69,7 @@ echo $this->Form_inputLabel(
 		'placeholder'=>'JJ/MM/AAAA'
 	)
 );
-echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_rendu') . "<br />\n";
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_rendu');
 
 //Annulation automatique
 $HeureData['value'] = 18;
@@ -80,7 +81,7 @@ echo $this->Form_inputLabel(
 		'placeholder'=>'JJ/MM/AAAA'
 	)
 );
-echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_annulation') . "<br />\n";
+echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
 ?>
 
 <h3>Informations complémentaires</h3>
@@ -96,7 +97,7 @@ echo $this->Doc_input('eleve', 'champ_infos') . "\n";
 	<div id="div_auto-accept">
 		<?php 
 			echo $this->Form_inputLabel('auto_accept', 'Valeur maximale d\'acceptation automatique', array('value'=>0));
-			echo $this->Doc_input('eleve', 'auto_accept') . "\n";
+			echo $this->Doc_inputBr('eleve', 'auto_accept');
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
 	</div>

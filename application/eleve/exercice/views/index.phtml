@@ -1,2 +1,20 @@
+<h1>Accueil des exercices</h1>
+<p class="info">Cette page sert de porte d'entrée vers vos exercices.</p>
 
-Accueil exercice
+<h2>Créer un nouvel exercice</h2>
+<a href="/eleve/exercice/creation">Créer un nouvel exercice</a>
+
+<?php 
+if(count($this->ExercicesActifs) > 0)
+{
+	?>
+	<h2>Mes exercices actifs</h2>
+	<?php 
+	echo $this->Html_listAnchor($this->ExercicesActifs, 'ul', '/eleve/exercice/index/');
+}
+?>
+
+<h2>Actions sur vos exercices</h2>
+<?php 
+echo $this->Html_ajaxTable('/eleve/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
+?>

@@ -108,7 +108,7 @@ function ViewHelper_Form_submit($name, $value)
  * @param string $name le nom du bouton
  * @param unknown_type $value la valeur du bouton
  */
-function ViewHelper_Form($form_id, $name, $value)
+function ViewHelper_form($form_id, $name, $value)
 {
 	return '
 <form method="post" action="" id="form_' . $form_id . '">

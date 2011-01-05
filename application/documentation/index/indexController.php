@@ -26,12 +26,13 @@
  */
 class Documentation_IndexController extends AbstractController
 {
-	private static $_Pages = array
+	/**
+	 * Liste des pages de documentation 
+	 * 
+	 * @var array
+	 */
+	public static $Pages = array
 	(
-		'foo' => array
-		(
-			'bar' => "Titre de la page d'aide"
-		),
 		'index' => array
 		(
 			'index' => "Accueil de la documentation",
@@ -130,13 +131,80 @@ class Documentation_IndexController extends AbstractController
 	 */
 	public static function getTitle($section, $page)
 	{
-		if(isset(self::$_Pages[$section][$page]))
+		if(isset(self::$Pages[$section][$page]))
 		{
-			return self::$_Pages[$section][$page];
+			return self::$Pages[$section][$page];
 		}
 		else
 		{
 			return 'Page inconnue.';
+		}
+	}
+	
+	/**
+	 * Accueil de la documentation.
+	 */
+	public function indexAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
+		
+		$this->View->Pages = self::$Pages;
+	}
+	
+	/**
+	 * Liste des matières supportées
+	 */
+	public function matieresAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['matieres']);
+		
+		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+	}
+	
+	/**
+	 * Liste des niveaux supportés
+	 */
+	public function niveauxAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['niveaux']);
+		
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+	}
+	
+	/**
+	 * Gère la documentation au format TeX
+	 * 
+	 * @param string $methodName le nom à utiliser, e.g. confidentialiteAction
+	 * @param array $args les arguments (vides)
+	 * @throws Exception si la méthode ou le fichier n'existe pas
+	 */
+	public function __call($methodName, array $args)
+	{
+		if(!substr($methodName, -6) == 'Action')
+		{
+			throw new Exception("Méthode " . $methodName . " inconnue.", 1);
+			return;
+		}
+		
+		$Action = substr($methodName, 0, -6);
+		$TexPath = APPLICATION_PATH . '/documentation/' . $this->Controller . '/views/' . $Action . '.tex';
+		
+		if(!isset(self::$Pages[$this->Controller][$Action]))
+		{
+			throw new Exception("Page " . $methodName . " inconnue.", 1);
+		}
+		elseif(!file_exists($TexPath))
+		{
+			throw new Exception("Méthode " . $methodName . " inconnue (aucun fichier).", 1);
+		}
+		else
+		{
+			//Dévier la vue vers la vue générique pour les fichiers TeX
+			$this->View->setFile(OO2FS::viewPath('generic', null, 'index', 'documentation'));
+			$this->View->texPath = $TexPath;
+			
+			//Renseigner le titre :
+			$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
 		}
 	}
 }

@@ -262,9 +262,13 @@ WHERE Hash="%ID%"';
 		WHERE Exercice = ' . $this->ID . '
 		GROUP BY Type';
 		
-		$R = Sql::queryAssoc($Query, 'Type','Nb');
-		$Defaults = array('SUJET'=>0,'CORRIGE'=>0,'RECLAMATION'=>0);
-		return array_merge($Defaults,$R);
+		$R = Sql::queryAssoc($Query, 'Type', 'Nb');
+		$Defaults = array(
+			'SUJET'=>0,
+			'CORRIGE'=>0,
+			'RECLAMATION'=>0
+		);
+		return array_merge($Defaults, $R);
 	}
 	
 	/**
