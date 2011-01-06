@@ -225,10 +225,15 @@ class View
 	/**
 	 * Ajoute un script en haut de page
 	 * 
-	 * @param string $Src l'URL du script à ajouter
+	 * @param string $Src l'URL du script à ajouter. Si vide, ajoutera le fichier js associé à la page dans le fichier public/js
 	 */
-	public function addScript($Src)
+	public function addScript($Src = '')
 	{
+		if(empty($Src))
+		{
+			$Src = '/public/js/' . $this->Controller->getModule() . '/' . $this->Controller->getController() . '/' . $this->Controller->getAction() . '.js';
+		}
+		
 		$this->Metas['script'][$Src] = true;
 	}
 	

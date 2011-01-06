@@ -92,6 +92,7 @@ class Correcteur_IndexController extends IndexAbstractController
 		$this->View->Compte = $this->concat('/correcteur/options_compte');
 		
 	}
+	
 	/**
 	 * Page d'options pour la mise à jour du compte
 	 */
@@ -150,6 +151,22 @@ class Correcteur_IndexController extends IndexAbstractController
 			}
 		}
 	}
+	
+	/**
+	 * Page d'options pour la mise à jour du compte
+	 */
+	public function options_matieresAction()
+	{
+		$this->View->setTitle('Définition de vos compétences');
+		$this->View->addScript();
+		//Charger la liste des matières :
+		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+		
+		//Charger la liste des matières :
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+		
+	}
+	
 	
 	/**
 	 * Page d'inscription.

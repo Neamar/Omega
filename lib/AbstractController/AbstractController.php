@@ -37,6 +37,12 @@ abstract class AbstractController
 	 * @var string
 	 */
 	protected $Module;
+	
+	/**
+	 * L'action (la vue non objet) 
+	 * @var string
+	 */
+	protected $Action;
 
 	/**
 	 * La vue associée au contrôleur.
@@ -74,6 +80,7 @@ abstract class AbstractController
 	{
 		$this->Module= $Module;
 		$this->Controller= $Controller;
+		$this->Action = $View;
 		$this->Data = $Data;
 
 		$this->View = new View($View, $this);
@@ -128,6 +135,15 @@ abstract class AbstractController
 	public function getModule()
 	{
 		return $this->Module;
+	}
+	
+	/**
+	 * Récupère l'action associée au contrôleur objet.
+	 * @return string l'action associée
+	 */
+	public function getAction()
+	{
+		return $this->Action;
 	}
 
 	/**
