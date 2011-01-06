@@ -1,0 +1,61 @@
+<h1>Modification du compte</h1>
+<p class="intro">Cette page vous permet de modifier les informations de votre compte.<br />
+Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro de SIRET.</p>
+
+<form method="post" action="" id="form_edition-compte">
+<?php
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
+	array(
+		'type'=>'email',
+		'placeholder'=>'nom@fai.fr',
+		'value' => $_SESSION['Correcteur']->Mail
+	)
+);
+
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe (laissez vide pour conserver le mot de passe actuel)',
+	array(
+		'type'=>'password',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password_confirm',
+	'Confirmez votre mot de passe',
+	array(
+		'type'=>'password',
+	)
+);
+
+echo $this->Form_inputLabel(
+	'telephone',
+	'Votre numéro de téléphone',
+	array(
+		'placeholder' => '06 00 00 00 00',
+		'value' => $_SESSION['Correcteur']->Telephone,
+	)
+) . $this->Doc_inputBr('correcteur', 'champ_telephone');
+
+if(is_null($_SESSION['Correcteur']->Siret))
+{
+
+	echo $this->Doc_box(
+		'correcteur',
+		'comment_autoentreprise',
+		"Vous devez nous fournir un numéro de SIRET valide. Si vous venez de vous inscrire en tant qu'auto-entrepreneur et que vous n'avez pas encore reçu votre numéro, vous pouvez laisser ce champ vide.<br />
+		<strong>Attention, aucun paiement ne pourra être effectué tant que vous n'aurez pas fourni ce numéro.</strong>"
+	);
+	
+	echo $this->Form_inputLabel(
+		'siret',
+		'Votre numéro de SIRET',
+		array(
+			'placeholder'=>'000 000 000 00000',
+		)
+	) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
+}
+	echo $this->Form_submit('edition-compte', "Modifier les informations");
+?>
+</form>

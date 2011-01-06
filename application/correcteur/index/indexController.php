@@ -84,9 +84,18 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Page d'options
+	 * Page d'options globales.
 	 */
 	public function optionsAction()
+	{
+		$this->View->setTitle('Options correcteur');
+		$this->View->Compte = $this->concat('/correcteur/options_compte');
+		
+	}
+	/**
+	 * Page d'options pour la mise à jour du compte
+	 */
+	public function options_compteAction()
 	{
 		$this->View->setTitle('Options du compte');
 
@@ -104,6 +113,10 @@ class Correcteur_IndexController extends IndexAbstractController
 			{
 				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
 			}
+			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
+			{
+				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
+			}
 			else
 			{
 				$ToUpdate = array();
@@ -119,7 +132,12 @@ class Correcteur_IndexController extends IndexAbstractController
 				{
 					$ToUpdate['Pass'] = sha1(SALT . $_POST['password']);
 				}
+				if(!empty($_POST['siret']))
+				{
+					$ToUpdate['Siret'] = $_POST['siret'];
+				}
 				
+				//Ne commiter que s'il y a des modifications.
 				if(empty($ToUpdate))
 				{
 					$this->View->setMessage("warning", "Aucune modification.");
@@ -161,7 +179,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
-			elseif($_POST['siret'] != '' && !$this->validateSiret($_POST['siret']))
+			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
 			{
 				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}

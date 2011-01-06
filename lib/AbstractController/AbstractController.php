@@ -203,7 +203,7 @@ abstract class AbstractController
 		
 		$ConcatController = new $ControllerName($Module, $Controller, $View, $Data);
 		$ConcatController->$ViewName();
-
+		
 		return $ConcatController->getView();
 	}
 
