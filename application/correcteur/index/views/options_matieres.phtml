@@ -7,6 +7,9 @@
 <?php
 foreach($this->Matieres as $Matiere)
 {
+	?>
+	<div class="matiere-box">
+	<?php
 	$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
 	echo $this->Form_checkbox('check_' . $ID, $Matiere);
 	?>
@@ -16,6 +19,7 @@ foreach($this->Matieres as $Matiere)
 	echo $this->Form_selectLabel('end_' . $ID, ' et finit en ', $this->Classes, 0)
 	?>
 	<div id="slider-<?php echo $ID ?>" class="slider" data-start="#start_<?php echo $ID ?>" data-end="#end_<?php echo $ID ?>"></div>
+	</div>
 	</div>
 	<?php
 }
