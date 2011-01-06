@@ -203,6 +203,7 @@ class Correcteur_IndexController extends IndexAbstractController
 		}
 		
 		$this->View->Matieres = $Matieres;
+		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
 	}
 	
 	

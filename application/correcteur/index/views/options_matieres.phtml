@@ -11,12 +11,23 @@ foreach($this->Matieres as $Matiere)
 	<div class="matiere-box">
 	<?php
 	$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
-	echo $this->Form_checkbox('check_' . $ID, $Matiere);
+
+	echo $this->Form_checkbox('check_' . $ID, $Matiere, isset($this->Defaults[$Matiere]));
 	?>
 	<div>
 	<?php
-	echo $this->Form_selectLabel('start_' . $ID, 'Débute en ', $this->Classes, 6);
-	echo $this->Form_selectLabel('end_' . $ID, ' et finit en ', $this->Classes, 0)
+	echo $this->Form_selectLabel(
+		'start_' . $ID,
+		'Débute en ',
+		$this->Classes,
+		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Commence']:6)
+	);
+	echo $this->Form_selectLabel(
+		'end_' . $ID,
+		' et finit en ',
+		$this->Classes,
+		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Finit']:0)
+	);
 	?>
 	<div id="slider-<?php echo $ID ?>" class="slider" data-start="#start_<?php echo $ID ?>" data-end="#end_<?php echo $ID ?>"></div>
 	</div>
