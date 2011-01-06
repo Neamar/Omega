@@ -2,9 +2,10 @@ Options +FollowSymlinks
 RewriteEngine on
 
 #--------------------------------------------------
-# Répertoire public directement accessible
+# Fichiers et répertoires directement accessibles
 #--------------------------------------------------
 RewriteRule ^public/.+ - [L]
+RewriteRule ^index\.htm$ - [L]
 
 #--------------------------------------------------
 # Erreurs corrigeables.
