@@ -299,34 +299,6 @@ class View
 	}
 	
 	/**
-	 * Fusionne les données de la vue actuelle avec la vue passée en paramètres.
-	 * En cas de doublons, la préséance va à la vue principale.
-	 * Attention : ne fusionne que les données, pas les metas (messages et autres)
-	 * 
-	 * @param View $View la vue à fusionner.
-	 */
-	public function merge(View $View)
-	{
-		$ViewArray = $View->toArray();
-		foreach($ViewArray as $Key => $Data)
-		{
-			if(!isset($this->$Key))
-			{
-				$this->$Key = $Data;
-			}
-		}
-		
-		$ViewArray = $View->metaToArray();
-		foreach($ViewArray as $Key => $Data)
-		{
-			if(!$this->issetMeta($Key))
-			{
-				$this->setMeta($Key, $Data);
-			}
-		}
-	}
-	
-	/**
 	 * Écrit le contenu de la balise <head>
 	 * 
 	 * Dans l'ordre :

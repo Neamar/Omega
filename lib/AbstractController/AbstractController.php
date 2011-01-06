@@ -220,7 +220,28 @@ abstract class AbstractController
 		$ConcatController = new $ControllerName($Module, $Controller, $View, $Data);
 		$ConcatController->$ViewName();
 		
-		return $ConcatController->getView();
+		/**
+		 * La nouvelle vue
+		 * 
+		 * @var View
+		 */
+		$NewView = $ConcatController->getView();
+		
+		//Fusionner metas, scripts et styles.
+		foreach($NewView->getMeta('script') as $Src => $_)
+		{
+			$this->View->addScript($Src);
+		}
+		foreach($NewView->getMeta('meta') as $Meta => $Valeur)
+		{
+			$this->View->addMeta($Meta, $Valeur);
+		}
+		foreach($NewView->getMeta('style') as $Src => $_)
+		{
+			$this->View->addStyle($Src);
+		}
+		
+		return $NewView;
 	}
 
 	/**

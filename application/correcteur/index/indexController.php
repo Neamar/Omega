@@ -90,7 +90,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle('Options correcteur');
 		$this->View->Compte = $this->concat('/correcteur/options_compte');
-		
+		$this->View->Matieres = $this->concat('/correcteur/options_matieres');
 	}
 	
 	/**
