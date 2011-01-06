@@ -35,14 +35,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->View->setTitle('Accueil exercice');
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
-		'SELECT Hash, Titre
-		FROM Exercices
-		WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
-		AND Statut IN("ANNULE", "TERMINE", "REMBOURSE")',
-		'Hash',
-		'Titre');
-		
-		
+			'SELECT Hash, Titre
+			FROM Exercices
+			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
+			AND Statut IN("ANNULE", "TERMINE", "REMBOURSE")',
+			'Hash',
+			'Titre'
+		);
 	}
 	
 	/**

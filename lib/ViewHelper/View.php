@@ -41,13 +41,13 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 0, $Message = true)
 	if($DeltaH != 0)
 	{
 		$R = preg_replace_callback(
-			'`<(/)?h([1-6])>`', 
-			create_function
-			(
+			'`<(/)?h([1-6])>`',
+			create_function(
 				'$H',
 				'return "<" . $H[1] . "h" . ($H[2] + ' . $DeltaH . ') . ">";'
 			),
-			$R);
+			$R
+		);
 	}
 	return $R;
 }

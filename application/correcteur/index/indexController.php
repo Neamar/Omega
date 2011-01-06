@@ -96,7 +96,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	/**
 	 * Page d'options pour la mise à jour du compte
 	 */
-	public function options_compteAction()
+	public function options_CompteAction()
 	{
 		$this->View->setTitle('Options du compte');
 
@@ -127,7 +127,7 @@ class Correcteur_IndexController extends IndexAbstractController
 				}
 				if($_POST['telephone'] != $_SESSION['Correcteur']->Telephone)
 				{
-					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`','',$_POST['telephone']);
+					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`', '', $_POST['telephone']);
 				}
 				if(!empty($_POST['password_confirm']))
 				{
@@ -155,7 +155,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	/**
 	 * Page d'options pour la mise à jour du compte
 	 */
-	public function options_matieresAction()
+	public function options_MatieresAction()
 	{
 		$this->View->setTitle('Définition de vos compétences');
 		$this->View->addScript();
@@ -241,7 +241,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			}
 			elseif($_FILES['cv']['name'] == '')
 			{
-				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.",'correcteur/pourquoi_cv');
+				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['error'] > 0)
 			{
@@ -249,15 +249,15 @@ class Correcteur_IndexController extends IndexAbstractController
 			}
 			elseif(Util::extension($_FILES['cv']['name']) != 'pdf')
 			{
-				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.','correcteur/pourquoi_cv');
+				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['size'] > 3*1048576)
 			{
-				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.','correcteur/pourquoi_cv');
+				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
 			}
 			else
 			{
-				$ID = $this->createAccount($_POST,'CORRECTEUR');
+				$ID = $this->createAccount($_POST, 'CORRECTEUR');
 				if($ID != FAIL)
 				{
 					//Enregistrer le CV :	
@@ -291,7 +291,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			'ID'=>Sql::lastId(),
 			'Prenom'=>$Datas['prenom'],
 			'Nom'=>$Datas['nom'],
-			'Telephone'=>preg_replace('`[^0-9]`','',$Datas['telephone']),
+			'Telephone'=>preg_replace('`[^0-9]`', '', $Datas['telephone']),
 		);
 		
 		if(isset($Datas['siret']) && $Datas['siret'] != '')
@@ -309,7 +309,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	 * 
 	 * @return bool
 	 */
-	private function validatePhone($Phone)
+	protected function validatePhone($Phone)
 	{
 		return preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`', $Phone);
 	}
@@ -320,7 +320,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	 * 
 	 * @param string $siren
 	 */
-	private function validateSiren($siren)
+	protected function validateSiren($siren)
 	{
         $siren = str_replace(array(' ', '.', '-'), '', $siren);
         $reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
@@ -355,7 +355,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	 * 
 	 * @return bool true si valide.
 	 */
-	private function validateSiret($siret)
+	protected function validateSiret($siret)
 	{
 		$siret = str_replace(array(' ', '.', '-'), '', $siret);
 		$reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";

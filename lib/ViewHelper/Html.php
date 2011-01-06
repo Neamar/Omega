@@ -109,16 +109,16 @@ function initTypo()
 {
 	include PATH . '/lib/Typo/Typo.php';
 	Typo::addOption(PARSE_MATH);
-	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
-	Typo::addBalise('#\\\\doc\[index/([a-z_-]+)\]{(.+)}#isU','<a href="/$1.htm">$2</a>');
-	Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU','<a href="/documentation/$1">$2</a>');
+	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
+	Typo::addBalise('#\\\\doc\[index/([a-z_-]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
+	Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU', '<a href="/documentation/$1">$2</a>');
 	
+	//Empêcher de mettre en forme le texte dans les ref.
 	Typo::$Escape_And_Prepare['#\\\\doc\[([^\[]+)\]{(.+)}#isU']=array
-//Empêcher de mettre en forme le texte dans les ref.
-(
-	'Protect'=>'DOC-REF',
-	'RegexpCode'=>1,
- );
+	(
+		'Protect'=>'DOC-REF',
+		'RegexpCode'=>1,
+ 	);
 	
 }
 
@@ -131,7 +131,7 @@ function initTypo()
  */
 function ViewHelper_Html_fromTex($URL)
 {
-	if(!class_exists('Typo',false))
+	if(!class_exists('Typo', false))
 	{
 		initTypo();
 	}
@@ -141,8 +141,7 @@ function ViewHelper_Html_fromTex($URL)
 	
 	$HTML = preg_replace_callback(
 		'`\%([A-Z_]+)\%`',
-		create_function
-		(
+		create_function(
 			'$Constante',
 			'return constant($Constante[1]);'
 		),
