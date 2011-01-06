@@ -11,6 +11,7 @@ $(function() {
 	});
 	
 	$(".matiere-box div").hide();
+	$(".matiere-box input[type=checkbox]").change();
 });
 
 $(function() {
@@ -32,8 +33,8 @@ $(function() {
 		slider.data('end', $(slider.data('end')));
 		
 		
-		slider.data('start').attr('disabled', 'readonly');
-		slider.data('end').attr('disabled', 'readonly');
+		slider.data('start').click(function(){slider.hide('slow')});
+		slider.data('end').click(function(){slider.hide('slow')});
 		
 		slider.slider({
 			range: true,

@@ -160,11 +160,49 @@ class Correcteur_IndexController extends IndexAbstractController
 		$this->View->setTitle('Définition de vos compétences');
 		$this->View->addScript();
 		//Charger la liste des matières :
-		$this->View->Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
 		//Charger la liste des matières :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
+		if(isset($_POST['edition-compte']))
+		{
+			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
+			foreach($Matieres as $Matiere)
+			{
+				$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
+				if(!empty($_POST['check_' . $ID]))
+				{
+					$Debut = intval($_POST['start_' . $ID]);
+					$Fin = intval($_POST['end_' . $ID]);
+					
+					if($Debut < $Fin)
+					{
+						$this->View->setMessage("error", "WTF ? Le slider... a buggé ? Nooooon !");
+						break;
+					}
+					else
+					{
+						$ToInsert = array
+						(
+							'Correcteur' => $_SESSION['Correcteur']->getFilteredId(),
+							'Matiere' => $Matiere,
+							'Commence' => $Debut,
+							'Finit' => $Fin,
+						);
+						
+						Sql::insert('Correcteurs_Capacites', $ToInsert);
+					}
+				}
+			}
+			
+			if(!$this->View->issetMeta('message'))
+			{
+				$this->View->setMessage("info", "Compétences enregistrées.");
+			}
+		}
+		
+		$this->View->Matieres = $Matieres;
 	}
 	
 	
