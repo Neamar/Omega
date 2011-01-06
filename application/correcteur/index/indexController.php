@@ -84,6 +84,56 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Page d'options
+	 */
+	public function optionsAction()
+	{
+		$this->View->setTitle('Options du compte');
+
+		if(isset($_POST['edition-compte']))
+		{
+			if(!$this->validateMail($_POST['email']))
+			{
+				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			}
+			if(!$this->validatePhone($_POST['telephone']))
+			{
+				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+			}
+			else if(!empty($_POST['password_confirm']) && $_POST['password'] != $_POST['password_confirm'])
+			{
+				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+			}
+			else
+			{
+				$ToUpdate = array();
+				if($_POST['email'] != $_SESSION['Correcteur']->Mail)
+				{
+					$ToUpdate['Mail'] = $_POST['email'];
+				}
+				if($_POST['telephone'] != $_SESSION['Correcteur']->Telephone)
+				{
+					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`','',$_POST['telephone']);
+				}
+				if(!empty($_POST['password_confirm']))
+				{
+					$ToUpdate['Pass'] = sha1(SALT . $_POST['password']);
+				}
+				
+				if(empty($ToUpdate))
+				{
+					$this->View->setMessage("warning", "Aucune modification.");
+				}
+				else
+				{
+					$_SESSION['Correcteur']->setAndSave($ToUpdate);
+					$this->View->setMessage("info", "Modifications du compte enregistrées.");
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Page d'inscription.
 	 * 
 	 */
@@ -107,7 +157,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			{
 				$this->View->setMessage("error", "Vous devez indiquer votre prénom.");
 			}
-			elseif(!preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`',$_POST['telephone']))
+			elseif(!$this->validatePhone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
@@ -176,6 +226,18 @@ class Correcteur_IndexController extends IndexAbstractController
 		}
 		
 		return Sql::insert('Correcteurs', $ToInsert);
+	}
+	
+	/**
+	 * Valide un numéro de téléphone
+	 * 
+	 * @param string $Phone
+	 * 
+	 * @return bool
+	 */
+	private function validatePhone($Phone)
+	{
+		return preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`', $Phone);
 	}
 	
 	/**
