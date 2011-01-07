@@ -225,10 +225,15 @@ class View
 	/**
 	 * Ajoute un script en haut de page
 	 * 
-	 * @param string $Src l'URL du script à ajouter
+	 * @param string $Src l'URL du script à ajouter. Si vide, ajoutera le fichier js associé à la page dans le fichier public/js
 	 */
-	public function addScript($Src)
+	public function addScript($Src = '')
 	{
+		if(empty($Src))
+		{
+			$Src = '/public/js/' . $this->Controller->getModule() . '/' . $this->Controller->getController() . '/' . $this->Controller->getAction() . '.js';
+		}
+		
 		$this->Metas['script'][$Src] = true;
 	}
 	
@@ -291,34 +296,6 @@ class View
 	public function setFile($URL)
 	{
 		$this->setMeta('viewFile', $URL);
-	}
-	
-	/**
-	 * Fusionne les données de la vue actuelle avec la vue passée en paramètres.
-	 * En cas de doublons, la préséance va à la vue principale.
-	 * Attention : ne fusionne que les données, pas les metas (messages et autres)
-	 * 
-	 * @param View $View la vue à fusionner.
-	 */
-	public function merge(View $View)
-	{
-		$ViewArray = $View->toArray();
-		foreach($ViewArray as $Key => $Data)
-		{
-			if(!isset($this->$Key))
-			{
-				$this->$Key = $Data;
-			}
-		}
-		
-		$ViewArray = $View->metaToArray();
-		foreach($ViewArray as $Key => $Data)
-		{
-			if(!$this->issetMeta($Key))
-			{
-				$this->setMeta($Key, $Data);
-			}
-		}
 	}
 	
 	/**

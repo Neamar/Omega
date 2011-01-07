@@ -1,0 +1,44 @@
+<h1>Modification des compétences</h1>
+<p class="intro">Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent.</p>
+
+
+
+<form method="post" action="" id="form_edition-competences">
+<?php
+foreach($this->Matieres as $Matiere)
+{
+	?>
+	<div class="matiere-box">
+	<?php
+	$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
+
+	echo $this->Form_checkbox('check_' . $ID, $Matiere, isset($this->Defaults[$Matiere]));
+	?>
+	<div>
+	<?php
+	echo $this->Form_selectLabel(
+		'start_' . $ID,
+		'Débute en ',
+		$this->Classes,
+		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Commence']:6)
+	);
+	echo $this->Form_selectLabel(
+		'end_' . $ID,
+		' et finit en ',
+		$this->Classes,
+		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Finit']:0)
+	);
+	?>
+	<div id="slider-<?php echo $ID ?>" class="slider" data-start="#start_<?php echo $ID ?>" data-end="#end_<?php echo $ID ?>"></div>
+	</div>
+	</div>
+	<?php
+}
+echo $this->Form_submit('edition-compte', "Modifier les informations");
+?>
+</form>
+
+<script type="text/javascript">
+ClasseMin = <?php echo min(array_keys($this->Classes)) ?>;
+ClasseMax = <?php echo max(array_keys($this->Classes)) ?>;
+</script>

@@ -21,12 +21,18 @@
  * 
  * @param View $ViewObject la vue contenant les données
  * @param int $DeltaH le décalage à imposer aux éléments de titre (DeltaH = 2 : tous les h1 deviennent des h3)
+ * @param bool $Message s'il faut afficher le message de la vue
  * 
  * @return string le contenu de la vue
  */
-function ViewHelper_View_render(View $ViewObject, $DeltaH = 0)
+function ViewHelper_View_render(View $ViewObject, $DeltaH = 0, $Message = true)
 {
 	ob_start();
+	
+	if($Message)
+	{
+		echo $ViewObject->renderMessage();
+	}
 	
 	$ViewObject->renderContent();
 	
@@ -35,13 +41,13 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 0)
 	if($DeltaH != 0)
 	{
 		$R = preg_replace_callback(
-			'`<(/)?h([1-6])>`', 
-			create_function
-			(
+			'`<(/)?h([1-6])>`',
+			create_function(
 				'$H',
 				'return "<" . $H[1] . "h" . ($H[2] + ' . $DeltaH . ') . ">";'
 			),
-			$R);
+			$R
+		);
 	}
 	return $R;
 }

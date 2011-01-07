@@ -84,6 +84,130 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Page d'options globales.
+	 */
+	public function optionsAction()
+	{
+		$this->View->setTitle('Options correcteur');
+		$this->View->Compte = $this->concat('/correcteur/options_compte');
+		$this->View->Matieres = $this->concat('/correcteur/options_matieres');
+	}
+	
+	/**
+	 * Page d'options pour la mise à jour du compte
+	 */
+	public function options_CompteAction()
+	{
+		$this->View->setTitle('Options du compte');
+
+		if(isset($_POST['edition-compte']))
+		{
+			if(!$this->validateMail($_POST['email']))
+			{
+				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			}
+			if(!$this->validatePhone($_POST['telephone']))
+			{
+				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+			}
+			else if(!empty($_POST['password_confirm']) && $_POST['password'] != $_POST['password_confirm'])
+			{
+				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+			}
+			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
+			{
+				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
+			}
+			else
+			{
+				$ToUpdate = array();
+				if($_POST['email'] != $_SESSION['Correcteur']->Mail)
+				{
+					$ToUpdate['Mail'] = $_POST['email'];
+				}
+				if($_POST['telephone'] != $_SESSION['Correcteur']->Telephone)
+				{
+					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`', '', $_POST['telephone']);
+				}
+				if(!empty($_POST['password_confirm']))
+				{
+					$ToUpdate['Pass'] = sha1(SALT . $_POST['password']);
+				}
+				if(!empty($_POST['siret']))
+				{
+					$ToUpdate['Siret'] = $_POST['siret'];
+				}
+				
+				//Ne commiter que s'il y a des modifications.
+				if(empty($ToUpdate))
+				{
+					$this->View->setMessage("warning", "Aucune modification.");
+				}
+				else
+				{
+					$_SESSION['Correcteur']->setAndSave($ToUpdate);
+					$this->View->setMessage("info", "Modifications du compte enregistrées.");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Page d'options pour la mise à jour du compte
+	 */
+	public function options_MatieresAction()
+	{
+		$this->View->setTitle('Définition de vos compétences');
+		$this->View->addScript();
+		//Charger la liste des matières :
+		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+		
+		//Charger la liste des matières :
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+		
+		if(isset($_POST['edition-compte']))
+		{
+			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
+			foreach($Matieres as $Matiere)
+			{
+				$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
+				if(!empty($_POST['check_' . $ID]))
+				{
+					$Debut = intval($_POST['start_' . $ID]);
+					$Fin = intval($_POST['end_' . $ID]);
+					
+					if($Debut < $Fin)
+					{
+						$this->View->setMessage("error", "WTF ? Le slider... a buggé ? Nooooon !");
+						break;
+					}
+					else
+					{
+						$ToInsert = array
+						(
+							'Correcteur' => $_SESSION['Correcteur']->getFilteredId(),
+							'Matiere' => $Matiere,
+							'Commence' => $Debut,
+							'Finit' => $Fin,
+						);
+						
+						Sql::insert('Correcteurs_Capacites', $ToInsert);
+					}
+				}
+			}
+			
+			if(!$this->View->issetMeta('message'))
+			{
+				$this->View->setMessage("info", "Compétences enregistrées.");
+			}
+		}
+		
+		$this->View->Matieres = $Matieres;
+		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
+	}
+	
+	
+	/**
 	 * Page d'inscription.
 	 * 
 	 */
@@ -107,17 +231,17 @@ class Correcteur_IndexController extends IndexAbstractController
 			{
 				$this->View->setMessage("error", "Vous devez indiquer votre prénom.");
 			}
-			elseif(!preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`',$_POST['telephone']))
+			elseif(!$this->validatePhone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
-			elseif($_POST['siret'] != '' && !$this->validateSiret($_POST['siret']))
+			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
 			{
 				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
 			elseif($_FILES['cv']['name'] == '')
 			{
-				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.",'correcteur/pourquoi_cv');
+				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['error'] > 0)
 			{
@@ -125,15 +249,15 @@ class Correcteur_IndexController extends IndexAbstractController
 			}
 			elseif(Util::extension($_FILES['cv']['name']) != 'pdf')
 			{
-				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.','correcteur/pourquoi_cv');
+				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['size'] > 3*1048576)
 			{
-				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.','correcteur/pourquoi_cv');
+				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
 			}
 			else
 			{
-				$ID = $this->createAccount($_POST,'CORRECTEUR');
+				$ID = $this->createAccount($_POST, 'CORRECTEUR');
 				if($ID != FAIL)
 				{
 					//Enregistrer le CV :	
@@ -167,7 +291,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			'ID'=>Sql::lastId(),
 			'Prenom'=>$Datas['prenom'],
 			'Nom'=>$Datas['nom'],
-			'Telephone'=>preg_replace('`[^0-9]`','',$Datas['telephone']),
+			'Telephone'=>preg_replace('`[^0-9]`', '', $Datas['telephone']),
 		);
 		
 		if(isset($Datas['siret']) && $Datas['siret'] != '')
@@ -179,12 +303,24 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Valide un numéro de téléphone
+	 * 
+	 * @param string $Phone
+	 * 
+	 * @return bool
+	 */
+	protected function validatePhone($Phone)
+	{
+		return preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`', $Phone);
+	}
+	
+	/**
 	 * Valide un numéro de SIREN.
 	 * @see http://pear.php.net/package/Validate_FR/download
 	 * 
 	 * @param string $siren
 	 */
-	private function validateSiren($siren)
+	protected function validateSiren($siren)
 	{
         $siren = str_replace(array(' ', '.', '-'), '', $siren);
         $reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
@@ -219,7 +355,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	 * 
 	 * @return bool true si valide.
 	 */
-	private function validateSiret($siret)
+	protected function validateSiret($siret)
 	{
 		$siret = str_replace(array(' ', '.', '-'), '', $siret);
 		$reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";

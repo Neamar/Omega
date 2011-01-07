@@ -146,7 +146,7 @@ class Thumbnail
 		//Générer l'aperçu de la première page
 		if(1)
 		{
-			$ThumbFilename = str_replace('.png','.gif',$ThumbFilename);
+			$ThumbFilename = str_replace('.png', '.gif', $ThumbFilename);
 			exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
 		}
 		else

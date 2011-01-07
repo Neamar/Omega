@@ -188,21 +188,22 @@ class Debug_IndexController extends AbstractController
 				rmdir($dir);
 			}
 			
-			if(is_dir(PATH . '/public/exercices'))
-			{
-				rrmdir(PATH . '/public/exercices');
-				$Actions[] = 'Exercices supprimés.';
-			}
-			mkdir(PATH . '/public/exercices');
-			$Actions[] = 'Dossier exercice créé et prêt à servir.';
+			$Dirs = array
+			(
+				'/public/exercices',
+				'/data/CV',
+				'/data/logs'
+			);
 			
-			if(is_dir(PATH . '/data/CV'))
+			foreach($Dirs as $Dir)
 			{
-				rrmdir(PATH . '/data/CV');
-				$Actions[] = 'CV supprimés.';
+				if(is_dir(PATH . $Dir))
+				{
+					rrmdir(PATH . $Dir);
+					$Actions[] = $Dir . ' nettoyé.';
+				}
+				mkdir(PATH . $Dir);
 			}
-			mkdir(PATH . '/data/CV');
-			$Actions[] = 'Dossier CV créé et prêt à servir.';
 			
 			/*
 			* Troisième partie : reconstruction de la DB.
