@@ -47,6 +47,14 @@ class Thumbnail
 		{
 			return self::createImage($Filename);
 		}
+		elseif($Extension == 'doc' || $Extension == 'docx')
+		{
+			return self::createDoc($Filename);
+		}
+		elseif($Extension == 'odt')
+		{
+			return self::createOdt($Filename);
+		}
 		elseif($Extension == 'pdf')
 		{
 			return self::createPdf($Filename);
@@ -158,6 +166,32 @@ class Thumbnail
 	}
 	
 	/**
+	 * Fichier Word
+	 * Renvoie une image générique.
+	 * 
+	 * @param string $Filename
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
+	 */
+	public static function createDoc($Filename)
+	{
+		return '/public/images/thumbs/doc.jpg';
+	}
+	
+	/**
+	 * Fichier OpenOffice
+	 * Renvoie une image générique.
+	 * 
+	 * @param string $Filename
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
+	 */
+	public static function createOdt($Filename)
+	{
+		return '/public/images/thumbs/odt.jpg';
+	}
+	
+	/**
 	 * Appelé quand le système ne sait pas comment générer l'aperçu.
 	 * Renvoie une image générique.
 	 * 
@@ -167,7 +201,7 @@ class Thumbnail
 	 */
 	public static function createDefault($Filename)
 	{
-		return '/public/images/unavailable.png';
+		return '/public/images/thumbs/unavailable.jpg';
 	}
 	
 	protected static function getThumbFileName($Filename)
