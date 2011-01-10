@@ -1,7 +1,10 @@
 /*********************************************************************************************
 
 Version : Pour l'index !
-Changements récents : 
+Changements récents : Correction des bugs de compatibilités sur ie et chrome
+Testé sur : IE8, chrome 8, Firefox 3.6, Safari 5
+Petit Bug sur IE7
+Affichage Nul sous IE6 et IE5.5
 
 /***********************************************************************************************
 
@@ -34,7 +37,7 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
-background:#2a2a2a url('../../images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
+background:#2a2a2a url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
 height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
@@ -155,11 +158,9 @@ z-index:10;
 			}
 				#content nav ul li a:hover{
 				color:#898989;
-				display:block;
 				background: url('/public/images/index/link-right-h.png') bottom center no-repeat;
 				}
 				#content nav ul li a span:hover{
-				display:block;
 				background: url('/public/images/index/link-lefts-h.png') bottom center no-repeat;
 				}
 			#content nav ul li a.active{
@@ -233,15 +234,17 @@ border:0;
 height:27px;
 margin-bottom:9px;
 width:200px;
-padding-left:5px;
+line-height:24px;/*ie*/
 }
 	#content-form input:hover {
 	background: url('/public/images/index/input-sp.png') no-repeat; /*input-h*/
 	background-position: 0px -31px;
+	outline:none;
 	}
 	#content-form input:focus {
 	background: url('/public/images/index/input-sp.png') no-repeat; /*input-f*/
 	background-position: 0px -62px;
+	outline:none;
 	}
 
 /* ------------------------------------- Formulaire élève / correcteur --*/
