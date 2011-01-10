@@ -38,7 +38,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'SELECT Hash, Titre
 			FROM Exercices
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
-			AND Statut IN("ANNULE", "TERMINE", "REMBOURSE")',
+			AND Statut NOT IN("ANNULE", "TERMINE", "REMBOURSE")',
 			'Hash',
 			'Titre'
 		);
