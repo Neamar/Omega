@@ -62,7 +62,7 @@ padding-bottom:40px;
 		-webkit-transform: rotate(-15deg);
 		-moz-transform: rotate(-15deg);
 		-o-transform: rotate(-15deg);
-		writing-mode: tb-rl;
+		/*writing-mode: tb-rl;*/
 		}
 
 #top ul {
@@ -234,6 +234,7 @@ border:0;
 height:27px;
 margin-bottom:9px;
 width:200px;
+padding-left:5px;
 line-height:24px;/*ie*/
 }
 	#content-form input:hover {
