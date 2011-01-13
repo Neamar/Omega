@@ -102,17 +102,15 @@ class Correcteur_IndexController extends IndexAbstractController
 
 		if(isset($_POST['edition-compte']))
 		{
-			if(!$this->validateMail($_POST['email']))
+			$ToUpdate = $this->editAccount($_POST, $_SESSION['Correcteur']);
+			if($ToUpdate == FAIL)
 			{
-				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+				//La mise à jour ne doit pas être effectuée.
+				//Le message a été défini par editAccount.
 			}
-			if(!$this->validatePhone($_POST['telephone']))
+			elseif(!$this->validatePhone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
-			}
-			else if(!empty($_POST['password_confirm']) && $_POST['password'] != $_POST['password_confirm'])
-			{
-				$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
 			}
 			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
 			{
@@ -120,18 +118,9 @@ class Correcteur_IndexController extends IndexAbstractController
 			}
 			else
 			{
-				$ToUpdate = array();
-				if($_POST['email'] != $_SESSION['Correcteur']->Mail)
-				{
-					$ToUpdate['Mail'] = $_POST['email'];
-				}
 				if($_POST['telephone'] != $_SESSION['Correcteur']->Telephone)
 				{
 					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`', '', $_POST['telephone']);
-				}
-				if(!empty($_POST['password_confirm']))
-				{
-					$ToUpdate['Pass'] = sha1(SALT . $_POST['password']);
 				}
 				if(!empty($_POST['siret']))
 				{

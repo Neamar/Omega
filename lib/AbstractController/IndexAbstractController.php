@@ -29,9 +29,12 @@ abstract class IndexAbstractController extends AbstractController
 	/**
 	 * Crée un compte de base.
 	 * Appelle la fonction create_account_special() qui gère les opérations spécifiques (tables héritées)
+	 * @see IndexAbstractController::createAccountSpecial
 	 * 
 	 * @param array $Data les données envoyées
-	 * @param string $Type (ELEVE|CORRECTEUR)
+	 * @param string $Type (ELEVE|CORRECTEUR) le type de la Table Membre.
+	 * 
+	 * @return int l'identifiant nouvellement inséré, ou FAIL.
 	 */
 	protected function createAccount(array $Datas, $Type)
 	{
@@ -101,6 +104,50 @@ abstract class IndexAbstractController extends AbstractController
 	 * @return bool true en succès, false en échec.
 	 */
 	protected abstract function createAccountSpecial(array $Datas);
+	
+	/**
+	 * Modifie un compte de base.
+	 * Appelle la fonction editAccountSpecial() qui gère les opérations spécifiques selon l'héritage (numéro de téléphone, classe...)
+	 * Utilisé par options_CompteAction().
+	 * 
+	 * @param array $Data les données envoyées
+	 * @param Membre $Base le membre actuel (pour ne pas mettre à jour ce qui ne change pas)
+	 * 
+	 * @return array le tableau des modifications à effecter, ou FAIL (avec un message dans ce cas)
+	 */
+	protected function editAccount(array $Datas, Membre $Base)
+	{
+		if(!$this->validateMail($Datas['email']))
+		{
+			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+		}
+		else if(External::isTrash($Datas['email']))
+		{
+			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
+		}
+		else if(!empty($Datas['password_confirm']) && $Datas['password'] != $Datas['password_confirm'])
+		{
+			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+		}
+		else
+		{
+			$ToUpdate = array();
+
+			if($Datas['email'] != $Base->Mail)
+			{
+				$ToUpdate['Mail'] = $Datas['email'];
+			}
+			
+			if(!empty($Datas['password_confirm']))
+			{
+				$ToUpdate['Pass'] = sha1(SALT . $Datas['password']);
+			}
+			
+			return $ToUpdate;
+		}
+		
+		return FAIL;
+	}
 	
 	/**
 	 * Connecte la personne en tant que $Type (Eleve, Correcteur) si ses identifiants sont corrects.

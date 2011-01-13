@@ -162,6 +162,61 @@ class Eleve_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Page d'options globales.
+	 */
+	public function optionsAction()
+	{
+		$this->View->setTitle('Options élève');
+		$this->View->Compte = $this->concat('/eleve/options_compte');
+	}
+	
+	public function options_CompteAction()
+	{
+		$this->View->setTitle('Options du compte');
+
+		//Charger la liste des classes pour le combobox :
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+		
+		
+		if(isset($_POST['edition-compte']))
+		{
+			$ToUpdate = $this->editAccount($_POST, $_SESSION['Eleve']);
+			if($ToUpdate == FAIL)
+			{
+				//La mise à jour ne doit pas être effectuée.
+				//Le message a été défini par editAccount.
+			}
+			elseif(!isset($this->View->Classes[$_POST['classe']]))
+			{
+				$this->View->setMessage("error", "Sélectionnez une classe dans la liste déroulante.");
+			}
+			else
+			{
+				if($_POST['classe'] != $_SESSION['Eleve']->Classe)
+				{
+					$ToUpdate['Classe'] = $_POST['classe'];
+				}
+				
+				if($_POST['section'] != $_SESSION['Eleve']->Section)
+				{
+					$ToUpdate['Section'] = $_POST['section'];
+				}
+				
+				//Ne commiter que s'il y a des modifications.
+				if(empty($ToUpdate))
+				{
+					$this->View->setMessage("warning", "Aucune modification.");
+				}
+				else
+				{
+					$_SESSION['Eleve']->setAndSave($ToUpdate);
+					$this->View->setMessage("info", "Modifications du compte enregistrées.");
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Gère l'enregistrement dans la table Eleves en particulier.
 	 * 
 	 * @see IndexAbstractController::createAccountSpecial()
