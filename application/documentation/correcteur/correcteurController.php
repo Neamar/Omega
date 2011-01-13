@@ -30,6 +30,17 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
 class Documentation_CorrecteurController extends Documentation_IndexController
 {
 	/**
+	 * Accueil du module correcteur.
+	 * @see Documentation_IndexController::indexAction()
+	 */
+	public function indexAction()
+	{
+		parent::indexAction();
+		
+		$this->View->Pages = self::$Pages[$this->Controller];
+	}
+	
+	/**
 	 * Overrider le index/matieres
 	 * @see Documentation_IndexController::matieresAction()
 	 */
