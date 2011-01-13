@@ -204,10 +204,16 @@ class View
 	 * Définit le titre de la page Web (balise <title>)
 	 * 
 	 * @param string $Title
+	 * @param string $Intro le texte présentant la page
 	 */
-	public function setTitle($Title)
+	public function setTitle($Title, $Intro = null)
 	{
 		self::setMeta('title', $Title);
+		
+		if($Intro != null)
+		{
+			self::setMeta('intro', $Intro);
+		}
 	}
 	
 	/**
@@ -385,6 +391,22 @@ class View
 		return $this->Html_ListAnchor(self::getMeta('breadcrumbs'));
 	}
 	
+	/**
+	 * Renvoie le message de titre et l'introduction.
+	 * 
+	 * @return html
+	 */
+	public function renderTitle()
+	{
+		$Title = '<h1>' . $this->getMeta('title') . '</h1>' . "\n";
+		
+		if($this->issetMeta('intro'))
+		{
+			$Title .= '<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
+		}
+		
+		return $Title;
+	}
 
 	/**
 	 * Écrit le contenu du fichier vue sur la sortie standard
