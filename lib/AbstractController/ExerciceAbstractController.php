@@ -51,26 +51,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			//Récupérer l'exercice :
 			$this->Exercice = Exercice::load($Data['data']);
 
-			//Vérifier que l'on a les accès.
-			//Partir du postulat qu'on les a, puis examiner toutes les possibilités pour ne pas les avoir.
-			$CanAccess = true;
-			
-			$CanAccess = $CanAccess && !is_null($this->Exercice);
-			
-			if($_GET['module'] == 'eleve')
-			{
-				$CanAccess = $CanAccess && $this->Exercice->Createur == $_SESSION['Eleve']->ID;
-			}
-			elseif($_GET['module'] == 'correcteur')
-			{
-				$CanAccess = $CanAccess && $this->Exercice->Correcteur != $_SESSION['Correcteur']->ID;
-			}
-			else 
-			{
-				$CanAccess = false;
-			}
-			
-			if(!$CanAccess)
+			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
 				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
@@ -130,6 +111,17 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->View->setMessage("warning", $Message);
 			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);
 		}
+	}
+	
+	/**
+	 * Vérifie que l'exercice associé à la page est disponible.
+	 * Overridé par les classes filles.
+	 * 
+	 * @return bool true si l'exercice peut être accédé.
+	 */
+	protected function hasAccess(Exercice $Exercice)
+	{
+		return false;
 	}
 	
 	/**

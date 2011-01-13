@@ -447,4 +447,16 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			WHERE CREATEUR = ' . $_SESSION['Eleve']->getFilteredId()
 		);
 	}
+	
+	/**
+	 * Vérifie que l'exercice associé à la page est disponible.
+	 * Overridé par les classes filles.
+	 * @see ExerciceAbstractController::hasAccess
+	 * 
+	 * @return bool true si l'exercice peut être accédé.
+	 */
+	protected function hasAccess(Exercice $Exercice)
+	{
+		return ($Exercice->Createur == $_SESSION['Eleve']->ID);
+	}
 }
