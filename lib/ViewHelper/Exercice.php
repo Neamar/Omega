@@ -67,7 +67,19 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			}
 		}
 	}
-	
+	//Mettre en forme les remarques :
+	if(!empty($Exercice->InfosEleve))
+	{
+		$Remarques = '
+		<p>Informations complémentaires :</p>
+		<p class="infoseleve">
+			' . $Exercice->InfosEleve . '
+		</p>';
+	}
+	else
+	{
+		$Remarques = '';
+	}
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);
 	
@@ -82,23 +94,20 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			<li><a href="#reclamation-' . $Exercice->Hash . '">Réclamation</a></li>
 		</ul>
 		<div class="exercice-tab exercice-infos" id="infos-' . $Exercice->Hash . '">
-		<h2>' . $Exercice->Titre . '</h2>
+		<h2><a href="/' . $_GET['module'] . '/exercice/index/' . $Exercice->Hash . '">' . $Exercice->Titre . '</a></h2>
 		' . ViewHelper_Html_list($Infos) . '
 		
-		<p>Informations complémentaires :</p>
-		<p class="infoseleve">
-			' . $Exercice->InfosEleve . '
-		</p>
+		' . $Remarques . '
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
 		<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
-		<p>' . $Content['SUJET'] . '</p>
+		<p>' . (isset($Content['SUJET'])?$Content['SUJET']:'Sujet non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-corrige" id="corrige-' . $Exercice->Hash . '">
-		<p>Corrige</p>
+		<p>' . (isset($Content['CORRIGE'])?$Content['CORRIGE']:'Corrigé non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-reclamation" id="reclamation-' . $Exercice->Hash . '">
-		<p>Reclamation</p>
+		<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'!Réclamation non disponible.') . '</p>
 		</div>
 	</div>
 	
