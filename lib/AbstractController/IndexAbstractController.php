@@ -132,15 +132,10 @@ abstract class IndexAbstractController extends AbstractController
 		else
 		{
 			$ToUpdate = array();
-			
+
 			if($Datas['email'] != $Base->Mail)
 			{
 				$ToUpdate['Mail'] = $Datas['email'];
-			}
-			
-			if($Datas['telephone'] != $Base->Telephone)
-			{
-				$ToUpdate['Telephone'] = preg_replace('`[^0-9]`', '', $Datas['telephone']);
 			}
 			
 			if(!empty($Datas['password_confirm']))
