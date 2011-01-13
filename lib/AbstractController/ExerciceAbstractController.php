@@ -44,12 +44,13 @@ abstract class ExerciceAbstractController extends AbstractController
 	public function __construct($Module,$Controller,$View,$Data)
 	{
 		parent::__construct($Module, $Controller, $View, $Data);
-		
+
 		//La page porte sur un exercice en particulier
 		if(is_array($Data) && isset($Data['data']))
 		{
 			//Récupérer l'exercice :
 			$this->Exercice = Exercice::load($Data['data']);
+
 			if(is_null($this->Exercice)
 			||
 			(!isset($_SESSION['Eleve']) && !isset($_SESSION['Correcteur']) && !isset($_SESSION['Admin'])
@@ -87,7 +88,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 		if($this->Action != 'index')
 		{
-			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = $this->Action;
+			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = ucfirst($this->Action);
 		}
 		
 		$this->View->setBreadcrumbs($Ariane);
@@ -95,7 +96,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	
 	public function sujetActionWd()
 	{
-		$this->View->setTitle("Affichage du sujet");
+		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 	}

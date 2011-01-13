@@ -32,7 +32,10 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil correcteur', 'Cette page regroupe les différentes actions qui vous sont disponibles en tant que correcteur.');
+		$this->View->setTitle(
+			'Accueil correcteur',
+			'Cette page regroupe les différentes actions qui vous sont disponibles en tant que correcteur.'
+		);
 
 	}
 	
@@ -43,7 +46,10 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function connexionAction()
 	{
-		$this->View->setTitle('Connexion correcteur', 'Connectez-vous pour accéder au site.');
+		$this->View->setTitle(
+			'Connexion correcteur',
+			'Connectez-vous pour accéder au site.'
+		);
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Correcteur']))
@@ -88,7 +94,11 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function optionsAction()
 	{
-		$this->View->setTitle('Options correcteur', 'Modifiez ici vos informations de compte, ou vos capacités pour chaque matière.');
+		$this->View->setTitle(
+			'Options correcteur',
+			'Modifiez ici vos informations de compte, ou vos capacités pour chaque matière.'
+		);
+		
 		$this->View->Compte = $this->concat('/correcteur/options_compte');
 		$this->View->Matieres = $this->concat('/correcteur/options_matieres');
 	}
@@ -150,7 +160,11 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function options_MatieresAction()
 	{
-		$this->View->setTitle('Modifications des compétences', "Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent.");
+		$this->View->setTitle(
+			'Modifications des compétences',
+			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
+		);
+		
 		$this->View->addScript();
 		//Charger la liste des matières :
 		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
@@ -206,7 +220,10 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function inscriptionAction()
 	{
-		$this->View->setTitle('Inscription correcteur', "L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences.");
+		$this->View->setTitle(
+			'Inscription correcteur',
+			"L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
+		);
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))

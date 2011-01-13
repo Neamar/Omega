@@ -32,7 +32,10 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil élève');
+		$this->View->setTitle(
+			'Accueil élève',
+			'Cette page offre un récapitulatif de votre compte : vos derniers exercices, votre compte... ainsi, bien sûr, que la possibilité de créer un nouvel exercice.</p>'
+		);
 		
 		$this->View->Exo = $this->concat('/eleve/exercice/');
 
@@ -45,7 +48,7 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function connexionAction()
 	{
-		$this->View->setTitle('Connexion élève');
+		$this->View->setTitle('Connexion élève', 'Connectez-vous pour accéder au site.');
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Eleve']))
@@ -91,7 +94,10 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function inscriptionAction()
 	{
-		$this->View->setTitle('Inscription élève');
+		$this->View->setTitle(
+			'Inscription élève',
+			"L'inscription à <strong>eDevoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permettre de profiter rapidement des services offerts par le site."
+		);
 		
 		//Charger la liste des classes pour le combobox :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
@@ -166,13 +172,19 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function optionsAction()
 	{
-		$this->View->setTitle('Options élève');
+		$this->View->setTitle(
+			'Options élève',
+			'Modifiez ici vos informations de compte.'
+		);
 		$this->View->Compte = $this->concat('/eleve/options_compte');
 	}
 	
 	public function options_CompteAction()
 	{
-		$this->View->setTitle('Options du compte');
+		$this->View->setTitle(
+			'Modifications du compte',
+			'Cette page vous permet de modifier les informations de votre compte'
+		);
 
 		//Charger la liste des classes pour le combobox :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');

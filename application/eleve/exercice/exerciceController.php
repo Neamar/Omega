@@ -32,7 +32,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil exercice');
+		$this->View->setTitle(
+			'Accueil des exercices',
+			"Cette page sert de porte d'entrée vers vos exercices."
+		);
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
 			'SELECT Hash, Titre
@@ -50,7 +53,21 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function indexActionWd()
 	{
-		$this->View->setTitle('Accueil exercice « ' . $this->Exercice->Titre . ' »');
+		/**
+		 * Liste des messages à afficher en fonction du statut.
+		 * 
+		 * @var array
+		 */
+		$ListeMessage = array(
+			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
+			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
+			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+		);
+
+		$this->View->setTitle(
+			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
+			$ListeMessage[$this->Exercice->Statut]
+		);
 	}
 	
 	/**
@@ -59,7 +76,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function creationAction()
 	{
-		$this->View->setTitle('Création d\'un exercice');
+		$this->View->setTitle(
+			'Création d\'un nouvel exercice',
+			"Vous allez ajouter un nouvel exercice. Soyez le plus complet possible afin que nous puissions vous offrir un service de qualité !"
+		);
+		
 		$this->View->addScript('/public/js/eleve/exercice/creation.js');
 		
 		//Charger la liste des matières pour le combobox :
@@ -194,7 +215,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('VIERGE'), "Vous ne pouvez plus ajouter de fichiers sur cet exercice.");
 		
-		$this->View->setTitle("Ajout de fichiers à l'exercice ");
+		$this->View->setTitle(
+			"Ajout de fichiers à l'exercice",
+			"Cette page permet d'ajouter des fichiers à l'exercice avant de l'envoyer aux correcteurs."
+		);
+		
 		$this->View->addScript('/public/js/jquery-multiupload.min.js');
 		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
 		
@@ -331,7 +356,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Affiche le récaptiulatif de l'exercice avant son envoi aux correcteurs
+	 * Affiche le récapitulatif de l'exercice avant son envoi aux correcteurs
 	 * VIERGE => ATTENTE_CORRECTEUR
 	 */
 	public function recapitulatifActionWd()
@@ -340,7 +365,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		//TODO : ajouter la possibilité de modifier la date d'annulation automatique
 		$this->canAccess(array('VIERGE'));
 		
-		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");
+		$this->View->setTitle(
+			'Récapitulatif des données envoyées aux correcteurs',
+			"Cette page liste les informations qui seront envoyées au correcteur.<br />
+			Vérifiez la cohérence de vos données, puis cliquez sur le bouton « Envoyer aux correcteurs ».<br />
+			En cas de souci, corrigez les problèmes avant d'envoyer."
+		);
 		
 		if(isset($_POST['change-info']))
 		{
@@ -371,7 +401,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
-		$this->View->setTitle('Annulation de « ' . $this->Exercice->Titre . ' »');
+		$this->View->setTitle(
+			'Annulation de « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet l'annulation de l'exercice. Cette action n'a aucun coût."
+		);
 		
 		if(isset($_POST['annulation']))
 		{
