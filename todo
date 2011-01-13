@@ -2,3 +2,5 @@
 /correcteur/options_matieres : intégration graphique cohérente, disabling du combo
 /exercice/sujet/XXX afficher une image aperçu des PDF
 Ajouter des attributs "required" sur les éléments de formulaire http://diveintohtml5.org/forms.html#required
+Ajouter des attributs pattern http://www.tomsyweb.com/component/content/article/43-html/88-les-formulaires-html-5-dans-firefox-4
+Passer les sliders en véritables sliders [type=range]
