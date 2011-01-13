@@ -51,15 +51,26 @@ abstract class ExerciceAbstractController extends AbstractController
 			//Récupérer l'exercice :
 			$this->Exercice = Exercice::load($Data['data']);
 
-			if(is_null($this->Exercice)
-			||
-			(!isset($_SESSION['Eleve']) && !isset($_SESSION['Correcteur']) && !isset($_SESSION['Admin'])
-			||
-			(
-				(isset($_SESSION['Eleve']) && $this->Exercice->Createur != $_SESSION['Eleve']->ID)
-				||
-				(isset($_SESSION['Correcteur']) && $this->Exercice->Correcteur != $_SESSION['Correcteur'])
-			)))
+			//Vérifier que l'on a les accès.
+			//Partir du postulat qu'on les a, puis examiner toutes les possibilités pour ne pas les avoir.
+			$CanAccess = true;
+			
+			$CanAccess = $CanAccess && !is_null($this->Exercice);
+			
+			if($_GET['module'] == 'eleve')
+			{
+				$CanAccess = $CanAccess && $this->Exercice->Createur == $_SESSION['Eleve']->ID;
+			}
+			elseif($_GET['module'] == 'correcteur')
+			{
+				$CanAccess = $CanAccess && $this->Exercice->Correcteur != $_SESSION['Correcteur']->ID;
+			}
+			else 
+			{
+				$CanAccess = false;
+			}
+			
+			if(!$CanAccess)
 			{
 				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
