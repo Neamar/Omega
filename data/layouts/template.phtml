@@ -13,19 +13,26 @@
 <?php 
 	//Gestion du ruban
 	echo $this->renderRibbon()
-	?>
+?>
+</section>
+
+<section id="ariane">
+<?php 
+	//Gestion du ruban
+	echo $this->renderBreadcrumbs()
+?>
 </section>
 
 <section id="content">
 <?php 
 	//Gestion des messages
 	echo $this->renderMessage()
-	?>
+?>
 	
 <?php
 	//Et le contenu de la page.
 	$this->renderContent();
-	?>
+?>
 </section>
 
 </body>

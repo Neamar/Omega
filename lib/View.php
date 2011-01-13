@@ -223,6 +223,16 @@ class View
 	}
 	
 	/**
+	 * Définit la liste des liens composant le chemin / breadcrumb.
+	 * 
+	 * @param array $Breads le tableau, du type Lien => Caption. Order matters.
+	 */
+	public function setBreadcrumbs(array $Breads)
+	{
+		self::setMeta('breadcrumbs', $Breads);
+	}
+	
+	/**
 	 * Ajoute un script en haut de page
 	 * 
 	 * @param string $Src l'URL du script à ajouter. Si vide, ajoutera le fichier js associé à la page dans le fichier public/js
@@ -364,6 +374,17 @@ class View
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
 		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
 	}
+	
+	/**
+	 * Renvoie le fil d'Ariane de la page
+	 * 
+	 * @return string une liste HTML.
+	 */
+	public function renderBreadcrumbs()
+	{
+		return $this->Html_ListAnchor(self::getMeta('breadcrumbs'));
+	}
+	
 
 	/**
 	 * Écrit le contenu du fichier vue sur la sortie standard
