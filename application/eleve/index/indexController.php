@@ -161,6 +161,15 @@ class Eleve_IndexController extends IndexAbstractController
 		}
 	}
 	
+	/**
+	 * Page d'options globales.
+	 */
+	public function optionsAction()
+	{
+		$this->View->setTitle('Options élève');
+		$this->View->Compte = $this->concat('/eleve/options_compte');
+	}
+	
 	public function options_CompteAction()
 	{
 		$this->View->setTitle('Options du compte');
