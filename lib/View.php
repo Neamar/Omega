@@ -204,10 +204,16 @@ class View
 	 * Définit le titre de la page Web (balise <title>)
 	 * 
 	 * @param string $Title
+	 * @param string $Intro le texte présentant la page
 	 */
-	public function setTitle($Title)
+	public function setTitle($Title, $Intro = null)
 	{
 		self::setMeta('title', $Title);
+		
+		if($Intro != null)
+		{
+			self::setMeta('intro', $Intro);
+		}
 	}
 	
 	/**
@@ -220,6 +226,16 @@ class View
 		self::setMeta('message', $Message);
 		self::setMeta('messageClass', $Type);
 		self::setMeta('messageDoc', $DocLink);
+	}
+	
+	/**
+	 * Définit la liste des liens composant le chemin / breadcrumb.
+	 * 
+	 * @param array $Breads le tableau, du type Lien => Caption. Order matters.
+	 */
+	public function setBreadcrumbs(array $Breads)
+	{
+		self::setMeta('breadcrumbs', $Breads);
 	}
 	
 	/**
@@ -363,6 +379,33 @@ class View
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
 		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
+	}
+	
+	/**
+	 * Renvoie le fil d'Ariane de la page
+	 * 
+	 * @return string une liste HTML.
+	 */
+	public function renderBreadcrumbs()
+	{
+		return $this->Html_ListAnchor(self::getMeta('breadcrumbs'));
+	}
+	
+	/**
+	 * Renvoie le message de titre et l'introduction.
+	 * 
+	 * @return html
+	 */
+	public function renderTitle()
+	{
+		$Title = '<h1>' . $this->getMeta('title') . '</h1>' . "\n";
+		
+		if($this->issetMeta('intro'))
+		{
+			$Title .= '<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
+		}
+		
+		return $Title;
 	}
 
 	/**

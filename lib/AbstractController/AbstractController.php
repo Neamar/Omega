@@ -52,7 +52,7 @@ abstract class AbstractController
 
 	/**
 	 * Les données associées.
-	 * @var string
+	 * @var array
 	 */
 	protected $Data;
 
@@ -98,7 +98,7 @@ abstract class AbstractController
 			$this->IsTemplate = true;
 		}
 		
-		//Réucpérer les enregistrements qui devaient être sauvegardés pour le futur (i.e. maintenant)
+		//Récupérer les enregistrements qui devaient être sauvegardés pour le futur (i.e. maintenant)
 		if(isset($_SESSION['Futur']))
 		{
 			foreach($_SESSION['Futur'] as $MetaKey => $V)
@@ -108,6 +108,8 @@ abstract class AbstractController
 			
 			unset($_SESSION['Futur']);
 		}
+		
+		$this->computeBreadcrumbs();
 	}
 
 	/**
@@ -144,6 +146,28 @@ abstract class AbstractController
 	public function getAction()
 	{
 		return $this->Action;
+	}
+	
+	/**
+	 * Calcule le fil d'Ariane.
+	 */
+	protected function computeBreadcrumbs()
+	{
+		$Ariane = array();
+		
+		$Ariane[self::build('index', null, 'index', $this->Module)] = ucfirst($this->Module);
+		
+		if($this->Controller != 'index')
+		{
+			$Ariane[self::build('index', null, $this->Controller, $this->Module)] = ucfirst($this->Controller);
+		}
+		
+		if($this->Action != 'index')
+		{
+			$Ariane[self::build($this->Action, null, $this->Controller, $this->Module)] = ucfirst($this->Action);
+		}
+		
+		$this->View->setBreadcrumbs($Ariane);
 	}
 
 	/**
@@ -347,25 +371,7 @@ abstract class AbstractController
 	 */
 	public static function build($View,$Data=null, $Controller=null, $Module=null)
 	{
-		if(is_null($controller))
-		{
-			$Controller = $this->Controller;
-		}
-		if(is_null($Module))
-		{
-			$Module = $this->Module;
-		}
-
 		//Simplification des URLS.
-		if(!is_null($Data))
-		{
-			$Data = '/' . $Data;
-		}
-		else
-		{
-			$Data = '';
-		}
-
 		if($Controller!='index')
 		{
 			$Controller = '/' . $Controller;
@@ -380,7 +386,7 @@ abstract class AbstractController
 		}
 
 
-		if($View!='index')
+		if($View != 'index')
 		{
 			$View = '/' . $View;
 		}
@@ -391,6 +397,38 @@ abstract class AbstractController
 		else
 		{
 			$View = '';
+		}
+		
+		if(!empty($Data))
+		{
+			$DataString = '/';
+			
+			//Désimplifier l'URL, il y a des données
+			if($View == '/')
+			{
+				$View = '/index';
+			}
+
+			if(!is_null($Data['data']))
+			{
+				$DataString .= $Data['data'];
+				unset($Data['data']);
+				if(!empty($Data))
+				{
+					$DataString .= '/';
+				}
+			}
+			
+			foreach($Data as $Key => $Val)
+			{
+				$DataString .= $Key . '/' . $Val;
+			}
+			
+			$Data = $DataString;
+		}
+		else
+		{
+			$Data = '';
 		}
 			
 		return '/' . $Module . $Controller . $View . $Data;

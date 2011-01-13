@@ -70,6 +70,29 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 	}
 	
+	/**
+	 * Calcule le fil d'Ariane.
+	 * @see AbstractController::computeBreadcrumbs()
+	 */
+	protected function computeBreadcrumbs()
+	{
+		$Ariane = array();
+		
+		$Ariane[self::build('index', null, 'index', $this->Module)] = ucfirst($this->Module);
+		$Ariane[self::build('index', null, $this->Controller, $this->Module)] = ucfirst($this->Controller);
+		
+		if(is_array($this->Data) && isset($this->Data['data']))
+		{
+			$Ariane[self::build('index', $this->Data, $this->Controller, $this->Module)] = 'Exercice #' . $this->Data['data'];
+		}
+		if($this->Action != 'index')
+		{
+			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = $this->Action;
+		}
+		
+		$this->View->setBreadcrumbs($Ariane);
+	}
+	
 	public function sujetActionWd()
 	{
 		$this->View->setTitle("Affichage du sujet");

@@ -13,19 +13,42 @@
 <?php 
 	//Gestion du ruban
 	echo $this->renderRibbon()
-	?>
+?>
+</section>
+
+<section id="logo">
+	<section>
+	<!-- Mettre le logo ici -->
+	</section>
+	<section>
+	<!-- Mettre les liens ici -->
+	</section>
+</section>
+
+<section id="ariane">
+<?php 
+	//Gestion du ruban
+	echo $this->renderBreadcrumbs()
+?>
+</section>
+
+<section id="title">
+<?php 
+	//Gestion du titre et de l'introduction
+	echo $this->renderTitle()
+?>
 </section>
 
 <section id="content">
 <?php 
 	//Gestion des messages
 	echo $this->renderMessage()
-	?>
+?>
 	
 <?php
 	//Et le contenu de la page.
 	$this->renderContent();
-	?>
+?>
 </section>
 
 </body>
