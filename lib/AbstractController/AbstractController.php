@@ -267,6 +267,15 @@ abstract class AbstractController
 			$this->View->addStyle($Src);
 		}
 		
+		if($NewView->issetMeta('message'))
+		{
+			$this->View->setMessage(
+				$NewView->getMeta('messageClass'),
+				$NewView->getMeta('message'),
+				(is_null($NewView->getMeta('messageDoc'))?null:$NewView->getMeta('messageDoc'))
+			);
+		}
+		
 		return $NewView;
 	}
 
