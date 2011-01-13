@@ -109,7 +109,7 @@ abstract class AbstractController
 			unset($_SESSION['Futur']);
 		}
 		
-		$this->computeBreadcrumbs();
+		$this->View->setBreadcrumbs($this->computeBreadcrumbs());
 	}
 
 	/**
@@ -150,6 +150,8 @@ abstract class AbstractController
 	
 	/**
 	 * Calcule le fil d'Ariane.
+	 * 
+	 * @return array le fil calculé
 	 */
 	protected function computeBreadcrumbs()
 	{
@@ -167,7 +169,7 @@ abstract class AbstractController
 			$Ariane[self::build($this->Action, null, $this->Controller, $this->Module)] = ucfirst($this->Action);
 		}
 		
-		$this->View->setBreadcrumbs($Ariane);
+		return $Ariane;
 	}
 
 	/**

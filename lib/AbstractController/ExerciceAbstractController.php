@@ -74,6 +74,8 @@ abstract class ExerciceAbstractController extends AbstractController
 	/**
 	 * Calcule le fil d'Ariane.
 	 * @see AbstractController::computeBreadcrumbs()
+	 * 
+	 * @return array le fil calculé
 	 */
 	protected function computeBreadcrumbs()
 	{
@@ -91,7 +93,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = ucfirst($this->Action);
 		}
 		
-		$this->View->setBreadcrumbs($Ariane);
+		return $Ariane;
 	}
 	
 	public function sujetActionWd()

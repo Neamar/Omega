@@ -141,6 +141,23 @@ class Documentation_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Modifie légèrement le fil pour lui donner plus de cohérence dans le cas de la documentation
+	 * @see AbstractController::computeBreadcrumbs()
+	 * 
+	 * @return array le fil
+	 */
+	public function computeBreadcrumbs()
+	{
+		$Ariane = parent::computeBreadcrumbs();
+		
+		if($this->Action != 'index')
+		{
+			$Ariane[self::build($this->Action, null, $this->Controller, $this->Module)] = self::$Pages[$this->Controller][$this->Action];
+		}
+		
+		return $Ariane;
+	}
+	/**
 	 * Accueil de la documentation.
 	 */
 	public function indexAction()
