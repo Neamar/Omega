@@ -202,8 +202,8 @@ abstract class AbstractController
 	 */
 	protected function json(array $Data)
 	{
-		$this->View->Datas = array_values($Data);
-		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
+		$this->View->jsonDatas = array_values($Data);
+		$this->View->setMeta('viewFile', LIB_PATH . '/Views/json.phtml');
 	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée
@@ -300,7 +300,8 @@ abstract class AbstractController
 
 		if($this->IsAjax)
 		{
-			echo json_encode($V->Datas);
+			//Ne rendre que le contenu, sans l'enrobage (titre, html entourant, breadcrumbs...)
+			$V->renderContent();
 		}
 		else
 		{

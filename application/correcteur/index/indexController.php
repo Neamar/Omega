@@ -257,7 +257,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			);
 		}
 		
-		//$this->json($Datas);
+		$this->json($Datas);
 	}
 	
 	
