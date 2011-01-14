@@ -230,12 +230,15 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 * Utilise une vue indépendante (_liste.phtml).
 	 */
 	public function _listeAction()
-	{	
+	{
+		//TODO: gérer les images
 		$this->View->RawDatas = Sql::queryAssoc(
 			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
 			FROM Exercices
 			NATURAL JOIN Classes
 			NATURAL JOIN Demandes
+			
+			WHERE Statut = "ATTENTE_CORRECTEUR"
 			',
 			'Hash'
 		);
