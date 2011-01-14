@@ -45,6 +45,7 @@ echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET')
 ?>
 
 <h3>Dates</h3>
+<p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu.<br />
 <?php
 $HeureData = array(
 	'type'=>'number',
@@ -66,8 +67,12 @@ echo $this->Form_inputLabel(
 		'placeholder'=>'JJ/MM/AAAA'
 	)
 );
-echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_rendu');
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_rendu');
+?>
+</p>
 
+<p>Ensuite, indiquez-nous à quel moment vous préférez abandonner automatiquement votre demande <strong>si aucune offre ne vous a conquis à cette date</strong>.<br />
+<?php
 //Annulation automatique
 $HeureData['value'] = 18;
 echo $this->Form_inputLabel(
@@ -80,6 +85,7 @@ echo $this->Form_inputLabel(
 );
 echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
 ?>
+</p>
 
 <h3>Informations complémentaires</h3>
 <?php

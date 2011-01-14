@@ -1,0 +1,17 @@
+<?php 
+echo $this->Exercice($this->Exercice);
+?>
+
+<p>Vous pouvez réserver cet exercice... depêchez-vous, il ne sera peut-être plus disponible pour longtemps !</p>
+<form id="form_reservation-exercice" method="post" action="">
+<?php 
+echo $this->Form_pointsLabel(
+	'prix',
+	'Prix demandé', 
+	MAX_SOMME
+);
+echo $this->Doc_inputBr('correcteur', 'prix');
+
+echo $this->Form_submit('reservation-exercice','Réserver cet exercice');
+?>
+</form>
