@@ -1,0 +1,36 @@
+<?php 
+$Datas = array();
+		
+foreach($this->RawDatas as $Hash => $ExerciceDatas)
+{
+	
+	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
+	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
+	
+	$Infos = '<p>Exercice « <strong>' . $ExerciceDatas['Titre'] . '</strong> »';
+	$Infos .= ', <strong>' . $ExerciceDatas['Matiere'] . '</strong>';
+	if($ExerciceDatas['Section'] != '')
+	{
+		$Infos .= ' (' . $ExerciceDatas['Section'] . ')';
+	}
+	$Infos .= ', ' . $ExerciceDatas['DetailsClasse'];
+	
+	$Infos .= '<br />Demande : ' . $ExerciceDatas['DetailsDemande'];
+	
+	if($ExerciceDatas['InfosEleve'] != '')
+	{
+		$Infos .= '</p>
+		<p>Remarque :</p>
+		<p class="infos-eleve">' . $ExerciceDatas['InfosEleve'];
+	}
+	
+	$Infos .= '</p>';
+	
+	$Datas[] = array(
+		$Expiration,
+		$Infos
+	);
+}
+
+echo json_encode($Datas);
+?>

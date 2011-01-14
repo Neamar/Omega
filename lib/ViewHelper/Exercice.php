@@ -72,7 +72,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	{
 		$Remarques = '
 		<p>Informations complémentaires :</p>
-		<p class="infoseleve">
+		<p class="infos-eleve">
 			' . $Exercice->InfosEleve . '
 		</p>';
 	}

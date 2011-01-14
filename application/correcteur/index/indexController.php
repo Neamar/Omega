@@ -225,39 +225,20 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	}
 	
 	/**
-	 * Affiche la "foire aux exercices" du correcteur (partie données)
+	 * Affiche la "foire aux exercices" du correcteur (partie données).
+	 * Doit faire des opérations relativement complexes sur les données, et ne passe donc pas par le helper ->json et sa vue associée.
+	 * Utilise une vue indépendante (_liste.phtml).
 	 */
 	public function _listeAction()
-	{
-		//On a besoin du gestionnaire de date.
-		include OO2FS::viewHelperPath('Date');
-		
-		$RawDatas = Sql::queryAssoc(
-			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
+	{	
+		$this->View->RawDatas = Sql::queryAssoc(
+			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
 			FROM Exercices
 			NATURAL JOIN Classes
 			NATURAL JOIN Demandes
 			',
 			'Hash'
 		);
-		
-		//TODO: Déporter ça dans une vue, rogntondidju !
-		$Datas = array();
-		
-		foreach($RawDatas as $Hash => $SubDatas)
-		{
-			
-			$Expiration = '<br /><a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
-			$Expiration .= ViewHelper_Date_countdown($SubDatas['TimeoutEleve']);
-			
-			$Infos = 'Exercice « <strong>' . $SubDatas['Titre'] . '</strong> »';
-			$Datas[] = array(
-				$Expiration,
-				$Infos
-			);
-		}
-		
-		$this->json($Datas);
 	}
 	
 	
