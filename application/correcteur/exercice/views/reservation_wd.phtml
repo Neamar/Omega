@@ -12,15 +12,12 @@ Si vous vous sentez prêt, indiquez votre prix puis cliquez sur valider. Faites-
 
 <?php
 //Prix
-echo $this->Form_inputLabel(
+echo $this->Form_pointsLabel(
 	'prix',
-	'Prix demandé', 
+	'Prix demandé',
+	MAX_SOMME,
 	array(
 		'value' => 1000,
-		'type' => 'number',
-		'min' => 0,
-		'max' => 20000,
-		'step' => 25,
 	)
 ) . $this->Doc_inputBr('correcteur', 'prix');
 //TODO: documentation/correcteur/prix

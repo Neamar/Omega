@@ -63,6 +63,13 @@ define('FAIL', -1);
 define('EQUIVALENCE_POINT', 25);
 
 /**
+ * Le prix maximal payable sur un exercice.
+ * 
+ * @var int
+ */
+define('MAX_SOMME', 20000);
+
+/**
  * Pourcentage de multiplication de la somme correcteur (dont TVA)
  * @var float
  */
