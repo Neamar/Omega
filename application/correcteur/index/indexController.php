@@ -185,7 +185,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 					
 					if($Debut < $Fin)
 					{
-						$this->View->setMessage("error", "WTF ? Le slider... a buggé ? Nooooon !");
+						$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin pour la matière " . $Matiere . ')');
 						break;
 					}
 					else
