@@ -190,9 +190,20 @@ abstract class AbstractController
 			$Resultats[] = $Resultat;
 		}
 		
-		$this->View->Datas = $Resultats;
-		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
+		$this->json($Resultats);
 		return $Resultats;
+	}
+	
+	/**
+	 * Prépare la vue à être utilisée "like JSON".
+	 * Méthode de plus bas niveau que ->ajax(), qui se contente d'enregistrer les données et de détourner la vue.
+	 * 
+	 * @param array $Data les données (clés non pris en compte)
+	 */
+	protected function json(array $Data)
+	{
+		$this->View->Datas = array_values($Data);
+		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
 	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée

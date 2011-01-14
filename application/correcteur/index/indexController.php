@@ -213,6 +213,53 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
 	}
 	
+	/**
+	 * Affiche la "foire aux exercices" du correcteur.
+	 */
+	public function listeAction()
+	{
+		$this->View->setTitle(
+			'Marché aux exercices',
+			"Cette page liste les articles en attente de correcteur... pourquoi pas vous ?"
+		);
+	}
+	
+	/**
+	 * Affiche la "foire aux exercices" du correcteur (partie données)
+	 */
+	public function _listeAction()
+	{
+		//On a besoin du gestionnaire de date.
+		include OO2FS::viewHelperPath('Date');
+		
+		$RawDatas = Sql::queryAssoc(
+			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
+			FROM Exercices
+			NATURAL JOIN Classes
+			NATURAL JOIN Demandes
+			',
+			'Hash'
+		);
+		
+		//TODO: Déporter ça dans une vue, rogntondidju !
+		$Datas = array();
+		
+		foreach($RawDatas as $Hash => $SubDatas)
+		{
+			
+			$Expiration = '<br /><a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
+			$Expiration .= ViewHelper_Date_countdown($SubDatas['TimeoutEleve']);
+			
+			$Infos = 'Exercice « <strong>' . $SubDatas['Titre'] . '</strong> »';
+			$Datas[] = array(
+				$Expiration,
+				$Infos
+			);
+		}
+		
+		//$this->json($Datas);
+	}
+	
 	
 	/**
 	 * Page d'inscription.
