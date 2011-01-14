@@ -55,7 +55,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			{
 				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
-				$this->redirect("/eleve/exercice/");
+				$this->redirect('/' . $_GET['module'] . '/exercice/');
 			}
 			
 			//Récupérer les données pour la vue :

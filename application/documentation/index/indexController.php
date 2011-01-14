@@ -101,6 +101,7 @@ class Documentation_IndexController extends AbstractController
 			'options' => "Comment modifier les options de mon compte ?",
 			'marche' => "Comment choisir un devoir pour le corriger ?",
 			'reservation' => "Comment réserver un exercice ?",
+			'prix' => 'Quelle somme demander ?',
 			'limite_reservation' => "Pourquoi ne puis-je plus réserver d'exercices ?",
 			'refus' => "Que se passe-t-il si mon offre est refusée par l'élève ?",
 			'faq' => "Qu'est ce que la FAQ exercice ? Comment s'en servir ? Quelles sont mes contraintes ?",

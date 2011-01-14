@@ -94,7 +94,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			<li><a href="#reclamation-' . $Exercice->Hash . '">Réclamation</a></li>
 		</ul>
 		<div class="exercice-tab exercice-infos" id="infos-' . $Exercice->Hash . '">
-		<h2><a href="' . $_GET['module'] . '/exercice/index/' . $Exercice->Hash . '">' . $Exercice->Titre . '</a></h2>
+		<h2><a href="/' . $_GET['module'] . '/exercice/index/' . $Exercice->Hash . '">' . $Exercice->Titre . '</a></h2>
 		' . ViewHelper_Html_list($Infos) . '
 		
 		' . $Remarques . '

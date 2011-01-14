@@ -93,7 +93,17 @@ echo $this->Doc_input('eleve', 'champ_info') . "\n";
 
 	<div id="div_auto-accept">
 		<?php 
-			echo $this->Form_inputLabel('auto_accept', 'Valeur maximale d\'acceptation automatique', array('value'=>0));
+			echo $this->Form_inputLabel(
+				'auto_accept',
+				'Valeur maximale d\'acceptation automatique', 
+				array(
+					'value' => 0,
+					'type' => 'number',
+					'min' => 0,
+					'max' => $_SESSION['Eleve']->getPoints(),
+					'step' => 20,
+				)
+			);
 			echo $this->Doc_inputBr('eleve', 'auto_accept');
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>

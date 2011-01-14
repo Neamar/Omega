@@ -6,3 +6,4 @@ Ajouter des attributs pattern http://www.tomsyweb.com/component/content/article/
 Passer les sliders en véritables sliders [type=range]
 Création d'un exercice puis déconnexion avant d'ajouter des fichiers : retourner à l'ajout de fichier.
 Revoir la cohérence des titresentre élève / correcteur
+Un clic sur une miniature affiche en lightbox le fichier original.
