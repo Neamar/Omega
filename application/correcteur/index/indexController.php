@@ -126,6 +126,10 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
+			elseif(!empty($_POST['siret']) && !is_null($_SESSION['Correcteur']->Siret))
+			{
+				$this->View->setMessage("error", "Impossible de redéfinir le SIRET.");
+			}
 			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
 			{
 				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
@@ -172,7 +176,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		//Charger la liste des matières :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
-		if(isset($_POST['edition-compte']))
+		if(isset($_POST['edition-competences']))
 		{
 			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
 			foreach($Matieres as $Matiere)
@@ -406,7 +410,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		}
 		else
 		{
-			if(!Validate_FR::siren(implode('', array_slice($match, 1, 9)))) {
+			if(!$this->validateSiren(implode('', array_slice($match, 1, 9)))) {
 				return false;
 			}
 		}

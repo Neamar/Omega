@@ -52,11 +52,15 @@ if(is_null($_SESSION['Correcteur']->Siret))
 		'siret',
 		'Votre numéro de SIRET',
 		array(
-			'placeholder'=>'000 000 000 00000',
+			'placeholder' => '000 000 000 00000',
+			'type' =>  'number'
 		)
 	) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
 }
-
+else
+{
+	echo '<p>Votre numéro de SIRET : <strong>' . $_SESSION['Correcteur']->Siret . '</strong></p>'; 
+}
 echo $this->Form_submit('edition-compte', "Modifier les informations");
 ?>
 </form>
