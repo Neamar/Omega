@@ -10,6 +10,7 @@ echo $this->Doc_box('correcteur','reservation','Besoin d\'aide pour compléter c
 <p>Consultez le sujet.<br />
 Si vous vous sentez prêt, indiquez votre prix puis cliquez sur valider. Faites-vite, vous n'êtes pas seul...</p>
 
+<h2>Coûts et délais</h2>
 <?php
 //Prix
 echo $this->Form_pointsLabel(
@@ -46,6 +47,14 @@ echo $this->Form_inputLabel(
 );
 echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('correcteur', 'champ_annulation');
 echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à h\h', strtotime($this->Exercice->Expiration)) . '</strong>. Vous devez avoir fourni le corrigé à cette heure !<br />';
+?>
+
+<h2>Informations complémentaires</h2>
+<p>Si nécessaire, vous pouvez ajouter des informations complémentaires.
+<?php
+echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires (facultatif)');
+echo $this->Doc_inputBr('correcteur', 'champ_info');
+
 echo $this->Form_submit('reservation-exercice', "Réserver l'exercice");
 ?>
 </form>

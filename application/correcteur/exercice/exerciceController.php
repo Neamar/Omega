@@ -81,6 +81,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					'Correcteur' => $_SESSION['Correcteur']->ID,
 					'Enchere' => $_POST['prix'],
 					'TimeoutCorrecteur' => Sql::getDate($_POST['annulation_ts']),
+					'InfosCorrecteur' => $_POST['infos'],
 				);
 				
 				$this->Exercice->setStatus('ATTENTE_ELEVE', $_SESSION['Correcteur'], 'Proposition correcteur pour ' . $_POST['prix'] . ' points.', $ToUpdate);

@@ -9,7 +9,6 @@ Revoir la cohérence des titresentre élève / correcteur
 Un clic sur une miniature affiche en lightbox le fichier original.
 Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
 Gérer auto-accept
-Rebase documentation/eleve/refus => offre
 
 En production
 - ajouter captcha à l'inscription élève

@@ -4,8 +4,17 @@ echo $this->Doc_box('eleve', 'offre', 'Besoin d\'aide pour compléter ce formula
 
 <form id="form_creation-exercice" method="post" action="">
 <p>Un correcteur vous propose de réaliser cet exercice.<br />
-En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Enchere; ?> points</strong>.<br />
-Que voulez-vous faire ?</p>
+En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Enchere; ?> points</strong>.</p>
+<?php 
+if(!empty($this->Exercice->InfosCorrecteur))
+{
+	echo '<p>Le correcteur fait passer le message suivant :</p>
+	<p class="infos-correcteur">
+		' . $this->Exercice->InfosCorrecteur . '
+	</p>';
+}?>
+
+<p>Que voulez-vous faire ?</p>
 
 <?php 
 echo $this->Form_radio(
