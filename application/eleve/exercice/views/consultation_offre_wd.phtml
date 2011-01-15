@@ -17,11 +17,14 @@ if(!empty($this->Exercice->InfosCorrecteur))
 <p>Que voulez-vous faire ?</p>
 
 <?php 
-$Oui = "Accepter l'offre";
-if($_SESSION['Eleve']->getPoints() < $this->Exercice->Enchere)
+$Oui = "Accepter l'offre<br />";
+if($_SESSION['Eleve']->getPoints() >= $this->Exercice->Enchere)
 {
-	$Oui .= '<br />
-	<span class="problem">Il vous manque <strong class="pts">' . ($this->Exercice->Enchere - $_SESSION['Eleve']->getPoints()) . '</strong> points ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
+	$Oui .= 'Vous serez débité de la somme indiquée.';
+}
+else
+{
+	$Oui .= '<span class="problem">Il vous manque <strong class="pts">' . ($this->Exercice->Enchere - $_SESSION['Eleve']->getPoints()) . '</strong> points ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
 }
 
 $Non = "Refuser l'offre<br />";

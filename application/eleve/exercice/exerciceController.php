@@ -49,7 +49,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Page d'accueil d'un exercice.
-	 * 
+	 * (all) =>
 	 */
 	public function indexActionWd()
 	{
@@ -437,6 +437,76 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'Consultation offre pour « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet la consultation de l'offre qui vous a été faite. Vous pouvez l'accepter, la refuser ou annuler l'exercice."
 		);
+		
+		if(isset($_POST['consultation-offre']))
+		{
+			if(!isset($_POST['choix']))
+			{
+				$this->View->setMessage('error', 'Sélectionnez une option !');
+			}
+			elseif($_POST['choix'] == 'oui' && $this->Exercice->Enchere > $_SESSION['Eleve']->getPoints())
+			{
+				$this->View->setMessage('error', "Vous n'avez pas assez de points pour accepter l'offre.",'eleve/depot');
+			}
+			elseif($_POST['choix'] == 'annuler')
+			{
+				//Annuler l'exercice.
+				$_POST['annulation'] = true;
+				$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
+				//Jamais de retour (annulation redirige).
+			}
+			elseif($_POST['choix'] == 'non')
+			{
+				$ToUpdate = array(
+					'_Correcteur' => 'NULL',
+					'_TimeoutCorrecteur' => 'NULL',
+					'_InfosCorrecteur' => 'NULL',
+					'Enchere' => '0',
+					'_NbRefus' => 'NbRefus + 1'
+				);
+				
+				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Refus de l'offre", $ToUpdate);
+				
+				if($this->Exercice->NbRefus == MAX_REFUS)
+				{
+					//Annuler l'exercice.
+					$_POST['annulation'] = true;
+					$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
+					//Jamais de retour (annulation redirige).
+				}
+				else
+				{
+					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé");
+					$this->redirectExercice();
+				}
+			}
+			elseif($_POST['choix'] == 'oui')
+			{
+				if(!$_SESSION['Eleve']->debit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+				{
+					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
+				}
+				else
+				{
+					//Logger la bonne nouvelle
+					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
+					
+					//Envoyer un mail au correcteur
+					$Datas = array(
+						'hash' => $this->Exercice->Hash,
+						'titre' => $this->Exercice->Titre,
+						'nom' => $_SESSION['Correcteur']->Prenom . ' ' . $_SESSION['Correcteur']->Nom,
+						'prix' => $this->Exercice->Enchere,
+						'delai' => date('d/m/Y à h\h', strtotime($this->Exercice->Expiration))
+					);
+					External::templateMail($_SESSION['Correcteur']->Mail, '/correcteur/acceptation', $Datas);
+					
+					//Et rediriger.
+					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...");
+					$this->redirect('/eleve/');					
+				}
+			}
+		}
 	}
 	/**
 	 * Liste les actions effectuées sur un exercice

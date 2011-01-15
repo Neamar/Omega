@@ -123,7 +123,7 @@ WHERE Hash="%ID%"';
 	 * @param string $ChangeMessage
 	 * @param array $Changes autres changements à apporter à l'objet en base de données
 	 */
-	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes=array())
+	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes = array())
 	{
 		if(!in_array($Status, self::$Workflow[$this->Statut]))
 		{
