@@ -61,7 +61,10 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 				$Thumbs = array();
 				foreach($Liens[$Nom] as $URL => $Infos)
 				{
-					$Thumbs[$Infos['ThumbURL']] = $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'];
+					$Thumbs[$Infos['ThumbURL']] = array(
+						'URL' => $URL,
+						'alt' => $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload']
+					);
 				}
 				$Content[$Nom] = ViewHelper_Exercice_thumbs($Thumbs, $Exercice->LongHash);
 			}
@@ -220,9 +223,9 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 	$Hash = substr($LongHash, 0, HASH_LENGTH);
 	$BaseURL = '/public/exercices/' . $LongHash;
 	
-	foreach($Thumbs as $URL => $Alt)
+	foreach($Thumbs as $URL => $Datas)
 	{
-		$R .= '	<a href="' . $BaseURL . str_replace('/Thumbs/', '/', $URL) . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Alt . '" /></a>';
+		$R .= '	<a href="' . $BaseURL . $Datas['URL'] . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
 	}
 	
 	return $R;
