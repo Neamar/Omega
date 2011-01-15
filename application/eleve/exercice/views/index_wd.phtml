@@ -2,7 +2,11 @@
 /*
  * Quelques actions communes.
  */
-$Annulation = array('Annuler l\'exercice.', "Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.", 'suractivite');
+$Annulation = array(
+	'Annuler l\'exercice.',
+	"Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.",
+	'suractivite'
+);
 
 /**
  * Liste des actions possibles.
@@ -20,6 +24,10 @@ $ListeActions = array(
 		'ajout' => array('Ajouter des fichiers', 'Vous pouvez continuer à ajouter des fichiers sur votre exercice.'),
 	),
 	'ATTENTE_CORRECTEUR' => array(
+		'annulation' => $Annulation,
+	),
+	'ATTENTE_ELEVE' => array(
+		'consultation_offre' => array('Voir l\'offre', "Consulter l'offre réalisée pour l'accepter ou la refuser.", 'refus'), 
 		'annulation' => $Annulation,
 	),
 	'ANNULE' => array(),
