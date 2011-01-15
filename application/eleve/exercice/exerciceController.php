@@ -426,7 +426,20 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Liste les actions d'un exercice
+	 * Consulte une offre et agit en conséquence.
+	 * ATTENTE_ELEVE => (ANNULE|ATTENTE_CORRECTEUR|EN_COURS)
+	 */
+	public function consultation_OffreActionWd()
+	{
+		$this->canAccess(array('ATTENTE_ELEVE'), 'Ce n\'est pas le moment de consulter les offres !');
+		
+		$this->View->setTitle(
+			'Consultation offre pour « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet la consultation de l'offre qui vous a été faite. Vous pouvez l'accepter, la refuser ou annuler l'exercice."
+		);
+	}
+	/**
+	 * Liste les actions effectuées sur un exercice
 	 */
 	public function _actionsActionWd()
 	{

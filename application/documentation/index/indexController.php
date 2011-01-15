@@ -71,7 +71,7 @@ class Documentation_IndexController extends AbstractController
 			'supplement' => "Pourquoi dois-je payer un supplément « suractivité » ?",
 			'acces_impossible' => "Pourquoi ne puis-je pas accéder à un exercice ?",
 			'annulation' => "Comment annuler mon devoir ?",
-			'refus' => "Comment puis-je refuser une offre ?",
+			'refus' => "Comment puis-je accepter (ou refuser) une offre ?",
 			'acceptation' => "Que se passe-t-il une fois l'offre du correcteur acceptée ?",
 			'vie_privee' => "J'ai eu une alerte vie privée, à quoi cela correspond-il ?",
 			'faq' => "Comment utiliser la FAQ pour poser des questions sur mon exercice ?",

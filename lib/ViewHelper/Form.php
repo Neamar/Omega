@@ -15,6 +15,21 @@
  */
 
 /**
+ * Génère un formulaire basique avec un simple bouton submit (action = la page actuelle)
+ * 
+ * @param string $form_id l'identifiant du formulaire. Form_ sera automatiquement ajouté devant.
+ * @param string $name le nom du bouton
+ * @param unknown_type $value la valeur du bouton
+ */
+function ViewHelper_form($form_id, $name, $value)
+{
+	return '
+<form method="post" action="" id="form_' . $form_id . '">
+' . ViewHelper_Form_submit($name, $value) . '
+</form>';
+}
+
+/**
  * Génère un input avec les arguments spécifiés.
  * 
  * @param string $name Nom / id du composant
@@ -122,21 +137,6 @@ function ViewHelper_Form_points($name, $max = MAX_SOMME, $args)
 }
 
 /**
- * Génère un formulaire basique avec un simple bouton submit (action = la page actuelle)
- * 
- * @param string $form_id l'identifiant du formulaire. Form_ sera automatiquement ajouté devant.
- * @param string $name le nom du bouton
- * @param unknown_type $value la valeur du bouton
- */
-function ViewHelper_form($form_id, $name, $value)
-{
-	return '
-<form method="post" action="" id="form_' . $form_id . '">
-' . ViewHelper_Form_submit($name, $value) . '
-</form>';
-}
-
-/**
  * Génère un select avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
@@ -185,6 +185,7 @@ function ViewHelper_Form_radio($name, array $values, $selected=null, $id_prefix=
 	$Return = '';
 	foreach($values as $value=>$caption)
 	{
+		//Ne pas utiliser VH_Form_label, qui ajoute ":" à la fin ce qui n'est pas nécessaire ici.
 		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $id_prefix . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $id_prefix . $value . '">' . $caption . "</label><br />\n";
 	}
 	

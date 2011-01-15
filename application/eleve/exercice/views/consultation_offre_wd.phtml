@@ -1,0 +1,21 @@
+<?php 
+echo $this->Doc_box('eleve', 'refus', 'Besoin d\'aide pour compléter ce formulaire ?');
+?>
+
+<form id="form_creation-exercice" method="post" action="">
+<p>Un correcteur vous propose de réaliser cet exercice.<br />
+En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Enchere; ?> points</strong>.<br />
+Que voulez-vous faire ?</p>
+
+<?php 
+echo $this->Form_radio(
+	'choix',
+	array(
+		'oui' => "Accepter l'offre",
+		'non' => "Refuser l'offre",
+		'annuler' => "Annuler l'exercice"
+	),
+	'oui'
+);
+?>
+</form>

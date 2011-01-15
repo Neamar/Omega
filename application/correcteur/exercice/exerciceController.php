@@ -28,6 +28,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 {
 	/**
 	 * Demander à réserver un article.
+	 * ATTENTE_CORRECTEUR => ATTENTE_ELEVE
 	 */
 	public function reservationActionWd()
 	{
