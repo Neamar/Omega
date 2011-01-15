@@ -125,7 +125,7 @@ function ViewHelper_Form_submit($name, $value)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_points($name, $max = MAX_SOMME, $args)
+function ViewHelper_Form_points($name, $max = MAX_SOMME, $args = array())
 {
 	$args['type'] = 'number';
 	$args['min'] = 0;

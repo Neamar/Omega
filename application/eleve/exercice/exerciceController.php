@@ -446,7 +446,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			elseif($_POST['choix'] == 'oui' && $this->Exercice->Enchere > $_SESSION['Eleve']->getPoints())
 			{
-				$this->View->setMessage('error', "Vous n'avez pas assez de points pour accepter l'offre.",'eleve/depot');
+				$this->View->setMessage('error', "Vous n'avez pas assez de points pour accepter l'offre.", 'eleve/depot');
 			}
 			elseif($_POST['choix'] == 'annuler')
 			{

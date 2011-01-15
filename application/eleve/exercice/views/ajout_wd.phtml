@@ -39,7 +39,7 @@ if($this->NbFiles > 0)
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
 		<?php 
 		echo $SizeLimit . "\n";
-		for($i=0; $i < $this->NbFilesUpload; $i++)
+for($i=0; $i < $this->NbFilesUpload; $i++)
 		{
 			//TODO : <input type="file" name="fichiers[]" id="fichiers-noscript" /><br />
 			echo $this->Form_input(
@@ -48,7 +48,7 @@ if($this->NbFiles > 0)
 					'type'=>'file',
 				)
 			) . "<br />\n";
-		}
+}
 		?>
 		
 		<p>Que faire ensuite ?</p>
@@ -67,17 +67,17 @@ if($this->NbFiles > 0)
 		
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-script">
 		<?php echo $SizeLimit . "\n";
-		if($this->NbFilesUpload > 0)
+if($this->NbFilesUpload > 0)
 		{?>
 			<input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />
 			<?php 
-		}
-		else
+}
+else
 		{
 		?>
 			<p>Vous ne pouvez plus ajouter de fichiers sur cet exercice.</p>
 		<?php 
-		}
+}
 		?>	
 		
 		<p>Que faire ensuite ?</p>

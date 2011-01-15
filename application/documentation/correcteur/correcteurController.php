@@ -8,7 +8,7 @@
  * 
  * @category  Controller
  * @package   Root
- * @author    Matthieu Bacconnier <matthieu@bacconnier.fr> and associates ! :D <- non je déconne !
+ * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
