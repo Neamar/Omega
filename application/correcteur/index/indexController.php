@@ -236,6 +236,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	public function _listeAction()
 	{
 		//TODO: gérer les images
+		//TODO: gérer une date dynamique
 		$this->View->RawDatas = Sql::queryAssoc(
 			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
 			FROM Exercices

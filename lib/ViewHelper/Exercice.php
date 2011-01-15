@@ -34,17 +34,9 @@ if(!function_exists("ViewHelper_Html_list"))
 function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 {
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
-	$Files = $Exercice->getFiles();
-	$Liens = array(
-		'INFOS' => array(true),
-		'SUJET' => array(),
-		'CORRIGE' => array(),
-		'RECLAMATION' => array()
-	);
-	foreach ($Files as $URL => $Infos)
-	{
-		$Liens[$Infos['Type']][$URL] = $Infos;
-	}
+	$Liens = $Exercice->getSortedFiles();
+	//Ajouter l'onglet "Informations"
+	$Liens = array('INFO'=>array(true)) + $Liens;
 	
 	$Disabled = array();
 	$Content = array();
@@ -98,6 +90,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		' . ViewHelper_Html_list($Infos) . '
 		
 		' . $Remarques . '
+		<p><a href="/' . $_GET['module'] . '/exercice/zip/' . $Exercice->Hash . '">Télécharger dans un zip</a></p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
 		<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
@@ -107,7 +100,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		<p>' . (isset($Content['CORRIGE'])?$Content['CORRIGE']:'Corrigé non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-reclamation" id="reclamation-' . $Exercice->Hash . '">
-		<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'!Réclamation non disponible.') . '</p>
+		<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'Réclamation non disponible.') . '</p>
 		</div>
 	</div>
 	

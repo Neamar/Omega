@@ -88,11 +88,27 @@ abstract class ExerciceAbstractController extends AbstractController
 		return $Ariane;
 	}
 	
+	/**
+	 * Afficher le sujet
+	 */
 	public function sujetActionWd()
 	{
+		//TODO : gérer les pdf / doc / odt / ...
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
+	}
+	
+	public function zipActionWd()
+	{
+		//Désactiver le templating.
+		$this->UseTemplate = false;
+		
+		//Charger les fichiers nécessaires :
+		$this->View->Files = $this->Exercice->getSortedFiles();
+		
+		//Et dévier la vue :
+		$this->View->setMeta('viewFile', LIB_PATH . '/Views/exercice/zip.phtml');
 	}
 	
 	/**

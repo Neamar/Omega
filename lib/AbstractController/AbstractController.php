@@ -57,16 +57,11 @@ abstract class AbstractController
 	protected $Data;
 
 	/**
-	 * La page actuelle doit-elle renvoyer des données au format AJAX ?
+	 * La page actuelle doit-elle être renvoyée dans le template ? (au milieu des breadcrumbs et autres titres,
+	 * @see data/layouts/template.phtml
 	 * @var bool
 	 */
-	protected $IsAjax;
-
-	/**
-	 * La page actuelle doit-elle être renvoyée dans le template ?
-	 * @var bool
-	 */
-	protected $IsTemplate;
+	protected $UseTemplate = true;
 
 	/**
 	 * Contrôleur par défaut, prenant en paramètres les différentes composantes de l'URL.
@@ -89,13 +84,7 @@ abstract class AbstractController
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')
 		{
-			$this->IsAjax = true;
-			$this->IsTemplate = false;
-		}
-		else
-		{
-			$this->IsAjax = false;
-			$this->IsTemplate = true;
+			$this->UseTemplate = false;
 		}
 		
 		//Récupérer les enregistrements qui devaient être sauvegardés pour le futur (i.e. maintenant)
@@ -298,14 +287,14 @@ abstract class AbstractController
 		//La vue
 		$V = $this->View;
 
-		if($this->IsAjax)
+		if($this->UseTemplate)
 		{
-			//Ne rendre que le contenu, sans l'enrobage (titre, html entourant, breadcrumbs...)
-			$V->renderContent();
+			$V->render();
 		}
 		else
 		{
-			$V->render();
+			//Ne rendre que le contenu, sans l'enrobage (titre, html entourant, breadcrumbs...)
+			$V->renderContent();
 		}
 	}
 
