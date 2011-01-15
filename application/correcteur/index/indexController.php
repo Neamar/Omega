@@ -238,10 +238,12 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		//TODO: gérer les images
 		//TODO: gérer une date dynamique
 		$this->View->RawDatas = Sql::queryAssoc(
-			'SELECT Hash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve 
+			'SELECT Hash, LongHash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve,
+			GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
 			FROM Exercices
 			NATURAL JOIN Classes
 			NATURAL JOIN Demandes
+			LEFT JOIN Exercices_Fichiers ON (Exercices.ID = Exercices_Fichiers.Exercice)
 			
 			WHERE Statut = "ATTENTE_CORRECTEUR"
 			',

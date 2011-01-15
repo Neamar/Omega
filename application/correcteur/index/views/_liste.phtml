@@ -24,6 +24,14 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 		<p class="infos-eleve">' . $ExerciceDatas['InfosEleve'];
 	}
 	
+	$Infos .= '</p><p class="image-preview">';
+	
+	$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
+	foreach($ExerciceDatas['Sujets'] as $URL)
+	{
+		$Infos .= '<img src="/public/exercices/' . $ExerciceDatas['LongHash'] . $URL . '" alt="Fichier sujet" />';
+	}
+	
 	$Infos .= '</p>';
 	
 	$Datas[] = array(
