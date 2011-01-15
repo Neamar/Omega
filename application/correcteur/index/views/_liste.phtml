@@ -3,6 +3,11 @@ $Datas = array();
 		
 foreach($this->RawDatas as $Hash => $ExerciceDatas)
 {
+	//GROUP_CONCAT fait remonter un tuple null si aucun exercice n'est disponible.
+	if(empty($Hash))
+	{
+		continue;
+	}
 	
 	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
 	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
