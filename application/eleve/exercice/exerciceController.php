@@ -27,7 +27,7 @@
 class Eleve_ExerciceController extends ExerciceAbstractController
 {
 	/**
-	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
+	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
