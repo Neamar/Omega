@@ -212,7 +212,7 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 /**
  * Retourne la liste des miniatures passées en paramètre.
  * 
- * @param array $Thumbs, les clés sont les URLs, les valeurs le contenu alternatif.
+ * @param array $Thumbs, les clés sont les URLs, les valeurs le contenu alternatif (ou un tableau URL =>, alt => pour un lightbox)
  * @param string $LongHash le hash de l'exercice.
  * 
  * @return string les images.
@@ -225,7 +225,14 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 	
 	foreach($Thumbs as $URL => $Datas)
 	{
-		$R .= '	<a href="' . $BaseURL . $Datas['URL'] . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
+		if(is_array($Datas))
+		{
+			$R .= '	<a href="' . $BaseURL . $Datas['URL'] . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
+		}
+		else
+		{
+			$R .= ' <img src="' . $BaseURL . $URL . '" alt="' . $Datas . '" />';
+		}
 	}
 	
 	return $R;

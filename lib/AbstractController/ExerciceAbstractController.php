@@ -127,7 +127,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		if(!in_array($this->Exercice->Statut, $Status))
 		{
 			$this->View->setMessage("warning", $Message);
-			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);
+			$this->redirectExercice();
 		}
 	}
 	
@@ -150,8 +150,13 @@ abstract class ExerciceAbstractController extends AbstractController
 	 * 
 	 * @return jamais.
 	 */
-	protected function redirectExercice($URL = '/eleve/exercice/index/')
+	protected function redirectExercice($URL = null)
 	{
+		if(is_null($URL))
+		{
+			$URL = '/' . $this->Module . '/exercice/index/';
+		}
+		
 		$this->redirect($URL . $this->Exercice->Hash);
 	}
 }
