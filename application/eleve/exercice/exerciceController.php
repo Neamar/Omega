@@ -161,7 +161,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				$ToInsert = array
 				(
-					'Hash' => substr($LongHash, 0, 6),
+					'Hash' => substr($LongHash, 0, HASH_LENGTH),
 					'LongHash' => $LongHash,
 					'Titre' => $_POST['titre'],
 					'Createur' => $_SESSION['Eleve']->ID,

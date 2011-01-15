@@ -217,9 +217,12 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 {
 	$R = '';
+	$Hash = substr($LongHash, 0, HASH_LENGTH);
+	$BaseURL = '/public/exercices/' . $LongHash;
+	
 	foreach($Thumbs as $URL => $Alt)
 	{
-		$R .= '	<img src="/public/exercices/' . $LongHash . $URL . '" alt="' . $Alt . '" />';
+		$R .= '	<a href="' . $BaseURL . str_replace('/Thumbs/', '/', $URL) . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Alt . '" /></a>';
 	}
 	
 	return $R;

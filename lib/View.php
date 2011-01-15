@@ -58,14 +58,16 @@ class View
 		$this->Metas = array(
 			'name'=>$Name,
 			'script'=>array(
-				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
-				'/public/js/jquery-ui.min.js'=>true,
-				'/public/js/default.js'=>true,
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' => true,
+				'/public/js/jquery-ui.min.js' => true,
+				'/public/js/jquery.prettyPhoto.js' => true,
+				'/public/js/default.js' => true,
 			),
 			'meta'=>array(),
 			'style'=>array(
-				'/public/css/base.css'=>true,
-				'/public/css/ui/ui.css'=>true,
+				'/public/css/base.css' => true,
+				'/public/css/ui/ui.css' => true,
+				'/public/css/prettyPhoto/prettyPhoto.css' => true,
 			),
 		);
 		
