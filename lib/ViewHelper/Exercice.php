@@ -52,10 +52,18 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		}
 		else
 		{
-			$Content[$Nom] = '';
-			foreach($Liens[$Nom] as $URL => $Infos)
+			if(!isset($Liens[$Nom]))
 			{
-				$Content[$Nom] .= '	<img src="/public/exercices/' . $Exercice->LongHash . $Infos['ThumbURL'] . '" alt="' . $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'] . '" />';
+				$Content[$Nom] = '';
+			}
+			else
+			{
+				$Thumbs = array();
+				foreach($Liens[$Nom] as $URL => $Infos)
+				{
+					$Thumbs[$Infos['ThumbURL']] = $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'];
+				}
+				$Content[$Nom] = ViewHelper_Exercice_thumbs($Thumbs, $Exercice->LongHash);
 			}
 		}
 	}
@@ -196,4 +204,23 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 		$Section = '<small>(' . $Section . ')</small>';
 	}
 	return '<span class="classe">' . $DetailsClasse . $Section . '</span>';
+}
+
+/**
+ * Retourne la liste des miniatures passées en paramètre.
+ * 
+ * @param array $Thumbs, les clés sont les URLs, les valeurs le contenu alternatif.
+ * @param string $LongHash le hash de l'exercice.
+ * 
+ * @return string les images.
+ */
+function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
+{
+	$R = '';
+	foreach($Thumbs as $URL => $Alt)
+	{
+		$R .= '	<img src="/public/exercices/' . $LongHash . $URL . '" alt="' . $Alt . '" />';
+	}
+	
+	return $R;
 }

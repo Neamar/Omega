@@ -27,10 +27,8 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	$Infos .= '</p><p class="image-preview">';
 	
 	$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
-	foreach($ExerciceDatas['Sujets'] as $URL)
-	{
-		$Infos .= '<img src="/public/exercices/' . $ExerciceDatas['LongHash'] . $URL . '" alt="Fichier sujet" />';
-	}
+	$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
+	$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
 	
 	$Infos .= '</p>';
 	
