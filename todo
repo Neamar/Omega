@@ -7,6 +7,7 @@ Passer les sliders en véritables sliders [type=range]
 Création d'un exercice puis déconnexion avant d'ajouter des fichiers : retourner à l'ajout de fichier.
 Revoir la cohérence des titresentre élève / correcteur
 Un clic sur une miniature affiche en lightbox le fichier original.
+Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
 
 En production
 - ajouter captcha à l'inscription élève
