@@ -270,9 +270,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					else
 					{
 						//Enregistrement du fichier.
-						$URL = '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						$URL = '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
 						
-						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . $URL))
+						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URLAbsolue))
 						{
 							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
 						}
@@ -283,7 +284,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								'Exercice' => $this->Exercice->ID,
 								'Type' => 'SUJET',
 								'URL' => $URL,
-								'ThumbURL' => Thumbnail::create(PATH . $URL),
+								'ThumbURL' => Thumbnail::create($URLAbsolue),
 								'NomUpload' => $_FILES['fichiers']['name'][$i],
 							);
 							

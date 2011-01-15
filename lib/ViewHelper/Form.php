@@ -114,6 +114,7 @@ function ViewHelper_Form_points($name, $max = MAX_SOMME, $args)
 {
 	$args['type'] = 'number';
 	$args['min'] = 0;
+	$args['value'] = 0;
 	$args['max'] = $max;
 	$args['step'] = 25;
 	

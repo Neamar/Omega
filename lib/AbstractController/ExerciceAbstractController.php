@@ -97,6 +97,8 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
+		
+		$this->deflectView(LIB_PATH . '/Views/exercice/sujet_wd.phtml');
 	}
 	
 	public function zipActionWd()
@@ -108,7 +110,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->Files = $this->Exercice->getSortedFiles();
 		
 		//Et dévier la vue :
-		$this->View->setMeta('viewFile', LIB_PATH . '/Views/exercice/zip.phtml');
+		$this->deflectView(LIB_PATH . '/Views/exercice/zip.phtml');
 	}
 	
 	/**

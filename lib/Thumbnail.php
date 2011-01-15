@@ -34,9 +34,9 @@ class Thumbnail
 	/**
 	 * Crée une miniature du fichier $Filename passé en paramètre.
 	 * 
-	 * @param string $Filename le chemin absolu vers le fichier à miniaturiser
+	 * @param string $Filename le chemin *absolu* vers le fichier à miniaturiser
 	 * 
-	 * @return string le chemin (http) vers la miniature créé
+	 * @return string le chemin (relatif à l'exercice) vers la miniature créé
 	 */
 	public static function create($Filename)
 	{
@@ -137,7 +137,7 @@ class Thumbnail
 		$ThumbFilename = self::getThumbFileName($Filename);
 		imagepng($Thumb, $ThumbFilename, 8);
 		
-		return str_replace(PATH, '', $ThumbFilename);
+		return self::getRelativePath($ThumbFilename);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ class Thumbnail
 			exec('convert ' . escapeshellarg($Filename) . '[0] -thumbnail 150x212! ' . $ThumbFilename .  '>> /dev/null');
 		}
 	
-		return str_replace(PATH, '', $ThumbFilename);
+		return self::getRelativePath($ThumbFilename);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ class Thumbnail
 	 */
 	public static function createDoc($Filename)
 	{
-		return '/public/images/thumbs/doc.jpg';
+		return '/../../images/thumbs/doc.jpg';
 	}
 	
 	/**
@@ -188,7 +188,7 @@ class Thumbnail
 	 */
 	public static function createOdt($Filename)
 	{
-		return '/public/images/thumbs/odt.jpg';
+		return '/../../images/thumbs/odt.jpg';
 	}
 	
 	/**
@@ -201,9 +201,16 @@ class Thumbnail
 	 */
 	public static function createDefault($Filename)
 	{
-		return '/public/images/thumbs/unavailable.jpg';
+		return '/../../images/thumbs/unavailable.jpg';
 	}
 	
+	/**
+	 * Renvoie le chemin dans lequel la miniature doit être enregistrée 
+	 * 
+	 * @param string $Filename
+	 * 
+	 * @return string chemin absolu
+	 */
 	protected static function getThumbFileName($Filename)
 	{
 		$ThumbFilename = preg_replace(
@@ -213,5 +220,18 @@ class Thumbnail
 		);
 		
 		return $ThumbFilename;
+	}
+	
+	/**
+	 * Renvoie l'adresse relative (du type /Sujet/Thumbs/0.jpg) d'une miniature.
+	 * 
+	 * @param string $ThumbFilename
+	 * 
+	 * @return string chemin relatif
+	 */
+	protected static function getRelativePath($ThumbFilename)
+	{
+		preg_match('`/[^/]+/Thumbs/[^/]+\.(' . EXTENSIONS . ')$`', $ThumbFilename, $URLRelative);
+		return $URLRelative[0];
 	}
 }

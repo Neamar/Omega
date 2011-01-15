@@ -55,7 +55,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			$Content[$Nom] = '';
 			foreach($Liens[$Nom] as $URL => $Infos)
 			{
-				$Content[$Nom] .= '	<img src="' . $Infos['ThumbURL'] . '" alt="' . $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'] . '" />';
+				$Content[$Nom] .= '	<img src="/public/exercices/' . $Exercice->LongHash . $Infos['ThumbURL'] . '" alt="' . $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'] . '" />';
 			}
 		}
 	}

@@ -111,6 +111,16 @@ abstract class AbstractController
 	}
 	
 	/**
+	 * Dévie la vue vers un nouveau fichier.
+	 * 
+	 * @param string $URL le chemin absolu vers la nouvelle vue.
+	 */
+	public function deflectView($URL)
+	{
+		$this->View->setMeta('viewFile', $URL);
+	}
+	
+	/**
 	 * Récupère le contrôleur associé au contrôleur objet.
 	 * @return string le contrôleur associé
 	 */
@@ -192,7 +202,7 @@ abstract class AbstractController
 	protected function json(array $Data)
 	{
 		$this->View->jsonDatas = array_values($Data);
-		$this->View->setMeta('viewFile', LIB_PATH . '/Views/json.phtml');
+		$this->deflectView(LIB_PATH . '/Views/json.phtml');
 	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée
