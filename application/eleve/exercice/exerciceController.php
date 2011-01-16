@@ -62,6 +62,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
 			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
 			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
+			'EN_COURS' => "Le correcteur s'occupe de tout... il est temps d'aller voir ce film au cinéma !",
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
 		);
 
