@@ -398,7 +398,7 @@ class View
 		{
 			$Caption = '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
   <a href="' . $Url . '" itemprop="url">
-    <span itemprop="title">' . $Caption . '</span>
+    <span itemprop="title">' . str_replace('_', ' ', $Caption) . '</span>
   </a>
 </div>';
 		}

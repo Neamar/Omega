@@ -1,0 +1,37 @@
+<a class="see-link">Envie d'être plus précis dans la définition de vos compétences ?</a>
+
+
+<form method="post" action="" id="form_edition-competences-rapide">
+<p class="matiere-box">
+<?php
+echo $this->Form_selectLabel(
+	'start_all',
+	'Je suis compétent de la',
+	$this->Classes,
+	(!is_null($this->Competences)?$this->Competences['Commence']:6)
+);
+echo $this->Form_selectLabel(
+	'end_all',
+	' à la',
+	$this->Classes,
+	(!is_null($this->Competences)?$this->Competences['Finit']:0)
+);
+?>
+<br />
+dans les matières suivantes :</p>
+
+<?php
+foreach($this->Matieres as $Matiere)
+{
+	$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
+
+	echo $this->Form_checkbox('check_' . $ID, $Matiere, isset($this->Defaults[$Matiere]));
+}
+echo $this->Form_submit('edition-competences-rapide', "Modifier mes compétences");
+?>
+</form>
+
+<script type="text/javascript">
+ClasseMin = <?php echo min(array_keys($this->Classes)) ?>;
+ClasseMax = <?php echo max(array_keys($this->Classes)) ?>;
+</script>

@@ -160,7 +160,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	}
 	
 	/**
-	 * Page d'options pour la mise à jour du compte
+	 * Page d'options pour la mise à jour des compétences
 	 */
 	public function options_MatieresAction()
 	{
@@ -173,7 +173,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		//Charger la liste des matières :
 		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
 		
-		//Charger la liste des matières :
+		//Charger la liste des classes :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
 		if(isset($_POST['edition-competences']))
@@ -215,6 +215,72 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		
 		$this->View->Matieres = $Matieres;
 		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
+	}
+	
+	/**
+	 * Page d'options pour la mise à jour (rapide) des compétences
+	 */
+	public function options_Matieres_RapideAction()
+	{
+		$this->View->setTitle(
+			'Modifications rapide des compétences',
+			"Cette page vous permet de modifier facilement vos compétences."
+		);
+		
+		$this->View->addScript('/public/js/correcteur/index/options_matieres.js');
+		//Charger la liste des matières :
+		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
+		
+		//Charger la liste des classes :
+		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+		
+
+		if(isset($_POST['edition-competences-rapide']))
+		{
+			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
+			$Debut = intval($_POST['start_all']);
+			$Fin = intval($_POST['end_all']);
+			
+			if($Debut < $Fin)
+			{
+				$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin)");
+			}
+			else
+			{
+				foreach($Matieres as $Matiere)
+				{
+					$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
+					if(!empty($_POST['check_' . $ID]))
+					{
+						$ToInsert = array
+						(
+							'Correcteur' => $_SESSION['Correcteur']->getFilteredId(),
+							'Matiere' => $Matiere,
+							'Commence' => $Debut,
+							'Finit' => $Fin,
+						);
+						
+						Sql::insert('Correcteurs_Capacites', $ToInsert);
+					}
+				}
+			}
+			
+			if(!$this->View->issetMeta('message'))
+			{
+				$this->View->setMessage("info", "Compétences enregistrées.");
+			}
+		}
+		
+		$this->View->Matieres = $Matieres;
+		//Charger les compétences déjà définies :
+		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
+		//Et en charger une qui servira de base :
+		$this->View->Competences = Sql::singleQuery('SELECT Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . ' LIMIT 1');
+		
+		if(!is_null($this->View->Competences) && !$this->View->issetMeta('message'))
+		{
+			$this->View->setMessage("warning", "Attention ! En utilisant cette page, vous perdrez aussi les <a href=\"/correcteur/options_matieres\">modifications plus avancées</a> que vous auriez pu apporter.");
+		}
 	}
 	
 	/**
