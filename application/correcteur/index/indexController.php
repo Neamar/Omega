@@ -301,17 +301,32 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function _listeAction()
 	{
-		//TODO: gérer les images
-		//TODO: gérer une date dynamique
 		$this->View->RawDatas = Sql::queryAssoc(
-			'SELECT Hash, LongHash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve,
-			GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
-			FROM Exercices
-			NATURAL JOIN Classes
-			NATURAL JOIN Demandes
-			LEFT JOIN Exercices_Fichiers ON (Exercices.ID = Exercices_Fichiers.Exercice)
-			
-			WHERE Statut = "ATTENTE_CORRECTEUR"
+			'
+SELECT 
+	Exercices.Hash,
+	Exercices.LongHash,
+	UNIX_TIMESTAMP(Exercices.TimeoutEleve) AS TimeoutEleve,
+	Exercices.Titre,
+	Exercices.Matiere,
+	Exercices.Section,
+	Exercices.InfosEleve,
+	Classes.DetailsClasse,
+	Demandes.DetailsDemande,
+	GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
+FROM Exercices
+NATURAL JOIN Classes
+NATURAL JOIN Demandes
+LEFT JOIN Exercices_Fichiers ON (
+	Exercices.ID = Exercices_Fichiers.Exercice
+)
+JOIN Correcteurs_Capacites ON (
+	Correcteurs_Capacites.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+	AND Correcteurs_Capacites.Matiere = Exercices.Matiere
+	AND Exercices.Classe BETWEEN Correcteurs_Capacites.Finit AND Correcteurs_Capacites.Commence
+)
+
+WHERE Statut = "ATTENTE_CORRECTEUR"
 			',
 			'Hash'
 		);
