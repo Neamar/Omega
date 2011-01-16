@@ -34,17 +34,9 @@ if(!function_exists("ViewHelper_Html_list"))
 function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 {
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
-	$Files = $Exercice->getFiles();
-	$Liens = array(
-		'INFOS' => array(true),
-		'SUJET' => array(),
-		'CORRIGE' => array(),
-		'RECLAMATION' => array()
-	);
-	foreach ($Files as $URL => $Infos)
-	{
-		$Liens[$Infos['Type']][$URL] = $Infos;
-	}
+	$Liens = $Exercice->getSortedFiles();
+	//Ajouter l'onglet "Informations"
+	$Liens = array('INFO'=>array(true)) + $Liens;
 	
 	$Disabled = array();
 	$Content = array();
@@ -60,10 +52,21 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		}
 		else
 		{
-			$Content[$Nom] = '';
-			foreach($Liens[$Nom] as $URL => $Infos)
+			if(!isset($Liens[$Nom]))
 			{
-				$Content[$Nom] .= '	<img src="' . $Infos['ThumbURL'] . '" alt="' . $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload'] . '" />';
+				$Content[$Nom] = '';
+			}
+			else
+			{
+				$Thumbs = array();
+				foreach($Liens[$Nom] as $URL => $Infos)
+				{
+					$Thumbs[$Infos['ThumbURL']] = array(
+						'URL' => $URL,
+						'alt' => $Exercice->Titre . ' ' . $Nom . ', fichier ' . $Infos['NomUpload']
+					);
+				}
+				$Content[$Nom] = ViewHelper_Exercice_thumbs($Thumbs, $Exercice->LongHash);
 			}
 		}
 	}
@@ -72,7 +75,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	{
 		$Remarques = '
 		<p>Informations complémentaires :</p>
-		<p class="infoseleve">
+		<p class="infos-eleve">
 			' . $Exercice->InfosEleve . '
 		</p>';
 	}
@@ -98,6 +101,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		' . ViewHelper_Html_list($Infos) . '
 		
 		' . $Remarques . '
+		<p><a href="/' . $_GET['module'] . '/exercice/zip/' . $Exercice->Hash . '">Télécharger dans un zip</a></p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
 		<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
@@ -107,7 +111,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		<p>' . (isset($Content['CORRIGE'])?$Content['CORRIGE']:'Corrigé non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-reclamation" id="reclamation-' . $Exercice->Hash . '">
-		<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'!Réclamation non disponible.') . '</p>
+		<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'Réclamation non disponible.') . '</p>
 		</div>
 	</div>
 	
@@ -203,4 +207,33 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 		$Section = '<small>(' . $Section . ')</small>';
 	}
 	return '<span class="classe">' . $DetailsClasse . $Section . '</span>';
+}
+
+/**
+ * Retourne la liste des miniatures passées en paramètre.
+ * 
+ * @param array $Thumbs, les clés sont les URLs, les valeurs le contenu alternatif (ou un tableau URL =>, alt => pour un lightbox)
+ * @param string $LongHash le hash de l'exercice.
+ * 
+ * @return string les images.
+ */
+function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
+{
+	$R = '';
+	$Hash = substr($LongHash, 0, HASH_LENGTH);
+	$BaseURL = '/public/exercices/' . $LongHash;
+	
+	foreach($Thumbs as $URL => $Datas)
+	{
+		if(is_array($Datas))
+		{
+			$R .= '	<a href="' . $BaseURL . $Datas['URL'] . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
+		}
+		else
+		{
+			$R .= ' <img src="' . $BaseURL . $URL . '" alt="' . $Datas . '" />';
+		}
+	}
+	
+	return $R;
 }

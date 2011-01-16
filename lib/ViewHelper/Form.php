@@ -15,6 +15,21 @@
  */
 
 /**
+ * Génère un formulaire basique avec un simple bouton submit (action = la page actuelle)
+ * 
+ * @param string $form_id l'identifiant du formulaire. Form_ sera automatiquement ajouté devant.
+ * @param string $name le nom du bouton
+ * @param unknown_type $value la valeur du bouton
+ */
+function ViewHelper_form($form_id, $name, $value)
+{
+	return '
+<form method="post" action="" id="form_' . $form_id . '">
+' . ViewHelper_Form_submit($name, $value) . '
+</form>';
+}
+
+/**
  * Génère un input avec les arguments spécifiés.
  * 
  * @param string $name Nom / id du composant
@@ -83,10 +98,10 @@ function ViewHelper_Form_textarea($name, array $args = array())
 }
 
 /**
- * Génère un input avec les arguments spécifiés.
+ * Génère un bouton submit avec les arguments spécifiés.
  * 
- * @param string $name Nom / id du composant
- * @param array $args
+ * @param string $name Nom / id du bouton
+ * @param string $value le contenu du bouton
  * 
  * @return string le code HTML demandé.
  */
@@ -102,18 +117,23 @@ function ViewHelper_Form_submit($name, $value)
 }
 
 /**
- * Génère un formulaire basique avec un simple bouton submit (action = la page actuelle)
+ * Génère un input de type numérique gérant les points.
  * 
- * @param string $form_id l'identifiant du formulaire. Form_ sera automatiquement ajouté devant.
- * @param string $name le nom du bouton
- * @param unknown_type $value la valeur du bouton
+ * @param string $name Nom / id du composant
+ * @param int $max la valeur maximum
+ * @param array $args paramètres additionnels.
+ * 
+ * @return string le code HTML demandé.
  */
-function ViewHelper_form($form_id, $name, $value)
+function ViewHelper_Form_points($name, $max = MAX_SOMME, $args = array())
 {
-	return '
-<form method="post" action="" id="form_' . $form_id . '">
-' . ViewHelper_Form_submit($name, $value) . '
-</form>';
+	$args['type'] = 'number';
+	$args['min'] = 0;
+	$args['value'] = 0;
+	$args['max'] = $max;
+	$args['step'] = 25;
+	
+	return ViewHelper_Form_input($name, $args);
 }
 
 /**
@@ -165,6 +185,7 @@ function ViewHelper_Form_radio($name, array $values, $selected=null, $id_prefix=
 	$Return = '';
 	foreach($values as $value=>$caption)
 	{
+		//Ne pas utiliser VH_Form_label, qui ajoute ":" à la fin ce qui n'est pas nécessaire ici.
 		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $id_prefix . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $id_prefix . $value . '">' . $caption . "</label><br />\n";
 	}
 	
@@ -250,7 +271,21 @@ function ViewHelper_Form_label($name, $label)
  */
 function ViewHelper_Form_inputLabel($name, $label, array $args=array())
 {
-	return ViewHelper_Form_Label($name, $label) . viewHelper_Form_Input($name, $args);
+	return ViewHelper_Form_label($name, $label) . viewHelper_Form_input($name, $args);
+}
+
+/**
+ * Génère un composant points et son label avec les arguments spécifiés.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $args=array())
+{
+	return ViewHelper_Form_label($name, $label) . viewHelper_Form_points($name, $max, $args);
 }
 
 /**
@@ -264,7 +299,7 @@ function ViewHelper_Form_inputLabel($name, $label, array $args=array())
  */
 function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
 {
-	return ViewHelper_Form_Label($name, $label) . "<br />\n" . ViewHelper_Form_textarea($name, $args);
+	return ViewHelper_Form_label($name, $label) . "<br />\n" . ViewHelper_Form_textarea($name, $args);
 }
 
 /**
@@ -279,6 +314,21 @@ function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
 function ViewHelper_Form_inputLabelBr($name, $label, array $args=array())
 {
 	return ViewHelper_Form_inputLabel($name, $label, $args) . "<br />\n";
+}
+
+/**
+ * Génère un composant points et son label avec les arguments spécifiés. Ajoute un retour à la ligne.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * @param int $max la valeur maximale
+ * @param array $args
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_pointsLabelBr($name, $label, $max = MAX_SOMME, array $args=array())
+{
+	return ViewHelper_Form_pointsLabel($name, $label, $max, $args) . "<br />\n";
 }
 
 /**

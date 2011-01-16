@@ -2,7 +2,11 @@
 /*
  * Quelques actions communes.
  */
-$Annulation = array('Annuler l\'exercice.', "Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.", 'suractivite');
+$Annulation = array(
+	'Annuler l\'exercice.',
+	"Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.",
+	'supplement'
+);
 
 /**
  * Liste des actions possibles.
@@ -22,24 +26,16 @@ $ListeActions = array(
 	'ATTENTE_CORRECTEUR' => array(
 		'annulation' => $Annulation,
 	),
+	'ATTENTE_ELEVE' => array(
+		'consultation_offre' => array('Voir l\'offre', "Consulter l'offre réalisée pour l'accepter ou la refuser.", 'offre'), 
+		'annulation' => $Annulation,
+	),
 	'ANNULE' => array(),
-);
-
-/**
- * Liste des messages à afficher en fonction du statut.
- * 
- * @var array
- */
-$ListeMessage = array(
-	'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
-	'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
-	'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
 );
 ?>
 
-<h1>Accueil de l'exercice «&nbsp;<?php echo $this->Exercice->Titre; ?>&nbsp;»</h1>
-<p class="intro"><?php echo $ListeMessage[$this->Exercice->Statut]?></p>
 <h2>Options de l'exercice</h2>
+
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
 foreach($Actions as $URL => &$Action)

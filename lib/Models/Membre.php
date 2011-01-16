@@ -95,10 +95,11 @@ class Membre extends DbObject
 	 * 
 	 * @param int $Value la valeur à débiter
 	 * @param string $Log le message de log. Si non spécifié, l'enregistrement des logs est à la charge de l'appelant.
+	 * @param Exercice $Exercice l'exercice (pour le log)
 	 * 
 	 * @return bool true si la transaction a réussie
 	 */
-	public function debit($Value,$Log=null)
+	public function debit($Value, $Log=null, Exercice $Exercice = null)
 	{
 		if(!is_int($Value))
 		{
@@ -110,13 +111,13 @@ class Membre extends DbObject
 			$this->setAndSave(array('_Points'=>'Points - ' . $Value));
 			if(!is_null($Log))
 			{
-				$this->log('Logs', $Log, $this, null, array('Delta'=>-$Value));
+				$this->log('Logs', $Log, $this, $Exercice, array('Delta'=>-$Value));
 			}
+			
+			return true;
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 	}
 	
 	/**
@@ -127,14 +128,14 @@ class Membre extends DbObject
 	 * 
 	 * @return bool true si la transaction a réussie
 	 */
-	public function credit($Value,$Log=null)
+	public function credit($Value, $Log=null)
 	{
 		if(!is_int($Value))
 		{
 			return false;
 		}
 		
-		$this->setAndSave(array('_Points'=>'Points + ' . $Value));
+		$this->setAndSave(array('_Points' => 'Points + ' . $Value));
 		if(!is_null($Log))
 		{
 			$this->log('Logs', $Log, $this, null, array('Delta'=>$Value));

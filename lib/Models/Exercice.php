@@ -123,7 +123,7 @@ WHERE Hash="%ID%"';
 	 * @param string $ChangeMessage
 	 * @param array $Changes autres changements à apporter à l'objet en base de données
 	 */
-	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes=array())
+	public function setStatus($Status, Membre $ChangeAuthor, $ChangeMessage, array $Changes = array())
 	{
 		if(!in_array($Status, self::$Workflow[$this->Statut]))
 		{
@@ -209,6 +209,7 @@ WHERE Hash="%ID%"';
 	/**
 	 * Récupère la liste des fichiers associés à l'exercice dans un tableau associatif de la forme
 	 * URL => array(Type, ThumbURL, NomUpload, Description)
+	 * @see Exercice::getSortedFiles
 	 * 
 	 * @param array $Types le type des fichiers (SUJET, CORRIGE ou RECLAMATION). Tous par défaut.
 	 * 
@@ -225,6 +226,28 @@ WHERE Hash="%ID%"';
 		ORDER BY Type, ID';
 		
 		return Sql::queryAssoc($Query, 'URL');
+	}
+	
+	/**
+	 * Renvoie tous les fichiers de l'exercice, correctement triés dans un tableau.
+	 * 
+	 * @return array array('SUJET' =>array(files), 'CORRIGE'=>array(files), 'RECLAMATION'=> =>array(files))
+	 */
+	public function getSortedFiles()
+	{
+		$Liens = array(
+			'SUJET' => array(),
+			'CORRIGE' => array(),
+			'RECLAMATION' => array()
+		);
+		
+		$Files = $this->getFiles();
+		foreach ($Files as $URL => $Infos)
+		{
+			$Liens[$Infos['Type']][$URL] = $Infos;
+		}
+		
+		return $Liens;
 	}
 	
 	/**

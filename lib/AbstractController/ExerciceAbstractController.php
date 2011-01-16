@@ -44,25 +44,18 @@ abstract class ExerciceAbstractController extends AbstractController
 	public function __construct($Module,$Controller,$View,$Data)
 	{
 		parent::__construct($Module, $Controller, $View, $Data);
-		
+
 		//La page porte sur un exercice en particulier
 		if(is_array($Data) && isset($Data['data']))
 		{
 			//Récupérer l'exercice :
 			$this->Exercice = Exercice::load($Data['data']);
-			if(is_null($this->Exercice)
-			||
-			(!isset($_SESSION['Eleve']) && !isset($_SESSION['Correcteur']) && !isset($_SESSION['Admin'])
-			||
-			(
-				(isset($_SESSION['Eleve']) && $this->Exercice->Createur != $_SESSION['Eleve']->ID)
-				||
-				(isset($_SESSION['Correcteur']) && $this->Exercice->Correcteur != $_SESSION['Correcteur'])
-			)))
+
+			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
 				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
-				$this->redirect("/eleve/exercice/");
+				$this->redirect('/' . $_GET['module'] . '/exercice/');
 			}
 			
 			//Récupérer les données pour la vue :
@@ -73,6 +66,8 @@ abstract class ExerciceAbstractController extends AbstractController
 	/**
 	 * Calcule le fil d'Ariane.
 	 * @see AbstractController::computeBreadcrumbs()
+	 * 
+	 * @return array le fil calculé
 	 */
 	protected function computeBreadcrumbs()
 	{
@@ -87,17 +82,35 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 		if($this->Action != 'index')
 		{
-			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = $this->Action;
+			$Ariane[self::build($this->Action, $this->Data, $this->Controller, $this->Module)] = ucfirst($this->Action);
 		}
 		
-		$this->View->setBreadcrumbs($Ariane);
+		return $Ariane;
 	}
 	
+	/**
+	 * Afficher le sujet
+	 */
 	public function sujetActionWd()
 	{
-		$this->View->setTitle("Affichage du sujet");
+		//TODO : gérer les pdf / doc / odt / ...
+		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
+		
+		$this->deflectView(LIB_PATH . '/Views/exercice/sujet_wd.phtml');
+	}
+	
+	public function zipActionWd()
+	{
+		//Désactiver le templating.
+		$this->UseTemplate = false;
+		
+		//Charger les fichiers nécessaires :
+		$this->View->Files = $this->Exercice->getSortedFiles();
+		
+		//Et dévier la vue :
+		$this->deflectView(LIB_PATH . '/Views/exercice/zip.phtml');
 	}
 	
 	/**
@@ -114,8 +127,19 @@ abstract class ExerciceAbstractController extends AbstractController
 		if(!in_array($this->Exercice->Statut, $Status))
 		{
 			$this->View->setMessage("warning", $Message);
-			$this->redirect("/eleve/exercice/index/" . $this->Exercice->Hash);
+			$this->redirectExercice();
 		}
+	}
+	
+	/**
+	 * Vérifie que l'exercice associé à la page est disponible.
+	 * Overridé par les classes filles.
+	 * 
+	 * @return bool true si l'exercice peut être accédé.
+	 */
+	protected function hasAccess(Exercice $Exercice)
+	{
+		return false;
 	}
 	
 	/**
@@ -126,8 +150,13 @@ abstract class ExerciceAbstractController extends AbstractController
 	 * 
 	 * @return jamais.
 	 */
-	protected function redirectExercice($URL = '/eleve/exercice/index/')
+	protected function redirectExercice($URL = null)
 	{
+		if(is_null($URL))
+		{
+			$URL = '/' . $this->Module . '/exercice/index/';
+		}
+		
 		$this->redirect($URL . $this->Exercice->Hash);
 	}
 }

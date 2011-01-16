@@ -1,8 +1,3 @@
-function numeric()
-{
-    this.value = this.value.replace(/[^0-9\.]/g,'');
-}
-
 //Slide du pressé
 $(function(){
 	$('#div_auto-accept').hide();
@@ -31,9 +26,7 @@ $(function() {
 				$("#auto_accept").val(ui.value);
 			}
 	});
-	$("#auto_accept")
-		.keyup(numeric)
-		.change(function()
+	$("#auto_accept").change(function()
 		{
 			Val = parseInt($("#auto_accept").val());
 		
@@ -48,7 +41,7 @@ $(function() {
 
 //Gestion des datepickers
 $(function(){
-	var dates = $( "#rendu_date, #annulation_date" ).datepicker({
+	var dates = $("#rendu_date, #annulation_date").datepicker({
 		firstDay: 1,
 		showOtherMonths: true,
 		selectOtherMonths: true,
@@ -69,7 +62,4 @@ $(function(){
 			dates.not( this ).datepicker( "option", option, date );
 		}
 	});
-	
-	$('#rendu_heure').keyup(numeric);
-	$('#annulation_heure').keyup(numeric);
 });

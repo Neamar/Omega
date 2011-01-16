@@ -27,12 +27,15 @@
 class Eleve_ExerciceController extends ExerciceAbstractController
 {
 	/**
-	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
+	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil exercice');
+		$this->View->setTitle(
+			'Accueil des exercices',
+			"Cette page sert de porte d'entrée vers vos exercices."
+		);
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
 			'SELECT Hash, Titre
@@ -46,11 +49,26 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Page d'accueil d'un exercice.
-	 * 
+	 * (all) =>
 	 */
 	public function indexActionWd()
 	{
-		$this->View->setTitle('Accueil exercice « ' . $this->Exercice->Titre . ' »');
+		/**
+		 * Liste des messages à afficher en fonction du statut.
+		 * 
+		 * @var array
+		 */
+		$ListeMessage = array(
+			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
+			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
+			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
+			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+		);
+
+		$this->View->setTitle(
+			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
+			$ListeMessage[$this->Exercice->Statut]
+		);
 	}
 	
 	/**
@@ -59,7 +77,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function creationAction()
 	{
-		$this->View->setTitle('Création d\'un exercice');
+		$this->View->setTitle(
+			'Création d\'un nouvel exercice',
+			"Vous allez ajouter un nouvel exercice. Soyez le plus complet possible afin que nous puissions vous offrir un service de qualité !"
+		);
+		
 		$this->View->addScript('/public/js/eleve/exercice/creation.js');
 		
 		//Charger la liste des matières pour le combobox :
@@ -140,7 +162,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				$ToInsert = array
 				(
-					'Hash' => substr($LongHash, 0, 6),
+					'Hash' => substr($LongHash, 0, HASH_LENGTH),
 					'LongHash' => $LongHash,
 					'Titre' => $_POST['titre'],
 					'Createur' => $_SESSION['Eleve']->ID,
@@ -194,7 +216,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('VIERGE'), "Vous ne pouvez plus ajouter de fichiers sur cet exercice.");
 		
-		$this->View->setTitle("Ajout de fichiers à l'exercice ");
+		$this->View->setTitle(
+			"Ajout de fichiers à l'exercice",
+			"Cette page permet d'ajouter des fichiers à l'exercice avant de l'envoyer aux correcteurs."
+		);
+		
 		$this->View->addScript('/public/js/jquery-multiupload.min.js');
 		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
 		
@@ -245,9 +271,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					else
 					{
 						//Enregistrement du fichier.
-						$URL = '/public/exercices/' . $this->Exercice->LongHash . '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						$URL = '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
 						
-						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], PATH . $URL))
+						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URLAbsolue))
 						{
 							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
 						}
@@ -258,7 +285,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								'Exercice' => $this->Exercice->ID,
 								'Type' => 'SUJET',
 								'URL' => $URL,
-								'ThumbURL' => Thumbnail::create(PATH . $URL),
+								'ThumbURL' => Thumbnail::create($URLAbsolue),
 								'NomUpload' => $_FILES['fichiers']['name'][$i],
 							);
 							
@@ -331,7 +358,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Affiche le récaptiulatif de l'exercice avant son envoi aux correcteurs
+	 * Affiche le récapitulatif de l'exercice avant son envoi aux correcteurs
 	 * VIERGE => ATTENTE_CORRECTEUR
 	 */
 	public function recapitulatifActionWd()
@@ -340,7 +367,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		//TODO : ajouter la possibilité de modifier la date d'annulation automatique
 		$this->canAccess(array('VIERGE'));
 		
-		$this->View->setTitle("Récapitulatif des données envoyées aux correcteurs");
+		$this->View->setTitle(
+			'Récapitulatif des données envoyées aux correcteurs',
+			"Cette page liste les informations qui seront envoyées au correcteur.<br />
+			Vérifiez la cohérence de vos données, puis cliquez sur le bouton « Envoyer aux correcteurs ».<br />
+			En cas de souci, corrigez les problèmes avant d'envoyer."
+		);
 		
 		if(isset($_POST['change-info']))
 		{
@@ -371,7 +403,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
-		$this->View->setTitle('Annulation de « ' . $this->Exercice->Titre . ' »');
+		$this->View->setTitle(
+			'Annulation de « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet l'annulation de l'exercice. Cette action n'a aucun coût."
+		);
 		
 		if(isset($_POST['annulation']))
 		{
@@ -391,7 +426,90 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
-	 * Liste les actions d'un exercice
+	 * Consulte une offre et agit en conséquence.
+	 * ATTENTE_ELEVE => (ANNULE|ATTENTE_CORRECTEUR|EN_COURS)
+	 */
+	public function consultation_OffreActionWd()
+	{
+		$this->canAccess(array('ATTENTE_ELEVE'), 'Ce n\'est pas le moment de consulter les offres !');
+		
+		$this->View->setTitle(
+			'Consultation offre pour « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet la consultation de l'offre qui vous a été faite. Vous pouvez l'accepter, la refuser ou annuler l'exercice."
+		);
+		
+		if(isset($_POST['consultation-offre']))
+		{
+			if(!isset($_POST['choix']))
+			{
+				$this->View->setMessage('error', 'Sélectionnez une option !');
+			}
+			elseif($_POST['choix'] == 'oui' && $this->Exercice->Enchere > $_SESSION['Eleve']->getPoints())
+			{
+				$this->View->setMessage('error', "Vous n'avez pas assez de points pour accepter l'offre.", 'eleve/depot');
+			}
+			elseif($_POST['choix'] == 'annuler')
+			{
+				//Annuler l'exercice.
+				$_POST['annulation'] = true;
+				$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
+				//Jamais de retour (annulation redirige).
+			}
+			elseif($_POST['choix'] == 'non')
+			{
+				$ToUpdate = array(
+					'_Correcteur' => 'NULL',
+					'_TimeoutCorrecteur' => 'NULL',
+					'_InfosCorrecteur' => 'NULL',
+					'Enchere' => '0',
+					'_NbRefus' => 'NbRefus + 1'
+				);
+				
+				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Refus de l'offre", $ToUpdate);
+				
+				if($this->Exercice->NbRefus == MAX_REFUS)
+				{
+					//Annuler l'exercice.
+					$_POST['annulation'] = true;
+					$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
+					//Jamais de retour (annulation redirige).
+				}
+				else
+				{
+					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé");
+					$this->redirectExercice();
+				}
+			}
+			elseif($_POST['choix'] == 'oui')
+			{
+				if(!$_SESSION['Eleve']->debit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+				{
+					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
+				}
+				else
+				{
+					//Logger la bonne nouvelle
+					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
+					
+					//Envoyer un mail au correcteur
+					$Datas = array(
+						'hash' => $this->Exercice->Hash,
+						'titre' => $this->Exercice->Titre,
+						'nom' => $_SESSION['Correcteur']->Prenom . ' ' . $_SESSION['Correcteur']->Nom,
+						'prix' => $this->Exercice->Enchere,
+						'delai' => date('d/m/Y à h\h', strtotime($this->Exercice->Expiration))
+					);
+					External::templateMail($_SESSION['Correcteur']->Mail, '/correcteur/acceptation', $Datas);
+					
+					//Et rediriger.
+					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...");
+					$this->redirect('/eleve/');					
+				}
+			}
+		}
+	}
+	/**
+	 * Liste les actions effectuées sur un exercice
 	 */
 	public function _actionsActionWd()
 	{
@@ -413,5 +531,17 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE CREATEUR = ' . $_SESSION['Eleve']->getFilteredId()
 		);
+	}
+	
+	/**
+	 * Vérifie que l'exercice associé à la page est disponible.
+	 * Overridé par les classes filles.
+	 * @see ExerciceAbstractController::hasAccess
+	 * 
+	 * @return bool true si l'exercice peut être accédé.
+	 */
+	protected function hasAccess(Exercice $Exercice)
+	{
+		return ($Exercice->Createur == $_SESSION['Eleve']->ID);
 	}
 }

@@ -1,0 +1,16 @@
+<a class="see-link" href="/correcteur/options_matieres">Modifier mes compétences</a>
+
+<?php 
+echo $this->Doc_box('correcteur', 'marche', 'Besoin d\'aide ?');
+?>
+
+<?php 
+//TODO: Prochaine mise à jour automatique : 30 secondes (lien actualiser maintenant)
+//TODO: Attention : vous vous êtes déjà engagés à répondre à trois exercices (dont un potentiel). N'ayez pas les yeux plus gros que le ventre :)
+//TODO: Formulaire de filtre
+?>
+
+<h2>Exercices correspondant à vos critères</h2>
+<?php 
+echo $this->Html_ajaxTable('/correcteur/_liste', 'Exercices disponibles', array('Date', 'Exercice'));
+?>

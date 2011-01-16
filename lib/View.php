@@ -58,14 +58,16 @@ class View
 		$this->Metas = array(
 			'name'=>$Name,
 			'script'=>array(
-				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'=>true,
-				'/public/js/jquery-ui.min.js'=>true,
-				'/public/js/default.js'=>true,
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' => true,
+				'/public/js/jquery-ui.min.js' => true,
+				'/public/js/jquery.prettyPhoto.js' => true,
+				'/public/js/default.js' => true,
 			),
 			'meta'=>array(),
 			'style'=>array(
-				'/public/css/base.css'=>true,
-				'/public/css/ui/ui.css'=>true,
+				'/public/css/base.css' => true,
+				'/public/css/ui/ui.css' => true,
+				'/public/css/prettyPhoto/prettyPhoto.css' => true,
 			),
 		);
 		
@@ -388,7 +390,19 @@ class View
 	 */
 	public function renderBreadcrumbs()
 	{
-		return $this->Html_ListAnchor(self::getMeta('breadcrumbs'));
+		$Ariane = array('/' => '<span class="edevoir"><span>e</span>Devoir</span>') + self::getMeta('breadcrumbs');
+		
+		//Mettre au format microdata décrit par Google
+		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417
+		foreach($Ariane as $Url => &$Caption)
+		{
+			$Caption = '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+  <a href="' . $Url . '" itemprop="url">
+    <span itemprop="title">' . $Caption . '</span>
+  </a>
+</div>';
+		}
+		return $this->Html_List($Ariane);
 	}
 	
 	/**

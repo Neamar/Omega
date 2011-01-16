@@ -57,16 +57,11 @@ abstract class AbstractController
 	protected $Data;
 
 	/**
-	 * La page actuelle doit-elle renvoyer des données au format AJAX ?
+	 * La page actuelle doit-elle être renvoyée dans le template ? (au milieu des breadcrumbs et autres titres,
+	 * @see data/layouts/template.phtml
 	 * @var bool
 	 */
-	protected $IsAjax;
-
-	/**
-	 * La page actuelle doit-elle être renvoyée dans le template ?
-	 * @var bool
-	 */
-	protected $IsTemplate;
+	protected $UseTemplate = true;
 
 	/**
 	 * Contrôleur par défaut, prenant en paramètres les différentes composantes de l'URL.
@@ -89,13 +84,7 @@ abstract class AbstractController
 		//Si format Ajax, la vue commence par un underscore par convention.
 		if(substr($View, 0, 1)=='_')
 		{
-			$this->IsAjax = true;
-			$this->IsTemplate = false;
-		}
-		else
-		{
-			$this->IsAjax = false;
-			$this->IsTemplate = true;
+			$this->UseTemplate = false;
 		}
 		
 		//Récupérer les enregistrements qui devaient être sauvegardés pour le futur (i.e. maintenant)
@@ -109,7 +98,7 @@ abstract class AbstractController
 			unset($_SESSION['Futur']);
 		}
 		
-		$this->computeBreadcrumbs();
+		$this->View->setBreadcrumbs($this->computeBreadcrumbs());
 	}
 
 	/**
@@ -119,6 +108,16 @@ abstract class AbstractController
 	public function getView()
 	{
 		return $this->View;
+	}
+	
+	/**
+	 * Dévie la vue vers un nouveau fichier.
+	 * 
+	 * @param string $URL le chemin absolu vers la nouvelle vue.
+	 */
+	public function deflectView($URL)
+	{
+		$this->View->setMeta('viewFile', $URL);
 	}
 	
 	/**
@@ -150,6 +149,8 @@ abstract class AbstractController
 	
 	/**
 	 * Calcule le fil d'Ariane.
+	 * 
+	 * @return array le fil calculé
 	 */
 	protected function computeBreadcrumbs()
 	{
@@ -167,7 +168,7 @@ abstract class AbstractController
 			$Ariane[self::build($this->Action, null, $this->Controller, $this->Module)] = ucfirst($this->Action);
 		}
 		
-		$this->View->setBreadcrumbs($Ariane);
+		return $Ariane;
 	}
 
 	/**
@@ -188,9 +189,20 @@ abstract class AbstractController
 			$Resultats[] = $Resultat;
 		}
 		
-		$this->View->Datas = $Resultats;
-		$this->View->setMeta('viewFile', LIB_PATH . '/Views/ajax.phtml');
+		$this->json($Resultats);
 		return $Resultats;
+	}
+	
+	/**
+	 * Prépare la vue à être utilisée "like JSON".
+	 * Méthode de plus bas niveau que ->ajax(), qui se contente d'enregistrer les données et de détourner la vue.
+	 * 
+	 * @param array $Data les données (clés non pris en compte)
+	 */
+	protected function json(array $Data)
+	{
+		$this->View->jsonDatas = array_values($Data);
+		$this->deflectView(LIB_PATH . '/Views/json.phtml');
 	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée
@@ -265,6 +277,15 @@ abstract class AbstractController
 			$this->View->addStyle($Src);
 		}
 		
+		if($NewView->issetMeta('message'))
+		{
+			$this->View->setMessage(
+				$NewView->getMeta('messageClass'),
+				$NewView->getMeta('message'),
+				(is_null($NewView->getMeta('messageDoc'))?null:$NewView->getMeta('messageDoc'))
+			);
+		}
+		
 		return $NewView;
 	}
 
@@ -276,13 +297,14 @@ abstract class AbstractController
 		//La vue
 		$V = $this->View;
 
-		if($this->IsAjax)
+		if($this->UseTemplate)
 		{
-			echo json_encode($V->Datas);
+			$V->render();
 		}
 		else
 		{
-			$V->render();
+			//Ne rendre que le contenu, sans l'enrobage (titre, html entourant, breadcrumbs...)
+			$V->renderContent();
 		}
 	}
 

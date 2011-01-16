@@ -1,0 +1,53 @@
+<?php 
+echo $this->Doc_box('eleve', 'offre', 'Besoin d\'aide pour compléter ce formulaire ?');
+?>
+
+<form id="form_consultation-offre" method="post" action="">
+<p>Un correcteur vous propose de réaliser cet exercice.<br />
+En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Enchere; ?> points</strong>.</p>
+<?php 
+if(!empty($this->Exercice->InfosCorrecteur))
+{
+	echo '<p>Le correcteur fait passer le message suivant :</p>
+	<p class="infos-correcteur">
+		' . $this->Exercice->InfosCorrecteur . '
+	</p>';
+}?>
+
+<p>Que voulez-vous faire ?</p>
+
+<?php 
+$Oui = "Accepter l'offre<br />";
+if($_SESSION['Eleve']->getPoints() >= $this->Exercice->Enchere)
+{
+	$Oui .= 'Vous serez débité de la somme indiquée.';
+}
+else
+{
+	$Oui .= '<span class="problem">Il vous manque <strong class="pts">' . ($this->Exercice->Enchere - $_SESSION['Eleve']->getPoints()) . '</strong> points ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
+}
+
+$Non = "Refuser l'offre<br />";
+if($this->Exercice->NbRefus < MAX_REFUS - 1)
+{
+	$Restant = MAX_REFUS  - $this->Exercice->NbRefus;
+	$Non .= 'Vous pouvez encore refuser ' . $Restant . ' offres.';
+}
+else
+{
+	$Non .= '<span class="problem">Si vous refusez cette offre, l\'exercice sera annulé.';
+}
+
+echo $this->Form_radio(
+	'choix',
+	array(
+		'oui' => $Oui,
+		'non' => $Non,
+		'annuler' => "Annuler l'exercice"
+	),
+	'oui'
+);
+
+echo $this->Form_submit('consultation-offre', 'Envoyer mon choix.');
+?>
+</form>

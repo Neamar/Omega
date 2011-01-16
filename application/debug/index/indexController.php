@@ -166,7 +166,6 @@ class Debug_IndexController extends AbstractController
 			/*
 			 * Seconde partie : suppression de tous les dossiers d'exercices
 			 */
-			$Actions[] = 'DROP Exercices';
 			function rrmdir($dir)
 			{
 				$objects = scandir($dir);
@@ -218,7 +217,7 @@ class Debug_IndexController extends AbstractController
 					Sql::query($Requete);
 				}
 			}
-			$Actions[] = count($Requetes) . ' requeêtes exécutées.';
+			$Actions[] = count($Requetes) . ' requêtes exécutées.';
 			$Actions[] = 'Reprise des valeurs par défaut.';
 			
 			

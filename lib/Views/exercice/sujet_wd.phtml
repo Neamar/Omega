@@ -1,0 +1,5 @@
+<?php 
+foreach($this->Fichiers as $URL => $Infos)
+{
+	echo '	<img src="/public/exercices/' . $this->Exercice->LongHash . $URL . '" alt="' . $this->Exercice->Titre . ', fichier ' . $Infos['NomUpload'] . '" class="fichier-sujet" />';
+}

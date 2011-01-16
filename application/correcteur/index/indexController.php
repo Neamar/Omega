@@ -32,7 +32,10 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle('Accueil correcteur', 'Cette page regroupe les différentes actions qui vous sont disponibles en tant que correcteur.');
+		$this->View->setTitle(
+			'Accueil correcteur',
+			'Cette page regroupe les différentes actions qui vous sont disponibles en tant que correcteur.'
+		);
 
 	}
 	
@@ -43,7 +46,10 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function connexionAction()
 	{
-		$this->View->setTitle('Connexion correcteur', 'Connectez-vous pour accéder au site.');
+		$this->View->setTitle(
+			'Connexion correcteur',
+			'Connectez-vous pour accéder au site.'
+		);
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Correcteur']))
@@ -88,7 +94,11 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function optionsAction()
 	{
-		$this->View->setTitle('Options correcteur', 'Modifiez ici vos informations de compte, ou vos capacités pour chaque matière.');
+		$this->View->setTitle(
+			'Options correcteur',
+			'Modifiez ici vos informations de compte, ou vos capacités pour chaque matière.'
+		);
+		
 		$this->View->Compte = $this->concat('/correcteur/options_compte');
 		$this->View->Matieres = $this->concat('/correcteur/options_matieres');
 	}
@@ -115,6 +125,10 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			elseif(!$this->validatePhone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+			}
+			elseif(!empty($_POST['siret']) && !is_null($_SESSION['Correcteur']->Siret))
+			{
+				$this->View->setMessage("error", "Impossible de redéfinir le SIRET.");
 			}
 			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
 			{
@@ -150,7 +164,11 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function options_MatieresAction()
 	{
-		$this->View->setTitle('Modifications des compétences', "Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent.");
+		$this->View->setTitle(
+			'Modifications des compétences',
+			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
+		);
+		
 		$this->View->addScript();
 		//Charger la liste des matières :
 		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
@@ -158,7 +176,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		//Charger la liste des matières :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
 		
-		if(isset($_POST['edition-compte']))
+		if(isset($_POST['edition-competences']))
 		{
 			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
 			foreach($Matieres as $Matiere)
@@ -171,7 +189,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 					
 					if($Debut < $Fin)
 					{
-						$this->View->setMessage("error", "WTF ? Le slider... a buggé ? Nooooon !");
+						$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin pour la matière " . $Matiere . ')');
 						break;
 					}
 					else
@@ -199,6 +217,40 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
 	}
 	
+	/**
+	 * Affiche la "foire aux exercices" du correcteur.
+	 */
+	public function listeAction()
+	{
+		$this->View->setTitle(
+			'Marché aux exercices',
+			"Cette page liste les articles en attente de correcteur... pourquoi pas vous ?"
+		);
+	}
+	
+	/**
+	 * Affiche la "foire aux exercices" du correcteur (partie données).
+	 * Doit faire des opérations relativement complexes sur les données, et ne passe donc pas par le helper ->json et sa vue associée.
+	 * Utilise une vue indépendante (_liste.phtml).
+	 */
+	public function _listeAction()
+	{
+		//TODO: gérer les images
+		//TODO: gérer une date dynamique
+		$this->View->RawDatas = Sql::queryAssoc(
+			'SELECT Hash, LongHash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve,
+			GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
+			FROM Exercices
+			NATURAL JOIN Classes
+			NATURAL JOIN Demandes
+			LEFT JOIN Exercices_Fichiers ON (Exercices.ID = Exercices_Fichiers.Exercice)
+			
+			WHERE Statut = "ATTENTE_CORRECTEUR"
+			',
+			'Hash'
+		);
+	}
+	
 	
 	/**
 	 * Page d'inscription.
@@ -206,7 +258,10 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function inscriptionAction()
 	{
-		$this->View->setTitle('Inscription correcteur', "L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences.");
+		$this->View->setTitle(
+			'Inscription correcteur',
+			"L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
+		);
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))
@@ -358,7 +413,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		}
 		else
 		{
-			if(!Validate_FR::siren(implode('', array_slice($match, 1, 9)))) {
+			if(!$this->validateSiren(implode('', array_slice($match, 1, 9)))) {
 				return false;
 			}
 		}

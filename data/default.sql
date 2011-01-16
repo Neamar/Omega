@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   `Modificateur` int(11) NOT NULL DEFAULT '100',
   `Statut` varchar(20) NOT NULL DEFAULT 'VIERGE',
   `Correcteur` int(11) DEFAULT NULL,
-  `TimeoutCorrecteur` int(11) DEFAULT NULL,
+  `TimeoutCorrecteur` datetime DEFAULT NULL,
   `InfosCorrecteur` mediumtext,
   `Enchere` int(11) NOT NULL DEFAULT '0',
   `NbRefus` int(11) NOT NULL DEFAULT '0',

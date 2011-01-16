@@ -174,7 +174,7 @@ abstract class DbObject
 	 * @param Exercice Exercice l'exercice sur lequel s'applique l'action
 	 * @param array Values les autres valeurs à insérer (échappées)
 	 */
-	public function log($Table, $Action, Membre $Membre, Exercice $Exercice, array $Values)
+	public function log($Table, $Action, Membre $Membre, Exercice $Exercice = null, array $Values = array())
 	{
 		$Values['Membre'] = $Membre->getFilteredId();
 		$Values['Action'] = $Action;

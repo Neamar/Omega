@@ -143,7 +143,7 @@ if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName,
  */
 //Chargement du contrôleur
 $Controller = new $ControllerName($_GET['module'], $_GET['controller'], $_GET['view'], $_GET['data']);
-//Exécution du contrôleur
+//Exécution du modèle
 $Controller->$ViewName();
 //Rendu de la vue
 $Controller->renderView();

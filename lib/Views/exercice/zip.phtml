@@ -1,0 +1,26 @@
+<?php 
+$zip = new ZipArchive();
+
+$zip->open(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/' . $this->Exercice->Hash . '.zip', ZIPARCHIVE::CREATE);
+
+//Message élève
+if(!empty($this->Exercice->InfosEleve))
+{
+	$zip->addFromString("InfosEleve.txt", $this->Exercice->InfosEleve);
+}
+
+//Message correcteur
+if(!empty($this->Exercice->InfosCorrecteur))
+{
+	$zip->addFromString("InfosCorrecteur.txt", $this->Exercice->InfosCorrecteur);
+}
+
+foreach($this->Files as $Type => $Fichiers)
+{
+	foreach($Fichiers as $URL => $_)
+	{
+		$zip->addFile(PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL, $URL);
+	}
+}
+
+$zip->close();

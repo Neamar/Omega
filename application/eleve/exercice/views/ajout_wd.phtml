@@ -1,15 +1,11 @@
 <?php 
 $Possibilites = array(
-	'again'=>"Je veux continuer à ajouter des fichiers. L'exercice reste inacessible aux correcteurs.",
+	'again'=>"Je veux sauvegarder cet exercice pour y revenir plus tard (cette action ne vous fera pas quitter la page).",
 	'resume'=>"J'ai terminé d'ajouter des fichiers. Passer à la dernière étape.");
 
 //Taille maximum.
 $SizeLimit = '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->SizeLimit . '" />'; 
-?>
 
-<h1>Ajout de fichiers à l'exercice</h1>
-
-<?php
 echo $this->Doc_box('eleve', 'ajout', "Besoin d'aide pour compléter ce formulaire ?");
 ?>
 
@@ -43,7 +39,7 @@ if($this->NbFiles > 0)
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
 		<?php 
 		echo $SizeLimit . "\n";
-		for($i=0; $i < $this->NbFilesUpload; $i++)
+for($i=0; $i < $this->NbFilesUpload; $i++)
 		{
 			//TODO : <input type="file" name="fichiers[]" id="fichiers-noscript" /><br />
 			echo $this->Form_input(
@@ -52,7 +48,7 @@ if($this->NbFiles > 0)
 					'type'=>'file',
 				)
 			) . "<br />\n";
-		}
+}
 		?>
 		
 		<p>Que faire ensuite ?</p>
@@ -71,17 +67,17 @@ if($this->NbFiles > 0)
 		
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-script">
 		<?php echo $SizeLimit . "\n";
-		if($this->NbFilesUpload > 0)
+if($this->NbFilesUpload > 0)
 		{?>
 			<input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />
 			<?php 
-		}
-		else
+}
+else
 		{
 		?>
 			<p>Vous ne pouvez plus ajouter de fichiers sur cet exercice.</p>
 		<?php 
-		}
+}
 		?>	
 		
 		<p>Que faire ensuite ?</p>

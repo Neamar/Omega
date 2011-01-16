@@ -1,14 +1,21 @@
+<?php 
+echo $this->Doc_box('correcteur', 'matieres', 'Besoin d\'aide pour compléter ce formulaire ?');
+?>
+
 <form method="post" action="" id="form_edition-competences">
 <?php
 foreach($this->Matieres as $Matiere)
 {
 	?>
-	<div class="matiere-box">
+	<fieldset class="matiere-box">
+	
+	<legend>
 	<?php
 	$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
 
 	echo $this->Form_checkbox('check_' . $ID, $Matiere, isset($this->Defaults[$Matiere]));
 	?>
+	</legend>
 	<div>
 	<?php
 	echo $this->Form_selectLabel(
@@ -24,12 +31,12 @@ foreach($this->Matieres as $Matiere)
 		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Finit']:0)
 	);
 	?>
-	<div id="slider-<?php echo $ID ?>" class="slider" data-start="#start_<?php echo $ID ?>" data-end="#end_<?php echo $ID ?>"></div>
+	<!--<div id="slider-<?php echo $ID ?>" class="slider" data-start="#start_<?php echo $ID ?>" data-end="#end_<?php echo $ID ?>"></div>-->
 	</div>
-	</div>
+	</fieldset>
 	<?php
 }
-echo $this->Form_submit('edition-compte', "Modifier les informations");
+echo $this->Form_submit('edition-competences', "Modifier les informations");
 ?>
 </form>
 

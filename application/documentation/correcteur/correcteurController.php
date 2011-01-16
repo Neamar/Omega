@@ -8,7 +8,7 @@
  * 
  * @category  Controller
  * @package   Root
- * @author    Matthieu Bacconnier <matthieu@bacconnier.fr> and associates ! :D <- non je déconne !
+ * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
@@ -29,6 +29,17 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
  */
 class Documentation_CorrecteurController extends Documentation_IndexController
 {
+	/**
+	 * Accueil du module correcteur.
+	 * @see Documentation_IndexController::indexAction()
+	 */
+	public function indexAction()
+	{
+		parent::indexAction();
+		
+		$this->View->Pages = self::$Pages[$this->Controller];
+	}
+	
 	/**
 	 * Overrider le index/matieres
 	 * @see Documentation_IndexController::matieresAction()

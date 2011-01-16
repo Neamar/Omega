@@ -1,0 +1,47 @@
+<?php 
+$Datas = array();
+		
+foreach($this->RawDatas as $Hash => $ExerciceDatas)
+{
+	//GROUP_CONCAT fait remonter un tuple null si aucun exercice n'est disponible.
+	if(empty($Hash))
+	{
+		continue;
+	}
+	
+	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
+	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
+	
+	$Infos = '<p>Exercice « <strong>' . $ExerciceDatas['Titre'] . '</strong> »';
+	$Infos .= ', <strong>' . $ExerciceDatas['Matiere'] . '</strong>';
+	if($ExerciceDatas['Section'] != '')
+	{
+		$Infos .= ' (' . $ExerciceDatas['Section'] . ')';
+	}
+	$Infos .= ', ' . $ExerciceDatas['DetailsClasse'];
+	
+	$Infos .= '<br />Demande : ' . $ExerciceDatas['DetailsDemande'];
+	
+	if($ExerciceDatas['InfosEleve'] != '')
+	{
+		$Infos .= '</p>
+		<p>Remarque :</p>
+		<p class="infos-eleve">' . $ExerciceDatas['InfosEleve'];
+	}
+	
+	$Infos .= '</p><p class="image-preview">';
+	
+	$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
+	$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
+	$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+	
+	$Infos .= '</p>';
+	
+	$Datas[] = array(
+		$Expiration,
+		$Infos
+	);
+}
+
+echo json_encode($Datas);
+?>
