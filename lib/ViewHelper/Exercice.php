@@ -212,7 +212,7 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 /**
  * Retourne la liste des miniatures passées en paramètre.
  * 
- * @param array $Thumbs, les clés sont les URLs, les valeurs le contenu alternatif (ou un tableau URL =>, alt => pour un lightbox)
+ * @param array $Thumbs, les clés sont les URLs de la miniature, les valeurs le contenu alternatif (ou un tableau URL =>, alt => pour un lightbox)
  * @param string $LongHash le hash de l'exercice.
  * 
  * @return string les images.
@@ -223,11 +223,29 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 	$Hash = substr($LongHash, 0, HASH_LENGTH);
 	$BaseURL = '/public/exercices/' . $LongHash;
 	
+	$Images = array('jpg', 'jpeg', 'png', 'gif');
+	$Documents = array('pdf', 'doc', 'docx', 'odt');
+
 	foreach($Thumbs as $URL => $Datas)
 	{
 		if(is_array($Datas))
 		{
-			$R .= '	<a href="' . $BaseURL . $Datas['URL'] . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
+			$Extension = Util::extension($Datas['URL']);
+			if(in_array($Extension, $Images))
+			{
+				$Fichier = $BaseURL . $Datas['URL'];
+			}
+			elseif(in_array($Extension, $Documents))
+			{
+				$FichierURL = URL . $BaseURL . $Datas['URL'];
+				$Fichier = 'http://docs.google.com/viewer?embedded=true&url=' . urlencode($FichierURL) . '&iframe=true&width=90%&height=90%';
+			}
+			else
+			{
+				$Fichier = $BaseURL . $Datas['URL'];
+			}
+			
+			$R .= '	<a href="' . $Fichier . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
 		}
 		else
 		{
