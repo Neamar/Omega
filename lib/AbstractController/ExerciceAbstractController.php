@@ -93,7 +93,6 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	public function sujetActionWd()
 	{
-		//TODO : gérer les pdf / doc / odt / ...
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));

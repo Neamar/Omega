@@ -341,7 +341,7 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 	{
 		$this->View->setTitle(
 			'Inscription correcteur',
-			"L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
+			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
 		);
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.

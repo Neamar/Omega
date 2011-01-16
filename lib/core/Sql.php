@@ -116,7 +116,6 @@ class Sql
 		$R = mysql_query($Query);
 		if($R===false)
 		{
-			//TODO : virer en production
 			echo '<pre>' . $Query . '</pre>';
 			echo '<p style="color:red">' . mysql_error() . '</p>';
 			
