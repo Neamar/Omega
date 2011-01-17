@@ -86,7 +86,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				
 				$this->Exercice->setStatus('ATTENTE_ELEVE', $_SESSION['Correcteur'], 'Proposition correcteur pour ' . $_POST['prix'] . ' points.', $ToUpdate);
 				
-				//Préparer l'envoi du mail.
+				//Préparer l'envoi du mail à l'élève.
 				$Eleve = $this->Exercice->getEleve();
 				$Datas = array(
 					'mail' => $Eleve->Mail,
@@ -96,6 +96,13 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				);
 				External::templateMail($Eleve->Mail, '/eleve/proposition', $Datas);
 
+				Event::dispatch(
+					Event::CORRECTEUR_EXERCICE_PROPOSITION,
+					array(
+						'Exercice' => $this->Exercice
+					)
+				);
+				
 				$this->View->setMessage("info", "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
 				$this->redirect('/correcteur/');
 			}

@@ -200,6 +200,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					$Exercice = Exercice::load($ToInsert['Hash']);
 					$Exercice->log('Exercices_Logs', 'Création de l\'exercice.', $_SESSION['Eleve'], $Exercice, array('Statut' => 'VIERGE'));
 					
+					//Mission accomplie ! Dispatcher l'évènement
+					Event::dispatch(
+						Event::ELEVE_EXERCICE_CREATION,
+						array(
+							'Exercice' => $Exercice
+						)
+					);
+					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
@@ -390,7 +398,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		if(isset($_POST['resume']))
 		{
 			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Envoi de l'exercice aux correcteurs.");
-						
+			
+			Event::dispatch(
+				Event::ELEVE_EXERCICE_ENVOI,
+				array(
+					'Exercice' => $this->Exercice
+				)
+			);
+			
 			$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
 			$this->redirectExercice();
 		}

@@ -129,6 +129,12 @@ class Eleve_IndexController extends IndexAbstractController
 						'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 					);
 					External::templateMail($_POST['email'], '/eleve/validation', $Datas);
+					
+					Event::dispatch(
+						Event::ELEVE_INSCRIPTION, 
+						$Datas
+					);
+					
 					$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
 					$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 					$this->redirect('/eleve/connexion');
