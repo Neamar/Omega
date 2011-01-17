@@ -27,99 +27,62 @@
  */
 class Event
 {
-	const NOUVEAU = 'Création de l\'omnilogisme';
-	const EDITION = 'Correction des erreurs';
-	const TAGGAGE = 'Modification des mots clés de l\'omnilogisme';
-	const LOADING = 'Chargement des données distantes';
-	const ACCROCHAGE = 'Ajout d\'une accroche';
-	const PARUTION = 'Parution officielle de l\'omnilogisme';
-	const ACCEPTE = 'Statut changé vers ACCEPTE';
-	const BANNIERE = 'Ajout d\'une bannière';
-	const A_CORRIGER = 'Statut changé vers A_CORRIGER';
-	const REF = 'Modification des références';
-	const CHANGEMENT_GENERIQUE = 'Modification d\'une des données de l\'article';
-
-	//Constantes non associées à un article en particulier
-	const NOUVELLE_PROPOSITION = 'Nouvelle proposition';
-	const NOUVELLE_CATEGORIE = 'Nouvelle catégorie';
-
-	private static $_Events = array();
-
+	const ELEVE_INSCRIPTION = 'eleve/index/inscription';
+	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	/**
 	* Transmet un événement aux écouteurs associés.
-	* @param Event:String l'évenement à dispatcher. Théoriquement une constante statique de Event ;)
-	* @param Article:Omni l'article concerné par la modification. Dans certains cas particuliers, il s'agit d'une info oncohérente (par exemple à l'enregistrement d'une proposition) auquel cas $Article est considéré comme null.
+	* @param string $Event l'évenement à dispatcher.
+	* @param array $Params les paramètres à passer aux évènements.
 	*/
-	public static function dispatch($Event, Omni $Article = null)
+	public static function dispatch($Event, array $Params = array())
 	{
-		if(count(self::$_Events)==0)
-		{
-			self::_buildEvents();
-		}
-
-		$EventType = array_search($Event, self::$_Events);
-
+		//Sécuriser :
+		$Event = str_replace('.', '', $Event);
+		
+		//Récupérer le chemin complet.
+		$EventPath = OO2FS::eventPath($Event);
 		//S'il y a des listeners associés :
-		if($EventType!=false && is_dir(PATH . '/E/' . strtolower($EventType)))
+		if(is_dir($EventPath))
 		{
-
 			//Les lister et les exécuter.
-			$handle = opendir(PATH . '/E/' .strtolower($EventType));
+			$handle = opendir($EventPath);
 			while (false !== ($file = readdir($handle)))
 			{
 				if ($file != "." && $file != "..")
 				{
-					include PATH . '/E/' .strtolower($EventType) . '/' . $file;
+					include $EventPath . '/' . $file;
 				}
 
 			}
 			closedir($handle);
         }
 
-        self::log('Dispatch : ' . ($EventType==false?$Event:$EventType) . (!is_null($Article)?' sur ' . $Article->Titre:''));
+        //Logger le dispatch de l'évènement.
+        self::log('Dispatch : ' . $Event);
 	}
 
 	/**
-	* Appelle un évenement générique.
-	* Les événements génériques sont des évènements qui peuvent être déclenchés de plusieurs façons ; pour éviter de dupliquer le code on les met dans le dossier _generic.
-	* @param $File le nom du fichier
-	* @example
-	* //Cette ligne redispatche l'évenement sur un fichier générique de même nom.
-	* Event::callGeneric(basename(__FILE__));
-	*/
-	public static function callGeneric($File)
-	{
-		include PATH . '/E/generique/' . $File;
-	}
-
-	/**
-	* Logge un événement quelconque : crash d'une page, dispatche d'un événement, action externe, bref toute action potentiellement intéressante (et crashable).
+	* Logge un événement quelconque : crash d'une page, dispatch d'un événement, action externe, bref toute action potentiellement intéressante (et crashable).
 	* Format : timestamp	IP	Auteur	Action
+	* 
+	* @param string $Event l'évènement
+	* @param Membre $Membre le membre ayant enclenché l'action (non spécifié si inconnu ou non pertinent)
 	*/
-	public static function log($Event)
+	public static function log($Event, Membre $Membre = null)
 	{
-		if(isset($_SESSION['Membre']['Pseudo']))
+		if(!is_null($Membre))
 		{
-			$Auteur = $_SESSION['Membre']['Pseudo'];
+			$Auteur = $Membre->Mail;
 		}
 		else
 		{
 			$Auteur = '-----';
 		}
 
-		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'], 15) . '	' . str_pad($Auteur, 12) . '	' . $Event . "\n";
+		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'], 15) . '	' . str_pad($Auteur, 20) . '	' . $Event . "\n";
 		
 		$f = fopen(DATA_PATH . '/logs/' . date('Y-m-d') . '.log', 'a');
 		fputs($f, $Ligne);
 		fclose($f);
-	}
-
-	/**
-	* Transforme les constantes en tableau pour les manipuler facilement.
-	*/
-	private static function _buildEvents()
-	{
-		$oClass = new ReflectionClass('Event');
-		self::$_Events = $oClass->getConstants();
 	}
 }

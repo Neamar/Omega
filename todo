@@ -13,3 +13,4 @@ En production
 - ajouter captcha à l'inscription élève
 - ajouter captcha à l'inscription correcteur
 - virer le dump de la requete dans Sql::query
+- véritables mails

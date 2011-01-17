@@ -392,11 +392,15 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 					//Enregistrer le CV :	
 					move_uploaded_file($_FILES['cv']['tmp_name'], PATH . '/data/CV/' . $ID . '.pdf');
 					
-					//Enregistrer le nouveau membre et le rediriger vers la page de connexion
-					$Datas = array(
-						'mail'=>$_POST['email'],
+					//Mission accomplie ! Dispatcher l'évènement :
+					Event::dispatch(
+						Event::CORRECTEUR_INSCRIPTION,
+						array(
+							'mail' => $_POST['email']
+						)
 					);
-					External::templateMail($_POST['email'], '/correcteur/inscription', $Datas);
+					
+					//Rediriger le nouveau membre vers la page de connexion
 					$_SESSION['Correcteur_JusteInscrit'] = $_POST['email'];
 					$this->View->setMessage("info", "Nous avons bien reçu votre demande. Vous serez informé par mail de notre verdict.");
 					$this->redirect('/correcteur/connexion');

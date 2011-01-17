@@ -105,6 +105,18 @@ class OO2FS
 	{
 		return LIB_PATH . '/View/' . $GenericView . '.phtml';
 	}
+	
+	/**
+	 * Renvoie le chemin vers un dossier d'évènements
+	 * 
+	 * @param string $Event l'évènement
+	 * 
+	 * @return  /lib/Event/{$Event}
+	 */
+	public static function eventPath($Event)
+	{
+		return LIB_PATH . '/Event/' . $Event;
+	}
 
 	/**
 	* Récupérer le nom d'une fonction de vue
