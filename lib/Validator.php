@@ -12,12 +12,10 @@
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
- * @param string
- * @param string
  */
  
 /**
- * Documentation de la classe
+ * Classe statique pour la validation des données.
  *
  * @category Default
  * @package  Root

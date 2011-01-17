@@ -106,50 +106,6 @@ abstract class IndexAbstractController extends AbstractController
 	protected abstract function createAccountSpecial(array $Datas);
 	
 	/**
-	 * Modifie un compte de base.
-	 * Appelle la fonction editAccountSpecial() qui gère les opérations spécifiques selon l'héritage (numéro de téléphone, classe...)
-	 * Utilisé par options_CompteAction().
-	 * 
-	 * @param array $Data les données envoyées
-	 * @param Membre $Base le membre actuel (pour ne pas mettre à jour ce qui ne change pas)
-	 * 
-	 * @return array le tableau des modifications à effecter, ou FAIL (avec un message dans ce cas)
-	 */
-	protected function editAccount(array $Datas, Membre $Base)
-	{
-		if(!$this->validateMail($Datas['email']))
-		{
-			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
-		}
-		else if(External::isTrash($Datas['email']))
-		{
-			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
-		}
-		else if(!empty($Datas['password_confirm']) && $Datas['password'] != $Datas['password_confirm'])
-		{
-			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
-		}
-		else
-		{
-			$ToUpdate = array();
-
-			if($Datas['email'] != $Base->Mail)
-			{
-				$ToUpdate['Mail'] = $Datas['email'];
-			}
-			
-			if(!empty($Datas['password_confirm']))
-			{
-				$ToUpdate['Pass'] = sha1(SALT . $Datas['password']);
-			}
-			
-			return $ToUpdate;
-		}
-		
-		return FAIL;
-	}
-	
-	/**
 	 * Connecte la personne en tant que $Type (Eleve, Correcteur) si ses identifiants sont corrects.
 	 * Renvoie null si les identifiants sont incorrects ou si le membre est désinscrit.
 	 * 
