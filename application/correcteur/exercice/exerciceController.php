@@ -58,7 +58,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage("error", "Heure d'annulation invalide.");
 			}
-			elseif(!preg_match('#^([0-3]?[0-9])/([0-1]?[0-9])/(20[0-1][0-9])$#', $_POST['annulation_date'], $_POST['annulation_array'])
+			elseif(!preg_match(Validator::DATE_REGEXP, $_POST['annulation_date'], $_POST['annulation_array'])
 				|| (($_POST['annulation_ts'] = mktime($_POST['annulation_heure'], 0, 0, $_POST['annulation_array'][2], $_POST['annulation_array'][1], $_POST['annulation_array'][3])) === false))
 			{
 				$this->View->setMessage("error", "Date d'annulation invalide.");

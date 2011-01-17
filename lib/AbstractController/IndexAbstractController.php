@@ -38,7 +38,7 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function createAccount(array $Datas, $Type)
 	{
-		if(!$this->validateMail($Datas['email']))
+		if(!Validator::mail($Datas['email']))
 		{
 			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
 		}
@@ -173,17 +173,5 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		
 		return $Membre;
-	}
-	
-	/**
-	 * Valide une adresse mail.
-	 * 
-	 * @param string $Mail
-	 * 
-	 * @return bool
-	 */
-	protected function validateMail($Mail)
-	{
-		return filter_var($Mail, FILTER_VALIDATE_EMAIL);
 	}
 }

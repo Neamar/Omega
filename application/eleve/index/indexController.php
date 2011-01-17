@@ -62,7 +62,7 @@ class Eleve_IndexController extends IndexAbstractController
 		
 		if(isset($_POST['connexion-eleve']))
 		{
-			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
 				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
 			}

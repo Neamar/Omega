@@ -60,7 +60,7 @@ class Correcteur_IndexController extends IndexAbstractController
 		
 		if(isset($_POST['connexion-correcteur']))
 		{
-			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
 				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
 			}
@@ -122,7 +122,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 				//La mise à jour ne doit pas être effectuée.
 				//Le message a été défini par editAccount.
 			}
-			elseif(!$this->validatePhone($_POST['telephone']))
+			elseif(!Validator::phone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
@@ -130,7 +130,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			{
 				$this->View->setMessage("error", "Impossible de redéfinir le SIRET.");
 			}
-			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
+			elseif(!empty($_POST['siret']) && !Validator::siret($_POST['siret']))
 			{
 				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
@@ -360,11 +360,11 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 			{
 				$this->View->setMessage("error", "Vous devez indiquer votre prénom.");
 			}
-			elseif(!$this->validatePhone($_POST['telephone']))
+			elseif(!Validator::phone($_POST['telephone']))
 			{
 				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
-			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
+			elseif(!empty($_POST['siret']) && !Validator::siret($_POST['siret']))
 			{
 				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
@@ -433,94 +433,5 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 		}
 		
 		return Sql::insert('Correcteurs', $ToInsert);
-	}
-	
-	/**
-	 * Valide un numéro de téléphone
-	 * 
-	 * @param string $Phone
-	 * 
-	 * @return bool
-	 */
-	protected function validatePhone($Phone)
-	{
-		return preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`', $Phone);
-	}
-	
-	/**
-	 * Valide un numéro de SIREN.
-	 * @see http://pear.php.net/package/Validate_FR/download
-	 * 
-	 * @param string $siren
-	 */
-	protected function validateSiren($siren)
-	{
-        $siren = str_replace(array(' ', '.', '-'), '', $siren);
-        $reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
-        if(!preg_match($reg, $siren, $match))
-        {
-            return false;
-        }
-        $match[2] *= 2;
-        $match[4] *= 2;
-        $match[6] *= 2;
-        $match[8] *= 2;
-        $sum = 0;
-
-        for($i = 1; $i < count($match); $i++)
-        {
-            if($match[$i] > 9)
-            {
-                $a = (int) substr($match[$i], 0, 1);
-                $b = (int) substr($match[$i], 1, 1);
-                $match[$i] = $a + $b;
-            }
-            $sum += $match[$i];
-        }
-        return (($sum % 10) == 0);
-	}
-	
-	/**
-	 * Valide un numéro de SIRET.
-	 * @see http://pear.php.net/package/Validate_FR/download
-	 * 
-	 * @param string $siret
-	 * 
-	 * @return bool true si valide.
-	 */
-	protected function validateSiret($siret)
-	{
-		$siret = str_replace(array(' ', '.', '-'), '', $siret);
-		$reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
-		if(!preg_match($reg, $siret, $match))
-		{
-			return false;
-		}
-		else
-		{
-			if(!$this->validateSiren(implode('', array_slice($match, 1, 9)))) {
-				return false;
-			}
-		}
-		$match[1] *= 2;
-		$match[3] *= 2;
-		$match[5] *= 2;
-		$match[7] *= 2;
-		$match[9] *= 2;
-		$match[11] *= 2;
-		$match[13] *= 2;
-		$sum = 0;
-	
-		for($i = 1; $i < count($match); $i++)
-		{
-			if($match[$i] > 9)
-			{
-				$a = (int) substr($match[$i], 0, 1);
-				$b = (int) substr($match[$i], 1, 1);
-				$match[$i] = $a + $b;
-			}
-			$sum += $match[$i];
-		}
-		return (($sum % 10) == 0);
 	}
 }
