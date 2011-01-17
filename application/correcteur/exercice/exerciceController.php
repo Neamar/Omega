@@ -27,6 +27,27 @@
 class Correcteur_ExerciceController extends ExerciceAbstractController
 {
 	/**
+	 * Page d'index du module
+	 */
+	public function indexAction()
+	{
+		$this->View->setTitle(
+			'Mes exercices',
+			"Cette page permet de consulter d'un coup d'œil les dernières actions sur les exercices que vous avez réservé."
+		);
+		
+		$this->View->ExercicesActifs = Sql::queryAssoc(
+			'SELECT Hash, Titre, Expiration
+			FROM Exercices
+			WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+			AND Statut = "EN_COURS"
+			ORDER BY Expiration',
+			'Hash'
+		);
+		
+	}
+	
+	/**
 	 * Demander à réserver un article.
 	 * ATTENTE_CORRECTEUR => ATTENTE_ELEVE
 	 */

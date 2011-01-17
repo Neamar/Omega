@@ -1,0 +1,20 @@
+<?php 
+if(count($this->ExercicesActifs) > 0)
+{
+	?>
+	<h2>Mes exercices actifs</h2>
+	<p>Vous vous êtes engagés à corriger ces exercices.</p>
+	<?php 
+	$ExercicesActifs = array();
+	foreach($this->ExercicesActifs as $Hash => $Donnees)
+	{
+		$ExercicesActifs[] = '<a href="/correcteur/exercice/index/' . $Hash . '">' . $Donnees['Titre'] . '</a> (expiration : ' . $this->Date_countdown($Donnees['Expiration']) . ')';
+	}
+	echo $this->Html_list($ExercicesActifs, 'ul', '/correcteur/exercice/index/');
+}
+?>
+
+<h2>Dernières actions</h2>
+<?php 
+echo $this->Html_ajaxTable('/correcteur/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
+?>
