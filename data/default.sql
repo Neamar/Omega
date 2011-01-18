@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `Correcteurs` (
   `Prenom` varchar(50) NOT NULL,
   `Nom` varchar(50) NOT NULL,
   `Telephone` varchar(10) NOT NULL,
-  `Siret` int(14) DEFAULT NULL,
+  `Siret` varchar(14) DEFAULT NULL,
   `SiretOK` binary(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Siret` (`Siret`)
@@ -636,3 +636,16 @@ ALTER TABLE `Membres_Mails`
 --
 ALTER TABLE `Virements`
   ADD CONSTRAINT `Virements_ibfk_1` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`);
+  
+--
+-- Valeurs par défaut
+--
+
+INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`, `RIB`, `Paypal`) VALUES
+(1, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 500, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE', NULL, NULL),
+(2, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR', NULL, NULL);
+INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
+(1, 2, 'ES');
+INSERT INTO `Correcteurs` (`ID`, `Prenom`, `Nom`, `Telephone`, `Siret`, `SiretOK`) VALUES
+(2, 'Matthieu', 'Bacconnier', '0669347015', NULL, '0');
+

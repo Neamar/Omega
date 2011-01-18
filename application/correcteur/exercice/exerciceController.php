@@ -137,13 +137,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			);
 			$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
 			
-			file_put_contents(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex', $Contenu);
+			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex';
+			file_put_contents($CorrigeURL, $Contenu);
 			
 			unset($Template, $Contenu);
 			
-			//exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
+			$Erreurs = $this->compileTex($CorrigeURL);
 			
-			$this->View->setMessage('info','Compilé.');
+			if(empty($Erreurs))
+			{
+				$this->View->setMessage('info', 'Corrigé compilé avec succès.');
+			}
+			else
+			{
+				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
+				$this->View->Erreurs = $Erreurs;
+			}
 		}
 	}
 	
@@ -182,5 +191,28 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	protected function hasAccess(Exercice $Exercice)
 	{
 		return (($Exercice->Correcteur == $_SESSION['Correcteur']->ID) || $Exercice->Statut == 'ATTENTE_CORRECTEUR');
+	}
+	
+	/**
+	 * Compile un document LaTeX en PDF. Le PDF se trouve dans le même dossier que le fichier TeX.
+	 * 
+	 * @param string $URL le fichier TeX à compiler.
+	 * 
+	 * @return array une liste des erreurs rencontrées (ou un tableau vide si succès)
+	 */
+	protected function compileTex($URL)
+	{
+		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
+		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL), $Return, $Code);
+		$Erreurs = array();
+		foreach($Return as $Line)
+		{
+			if(isset($Line[0]) && $Line[0] == '!')
+			{
+				$Erreurs[] = substr($Line, 2);
+			}
+		}
+		
+		return $Erreurs;
 	}
 }

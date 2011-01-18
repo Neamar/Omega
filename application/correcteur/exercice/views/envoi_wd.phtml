@@ -19,6 +19,13 @@ echo $this->Form_textareaLabelBr(
 );
 echo $this->Doc_inputBr('correcteur', 'aide_tex');
 
+//Indiquer les erreurs.
+if(isset($this->Erreurs))
+{
+	echo '<p>Erreurs :</p>';
+	echo $this->Html_list($this->Erreurs);
+}
+
 echo $this->Form_submit('envoi-exercice', "Envoyer ce texte");
 ?>
 </form>
