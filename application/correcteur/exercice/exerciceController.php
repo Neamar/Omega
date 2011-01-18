@@ -121,6 +121,14 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 	}
 	
+	public function envoiActionWd()
+	{
+		$this->View->setTitle(
+			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet de rédiger le corrigé d'un exercice."
+		);
+	}
+	
 	/**
 	 * Liste les actions des exercices
 	 */

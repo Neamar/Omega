@@ -8,7 +8,7 @@ if(count($this->ExercicesActifs) > 0)
 	$ExercicesActifs = array();
 	foreach($this->ExercicesActifs as $Hash => $Donnees)
 	{
-		$ExercicesActifs[] = '<a href="/correcteur/exercice/index/' . $Hash . '">' . $Donnees['Titre'] . '</a> (expiration : ' . $this->Date_countdown($Donnees['Expiration']) . ')';
+		$ExercicesActifs[] = '<a href="/correcteur/exercice/envoi/' . $Hash . '">' . $Donnees['Titre'] . '</a> (expiration : ' . $this->Date_countdown($Donnees['Expiration']) . ')';
 	}
 	echo $this->Html_list($ExercicesActifs, 'ul', '/correcteur/exercice/index/');
 }
