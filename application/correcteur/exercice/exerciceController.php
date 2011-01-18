@@ -130,7 +130,20 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['envoi-exercice']))
 		{
-			file_put_contents(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex', $_POST['corrige']);
+			$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
+			$Remplacements = array(
+				'__TITRE__' => $this->Exercice->Titre,
+				'__CONTENU__' => $_POST['corrige']
+			);
+			$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
+			
+			file_put_contents(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex', $Contenu);
+			
+			unset($Template, $Contenu);
+			
+			//exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
+			
+			$this->View->setMessage('info','Compilé.');
 		}
 	}
 	
