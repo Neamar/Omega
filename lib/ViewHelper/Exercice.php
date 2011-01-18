@@ -108,6 +108,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		<p>' . (isset($Content['SUJET'])?$Content['SUJET']:'Sujet non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-corrige" id="corrige-' . $Exercice->Hash . '">
+		<p>Fichiers composant <a href="/eleve/exercice/corrige/' . $Exercice->Hash . '">le corrigé</a> :</p>
 		<p>' . (isset($Content['CORRIGE'])?$Content['CORRIGE']:'Corrigé non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-reclamation" id="reclamation-' . $Exercice->Hash . '">
