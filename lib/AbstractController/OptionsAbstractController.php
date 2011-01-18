@@ -23,7 +23,7 @@
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link     http://edevoir.com
  */
-class OptionsAbstractController extends AbstractController
+abstract class OptionsAbstractController extends AbstractController
 {
 	/**
 	 * Modifie un compte de base.
@@ -72,5 +72,5 @@ class OptionsAbstractController extends AbstractController
 	/**
 	 * Options pour la modification du compte (adresse mail, ...)
 	 */
-	public abstract function compteAction() {} 
+	public abstract function compteAction();
 }
