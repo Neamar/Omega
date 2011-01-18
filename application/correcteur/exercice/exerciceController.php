@@ -127,6 +127,11 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet de rédiger le corrigé d'un exercice."
 		);
+		
+		if(isset($_POST['envoi-exercice']))
+		{
+			file_put_contents(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex', $_POST['corrige']);
+		}
 	}
 	
 	/**
