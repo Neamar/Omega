@@ -122,6 +122,31 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Liste les actions des exercices
+	 */
+	public function _actionsAction()
+	{
+		//TODO : à compléter
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			FROM Exercices_Logs
+			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
+			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
+			WHERE 
+			(
+				Exercices.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+				AND NouveauStatut NOT IN("VIERGE", "ATTENTE_CORRECTEUR")
+				AND
+				(
+					Membres.Type = "ELEVE"
+					OR
+					Membres.ID = ' . $_SESSION['Correcteur']->getFilteredId() . '
+				)
+			)'
+		);
+	}
+	
+	/**
 	 * Vérifie que l'exercice associé à la page est disponible.
 	 * Overridé par les classes filles.
 	 * @see ExerciceAbstractController::hasAccess

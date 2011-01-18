@@ -198,7 +198,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					
 					//Logger la création de l'exercice.
 					$Exercice = Exercice::load($ToInsert['Hash']);
-					$Exercice->log('Exercices_Logs', 'Création de l\'exercice.', $_SESSION['Eleve'], $Exercice, array('Statut' => 'VIERGE'));
+					$Exercice->log('Exercices_Logs', 'Création de l\'exercice.', $_SESSION['Eleve'], $Exercice, array('NouveauStatut' => 'VIERGE'));
 					
 					//Mission accomplie ! Dispatcher l'évènement
 					Event::dispatch(
@@ -545,7 +545,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
-			WHERE CREATEUR = ' . $_SESSION['Eleve']->getFilteredId()
+			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()
 		);
 	}
 	

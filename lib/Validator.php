@@ -103,7 +103,7 @@ class Validator
 		}
 		else
 		{
-			if(!$this->validateSiren(implode('', array_slice($match, 1, 9)))) {
+			if(!Validator::siren(implode('', array_slice($match, 1, 9)))) {
 				return false;
 			}
 		}
