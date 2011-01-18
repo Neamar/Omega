@@ -4,6 +4,8 @@ Revoir la cohérence des titres entre élève / correcteur
 Gérer auto-accept
 Ajouter un graphique pour les deltas de points
 Ajouter une coloration syntaxique pour le LaTeX.
+Enregistrer les différentes versions du fichier
+Afficher le contenu du PDF en aperçu
 
 HTML5 Forms :
 Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');

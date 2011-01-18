@@ -44,7 +44,6 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			ORDER BY Expiration',
 			'Hash'
 		);
-		
 	}
 	
 	/**
@@ -121,8 +120,14 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 	}
 	
+	/**
+	 * Permet d'envoyer le corrigé.
+	 * EN_COURS => ENVOYE
+	 */
 	public function envoiActionWd()
 	{
+		$this->canAccess(array('EN_COURS'));
+			
 		$this->View->setTitle(
 			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet de rédiger le corrigé d'un exercice."
@@ -130,29 +135,62 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['envoi-exercice']))
 		{
+			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
+			$FileName = 'head';
+			
+			//Le template LaTeX générique
 			$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
+			
+			//En déduire le contenu par remplacement :
 			$Remplacements = array(
 				'__TITRE__' => $this->Exercice->Titre,
 				'__CONTENU__' => $_POST['corrige']
 			);
 			$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
 			
-			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/head.tex';
+			//L'url du fichier Tex
+			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
 			file_put_contents($CorrigeURL, $Contenu);
 			
 			unset($Template, $Contenu);
 			
 			$Erreurs = $this->compileTex($CorrigeURL);
 			
-			if(empty($Erreurs))
-			{
-				$this->View->setMessage('info', 'Corrigé compilé avec succès.');
-			}
-			else
+			if(!empty($Erreurs))
 			{
 				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
 				$this->View->Erreurs = $Erreurs;
 			}
+			else
+			{
+				//Insérer le PDF dans les fichiers constituant l'exercice
+				$CorrigeURLPDF = substr($CorrigeURL, 0, -3) . 'pdf';
+				$ToInsert = array
+				(
+					'Exercice' => $this->Exercice->ID,
+					'Type' => 'CORRIGE',
+					'URL' => '/Corrige/' . $FileName . '.pdf',
+					'ThumbURL' => Thumbnail::create($CorrigeURLPDF),
+					'NomUpload' => 'Corrige.pdf',
+				);
+				
+				if(!Sql::insert('Exercices_Fichiers', $ToInsert))
+				{
+					$this->View->setMessage('error', "Impossible d'enregistrer le PDF sur l'exercice... merci de nous contacter.");
+				}
+				else
+				{
+					//Modifier le statut vers ENVOYE
+					$this->Exercice->setStatus('ENVOYE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé');
+					
+					Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI, array('Exercice' => $this->Exercice));
+					
+					//Et rediriger
+					$this->View->setMessage('info', 'Corrigé compilé avec succès.');
+					$this->redirect('/correcteur/exercice/');					
+				}
+			}
+
 		}
 	}
 	
@@ -163,7 +201,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	{
 		//TODO : à compléter
 		$this->ajax(
-			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/correcteur/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
