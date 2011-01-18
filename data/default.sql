@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `Admins` (
 CREATE TABLE IF NOT EXISTS `Alertes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Membre` int(11) DEFAULT NULL,
-  `Exercice` int(2) DEFAULT NULL,
+  `Exercice` int(11) DEFAULT NULL,
   `FAQ` int(11) DEFAULT NULL,
   `Texte` mediumtext NOT NULL,
   `Remarque` varchar(200) DEFAULT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Banque` (
 --
 
 CREATE TABLE IF NOT EXISTS `Classes` (
-  `Classe` int(2) NOT NULL,
+  `Classe` int(11) NOT NULL,
   `DetailsClasse` varchar(15) NOT NULL,
   PRIMARY KEY (`Classe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des années scolaires (avec ordre)';
@@ -132,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `Correcteurs` (
 CREATE TABLE IF NOT EXISTS `Correcteurs_Capacites` (
   `Correcteur` int(11) NOT NULL,
   `Matiere` varchar(15) NOT NULL,
-  `Commence` int(2) NOT NULL,
-  `Finit` int(2) NOT NULL,
+  `Commence` int(11) NOT NULL,
+  `Finit` int(11) NOT NULL,
   PRIMARY KEY (`Correcteur`,`Matiere`),
   KEY `Matiere` (`Matiere`),
   KEY `Commence` (`Commence`),
@@ -173,7 +173,7 @@ INSERT INTO `Demandes` (`Demande`, `DetailsDemande`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Eleves` (
   `ID` int(11) NOT NULL,
-  `Classe` int(2) NOT NULL,
+  `Classe` int(11) NOT NULL,
   `Section` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `Classe` (`Classe`)
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `Eleves` (
 --
 
 CREATE TABLE IF NOT EXISTS `Exercices` (
-  `ID` int(2) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Hash` varchar(6) NOT NULL,
   `LongHash` varchar(40) NOT NULL,
   `Titre` varchar(50) NOT NULL,
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   `TimeoutEleve` datetime DEFAULT NULL,
   `Expiration` datetime NOT NULL,
   `Matiere` varchar(15) NOT NULL,
-  `Classe` int(2) NOT NULL,
+  `Classe` int(11) NOT NULL,
   `Section` varchar(20) DEFAULT NULL,
   `Type` varchar(15) NOT NULL,
   `Demande` varchar(10) NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
 
 CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Exercice` int(2) NOT NULL,
+  `Exercice` int(11) NOT NULL,
   `Correcteur` int(11) NOT NULL,
   `Action` enum('VUE','ENCHERE','SIGNALEMENT') NOT NULL,
   PRIMARY KEY (`ID`),
@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
 
 CREATE TABLE IF NOT EXISTS `Exercices_FAQ` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Exercice` int(2) NOT NULL,
+  `Exercice` int(11) NOT NULL,
   `Creation` date NOT NULL,
   `Texte` mediumtext NOT NULL,
   `Parent` int(11) NOT NULL,
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_FAQ` (
 
 CREATE TABLE IF NOT EXISTS `Exercices_Fichiers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Exercice` int(2) NOT NULL,
+  `Exercice` int(11) NOT NULL,
   `Type` enum('SUJET','CORRIGE','RECLAMATION') NOT NULL,
   `URL` varchar(80) NOT NULL,
   `ThumbURL` varchar(80) NOT NULL,
@@ -315,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Fichiers` (
 CREATE TABLE IF NOT EXISTS `Exercices_Logs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Date` datetime NOT NULL,
-  `Exercice` int(2) NOT NULL,
+  `Exercice` int(11) NOT NULL,
   `Membre` int(11) DEFAULT NULL,
   `Action` varchar(50) NOT NULL,
   `AncienStatut` varchar(20) DEFAULT NULL,
@@ -334,6 +334,27 @@ CREATE TABLE IF NOT EXISTS `Exercices_Logs` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `Exercices_Corriges`
+--
+
+CREATE TABLE IF NOT EXISTS `Exercices_Corriges` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Exercice` int(2) NOT NULL,
+  `Date` datetime NOT NULL,
+  `Contenu` text NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Date` (`Date`),
+  KEY `Exercice` (`Exercice`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Sauvegardes des corrigés TeX.' AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `Exercices_Corriges`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `Logs`
 --
 
@@ -341,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `Logs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Date` datetime NOT NULL,
   `Membre` int(11) NOT NULL,
-  `Exercice` int(2) DEFAULT NULL,
+  `Exercice` int(11) DEFAULT NULL,
   `Action` varchar(50) NOT NULL,
   `Delta` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`),
@@ -607,6 +628,12 @@ ALTER TABLE `Exercices_FAQ`
 --
 ALTER TABLE `Exercices_Fichiers`
   ADD CONSTRAINT `Exercices_Fichiers_ibfk_1` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Exercices_Corriges`
+--
+ALTER TABLE `Exercices_Corriges`
+  ADD CONSTRAINT `Exercices_Corriges_ibfk_1` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`);
 
 --
 -- Contraintes pour la table `Exercices_Logs`

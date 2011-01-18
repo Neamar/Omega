@@ -2,6 +2,8 @@
 Création d'un exercice puis déconnexion avant d'ajouter des fichiers : retourner à l'ajout de fichier.
 Revoir la cohérence des titres entre élève / correcteur
 Gérer auto-accept
+Ajouter un graphique pour les deltas de points
+Ajouter une coloration syntaxique pour le LaTeX.
 
 HTML5 Forms :
 Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
