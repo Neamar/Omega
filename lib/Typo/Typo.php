@@ -60,7 +60,7 @@ class Typo
 		'Replace'=>'<math>%n</math>',
 		'Modifications'=>array('$'=>'','&amp;'=>'&'),
 		),
-	'#\\\\(~|\{|\}|\[|\]|\$|\&|\"|oe|ae|\.|,|;|:|!|\?)#iU'=>array//Certains caractères doivent être échappés : l'accolade par exemple.
+	'#\\\\(~|\{|\}|\[|\]|\$|\&|\"|oe|ae|\.|,|;|:|!|\?|\%)#iU'=>array//Certains caractères doivent être échappés : l'accolade par exemple.
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>0,

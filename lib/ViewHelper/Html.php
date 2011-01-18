@@ -140,7 +140,7 @@ function ViewHelper_Html_fromTex($URL)
 	$HTML = Typo::Parse();
 	
 	$HTML = preg_replace_callback(
-		'`\%([A-Z_]+)\%`',
+		'`__([A-Z_]+)__`',
 		create_function(
 			'$Constante',
 			'return constant($Constante[1]);'
