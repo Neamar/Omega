@@ -130,11 +130,21 @@ WHERE Hash="%ID%"';
 			Debug::fail('Impossible de passer du statut ' . $this->Statut . ' au statut ' . $Status);
 		}
 		
+		$AncienStatut = $this->Statut;
 		$Changes['Statut'] = $Status;
 		
 		$this->setAndSave($Changes);
 		
-		$this->log('Exercices_Logs', $ChangeMessage, $ChangeAuthor, $this, array('Statut' => $Status));
+		$this->log(
+			'Exercices_Logs',
+			$ChangeMessage,
+			$ChangeAuthor,
+			$this,
+			array(
+				'NouveauStatut' => $Status,
+				'AncienStatut' => $AncienStatut
+			)
+		);
 	}
 	
 	public function getFilteredId()
