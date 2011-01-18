@@ -242,6 +242,24 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Liste les actions d'un exercice en particulier
+	 */
+	public function _actionsActionWd()
+	{
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
+			FROM Exercices_Logs
+			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
+			WHERE 
+			(
+				Exercices_Logs.Membre = ' . $_SESSION['Correcteur']->getFilteredId() . '
+				OR
+				Exercices_Logs.Membre = Exercices.Createur
+			)'
+		);
+	}
+	
+	/**
 	 * Vérifie que l'exercice associé à la page est disponible.
 	 * Overridé par les classes filles.
 	 * @see ExerciceAbstractController::hasAccess
