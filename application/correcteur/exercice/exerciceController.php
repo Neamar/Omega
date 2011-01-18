@@ -47,6 +47,28 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Page d'index d'un exercice.
+	 */
+	public function indexActionWd()
+	{
+		/**
+		 * Liste des messages à afficher en fonction du statut.
+		 * 
+		 * @var array
+		 */
+		$ListeMessage = array(
+			'ATTENTE_ELEVE' => "Votre offre a été transmise à l'élève. Vous serez informés de son choix.",
+			'EN_COURS' => "Votre offre a été acceptée, vous pouvez commencer à travailler.",
+			'ENVOYE' => "Vous avez envoyé votre corrigé. L'élève n'a pas encore fait de remarques.",
+		);
+
+		$this->View->setTitle(
+			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
+			$ListeMessage[$this->Exercice->Statut]
+		);
+	}
+	
+	/**
 	 * Demander à réserver un article.
 	 * ATTENTE_CORRECTEUR => ATTENTE_ELEVE
 	 */

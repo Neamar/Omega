@@ -43,7 +43,11 @@ $ListeActions = array(
 
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
-if(is_array($Actions))
+if(!is_array($Actions))
+{
+	echo '<p>' . $Actions . '</p>';
+}
+else
 {
 	foreach($Actions as $URL => &$Action)
 	{
@@ -66,10 +70,6 @@ if(is_array($Actions))
 	//TODO : un select "quickjump" pour activer rapidement différentes options.
 	
 	echo $this->Html_list($Actions);
-}
-else
-{
-	echo '<p>' . $Actions . '</p>';
 }
 ?>
 

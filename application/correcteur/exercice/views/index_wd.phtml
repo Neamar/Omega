@@ -1,0 +1,61 @@
+<?php
+/**
+ * Liste des actions possibles.
+ * Structure :
+ * Statut =>
+ * 	action =>
+ * 		lien => caption[[, explication], documentation]
+ * 
+ * @var array
+ */
+$ListeActions = array(
+	'ATTENTE_ELEVE' => 'Aucune action n\'est actuellement disponible pour cet exercice. Vous serez informé si l\'élève vous accepte.',
+	'EN_COURS' => array(
+		'envoi' => 'Rédiger le corrigé', 'Votre offre a été acceptée, vous pouvez donc écrire le corrigé.'
+	),
+	'ENVOYE' => 'Votre exercice a été transmis. Vous serez payé dès que l\'élève aura donné son accord (ou que le délai est dépassé)'
+);
+?>
+
+<h2>Options de l'exercice</h2>
+
+<?php
+$Actions = $ListeActions[$this->Exercice->Statut];
+if(!is_array($Actions))
+{
+	echo '<p>' . $Actions . '</p>';
+}
+else
+{
+	foreach($Actions as $URL => &$Action)
+	{
+		if(is_array($Action))
+		{
+			$Texte = '<a href="/correcteur/exercice/' . $URL . '/' . $this->Exercice->Hash . '">' . $Action[0] . '</a><br />
+	<p class="exercice-action-detail">' . $Action[1];
+			if(isset($Action[2]))
+			{
+				$Texte .= '<br />' . $this->Doc_anchor('correcteur', $Action[2]);
+			}
+			
+			$Action = $Texte . '</p>';
+		}
+		else
+		{
+			$Action = '<a href="' . $URL . '">' . $Action . '</a>';
+		}
+	}
+	
+	echo $this->Html_list($Actions);
+}
+?>
+
+<h2>Affichage de l'exercice</h2>
+<?php 
+echo $this->Exercice($this->Exercice);
+?>
+
+<h2>Actions sur l'exercice</h2>
+<?php 
+echo $this->Html_ajaxTable('/correcteur/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
+?>
