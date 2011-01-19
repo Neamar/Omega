@@ -98,20 +98,20 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				|| $_POST['annulation_heure'] < 0
 				|| $_POST['annulation_heure'] > 23)
 			{
-				$this->View->setMessage("error", "Heure d'annulation invalide.");
+				$this->View->setMessage('error', "Heure d'annulation invalide.");
 			}
 			elseif(!preg_match(Validator::DATE_REGEXP, $_POST['annulation_date'], $_POST['annulation_array'])
 				|| (($_POST['annulation_ts'] = mktime($_POST['annulation_heure'], 0, 0, $_POST['annulation_array'][2], $_POST['annulation_array'][1], $_POST['annulation_array'][3])) === false))
 			{
-				$this->View->setMessage("error", "Date d'annulation invalide.");
+				$this->View->setMessage('error', "Date d'annulation invalide.");
 			}
 			elseif($_POST['annulation_ts'] <= time())
 			{
-				$this->View->setMessage("error", "La date d'annulation doit être dans le futur ! Les travaux prémonitoires ne sont pas supportés ici.");
+				$this->View->setMessage('error', "La date d'annulation doit être dans le futur ! Les travaux prémonitoires ne sont pas supportés ici.");
 			}
 			elseif($_POST['annulation_ts'] >= strtotime($this->Exercice->Expiration) - 3600)
 			{
-				$this->View->setMessage("error", "La date d'expiration doit dépasser d'au moins une heure la date d'annulation !");
+				$this->View->setMessage('error', "La date d'expiration doit dépasser d'au moins une heure la date d'annulation !");
 			}
 			elseif($this->Exercice->Statut != 'ATTENTE_CORRECTEUR')
 			{
@@ -136,7 +136,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					)
 				);
 				
-				$this->View->setMessage("info", "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
+				$this->View->setMessage('info', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
 				$this->redirect('/correcteur/');
 			}
 		}
@@ -208,7 +208,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI, array('Exercice' => $this->Exercice));
 					
 					//Et rediriger
-					$this->View->setMessage('info', 'Corrigé compilé avec succès.');
+					$this->View->setMessage('ok', 'Corrigé compilé avec succès.');
 					$this->redirect('/correcteur/exercice/');					
 				}
 			}

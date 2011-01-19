@@ -60,7 +60,7 @@ class Eleve_OptionsController extends OptionsAbstractController
 			}
 			elseif(!isset($this->View->Classes[$_POST['classe']]))
 			{
-				$this->View->setMessage("error", "Sélectionnez une classe dans la liste déroulante.");
+				$this->View->setMessage('error', "Sélectionnez une classe dans la liste déroulante.");
 			}
 			else
 			{
@@ -77,12 +77,12 @@ class Eleve_OptionsController extends OptionsAbstractController
 				//Ne commiter que s'il y a des modifications.
 				if(empty($ToUpdate))
 				{
-					$this->View->setMessage("warning", "Aucune modification.");
+					$this->View->setMessage('warning', "Aucune modification.");
 				}
 				else
 				{
 					$_SESSION['Eleve']->setAndSave($ToUpdate);
-					$this->View->setMessage("info", "Modifications du compte enregistrées.");
+					$this->View->setMessage('ok', "Modifications du compte enregistrées.");
 				}
 			}
 		}

@@ -102,61 +102,61 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		{
 			if($_POST['titre'] == '')
 			{
-				$this->View->setMessage("error", "Vous devez donner un nom à votre article.");
+				$this->View->setMessage('error', "Vous devez donner un nom à votre article.");
 			}
 			elseif(!isset($this->View->Classes[$_POST['classe']]))
 			{
-				$this->View->setMessage("error", "Cette classe n'existe pas.");
+				$this->View->setMessage('error', "Cette classe n'existe pas.");
 			}
 			elseif(!isset($this->View->Matieres[$_POST['matiere']]))
 			{
-				$this->View->setMessage("error", "Cette matière n'existe pas.");
+				$this->View->setMessage('error', "Cette matière n'existe pas.");
 			}
 			elseif(!isset($this->View->Types[$_POST['type']]))
 			{
-				$this->View->setMessage("error", "Ce type d'exercice n'existe pas.");
+				$this->View->setMessage('error', "Ce type d'exercice n'existe pas.");
 			}
 			elseif(!isset($this->View->Demandes[$_POST['demande']]))
 			{
-				$this->View->setMessage("error", "Cette demande n'existe pas.");
+				$this->View->setMessage('error', "Cette demande n'existe pas.");
 			}
 			elseif(!is_numeric($_POST['rendu_heure'])
 				|| $_POST['rendu_heure'] < 0
 				|| $_POST['rendu_heure'] > 23)
 			{
-				$this->View->setMessage("error", "Heure de rendu invalide.");
+				$this->View->setMessage('error', "Heure de rendu invalide.");
 			}
 			elseif(!is_numeric($_POST['annulation_heure'])
 				|| $_POST['annulation_heure'] < 0
 				|| $_POST['annulation_heure'] > 23)
 			{
-				$this->View->setMessage("error", "Heure d'annulation invalide.");
+				$this->View->setMessage('error', "Heure d'annulation invalide.");
 			}
 			elseif(!preg_match(Validator::DATE_REGEXP, $_POST['rendu_date'], $_POST['rendu_array'])
 				|| (($_POST['rendu_ts'] = mktime($_POST['rendu_heure'], 0, 0, $_POST['rendu_array'][2], $_POST['rendu_array'][1], $_POST['rendu_array'][3])) === false))
 			{
-				$this->View->setMessage("error", "Date de rendu invalide.");
+				$this->View->setMessage('error', "Date de rendu invalide.");
 			}
 			elseif(!preg_match(Validator::DATE_REGEXP, $_POST['annulation_date'], $_POST['annulation_array'])
 				|| (($_POST['annulation_ts'] = mktime($_POST['annulation_heure'], 0, 0, $_POST['annulation_array'][2], $_POST['annulation_array'][1], $_POST['annulation_array'][3])) === false))
 			{
-				$this->View->setMessage("error", "Date d'annulation invalide.");
+				$this->View->setMessage('error', "Date d'annulation invalide.");
 			}
 			elseif($_POST['rendu_ts'] < time() + 2*3600)
 			{
-				$this->View->setMessage("error", "Le délai spécifié pour le rendu est trop court ou dans le passé. Nous ne faisons pas machine à remonter le temps, désolé.");
+				$this->View->setMessage('error', "Le délai spécifié pour le rendu est trop court ou dans le passé. Nous ne faisons pas machine à remonter le temps, désolé.");
 			}
 			elseif($_POST['rendu_ts'] < $_POST['annulation_ts'])
 			{
-				$this->View->setMessage("error", "La date de rendu doit être postérieure à la date d'annulation automatique.");
+				$this->View->setMessage('error', "La date de rendu doit être postérieure à la date d'annulation automatique.");
 			}
 			elseif(!is_numeric($_POST['auto_accept']) || $_POST['auto_accept'] < 0)
 			{
-				$this->View->setMessage("error", "La valeur spécifiée pour l'acceptation automatique doit être numérique positive.");
+				$this->View->setMessage('error', "La valeur spécifiée pour l'acceptation automatique doit être numérique positive.");
 			}
 			elseif($_POST['auto_accept'] > $_SESSION['Eleve']->getPoints())
 			{
-				$this->View->setMessage("error", "La valeur spécifiée pour l'acceptation automatique est supérieure à votre solde. Valeur maximum : " . $_SESSION['Eleve']->getPoints());
+				$this->View->setMessage('error', "La valeur spécifiée pour l'acceptation automatique est supérieure à votre solde. Valeur maximum : " . $_SESSION['Eleve']->getPoints());
 			}
 			else
 			{
@@ -213,7 +213,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				else
 				{
-					$this->View->setMessage("error", "Impossible de créer cet exercice. Veuillez réessayer dans quelques minutes.");
+					$this->View->setMessage('error', "Impossible de créer cet exercice. Veuillez réessayer dans quelques minutes.");
 				}
 			}
 		}
@@ -317,20 +317,24 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			if($NbFichiersAjoutes>0)
 			{
 				$Corrects = (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.";
+				$CorrectsClass = 'ok';
 			}
 			else
 			{
-				$Corrects = "Aucun fichier ajouté.";
+				$Corrects = 'Aucun fichier ajouté.';
+				$CorrectsClass = 'warning';
 			}
 			
 			if(count($Messages)!=0)
 			{
+				//Il y a des erreurs
 				$Messages[] = $Corrects;
-				$this->View->setMessage("error", implode("<br />\n", $Messages));
+				$this->View->setMessage('error', implode("<br />\n", $Messages));
 			}
 			elseif($_POST['next_page']!='resume')
 			{
-				$this->View->setMessage("info", $Corrects);
+				//Il n'y a pas d'erreurs
+				$this->View->setMessage($CorrectsClass, $Corrects);
 			}
 			else
 			{
@@ -342,16 +346,16 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				{
 					if($this->Exercice->InfosEleve == '')
 					{
-						$this->View->setMessage("error", "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
+						$this->View->setMessage('error', "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
 						$CanForward = false;
 					}
 					else
 					{
 						$this->View->setMessage(
-							"warning",
+							'warning',
 							"Attention, vous avez validé cet exercice sans aucun fichier.<br />
 							Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
-							S'il s'agit d'une erreur, vous pouvez <a href='/eleve/annulation/" . $this->Exercice->Hash . "'>annuler l'exercice</a>."
+							S'il s'agit d'une erreur, vous pouvez <a href='/eleve/ajout/" . $this->Exercice->Hash . "'>retourner à l'ajout de fichier</a>."
 						);
 					}
 				}
@@ -388,11 +392,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		{
 			if($_POST['infos']=='')
 			{
-				$this->View->setMessage("warning", "Vous ne pouvez pas vider le champ information maintenant.");
+				$this->View->setMessage('warning', "Vous ne pouvez pas vider le champ information maintenant.");
 			}
 			else
 			{
-				$this->View->setMessage('info', "Les informations de l'exercice ont bien été modifiées.");
+				$this->View->setMessage('ok', "Les informations de l'exercice ont bien été modifiées.");
 				$this->Exercice->setAndSave(array('InfosEleve'=>$_POST['infos']));
 			}
 		}
@@ -437,7 +441,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			
 			$this->Exercice->setStatus('ANNULE', $_SESSION['Eleve'], 'Annulation de l\'exercice.', $Changes);
 			
-			$this->View->setMessage("info", "Votre exercice a été annulé.");
+			$this->View->setMessage('info', "Votre exercice a été annulé.");
 			$this->redirect("/eleve/exercice/");
 		}
 	}

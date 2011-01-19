@@ -62,15 +62,15 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			}
 			elseif(!Validator::phone($_POST['telephone']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+				$this->View->setMessage('error', "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
 			elseif(!empty($_POST['siret']) && !is_null($_SESSION['Correcteur']->Siret))
 			{
-				$this->View->setMessage("error", "Impossible de redéfinir le SIRET.");
+				$this->View->setMessage('error', "Impossible de redéfinir le SIRET.");
 			}
 			elseif(!empty($_POST['siret']) && !Validator::siret($_POST['siret']))
 			{
-				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
+				$this->View->setMessage('error', "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
 			else
 			{
@@ -86,12 +86,12 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 				//Ne commiter que s'il y a des modifications.
 				if(empty($ToUpdate))
 				{
-					$this->View->setMessage("warning", "Aucune modification.");
+					$this->View->setMessage('warning', "Aucune modification.");
 				}
 				else
 				{
 					$_SESSION['Correcteur']->setAndSave($ToUpdate);
-					$this->View->setMessage("info", "Modifications du compte enregistrées.");
+					$this->View->setMessage('ok', "Modifications du compte enregistrées.");
 				}
 			}
 		}
@@ -127,7 +127,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 					
 					if($Debut < $Fin)
 					{
-						$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin pour la matière " . $Matiere . ')');
+						$this->View->setMessage('error', "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin pour la matière " . $Matiere . ')');
 						break;
 					}
 					else
@@ -147,7 +147,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			
 			if(!$this->View->issetMeta('message'))
 			{
-				$this->View->setMessage("info", "Compétences enregistrées.");
+				$this->View->setMessage('ok', "Compétences enregistrées.");
 			}
 		}
 		
@@ -181,7 +181,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			
 			if($Debut < $Fin)
 			{
-				$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin)");
+				$this->View->setMessage('error', "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin)");
 			}
 			else
 			{
@@ -205,7 +205,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			
 			if(!$this->View->issetMeta('message'))
 			{
-				$this->View->setMessage("info", "Compétences enregistrées.");
+				$this->View->setMessage('ok', "Compétences enregistrées.");
 			}
 		}
 		
@@ -217,7 +217,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		
 		if(!is_null($this->View->Competences) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("warning", "Attention ! En utilisant cette page, vous perdrez aussi les <a href=\"/correcteur/options/matieres\">modifications plus avancées</a> que vous auriez pu apporter.");
+			$this->View->setMessage('warning', "Attention ! En utilisant cette page, vous perdrez aussi les <a href=\"/correcteur/options/matieres\">modifications plus avancées</a> que vous auriez pu apporter.");
 		}
 	}
 }

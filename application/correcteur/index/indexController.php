@@ -55,14 +55,14 @@ class Correcteur_IndexController extends IndexAbstractController
 		if(isset($_SESSION['Correcteur']))
 		{
 			unset($_SESSION['Correcteur']);
-			$this->View->setMessage("info", "Vous vous êtes déconnecté.", 'eleve/deconnexion');
+			$this->View->setMessage('info', "Vous vous êtes déconnecté.", 'eleve/deconnexion');
 		}
 		
 		if(isset($_POST['connexion-correcteur']))
 		{
 			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
-				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+				$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 			}
 			else
 			{
@@ -71,7 +71,7 @@ class Correcteur_IndexController extends IndexAbstractController
 				{
 					if($Correcteur->Statut == 'EN_ATTENTE')
 					{
-						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation de notre part. Vous serez informé par mail sous 48h ouvrées.", 'correcteur/validation');
+						$this->View->setMessage('error', "Votre compte est actuellement en attente de validation de notre part. Vous serez informé par mail sous 48h ouvrées.", 'correcteur/validation');
 						unset($_SESSION['Correcteur']); 
 					}
 					else
@@ -83,7 +83,7 @@ class Correcteur_IndexController extends IndexAbstractController
 				else
 				{
 					//TODO : Bloquer après trois connexions ?
-					$this->View->setMessage("error", "Identifiants incorrects.", 'eleve/probleme_connexion');
+					$this->View->setMessage('error', "Identifiants incorrects.", 'eleve/probleme_connexion');
 				}
 			}
 		}
@@ -153,42 +153,42 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
+			$this->View->setMessage('info', "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
 		}
 		
 		if(isset($_POST['inscription-correcteur']))
 		{
 			if(empty($_POST['nom']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer votre nom.");
+				$this->View->setMessage('error', "Vous devez indiquer votre nom.");
 			}
 			elseif(empty($_POST['prenom']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer votre prénom.");
+				$this->View->setMessage('error', "Vous devez indiquer votre prénom.");
 			}
 			elseif(!Validator::phone($_POST['telephone']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+				$this->View->setMessage('error', "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
 			elseif(!empty($_POST['siret']) && !Validator::siret($_POST['siret']))
 			{
-				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
+				$this->View->setMessage('error', "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
 			elseif($_FILES['cv']['name'] == '')
 			{
-				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['error'] > 0)
 			{
-				$this->View->setMessage("error", 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['cv']['name'] . ' (erreur ' . $_FILES['cv']['error'] . ')', '/eleve/erreurs_upload');
+				$this->View->setMessage('error', 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['cv']['name'] . ' (erreur ' . $_FILES['cv']['error'] . ')', '/eleve/erreurs_upload');
 			}
 			elseif(Util::extension($_FILES['cv']['name']) != 'pdf')
 			{
-				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['size'] > 3*1048576)
 			{
-				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
 			}
 			else
 			{
@@ -208,7 +208,7 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 					
 					//Rediriger le nouveau membre vers la page de connexion
 					$_SESSION['Correcteur_JusteInscrit'] = $_POST['email'];
-					$this->View->setMessage("info", "Nous avons bien reçu votre demande. Vous serez informé par mail de notre verdict.");
+					$this->View->setMessage('info', "Nous avons bien reçu votre demande. Vous serez informé par mail de notre verdict.");
 					$this->redirect('/correcteur/connexion');
 				}
 			}
