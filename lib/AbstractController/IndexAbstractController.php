@@ -80,12 +80,69 @@ abstract class IndexAbstractController extends AbstractController
 			'Récupération mot de passe',
 			'Cette page vous permet de récupérer un mot de passe perdu.'
 		);
+		$this->View->setSeelink('/' . $this->getModule() . '/connexion', 'Connexion');
 		
 		//Récupérer un mot de passe alors qu'on est connecté ?
 		//WTF ?
 		if(isset($_SESSION[ucfirst($this->getModule())]))
 		{
 			$this->redirect('/' . $this->getModule());
+		}
+		
+		if(isset($_POST['recuperation-membre']))
+		{
+			if(!Validator::mail($_POST['email']))
+			{
+				$this->View->setMessage('error', "Entrez une adresse mail correcte !");
+			}
+			else
+			{
+				//Générer un nouveau mot de passe :
+				$length = 8;
+				$chars = '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+				$chars_length = (strlen($chars) - 1);
+		
+				// Start our string
+				$string = $chars{rand(0, $chars_length)};
+		
+				// Generate random string
+				for ($i = 1; $i < $length; $i = strlen($string))
+				{
+					// Grab a random character from our list
+					$r = $chars{rand(0, $chars_length)};
+		
+					// Make sure the same two characters don't appear next to each other
+					if ($r != $string{$i - 1}) $string .=  $r;
+				}
+				
+				$Password = $string;
+				
+				Sql::update(
+					'Membres',
+					'-1',
+					array(
+						'Pass' => $this->hashPass($Password)
+					),
+					'OR (Mail = "' . Sql::escape($_POST['email']) . '" AND Type = "' . strtoupper($this->getModule()) . '")'
+				);
+				
+				if(Sql::affectedRows() < 1)
+				{
+					$this->View->setMessage('error', "Cette adresse n'existe pas.");
+				}
+				else
+				{
+					$Datas = array(
+						'mail' => $_POST['email'],
+						'mdp' => $Password
+					);
+					
+					External::templateMail($_POST['email'], '/membre/recuperation', $Datas);
+					
+					$this->View->setMessage('info', "Un mail a bien été envoyé avec vos nouveaux identifiants.");
+					$this->redirect('/' . $this->getModule() . '/connexion');
+				}
+			}
 		}
 		
 		//Utiliser une vue générique.
