@@ -18,13 +18,14 @@ $Retour = array();
 
 if(!isset($_SESSION['Correcteur']))
 {
-	$Retour[] = 'Visiteur non connecté';
-	$Retour[] = '<a href="/correcteur/connexion">Connexion</a>';
+	$Retour['left'] = 'Non connecté';
+	$Retour['right'] = '<a href="/correcteur/connexion">Connexion</a>';
 }
 else
 {
-	$Retour[] = '<a href="/correcteur/" class="correcteur-home">' . $_SESSION['Correcteur']->Mail . '</a>';
-	$Retour[] = '<a href="/correcteur/connexion" class="deconnexion">Déconnexion</a>';
+	$Retour['left'] = '<a href="/correcteur/connexion" class="deconnexion">Déconnexion</a> <a href="/correcteur/">' . $_SESSION['Correcteur']->Mail . '</a>';
+	
+	$Retour['right'] = $_SESSION['Correcteur']->getPoints() . ' pts. <a href="/correcteur/points/retrait">Retirer des points</a>';
 }
 
 return $Retour;

@@ -14,4 +14,7 @@
  * @link      http://edevoir.com
  */
  
-return array('Module de débuggage.');
+return array(
+	'left' => 'ADMIN',
+	'right' => '<a href="/admin/">Accès à l\'administration</a>'
+);

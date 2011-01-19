@@ -18,14 +18,14 @@ $Retour = array();
 
 if(!isset($_SESSION['Eleve']))
 {
-	$Retour[] = 'Visiteur non connecté';
-	$Retour[] = '<a href="/eleve/connexion">Connexion</a>';
+	$Retour['left'] = 'Non connecté';
+	$Retour['right'] = '<a href="/eleve/connexion">Connexion</a>';
 }
 else
 {
-	$Retour[] = '<a href="/eleve/" class="eleve-home">' . $_SESSION['Eleve']->Mail . '</a>';
-	$Retour[] = '<a href="/eleve/connexion" class="deconnexion">Déconnexion</a>';
-	$Retour[] = $_SESSION['Eleve']->getPoints() . '&nbsp;pts. <a href="/eleve/points/ajout">Ajouter des points</a>';
+	$Retour['left'] = '<a href="/eleve/connexion" class="deconnexion">Déconnexion</a> <a href="/eleve/">' . $_SESSION['Correcteur']->Mail . '</a>';
+	
+	$Retour['right'] = $_SESSION['Eleve']->getPoints() . ' pts. <a href="/eleve/points/ajout">Ajouter des points</a>';
 }
 
 return $Retour;

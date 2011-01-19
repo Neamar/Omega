@@ -14,7 +14,10 @@
  * @link      http://edevoir.com
  */
 
-$Retour = array('Documentation');
+$Retour = array(
+	'left' => '',
+	'right' => ''
+);
 
 
 return $Retour;
