@@ -16,6 +16,8 @@ Passer les sliders en véritables sliders [type=range]
 En production
 - ajouter captcha à l'inscription élève
 - ajouter captcha à l'inscription correcteur
+- ajouter captcha à la récupération mdp
+- ajouter captcha à la désinscription
 - virer le dump de la requete dans Sql::query
 - véritables mails
 - supprimer les tuples SQL par défaut

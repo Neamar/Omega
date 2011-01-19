@@ -428,7 +428,7 @@ class View
 			$R .= '<div class="seelink"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
 		}
 		
-		$Ariane = array('/' => '<span class="edevoir"><span>e</span>Devoir</span>') + self::getMeta('breadcrumbs');
+		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
 		
 		//Mettre au format microdata décrit par Google
 		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417

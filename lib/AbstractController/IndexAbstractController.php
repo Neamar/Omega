@@ -66,9 +66,32 @@ abstract class IndexAbstractController extends AbstractController
 				$this->redirect('/' . $this->getModule() . '/connexion');
 			}
 		}
+		
 		//Utiliser une vue générique.
 		$this->deflectView(LIB_PATH . '/View/membre/desinscription.phtml');
 	}
+	
+	/**
+	 * Page pour récupérer un mot de passe perdu
+	 */
+	public function recuperationAction()
+	{
+		$this->View->setTitle(
+			'Récupération mot de passe',
+			'Cette page vous permet de récupérer un mot de passe perdu.'
+		);
+		
+		//Récupérer un mot de passe alors qu'on est connecté ?
+		//WTF ?
+		if(isset($_SESSION[ucfirst($this->getModule())]))
+		{
+			$this->redirect('/' . $this->getModule());
+		}
+		
+		//Utiliser une vue générique.
+		$this->deflectView(LIB_PATH . '/View/membre/recuperation.phtml');
+	}
+	
 	/**
 	 * Crée un compte de base.
 	 * Appelle la fonction create_account_special() qui gère les opérations spécifiques (tables héritées)
