@@ -106,6 +106,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			'Modifications des compétences',
 			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
 		);
+		$this->View->setSeelink('/correcteur/options/matieres_rapide', 'Faciliter la saisie des compétences ?');
 		
 		$this->View->addScript();
 		//Charger la liste des matières :
@@ -164,6 +165,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			'Modifications rapide des compétences',
 			"Cette page vous permet de modifier facilement vos compétences."
 		);
+		$this->View->setSeelink('/correcteur/options/matieres', 'Plus de précision pour vos compétences ?');
 		
 		$this->View->addScript('/public/js/correcteur/options/matieres.js');
 		//Charger la liste des matières :

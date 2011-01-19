@@ -425,7 +425,7 @@ class View
 		if($this->issetMeta('seelink'))
 		{
 			$SeeLink = $this->getMeta('seelink');
-			$R .= '<div class="seelink"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
+			$R .= '<div class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
 		}
 		
 		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
