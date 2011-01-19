@@ -81,6 +81,14 @@ class Sql
 	}
 	
 	/**
+	 * Renvoie le nombre de tuples affectés par la dernière requête
+	 */
+	public static function affectedRows()
+	{
+		return mysql_affected_rows();
+	}
+	
+	/**
 	 * Débute une transaction.
 	 */
 	public static function start()

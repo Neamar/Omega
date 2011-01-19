@@ -27,6 +27,49 @@
 abstract class IndexAbstractController extends AbstractController
 {
 	/**
+	 * Désinscrit le membre.
+	 */
+	public function desinscriptionAction()
+	{
+		$this->View->setTitle(
+			'Désinscription eDevoir',
+			'Cette page vous permet de vous désinscrire définitivement.'
+		);
+		
+		/**
+		 * Le membre qui demande la désinscription.
+		 * @var Membre
+		 */
+		$this->View->Membre = $_SESSION[ucfirst($this->getModule())];
+		
+		if(isset($_POST['desinscription-membre']))
+		{
+			//Au revoir :(
+			Sql::update(
+				'Membres',
+				$this->View->Membre->getFilteredId(),
+				array('Statut' =>  'DESINSCRIT'),
+				'AND Pass="' . $this->hashPass($_POST['password']) . '"
+				 AND Type = "' . strtoupper($this->getModule()) . '"'
+			);
+			
+			if(Sql::affectedRows() < 1)
+			{
+				$this->View->setMessage('error', "Mot de passe invalide.");
+			}
+			else
+			{
+				unset($_SESSION[ucfirst($this->getModule())]);
+				
+				$this->View->setMessage('ok', "Vous avez été désinscrit. Que les vents vous soient favorables !<br />
+				Vous avez été déconnecté.");
+				$this->redirect('/' . $this->getModule() . '/connexion');
+			}
+		}
+		//Utiliser une vue générique.
+		$this->deflectView(LIB_PATH . '/View/membre/desinscription.phtml');
+	}
+	/**
 	 * Crée un compte de base.
 	 * Appelle la fonction create_account_special() qui gère les opérations spécifiques (tables héritées)
 	 * @see IndexAbstractController::createAccountSpecial
@@ -64,7 +107,7 @@ abstract class IndexAbstractController extends AbstractController
 			SQL::start();
 			$ToInsert = array(
 				'Mail' => $Datas['email'],
-				'Pass' => sha1(SALT . $Datas['password']),
+				'Pass' => $this->hashPass($Datas['password']),
 				'_Creation' => 'NOW()',
 				'_Connexion' => 'NOW()',
 				'Type' => $Type,
@@ -117,7 +160,15 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function logMe($Mail, $Pass, $Type)
 	{
-		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT" AND Type="' . Sql::escape($Type) . '")';
+		$ID = '(
+		SELECT ID
+		FROM Membres
+		WHERE
+			Mail="' . SQL::escape($Mail) . '"
+			AND Pass="' . $this->hashPass($Pass) . '"
+			AND Statut !="DESINSCRIT"
+			AND Type="' . Sql::escape($Type) . '"
+		)';
 		
 		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	
@@ -129,5 +180,17 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		
 		return $Membre;
+	}
+	
+	/**
+	 * Hashe le mot de passe fourni
+	 * 
+	 * @param string $Pass
+	 * 
+	 * @return string du sha1.
+	 */
+	private function hashPass($Pass)
+	{
+		return sha1(SALT . $Pass);
 	}
 }

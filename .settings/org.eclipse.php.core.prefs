@@ -1,3 +1,5 @@
-#Tue Oct 26 16:44:43 CEST 2010
+#Wed Jan 19 15:24:20 CET 2011
 eclipse.preferences.version=1
 include_path=0;/Omega/application\u00050;/Omega/lib
+phpVersion=php5.3
+useShortTags=true
