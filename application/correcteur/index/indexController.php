@@ -55,23 +55,28 @@ class Correcteur_IndexController extends IndexAbstractController
 		if(isset($_SESSION['Correcteur']))
 		{
 			unset($_SESSION['Correcteur']);
-			$this->View->setMessage("info", "Vous vous êtes déconnecté.", 'eleve/deconnexion');
+			$this->View->setMessage('info', "Vous vous êtes déconnecté.", 'eleve/deconnexion');
 		}
 		
 		if(isset($_POST['connexion-correcteur']))
 		{
-			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
-				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+				$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 			}
 			else
 			{
 				$Correcteur = $this->logMe($_POST['email'], $_POST['password'], 'Correcteur');
-				if(!is_null($Correcteur))
+				if(is_null($Correcteur))
+				{
+					//TODO : Bloquer après trois connexions ?
+					$this->View->setMessage('error', "Identifiants incorrects.", 'correcteur/probleme_connexion');
+				}
+				else
 				{
 					if($Correcteur->Statut == 'EN_ATTENTE')
 					{
-						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation de notre part. Vous serez informé par mail sous 48h ouvrées.", 'correcteur/validation');
+						$this->View->setMessage('error', "Votre compte est actuellement en attente de validation de notre part. Vous serez informé par mail sous 48h ouvrées.", 'correcteur/validation');
 						unset($_SESSION['Correcteur']); 
 					}
 					else
@@ -80,141 +85,8 @@ class Correcteur_IndexController extends IndexAbstractController
 						$this->redirect('/correcteur/');
 					}
 				}
-				else
-				{
-					//TODO : Bloquer après trois connexions ?
-					$this->View->setMessage("error", "Identifiants incorrects.", 'eleve/probleme_connexion');
-				}
 			}
 		}
-	}
-	
-	/**
-	 * Page d'options globales.
-	 */
-	public function optionsAction()
-	{
-		$this->View->setTitle(
-			'Options correcteur',
-			'Modifiez ici vos informations de compte, ou vos capacités pour chaque matière.'
-		);
-		
-		$this->View->Compte = $this->concat('/correcteur/options_compte');
-		$this->View->Matieres = $this->concat('/correcteur/options_matieres');
-	}
-	
-	/**
-	 * Page d'options pour la mise à jour du compte
-	 */
-	public function options_CompteAction()
-	{
-		$this->View->setTitle(
-			'Modifications du compte',
-			"Cette page vous permet de modifier les informations de votre compte.<br />
-Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro de SIRET."
-		);
-
-		if(isset($_POST['edition-compte']))
-		{
-			$ToUpdate = $this->editAccount($_POST, $_SESSION['Correcteur']);
-			if($ToUpdate == FAIL)
-			{
-				//La mise à jour ne doit pas être effectuée.
-				//Le message a été défini par editAccount.
-			}
-			elseif(!$this->validatePhone($_POST['telephone']))
-			{
-				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
-			}
-			elseif(!empty($_POST['siret']) && !is_null($_SESSION['Correcteur']->Siret))
-			{
-				$this->View->setMessage("error", "Impossible de redéfinir le SIRET.");
-			}
-			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
-			{
-				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
-			}
-			else
-			{
-				if($_POST['telephone'] != $_SESSION['Correcteur']->Telephone)
-				{
-					$ToUpdate['Telephone'] = preg_replace('`[^0-9]`', '', $_POST['telephone']);
-				}
-				if(!empty($_POST['siret']))
-				{
-					$ToUpdate['Siret'] = $_POST['siret'];
-				}
-				
-				//Ne commiter que s'il y a des modifications.
-				if(empty($ToUpdate))
-				{
-					$this->View->setMessage("warning", "Aucune modification.");
-				}
-				else
-				{
-					$_SESSION['Correcteur']->setAndSave($ToUpdate);
-					$this->View->setMessage("info", "Modifications du compte enregistrées.");
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Page d'options pour la mise à jour du compte
-	 */
-	public function options_MatieresAction()
-	{
-		$this->View->setTitle(
-			'Modifications des compétences',
-			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
-		);
-		
-		$this->View->addScript();
-		//Charger la liste des matières :
-		$Matieres = SQL::queryAssoc('SELECT Matiere FROM Matieres', 'Matiere', 'Matiere');
-		
-		//Charger la liste des matières :
-		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
-		
-		if(isset($_POST['edition-competences']))
-		{
-			Sql::query('DELETE FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId());
-			foreach($Matieres as $Matiere)
-			{
-				$ID = preg_replace('`[^-a-zA-Z]`', '', $Matiere);
-				if(!empty($_POST['check_' . $ID]))
-				{
-					$Debut = intval($_POST['start_' . $ID]);
-					$Fin = intval($_POST['end_' . $ID]);
-					
-					if($Debut < $Fin)
-					{
-						$this->View->setMessage("error", "Impossible de commencer à être compétent après avoir fini de l'être ! (Début > Fin pour la matière " . $Matiere . ')');
-						break;
-					}
-					else
-					{
-						$ToInsert = array
-						(
-							'Correcteur' => $_SESSION['Correcteur']->getFilteredId(),
-							'Matiere' => $Matiere,
-							'Commence' => $Debut,
-							'Finit' => $Fin,
-						);
-						
-						Sql::insert('Correcteurs_Capacites', $ToInsert);
-					}
-				}
-			}
-			
-			if(!$this->View->issetMeta('message'))
-			{
-				$this->View->setMessage("info", "Compétences enregistrées.");
-			}
-		}
-		
-		$this->View->Matieres = $Matieres;
-		$this->View->Defaults = SQL::queryAssoc('SELECT Matiere, Commence, Finit FROM Correcteurs_Capacites WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(), 'Matiere');
 	}
 	
 	/**
@@ -235,17 +107,32 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	 */
 	public function _listeAction()
 	{
-		//TODO: gérer les images
-		//TODO: gérer une date dynamique
 		$this->View->RawDatas = Sql::queryAssoc(
-			'SELECT Hash, LongHash, UNIX_TIMESTAMP(TimeoutEleve) AS TimeoutEleve, Titre, Matiere, Section, Classes.DetailsClasse, Demandes.DetailsDemande, InfosEleve,
-			GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
-			FROM Exercices
-			NATURAL JOIN Classes
-			NATURAL JOIN Demandes
-			LEFT JOIN Exercices_Fichiers ON (Exercices.ID = Exercices_Fichiers.Exercice)
-			
-			WHERE Statut = "ATTENTE_CORRECTEUR"
+			'
+SELECT 
+	Exercices.Hash,
+	Exercices.LongHash,
+	UNIX_TIMESTAMP(Exercices.TimeoutEleve) AS TimeoutEleve,
+	Exercices.Titre,
+	Exercices.Matiere,
+	Exercices.Section,
+	Exercices.InfosEleve,
+	Classes.DetailsClasse,
+	Demandes.DetailsDemande,
+	GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
+FROM Exercices
+NATURAL JOIN Classes
+NATURAL JOIN Demandes
+LEFT JOIN Exercices_Fichiers ON (
+	Exercices.ID = Exercices_Fichiers.Exercice
+)
+JOIN Correcteurs_Capacites ON (
+	Correcteurs_Capacites.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+	AND Correcteurs_Capacites.Matiere = Exercices.Matiere
+	AND Exercices.Classe BETWEEN Correcteurs_Capacites.Finit AND Correcteurs_Capacites.Commence
+)
+
+WHERE Statut = "ATTENTE_CORRECTEUR"
 			',
 			'Hash'
 		);
@@ -260,48 +147,48 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	{
 		$this->View->setTitle(
 			'Inscription correcteur',
-			"L'inscription à <strong>eDevoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
+			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
 		);
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
+			$this->View->setMessage('info', "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
 		}
 		
 		if(isset($_POST['inscription-correcteur']))
 		{
 			if(empty($_POST['nom']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer votre nom.");
+				$this->View->setMessage('error', "Vous devez indiquer votre nom.");
 			}
 			elseif(empty($_POST['prenom']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer votre prénom.");
+				$this->View->setMessage('error', "Vous devez indiquer votre prénom.");
 			}
-			elseif(!$this->validatePhone($_POST['telephone']))
+			elseif(!Validator::phone($_POST['telephone']))
 			{
-				$this->View->setMessage("error", "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
+				$this->View->setMessage('error', "Vous devez indiquer un numéro de téléphone valide (0X XX XX XX XX).");
 			}
-			elseif(!empty($_POST['siret']) && !$this->validateSiret($_POST['siret']))
+			elseif(!empty($_POST['siret']) && !Validator::siret($_POST['siret']))
 			{
-				$this->View->setMessage("error", "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
+				$this->View->setMessage('error', "Numéro de SIRET invalide. Si vous n'avez pas encore de SIRET, laissez le champ vide.");
 			}
 			elseif($_FILES['cv']['name'] == '')
 			{
-				$this->View->setMessage("error", "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', "Vous n'avez pas fourni votre CV.", 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['error'] > 0)
 			{
-				$this->View->setMessage("error", 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['cv']['name'] . ' (erreur ' . $_FILES['cv']['error'] . ')', '/eleve/erreurs_upload');
+				$this->View->setMessage('error', 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['cv']['name'] . ' (erreur ' . $_FILES['cv']['error'] . ')', '/eleve/erreurs_upload');
 			}
 			elseif(Util::extension($_FILES['cv']['name']) != 'pdf')
 			{
-				$this->View->setMessage("error", 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', 'Votre CV doit-être au format PDF.', 'correcteur/pourquoi_cv');
 			}
 			elseif($_FILES['cv']['size'] > 3*1048576)
 			{
-				$this->View->setMessage("error", 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
+				$this->View->setMessage('error', 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
 			}
 			else
 			{
@@ -311,13 +198,17 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 					//Enregistrer le CV :	
 					move_uploaded_file($_FILES['cv']['tmp_name'], PATH . '/data/CV/' . $ID . '.pdf');
 					
-					//Enregistrer le nouveau membre et le rediriger vers la page de connexion
-					$Datas = array(
-						'mail'=>$_POST['email'],
+					//Mission accomplie ! Dispatcher l'évènement :
+					Event::dispatch(
+						Event::CORRECTEUR_INSCRIPTION,
+						array(
+							'mail' => $_POST['email']
+						)
 					);
-					External::templateMail($_POST['email'], '/correcteur/inscription', $Datas);
+					
+					//Rediriger le nouveau membre vers la page de connexion
 					$_SESSION['Correcteur_JusteInscrit'] = $_POST['email'];
-					$this->View->setMessage("info", "Nous avons bien reçu votre demande. Vous serez informé par mail de notre verdict.");
+					$this->View->setMessage('info', "Nous avons bien reçu votre demande. Vous serez informé par mail de notre verdict.");
 					$this->redirect('/correcteur/connexion');
 				}
 			}
@@ -348,94 +239,5 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		}
 		
 		return Sql::insert('Correcteurs', $ToInsert);
-	}
-	
-	/**
-	 * Valide un numéro de téléphone
-	 * 
-	 * @param string $Phone
-	 * 
-	 * @return bool
-	 */
-	protected function validatePhone($Phone)
-	{
-		return preg_match('`^0[1-8]([-. ]?[0-9]{2}){4}$`', $Phone);
-	}
-	
-	/**
-	 * Valide un numéro de SIREN.
-	 * @see http://pear.php.net/package/Validate_FR/download
-	 * 
-	 * @param string $siren
-	 */
-	protected function validateSiren($siren)
-	{
-        $siren = str_replace(array(' ', '.', '-'), '', $siren);
-        $reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
-        if(!preg_match($reg, $siren, $match))
-        {
-            return false;
-        }
-        $match[2] *= 2;
-        $match[4] *= 2;
-        $match[6] *= 2;
-        $match[8] *= 2;
-        $sum = 0;
-
-        for($i = 1; $i < count($match); $i++)
-        {
-            if($match[$i] > 9)
-            {
-                $a = (int) substr($match[$i], 0, 1);
-                $b = (int) substr($match[$i], 1, 1);
-                $match[$i] = $a + $b;
-            }
-            $sum += $match[$i];
-        }
-        return (($sum % 10) == 0);
-	}
-	
-	/**
-	 * Valide un numéro de SIRET.
-	 * @see http://pear.php.net/package/Validate_FR/download
-	 * 
-	 * @param string $siret
-	 * 
-	 * @return bool true si valide.
-	 */
-	protected function validateSiret($siret)
-	{
-		$siret = str_replace(array(' ', '.', '-'), '', $siret);
-		$reg = "/^(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)$/";
-		if(!preg_match($reg, $siret, $match))
-		{
-			return false;
-		}
-		else
-		{
-			if(!$this->validateSiren(implode('', array_slice($match, 1, 9)))) {
-				return false;
-			}
-		}
-		$match[1] *= 2;
-		$match[3] *= 2;
-		$match[5] *= 2;
-		$match[7] *= 2;
-		$match[9] *= 2;
-		$match[11] *= 2;
-		$match[13] *= 2;
-		$sum = 0;
-	
-		for($i = 1; $i < count($match); $i++)
-		{
-			if($match[$i] > 9)
-			{
-				$a = (int) substr($match[$i], 0, 1);
-				$b = (int) substr($match[$i], 1, 1);
-				$match[$i] = $a + $b;
-			}
-			$sum += $match[$i];
-		}
-		return (($sum % 10) == 0);
 	}
 }

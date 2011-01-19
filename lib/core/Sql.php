@@ -81,6 +81,14 @@ class Sql
 	}
 	
 	/**
+	 * Renvoie le nombre de tuples affectés par la dernière requête
+	 */
+	public static function affectedRows()
+	{
+		return mysql_affected_rows();
+	}
+	
+	/**
 	 * Débute une transaction.
 	 */
 	public static function start()
@@ -116,7 +124,6 @@ class Sql
 		$R = mysql_query($Query);
 		if($R===false)
 		{
-			//TODO : virer en production
 			echo '<pre>' . $Query . '</pre>';
 			echo '<p style="color:red">' . mysql_error() . '</p>';
 			

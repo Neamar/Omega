@@ -25,7 +25,7 @@ if(isset($_SESSION['Eleve']))
 }
 else 
 {//Sinon on dégage sauf si on demande une page accessible hors ligne.
-	$Allowed = array('inscription','connexion','validation');
+	$Allowed = array('inscription', 'connexion', 'validation', 'recuperation');
 	
 	if(in_array($_GET['view'], $Allowed))
 	{

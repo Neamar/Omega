@@ -100,6 +100,16 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
 	return $R;
 }
 
+/**
+ * Génère le code HTML eDevoir.
+ * 
+ * @param string $markup la balise à utiliser. Strong par défaut.
+ */
+function ViewHelper_Html_eDevoir($markup='strong')
+{
+	return '<' . $markup . ' class="edevoir"><span>e</span>Devoir</' . $markup . '>';
+}
+
 	
 /**
  * Initialise le Typographe pour une utilisation avec la documentation.
@@ -140,7 +150,7 @@ function ViewHelper_Html_fromTex($URL)
 	$HTML = Typo::Parse();
 	
 	$HTML = preg_replace_callback(
-		'`\%([A-Z_]+)\%`',
+		'`__([A-Z_]+)__`',
 		create_function(
 			'$Constante',
 			'return constant($Constante[1]);'

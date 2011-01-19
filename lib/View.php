@@ -241,6 +241,17 @@ class View
 	}
 	
 	/**
+	 * Ajoute une URL "à voir aussi" qui s'affichera à droite du breadcrumb.
+	 * 
+	 * @param string $URL
+	 * @param string $Caption
+	 */
+	public function setSeelink($URL, $Caption)
+	{
+		self::setMeta('seelink', array('url' => $URL, 'caption' => $Caption));
+	}
+	
+	/**
 	 * Ajoute un script en haut de page
 	 * 
 	 * @param string $Src l'URL du script à ajouter. Si vide, ajoutera le fichier js associé à la page dans le fichier public/js
@@ -380,7 +391,25 @@ class View
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
-		return $this->Html_List($RibbonParts, 'ul', 'ribbon-' . count($RibbonParts));
+		
+		//Si les liens sont précisés, les enregistrer pour le rendu depuis ->renderLinks()
+		if(isset($RibbonParts['links']))
+		{
+			$this->setMeta('links', $RibbonParts['links']);
+		}
+		
+		$R = 
+'	<div id="ribbon-left">
+		' . $RibbonParts['left'] . '
+	</div>
+	<div id="ribbon-center">
+		Espace ' .$this->Controller->getModule() . '
+	</div>
+	<div id="ribbon-right">
+		' . $RibbonParts['right'] . '
+	</div>
+';		
+		return $R;
 	}
 	
 	/**
@@ -390,19 +419,50 @@ class View
 	 */
 	public function renderBreadcrumbs()
 	{
-		$Ariane = array('/' => '<span class="edevoir"><span>e</span>Devoir</span>') + self::getMeta('breadcrumbs');
+		$R = '';
+		
+		//Lien "voir aussi"
+		if($this->issetMeta('seelink'))
+		{
+			$SeeLink = $this->getMeta('seelink');
+			$R .= '<div class="seelink"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
+		}
+		
+		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
 		
 		//Mettre au format microdata décrit par Google
 		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417
 		foreach($Ariane as $Url => &$Caption)
 		{
-			$Caption = '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-  <a href="' . $Url . '" itemprop="url">
-    <span itemprop="title">' . $Caption . '</span>
-  </a>
-</div>';
+			$Caption = '
+		<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+			<a href="' . $Url . '" itemprop="url">
+			   	<span itemprop="title">' . str_replace('_', ' ', $Caption) . '</span>
+			</a>
+		</div>
+	';
 		}
-		return $this->Html_List($Ariane);
+		$R .= $this->Html_List($Ariane);
+		
+		return $R;
+	}
+	
+	public function renderLinks()
+	{
+		if(!$this->issetMeta('links'))
+		{
+			//Liens par défaut
+			$this->setMeta(
+				'links',
+				array(
+					'/' => 'Accueil',
+					'/eleve/connexion' => 'Connexion élève',
+					'/correcteur/connexion' => 'Connexion correcteur'
+				)
+			);
+		}
+
+		return $this->Html_listAnchor($this->getMeta('links'));
 	}
 	
 	/**
@@ -412,11 +472,11 @@ class View
 	 */
 	public function renderTitle()
 	{
-		$Title = '<h1>' . $this->getMeta('title') . '</h1>' . "\n";
+		$Title = '	<h1>' . $this->getMeta('title') . '</h1>' . "\n";
 		
 		if($this->issetMeta('intro'))
 		{
-			$Title .= '<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
+			$Title .= '	<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
 		}
 		
 		return $Title;

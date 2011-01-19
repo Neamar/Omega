@@ -1,16 +1,23 @@
-/exercice/index/XXX liste déroulante "action rapide"
 /correcteur/options_matieres : intégration graphique cohérente, disabling du combo
-/exercice/sujet/XXX afficher une image aperçu des PDF
+Création d'un exercice puis déconnexion avant d'ajouter des fichiers : retourner à l'ajout de fichier.
+Revoir la cohérence des titres entre élève / correcteur
+Gérer auto-accept
+Ajouter un graphique pour les deltas de points
+Ajouter une coloration syntaxique pour le LaTeX.
+Enregistrer les différentes versions du fichier
+Afficher le contenu du PDF en aperçu
+
+HTML5 Forms :
+Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
 Ajouter des attributs "required" sur les éléments de formulaire http://diveintohtml5.org/forms.html#required
 Ajouter des attributs pattern http://www.tomsyweb.com/component/content/article/43-html/88-les-formulaires-html-5-dans-firefox-4
 Passer les sliders en véritables sliders [type=range]
-Création d'un exercice puis déconnexion avant d'ajouter des fichiers : retourner à l'ajout de fichier.
-Revoir la cohérence des titresentre élève / correcteur
-Un clic sur une miniature affiche en lightbox le fichier original.
-Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
-Gérer auto-accept
 
 En production
 - ajouter captcha à l'inscription élève
 - ajouter captcha à l'inscription correcteur
+- ajouter captcha à la récupération mdp
+- ajouter captcha à la désinscription
 - virer le dump de la requete dans Sql::query
+- véritables mails
+- supprimer les tuples SQL par défaut

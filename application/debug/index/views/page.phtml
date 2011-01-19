@@ -1,9 +1,11 @@
-<h1>Titre de la page</h1>
-<p class="intro">Texte de présentation de la page</p>
-
-<p class="see-link"><a href="/...">Lien de retour</a></p>
-
 <p>Du blabla explicatif si nécessaire...</p>
+
+<p class="important">Un message important.</p>
+
+<p>Encore du blabla... et <?php echo $this->Html_eDevoir() ?> (avec une classe pour pencher le e)</p>
+
 <?php 
-echo $this->Doc_box('foo', 'bar', 'Un lien vers une page d\'aide');
+echo $this->Doc_box('eleve', 'inscription', 'Un lien vers une page d\'aide');
+
+echo $this->View_render($this->SousPage);
 ?>

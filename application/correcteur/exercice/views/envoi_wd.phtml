@@ -1,0 +1,35 @@
+<p>Avant de commencer à travailler, quelques rappels :</p>
+<?php 
+$Rappels = array();
+
+$Rappels[] = 'Délai avant expiration : ' . $this->Date_countdown($this->Exercice->Expiration);
+$Rappels[] = 'Type de la demande : <strong>' . $this->Exercice->DetailsDemande . '</strong>. ' . $this->Doc_anchor('correcteur', 'demande_' . strtolower($this->Exercice->Demande));
+
+echo $this->Html_list($Rappels);
+?>
+
+<p>Vous retrouverez l'exercice au complet ci-dessous.</p>
+
+<form id="form_envoi-exercice" method="post" action="">
+
+<?php
+echo $this->Form_textareaLabelBr(
+	'corrige',
+	'Votre texte'
+);
+echo $this->Doc_inputBr('correcteur', 'aide_tex');
+
+//Indiquer les erreurs.
+if(isset($this->Erreurs))
+{
+	echo '<p>Erreurs :</p>';
+	echo $this->Html_list($this->Erreurs);
+}
+
+echo $this->Form_submit('envoi-exercice', "Envoyer ce texte");
+?>
+</form>
+
+<?php 
+echo $this->Exercice($this->Exercice);
+?>

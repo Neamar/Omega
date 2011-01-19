@@ -34,7 +34,7 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle(
 			'Accueil élève',
-			'Cette page offre un récapitulatif de votre compte : vos derniers exercices, votre compte... ainsi, bien sûr, que la possibilité de créer un nouvel exercice.</p>'
+			'Cette page offre un récapitulatif de votre compte : vos derniers exercices, votre solde... ainsi, bien sûr, que la possibilité de créer un nouvel exercice.</p>'
 		);
 		
 		$this->View->Exo = $this->concat('/eleve/exercice/');
@@ -48,20 +48,23 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function connexionAction()
 	{
-		$this->View->setTitle('Connexion élève', 'Connectez-vous pour accéder au site.');
+		$this->View->setTitle(
+			'Connexion élève',
+			'Connectez-vous pour accéder au site.'
+		);
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Eleve']))
 		{
 			unset($_SESSION['Eleve']);
-			$this->View->setMessage("info", "Vous vous êtes déconnecté.", 'eleve/deconnexion');
+			$this->View->setMessage('info', "Vous vous êtes déconnecté.", 'eleve/deconnexion');
 		}
 		
 		if(isset($_POST['connexion-eleve']))
 		{
-			if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
-				$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+				$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 			}
 			else
 			{
@@ -70,7 +73,7 @@ class Eleve_IndexController extends IndexAbstractController
 				{
 					if($Eleve->Statut == 'EN_ATTENTE')
 					{
-						$this->View->setMessage("error", "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.", 'eleve/probleme_connexion');
+						$this->View->setMessage('error', "Votre compte est actuellement en attente de validation. Consultez votre boite mail pour plus de détails.", 'eleve/probleme_connexion');
 						unset($_SESSION['Eleve']); 
 					}
 					else
@@ -82,7 +85,7 @@ class Eleve_IndexController extends IndexAbstractController
 				else
 				{
 					//TODO : Bloquer après trois connexions ?
-					$this->View->setMessage("error", "Identifiants incorrects.", 'eleve/probleme_connexion');
+					$this->View->setMessage('error', "Identifiants incorrects.", 'eleve/probleme_connexion');
 				}
 			}
 		}
@@ -96,7 +99,7 @@ class Eleve_IndexController extends IndexAbstractController
 	{
 		$this->View->setTitle(
 			'Inscription élève',
-			"L'inscription à <strong>eDevoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permettre de profiter rapidement des services offerts par le site."
+			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permettre de profiter rapidement des services offerts par le site."
 		);
 		
 		//Charger la liste des classes pour le combobox :
@@ -106,14 +109,14 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage("info", "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
+			$this->View->setMessage('info', "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
 		}
 		
 		if(isset($_POST['inscription-eleve']))
 		{
 			if(!isset($this->View->Classes[$_POST['classe']]))
 			{
-				$this->View->setMessage("error", "Sélectionnez une classe dans la liste déroulante.");
+				$this->View->setMessage('error', "Sélectionnez une classe dans la liste déroulante.");
 			}
 			else
 			{
@@ -126,8 +129,14 @@ class Eleve_IndexController extends IndexAbstractController
 						'lien'=>sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
 					);
 					External::templateMail($_POST['email'], '/eleve/validation', $Datas);
+					
+					Event::dispatch(
+						Event::ELEVE_INSCRIPTION, 
+						$Datas
+					);
+					
 					$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];
-					$this->View->setMessage("info", "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
+					$this->View->setMessage('info', "Vous êtes maintenant membre ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail pour terminer votre inscription.");
 					$this->redirect('/eleve/connexion');
 				}
 			}
@@ -157,74 +166,13 @@ class Eleve_IndexController extends IndexAbstractController
 				$Eleve->setAndSave(array('Statut'=>'OK'));
 			}
 			
-			$this->View->setMessage("info", "Votre compte est validé ! Vous pouvez maintenant vous connecter");
+			$this->View->setMessage('info', "Votre compte est validé ! Vous pouvez maintenant vous connecter");
 			$this->redirect("/eleve/connexion");
 		}
 		else
 		{
-			$this->View->setMessage("error", "Lien de validation invalide.");
+			$this->View->setMessage('error', "Lien de validation invalide.");
 			$this->redirect("/eleve/inscription");
-		}
-	}
-	
-	/**
-	 * Page d'options globales.
-	 */
-	public function optionsAction()
-	{
-		$this->View->setTitle(
-			'Options élève',
-			'Modifiez ici vos informations de compte.'
-		);
-		$this->View->Compte = $this->concat('/eleve/options_compte');
-	}
-	
-	public function options_CompteAction()
-	{
-		$this->View->setTitle(
-			'Modifications du compte',
-			'Cette page vous permet de modifier les informations de votre compte'
-		);
-
-		//Charger la liste des classes pour le combobox :
-		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
-		
-		
-		if(isset($_POST['edition-compte']))
-		{
-			$ToUpdate = $this->editAccount($_POST, $_SESSION['Eleve']);
-			if($ToUpdate == FAIL)
-			{
-				//La mise à jour ne doit pas être effectuée.
-				//Le message a été défini par editAccount.
-			}
-			elseif(!isset($this->View->Classes[$_POST['classe']]))
-			{
-				$this->View->setMessage("error", "Sélectionnez une classe dans la liste déroulante.");
-			}
-			else
-			{
-				if($_POST['classe'] != $_SESSION['Eleve']->Classe)
-				{
-					$ToUpdate['Classe'] = $_POST['classe'];
-				}
-				
-				if($_POST['section'] != $_SESSION['Eleve']->Section)
-				{
-					$ToUpdate['Section'] = $_POST['section'];
-				}
-				
-				//Ne commiter que s'il y a des modifications.
-				if(empty($ToUpdate))
-				{
-					$this->View->setMessage("warning", "Aucune modification.");
-				}
-				else
-				{
-					$_SESSION['Eleve']->setAndSave($ToUpdate);
-					$this->View->setMessage("info", "Modifications du compte enregistrées.");
-				}
-			}
 		}
 	}
 	

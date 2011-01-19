@@ -5,8 +5,7 @@
  * @author eDevoir <webmaster@edevoir.com>
  */
 
-//Gestion des dates dynamiques
-$(function()
+function dynamicDate()
 {
 	var Times = $('time.date');
 	if(Times.length > 0)
@@ -15,7 +14,9 @@ $(function()
 			Times.prettyDate();
 		});
 	}
-});
+}
+//Gestion des dates dynamiques
+$(dynamicDate);
 
 //Gestion des tableaux Ajax
 $(function()

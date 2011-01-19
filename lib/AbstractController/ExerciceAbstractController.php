@@ -93,12 +93,25 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	public function sujetActionWd()
 	{
-		//TODO : gérer les pdf / doc / odt / ...
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
-		$this->deflectView(LIB_PATH . '/Views/exercice/sujet_wd.phtml');
+		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
+	}
+	
+	/**
+	 * Afficher le corrigé
+	 */
+	public function corrigeActionWd()
+	{
+		$this->canAccess(array('ENVOYE', 'TERMINE', 'REFUSE', 'REMBOURSE'), 'Le corrigé n\'est pas encore disponible.');
+		
+		$this->View->setTitle("Affichage du corrigé de l'exercice « " . $this->Exercice->Titre . ' »');
+
+		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
+		
+		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
 	}
 	
 	public function zipActionWd()
@@ -110,7 +123,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->Files = $this->Exercice->getSortedFiles();
 		
 		//Et dévier la vue :
-		$this->deflectView(LIB_PATH . '/Views/exercice/zip.phtml');
+		$this->deflectView(OO2FS::genericViewPath('exercice/zip_wd'));
 	}
 	
 	/**

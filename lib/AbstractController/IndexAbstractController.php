@@ -27,6 +27,72 @@
 abstract class IndexAbstractController extends AbstractController
 {
 	/**
+	 * Désinscrit le membre.
+	 */
+	public function desinscriptionAction()
+	{
+		$this->View->setTitle(
+			'Désinscription eDevoir',
+			'Cette page vous permet de vous désinscrire définitivement.'
+		);
+		
+		/**
+		 * Le membre qui demande la désinscription.
+		 * @var Membre
+		 */
+		$this->View->Membre = $_SESSION[ucfirst($this->getModule())];
+		
+		if(isset($_POST['desinscription-membre']))
+		{
+			//Au revoir :(
+			Sql::update(
+				'Membres',
+				$this->View->Membre->getFilteredId(),
+				array('Statut' =>  'DESINSCRIT'),
+				'AND Pass="' . $this->hashPass($_POST['password']) . '"
+				 AND Type = "' . strtoupper($this->getModule()) . '"'
+			);
+			
+			if(Sql::affectedRows() < 1)
+			{
+				$this->View->setMessage('error', "Mot de passe invalide.");
+			}
+			else
+			{
+				unset($_SESSION[ucfirst($this->getModule())]);
+				
+				$this->View->setMessage('ok', "Vous avez été désinscrit. Que les vents vous soient favorables !<br />
+				Vous avez été déconnecté.");
+				$this->redirect('/' . $this->getModule() . '/connexion');
+			}
+		}
+		
+		//Utiliser une vue générique.
+		$this->deflectView(LIB_PATH . '/View/membre/desinscription.phtml');
+	}
+	
+	/**
+	 * Page pour récupérer un mot de passe perdu
+	 */
+	public function recuperationAction()
+	{
+		$this->View->setTitle(
+			'Récupération mot de passe',
+			'Cette page vous permet de récupérer un mot de passe perdu.'
+		);
+		
+		//Récupérer un mot de passe alors qu'on est connecté ?
+		//WTF ?
+		if(isset($_SESSION[ucfirst($this->getModule())]))
+		{
+			$this->redirect('/' . $this->getModule());
+		}
+		
+		//Utiliser une vue générique.
+		$this->deflectView(LIB_PATH . '/View/membre/recuperation.phtml');
+	}
+	
+	/**
 	 * Crée un compte de base.
 	 * Appelle la fonction create_account_special() qui gère les opérations spécifiques (tables héritées)
 	 * @see IndexAbstractController::createAccountSpecial
@@ -38,7 +104,7 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function createAccount(array $Datas, $Type)
 	{
-		if(!$this->validateMail($Datas['email']))
+		if(!Validator::mail($Datas['email']))
 		{
 			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
 		}
@@ -64,7 +130,7 @@ abstract class IndexAbstractController extends AbstractController
 			SQL::start();
 			$ToInsert = array(
 				'Mail' => $Datas['email'],
-				'Pass' => sha1(SALT . $Datas['password']),
+				'Pass' => $this->hashPass($Datas['password']),
 				'_Creation' => 'NOW()',
 				'_Connexion' => 'NOW()',
 				'Type' => $Type,
@@ -106,50 +172,6 @@ abstract class IndexAbstractController extends AbstractController
 	protected abstract function createAccountSpecial(array $Datas);
 	
 	/**
-	 * Modifie un compte de base.
-	 * Appelle la fonction editAccountSpecial() qui gère les opérations spécifiques selon l'héritage (numéro de téléphone, classe...)
-	 * Utilisé par options_CompteAction().
-	 * 
-	 * @param array $Data les données envoyées
-	 * @param Membre $Base le membre actuel (pour ne pas mettre à jour ce qui ne change pas)
-	 * 
-	 * @return array le tableau des modifications à effecter, ou FAIL (avec un message dans ce cas)
-	 */
-	protected function editAccount(array $Datas, Membre $Base)
-	{
-		if(!$this->validateMail($Datas['email']))
-		{
-			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
-		}
-		else if(External::isTrash($Datas['email']))
-		{
-			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
-		}
-		else if(!empty($Datas['password_confirm']) && $Datas['password'] != $Datas['password_confirm'])
-		{
-			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
-		}
-		else
-		{
-			$ToUpdate = array();
-
-			if($Datas['email'] != $Base->Mail)
-			{
-				$ToUpdate['Mail'] = $Datas['email'];
-			}
-			
-			if(!empty($Datas['password_confirm']))
-			{
-				$ToUpdate['Pass'] = sha1(SALT . $Datas['password']);
-			}
-			
-			return $ToUpdate;
-		}
-		
-		return FAIL;
-	}
-	
-	/**
 	 * Connecte la personne en tant que $Type (Eleve, Correcteur) si ses identifiants sont corrects.
 	 * Renvoie null si les identifiants sont incorrects ou si le membre est désinscrit.
 	 * 
@@ -161,7 +183,16 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function logMe($Mail, $Pass, $Type)
 	{
-		$ID = '(SELECT ID FROM Membres WHERE Mail="' . SQL::escape($Mail) . '" AND Pass="' . sha1(SALT . $Pass) . '" AND Statut !="DESINSCRIT" AND Type="' . Sql::escape($Type) . '")';
+		//On ne gère pas désinscrit par un message à part pour ne pas révéler si un membre était déjà inscrit.
+		$ID = '(
+		SELECT ID
+		FROM Membres
+		WHERE
+			Mail="' . SQL::escape($Mail) . '"
+			AND Pass="' . $this->hashPass($Pass) . '"
+			AND Statut !="DESINSCRIT"
+			AND Type="' . Sql::escape($Type) . '"
+		)';
 		
 		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	
@@ -176,14 +207,14 @@ abstract class IndexAbstractController extends AbstractController
 	}
 	
 	/**
-	 * Valide une adresse mail.
+	 * Hashe le mot de passe fourni
 	 * 
-	 * @param string $Mail
+	 * @param string $Pass
 	 * 
-	 * @return bool
+	 * @return string du sha1.
 	 */
-	protected function validateMail($Mail)
+	private function hashPass($Pass)
 	{
-		return filter_var($Mail, FILTER_VALIDATE_EMAIL);
+		return sha1(SALT . $Pass);
 	}
 }

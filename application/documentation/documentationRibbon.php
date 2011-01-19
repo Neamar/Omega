@@ -14,7 +14,16 @@
  * @link      http://edevoir.com
  */
 
-$Retour = array('Documentation');
+$Retour = array(
+	'left' => '',
+	'right' => '',
+	'links' => array(
+		'/' => 'Accueil site',
+		'/documentation/' => 'Accueil documentation',
+		'/documentation/eleve/' => 'Documentation élève',
+		'/documentation/correcteur' => 'Documentation correcteur'
+	)
+);
 
 
 return $Retour;

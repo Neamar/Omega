@@ -202,7 +202,7 @@ abstract class AbstractController
 	protected function json(array $Data)
 	{
 		$this->View->jsonDatas = array_values($Data);
-		$this->deflectView(LIB_PATH . '/Views/json.phtml');
+		$this->deflectView(OO2FS::genericViewPath('json'));
 	}
 	/**
 	 * Redirige le visiteur sur la page spécifiée

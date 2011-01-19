@@ -20,7 +20,7 @@ foreach($this->Matieres as $Matiere)
 	<?php
 	echo $this->Form_selectLabel(
 		'start_' . $ID,
-		'Débute en ',
+		'Débute en',
 		$this->Classes,
 		(isset($this->Defaults[$Matiere])?$this->Defaults[$Matiere]['Commence']:6)
 	);
