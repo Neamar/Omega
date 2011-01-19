@@ -392,6 +392,12 @@ class View
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
 		
+		//Si les liens sont précisés, les enregistrer pour le rendu depuis ->renderLinks()
+		if(isset($RibbonParts['links']))
+		{
+			$this->setMeta('links', $RibbonParts['links']);
+		}
+		
 		$R = 
 '	<div id="ribbon-left">
 		' . $RibbonParts['left'] . '
@@ -439,6 +445,24 @@ class View
 		$R .= $this->Html_List($Ariane);
 		
 		return $R;
+	}
+	
+	public function renderLinks()
+	{
+		if(!$this->issetMeta('links'))
+		{
+			//Liens par défaut
+			$this->setMeta(
+				'links',
+				array(
+					'/' => 'Accueil',
+					'/eleve/connexion' => 'Connexion élève',
+					'/correcteur/connexion' => 'Connexion correcteur'
+				)
+			);
+		}
+
+		return $this->Html_listAnchor($this->getMeta('links'));
 	}
 	
 	/**

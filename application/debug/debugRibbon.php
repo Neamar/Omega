@@ -16,5 +16,10 @@
  
 return array(
 	'left' => 'ADMIN',
-	'right' => '<a href="/admin/">Accès à l\'administration</a>'
+	'right' => '<a href="/admin/">Accès à l\'administration</a>',
+	'links' => array(
+		'/' => 'Accueil',
+		'/debug/clean' => 'Nettoyage',
+		'/debug/alldoc' => 'Toute la documentation'
+	)
 );

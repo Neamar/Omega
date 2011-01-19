@@ -16,7 +16,13 @@
 
 $Retour = array(
 	'left' => '',
-	'right' => ''
+	'right' => '',
+	'links' => array(
+		'/' => 'Accueil site',
+		'/documentation/' => 'Accueil documentation',
+		'/documentation/eleve/' => 'Documentation élève',
+		'/documentation/correcteur' => 'Documentation correcteur'
+	)
 );
 
 
