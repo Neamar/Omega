@@ -85,14 +85,24 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
-	 * Page par défaut.
+	 * Page par défaut, pour les tests de CSS
 	 * 
 	 */
 	public function pageAction()
 	{
-		$this->View->setTitle('Exemple de contenu HTML');
+		$this->View->setTitle(
+			'Exemple de contenu HTML',
+			"Exemple de texte d'introduction présentant l'utilité de la page et son contenu.");
 		
-		$this->View->setMessage("error", "Texte du message d'erreur", "foo/bar");
+		$this->View->setSeelink('/', 'Exemple de lien à voir aussi');
+		
+		$this->View->setMessage("error", "Exemple de message d'erreur suivi d'un lien vers l'aide", "eleve/inscription");
+		
+		$this->View->SousPage = $this->concat('/eleve/inscription');
+		
+		$this->View->SousPage->setTitle(
+			'Exemple de sous page',
+			"Exemple de texte d'introduction présentant l'utilité de la sous page et son contenu. Ici, sous-page inscription élève");		
 	}
 	
 	/**
