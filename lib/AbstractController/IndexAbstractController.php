@@ -160,6 +160,7 @@ abstract class IndexAbstractController extends AbstractController
 	 */
 	protected function logMe($Mail, $Pass, $Type)
 	{
+		//On ne gère pas désinscrit par un message à part pour ne pas révéler si un membre était déjà inscrit.
 		$ID = '(
 		SELECT ID
 		FROM Membres

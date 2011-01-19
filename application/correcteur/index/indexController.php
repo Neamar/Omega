@@ -67,7 +67,12 @@ class Correcteur_IndexController extends IndexAbstractController
 			else
 			{
 				$Correcteur = $this->logMe($_POST['email'], $_POST['password'], 'Correcteur');
-				if(!is_null($Correcteur))
+				if(is_null($Correcteur))
+				{
+					//TODO : Bloquer après trois connexions ?
+					$this->View->setMessage('error', "Identifiants incorrects.", 'correcteur/probleme_connexion');
+				}
+				else
 				{
 					if($Correcteur->Statut == 'EN_ATTENTE')
 					{
@@ -79,11 +84,6 @@ class Correcteur_IndexController extends IndexAbstractController
 						$this->View->setMessage("infos", "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
 						$this->redirect('/correcteur/');
 					}
-				}
-				else
-				{
-					//TODO : Bloquer après trois connexions ?
-					$this->View->setMessage('error', "Identifiants incorrects.", 'eleve/probleme_connexion');
 				}
 			}
 		}
