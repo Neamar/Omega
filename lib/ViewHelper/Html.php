@@ -67,6 +67,46 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
 }
 
 /**
+ * Génère une liste d'action :
+ * Lien
+ * 	Description du lien...
+ * 	[Lien vers de la documentation]
+ * 
+ * @param array $Actions la liste des actions. La clé repréente la partie dynamique de l'URL, la valeur est soit un string (le texte du lien), soit un tableau pouvant contneir jusqu'à trois éléments : le texte du lien, la description du lien, et un lien vers une page d'aide.
+ * @param string $BaseURL l'url de base. La partie _URL_ sera dynamiquement remplacée par la clé du tableau.
+ * @param string $BaseDoc le module de base pour les liens documentation.
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
+{
+	foreach($Actions as $URL => &$Action)
+	{
+		if(is_array($Action))
+		{
+			$Texte = '<a href="' . str_replace('_URL_', $URL, $BaseURL) . '">' . $Action[0] . '</a><br />
+	<p class="action-detail">' . $Action[1];
+			if(isset($Action[2]))
+			{
+				if(!function_exists('ViewHelper_Doc_anchor'))
+				{
+					include OO2FS::viewHelperPath('Doc');
+				}
+				$Texte .= '<br />' . ViewHelper_Doc_anchor($BaseDoc, $Action[2]);
+			}
+			
+			$Action = $Texte . '</p>';
+		}
+		else
+		{
+			$Action = '<a href="' . str_replace('_URL_', $URL, $BaseURL) . '">' . $Action . '</a>';
+		}
+	}
+	
+	return ViewHelper_Html_list($Actions);
+}
+
+/**
  * Génère un tableau dynamique AJAX.
  * 
  * @param string $URL l'URL renvoyant les ressources en JSON
