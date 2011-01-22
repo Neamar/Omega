@@ -56,15 +56,25 @@ abstract class PointsAbstractController extends AbstractController
 		
 		if($Membre->getPoints() == 0)
 		{
-			$Message = 'Vous n\'avez aucun point à convertir.';
+			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
+			$this->redirect('/' . $this->getModule() . '/points/');
 		}
-		//TODO : tester la dernière demande de virement
-		
-		//Si erreur, notifier puis dégager
-		if(isset($Message))
+		$DernierVirement = strtotime(Sql::singleColumn(
+			'SELECT Date
+			FROM Virements
+			WHERE Membre = ' . $Membre->getFilteredId() . '
+			ORDER BY ID DESC
+			LIMIT 1',
+			'Date'
+		));
+		if($DernierVirement != false && $DernierVirement > time() - DELAI_VIREMENT * 7 * 24 * 3600)
 		{
-			$this->View->setMessage("error", $Message);
-			$this->redirect('/' . $_GET['module'] . '/points/');
+			$this->View->setMessage(
+				"error",
+				"Impossible d'effectuer plus d'un virement tous les " . DELAI_VIREMENT . ' jours. Dernière demande de virement : ' . date('d/m/Y à H\h', $DernierVirement),
+				'correcteur/retrait'
+			);
+			$this->redirect('/' . $this->getModule() . '/points/');
 		}
 		
 		if(isset($_POST['retrait-points']))
