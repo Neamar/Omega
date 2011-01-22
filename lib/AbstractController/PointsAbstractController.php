@@ -70,9 +70,15 @@ abstract class PointsAbstractController extends AbstractController
 		if(isset($_POST['retrait-points']))
 		{
 			$_POST['retrait'] = intval($_POST['retrait']);
-			
-			//TODO : demander le mot de passe
-			if($_POST['retrait'] == 0)
+			if(empty($_POST['password']))
+			{
+				$this->View->setMessage("error", "Pour des raisons de sécurité, vous devez fournir votre mot de passe.");
+			}
+			elseif(!$Membre->comparePass(Util::hashPass($_POST['password'])))
+			{
+				$this->View->setMessage("error", "Mot de passe non valide.");
+			}
+			elseif($_POST['retrait'] == 0)
 			{
 				$this->View->setMessage("error", "Valeur invalide ou nulle.");
 			}
