@@ -65,7 +65,9 @@ class View
 			),
 			'meta'=>array(),
 			'style'=>array(
+				'/public/css/head.css' => true,
 				'/public/css/base.css' => true,
+				'/public/css/' . $Controller->getModule() . '.css' => true,
 				'/public/css/ui/ui.css' => true,
 				'/public/css/prettyPhoto/prettyPhoto.css' => true,
 			),
