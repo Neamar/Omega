@@ -1,0 +1,56 @@
+<?php 
+echo $this->Doc_box(
+	'correcteur',
+	'retrait',
+	$this->Message
+);
+
+//Somme maximum que l'on peut dépenser
+$Max = $this->Membre->getPoints();
+?>
+
+<form id="form_retrait-points" method="post" action="">
+<p>Vous pouvez retirer jusqu'à <?php echo $Max ?> points (<?php echo $this->Points_euros($Max) ?>)<br />
+Attention ! Le délai minimum entre deux retraits est d'une semaine.</p>
+<?php 
+//Le mot de passe
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
+	array(
+		'type'=>'password',
+	)
+);
+
+//Le nombre de points
+echo $this->Form_pointsLabelBr(
+	'retrait',
+	'Nombre de points à retirer',
+	$Max,
+	array(
+		'value' => 0,
+	)
+);
+
+//Le type de retrait
+//TODO : disable la partie non sélectionnée
+echo $this->Form_radio(
+	'type',
+	array(
+		'rib' => 'Paiement par virement bancaire. ' . $this->Form_ribLabel('rib', 'RIB') ,
+		'paypal' => 'Paiement par paypal. ' . $this->Form_inputLabel(
+			'paypal',
+			'Compte',
+			array(
+				'placeholder' => 'nom@fai.fr',
+				'type' => 'email',
+				'maxlength' => '29'
+			)
+		)
+	),
+	'rib'
+);
+
+echo $this->Form_submit('retrait-points', "Retirer des points");
+?>
+</form>

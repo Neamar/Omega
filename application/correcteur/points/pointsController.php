@@ -43,6 +43,7 @@ class Correcteur_PointsController extends PointsAbstractController
 		}
 		else
 		{
+			$this->View->Message = "Convertissez vos points durement gagnés en euros sonnants et trébuchants !";
 			parent::retraitAction();
 			return;
 		}

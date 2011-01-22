@@ -52,6 +52,7 @@ abstract class PointsAbstractController extends AbstractController
 		 * @var Membre
 		 */
 		$Membre = $_SESSION[ucfirst($_GET['module'])];
+		$this->View->Membre = $Membre;
 		
 		if($Membre->getPoints() == 0)
 		{
@@ -148,7 +149,8 @@ abstract class PointsAbstractController extends AbstractController
 					}
 				}
 			}
-		}
+		}//Fin test $_POST
 		
+		$this->deflectView(OO2FS::genericViewPath('membre/retrait'));
 	}
 }
