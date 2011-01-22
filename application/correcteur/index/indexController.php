@@ -135,6 +135,8 @@ JOIN Correcteurs_Capacites ON (
 )
 
 WHERE Statut = "ATTENTE_CORRECTEUR"
+
+ORDER BY Exercices.TimeoutEleve
 			',
 			'Hash'
 		);

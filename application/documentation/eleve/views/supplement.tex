@@ -1,7 +1,7 @@
 ﻿Un système de majoration par exercice est mis en place lorsque le flux d'exercices envoyés est trop important. Celui-ci fonctionne de la manière suivante :
-\item Lorsqu'un élève poste un exercice, le site regarde combien de jours sur les __CALCUL_CUMUL__ derniers jours l'élève a déjà posté un (ou plusieurs) exercice(s). On majore ensuite de __POURCENTAGE_SURACTIVITE__\% par jour les propositions correcteurs. Ce surplus, qui ne prend donc en compte que les __CALCUL_CUMUL__ derniers jours d'activité, est majoré par __POURCENTAGE_MAX_SURACTIVITE__\%. Autrement dit, un exercice de 10€ ne pourra pas coûter après majoration plus de 15€ en cas de sur-sur-activité.
+\item Lorsqu'un élève poste un exercice, le site regarde combien de jours sur les __CALCUL_CUMUL__ derniers jours l'élève a déjà posté un (ou plusieurs) exercice(s). On majore ensuite de __POURCENTAGE_SURACTIVITE__\% par jour les propositions correcteurs. Ce surplus, qui ne prend donc en compte que les __CALCUL_CUMUL__ derniers jours d'activité, est majoré par __POURCENTAGE_MAX_SURACTIVITE__\%. Autrement dit, un exercice normalement facturé 10€ ne pourra pas coûter après majoration plus de 15€ en cas de sur-sur-...-sur-activité.
 \item Ce calcul de majoration prend en compte le nombre de jours où l'élève a posté un exercice dans les __CALCUL_CUMUL__ derniers jours, et pas le nombre d'exercices postés. Autrement dit, qu'un élève poste un exercice lundi et un exercice mardi, ou dix exercices lundi et dix exercices mardi, la surcharge sera la même pour mercredi (soit deux fois __POURCENTAGE_SURACTIVITE__\%).
-\item Ce supplément retombe automatiquement à zéro après __CALCUL_CUMUL__ jours, puisque son calcul repose sur l'activité des __CALCUL_CUMUL__ derniers jours.
+\item Ce supplément retombe automatiquement à zéro après __CALCUL_CUMUL__ jours sans activité, puisque son calcul repose sur l'activité des __CALCUL_CUMUL__ derniers jours.
 
 \subsection{Pourquoi cette mesure ?}
 
