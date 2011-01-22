@@ -39,6 +39,18 @@ class Validator
 	}
 	
 	/**
+	 * Valide un compte paypal
+	 * 
+	 * @param $Compte le compte à tester
+	 *
+	 * @return true si ok
+	 */
+	public static function paypal($Compte)
+	{
+		return self::mail($Compte);
+	}
+	
+	/**
 	 * Valide un numéro de téléphone
 	 * 
 	 * @param string $Phone le numéro de téléphone à testers
@@ -128,4 +140,53 @@ class Validator
 		}
 		return (($sum % 10) == 0);
 	}
+	
+	/**
+	 * Valide un numéro de RIB.
+	 * @see http://pear.php.net/package/Validate_FR/download
+	 * 
+	 * @param array $rib le numéro de RIB à valider
+	 * 
+	 * @return bool true si ok
+	 */
+    public static function rib(array $rib)
+    {
+        if (is_array($rib)) {
+            $codebanque = $codeguichet = $nocompte = $key = '';
+            extract($rib);
+        } else {
+            return false;
+        }
+        $chars  = array('/[AJ]/','/[BKS]/','/[CLT]/','/[DMU]/','/[ENV]/',
+                        '/[FOW]/','/[GPX]/','/[HQY]/','/[IRZ]/');
+        $values = array('1','2','3','4','5','6','7','8','9');
+
+        $codebank   = preg_replace('/[^0-9]/', '', $codebanque);
+        $officecode = preg_replace('/[^0-9]/', '', $codeguichet);
+        $account    = preg_replace($chars, $values, $nocompte);
+
+        if (strlen($codebank) != 5) {
+            return false;
+        }
+
+        if (strlen($officecode) != 5) {
+            return false;
+        }
+
+        if (strlen($account) > 11) {
+            return false;
+        }
+
+        if (strlen($key) != 2) {
+            return false;
+        }
+
+        $padded = str_pad($account, 11, '0', STR_PAD_LEFT);
+        $l      = $codebank . $officecode . $padded . $key . '0';
+        $keyChk = 0;
+        for ($i = 0; $i < 24; $i += 4) {
+            $keyChk = ($keyChk*9 + substr($l, $i, 4)) % 97;
+        }
+        return !$keyChk;
+    }
 }
