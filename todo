@@ -7,6 +7,7 @@ Ajouter une coloration syntaxique pour le LaTeX.
 Enregistrer les différentes versions du fichier
 Afficher le contenu du PDF en aperçu
 Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
+Édulcorer au maximum les utilisations de $_GET['module'] pour $controller->getModule()
 
 HTML5 Forms :
 Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');

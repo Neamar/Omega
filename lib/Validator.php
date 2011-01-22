@@ -155,7 +155,6 @@ class Validator
         if (is_array($rib)) {
             $codebanque = $codeguichet = $nocompte = $key = '';
             extract($rib);
-            echo  $codebanque, $codeguichet , $nocompte , $key;
         } else {
             return false;
         }

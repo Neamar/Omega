@@ -36,6 +36,8 @@ class Event
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';
 	const CORRECTEUR_EXERCICE_ENVOI = 'correcteur/exercice/envoi';
+	
+	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
 	/**
 	* Transmet un événement aux écouteurs associés.
 	* @param string $Event l'évenement à dispatcher.

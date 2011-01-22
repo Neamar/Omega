@@ -27,4 +27,13 @@
  */
 class Correcteur_PointsController extends PointsAbstractController
 {
+	/**
+	 * Vérifie que le SIRET est valide.
+	 * @see PointsAbstractController::retraitAction()
+	 */
+	public function retraitAction()
+	{
+		//TODO : tests sur le SIRET.
+		parent::retraitAction();
+	}
 }

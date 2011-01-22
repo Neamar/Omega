@@ -43,6 +43,7 @@ abstract class PointsAbstractController extends AbstractController
 		{
 			$Message = 'Vous n\'avez aucun point à convertir.';
 		}
+		//TODO : tester la dernière demande de virement
 		
 		//Si erreur, notifier puis dégager
 		if(isset($Message))
@@ -55,6 +56,7 @@ abstract class PointsAbstractController extends AbstractController
 		{
 			$_POST['retrait'] = intval($_POST['retrait']);
 			
+			//TODO : demander le mot de passe
 			if($_POST['retrait'] == 0)
 			{
 				$this->View->setMessage("error", "Valeur invalide ou nulle.");
@@ -115,6 +117,17 @@ abstract class PointsAbstractController extends AbstractController
 					else
 					{
 						Sql::commit();
+						
+						Event::dispatch(
+							Event::MEMBRE_POINTS_RETRAIT,
+							array(
+								'mail' => $Membre->Mail,
+								'delta' => $_POST['retrait'],
+								'type' => $_POST['type'],
+								'ordre' => $Ordre,
+								'ip' => $_SERVER['REMOTE_ADDR']
+							)
+						);
 						
 						$this->View->setMessage('info', "Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais (usuellement dans la semaine).");
 						$this->redirect('/' . $this->getModule() . '/points/');
