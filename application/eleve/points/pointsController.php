@@ -27,4 +27,16 @@
  */
 class Eleve_PointsController extends PointsAbstractController
 {
+	/**
+	 * Retrait de points
+	 * @see PointsAbstractController::retraitAction()
+	 */
+	public function retraitAction()
+	{
+		$this->View->Message = "Vous souhaitez reconvertir vos points en euros ?<br />
+		Il vous suffit d'indiquer votre Relevé d'Identité Bancaire et le montant en points que vous souhaitez récupérer.<br />
+		Attention, selon le service utilisé, vous ne récupérerez pas forcément la somme initiale.";
+		
+		parent::retraitAction();
+	}
 }
