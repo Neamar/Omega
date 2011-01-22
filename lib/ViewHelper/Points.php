@@ -44,7 +44,8 @@ function ViewHelper_Points_formRetrait($Max)
 				'Compte',
 				array(
 					'placeholder' => 'nom@fai.fr',
-					'type' => 'email'
+					'type' => 'email',
+					'maxlength' => '29'
 				)
 			)
 		),

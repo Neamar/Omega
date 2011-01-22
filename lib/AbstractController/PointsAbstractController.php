@@ -63,7 +63,7 @@ abstract class PointsAbstractController extends AbstractController
 			{
 				$this->View->setMessage("error", "Vous ne pouvez pas retirer autant !");
 			}
-			elseif(!isset($_POST['type']))
+			elseif(!isset($_POST['type']) || !in_array($_POST['type'], array('rib', 'paypal')))
 			{
 				$this->View->setMessage("error", "Choisissez le type de virement.");
 			}
@@ -75,10 +75,51 @@ abstract class PointsAbstractController extends AbstractController
 			{
 				$this->View->setMessage("error", "Compte paypal invalide.");
 			}
+			elseif($_POST['type'] == 'paypal' && strlen($_POST['paypal']) > 29)
+			{
+				$this->View->setMessage("error", "Votre adresse paypal ne doit pas dépasser 30 caractères.");
+			}
 			else
 			{
-				//Sql::start();
-				//$Membre->debit($_POST['retraitPoints'], "Virement.");
+				if($_POST['type'] == 'paypal')
+				{
+					$Ordre = $_POST['paypal'];
+				}
+				else
+				{
+					$Ordre = $_POST['rib-banque'] . '-' . $_POST['rib-guichet'] . '-' . $_POST['rib-compte'] . '-' . $_POST['rib-cle'];
+				}
+				
+				Sql::start();
+				if(!$Membre->debit($_POST['retrait'], 'Virement pour ' . $Ordre))
+				{
+					Sql::rollback();
+					$this->View->setMessage('error', 'Impossible de débiter une telle somme. La transaction a été annulée');
+				}
+				else
+				{
+					$ToInsert = array(
+						'Membre' => $Membre->getFilteredId(),
+						'_Date' => 'NOW()',
+						'Montant' => $_POST['retrait'],
+						'Type' => strtoupper($_POST['type']),
+						'Beneficiaire' => $Ordre,
+						'Statut' => 'INDETERMINE'
+					);
+					
+					if(!Sql::insert('Virements', $ToInsert))
+					{
+						Sql::rollback();
+						$this->View->setMessage('error', "Impossible d'enregistrer la demande de virement. Ce problème devrait se résoudre de lui même sous peu.");
+					}
+					else
+					{
+						Sql::commit();
+						
+						$this->View->setMessage('info', "Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais (usuellement dans la semaine).");
+						$this->redirect('/' . $this->getModule() . '/points/');
+					}
+				}
 			}
 		}
 		
