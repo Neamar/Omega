@@ -25,6 +25,20 @@
  */
 abstract class PointsAbstractController extends AbstractController
 {
+	/**
+	 * Index du contrôleur de points
+	 */
+	public function indexAction()
+	{
+		$this->View->setTitle(
+			'Vos points',
+			'Cette page liste les différentes informations disponibles concernant vos points.'
+		);		
+	}
+	
+	/**
+	 * Opération de retrait de points
+	 */
 	public function retraitAction()
 	{
 		$this->View->setTitle(

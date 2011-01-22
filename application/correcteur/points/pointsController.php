@@ -33,7 +33,20 @@ class Correcteur_PointsController extends PointsAbstractController
 	 */
 	public function retraitAction()
 	{
-		//TODO : tests sur le SIRET.
-		parent::retraitAction();
+		if(empty($_SESSION['Correcteur']->Siret))
+		{
+			$this->View->setMessage('error', "Impossible de retirer de l'argent tant que vous ne nous avez pas indiqué votre SIRET. <a href=\"/correcteur/options/compte\">Entrer cette information</a>.", "correcteur/pourquoi_autoentreprise");
+		}
+		elseif($_SESSION['Correcteur']->SiretOK == 0)
+		{
+			$this->View->setMessage('error', "Impossible de retirer de l'argent tant que votre SIRET n'a pas été validé.");
+		}
+		else
+		{
+			parent::retraitAction();
+			return;
+		}
+		
+		$this->redirect('/correcteur/points/');
 	}
 }
