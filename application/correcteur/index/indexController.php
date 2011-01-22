@@ -135,6 +135,11 @@ JOIN Correcteurs_Capacites ON (
 )
 
 WHERE Statut = "ATTENTE_CORRECTEUR"
+AND Exercices.ID NOT IN (
+	SELECT Exercice
+	FROM Exercices_Correcteurs
+	WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+)
 
 ORDER BY Exercices.TimeoutEleve
 			',

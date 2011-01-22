@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Exercice` int(11) NOT NULL,
   `Correcteur` int(11) NOT NULL,
-  `Action` enum('VUE','ENCHERE','SIGNALEMENT') NOT NULL,
+  `Action` enum('ENCHERE','SIGNALEMENT') NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Correcteur` (`Correcteur`),
   KEY `Exercice` (`Exercice`)

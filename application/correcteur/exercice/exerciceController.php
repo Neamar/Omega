@@ -57,6 +57,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		 * @var array
 		 */
 		$ListeMessage = array(
+			'ATTENTE_CORRECTEUR' => "Cet exercice est disponible et ouvert à la réservation.",
 			'ATTENTE_ELEVE' => "Votre offre a été transmise à l'élève. Vous serez informés de son choix.",
 			'EN_COURS' => "Votre offre a été acceptée, vous pouvez commencer à travailler.",
 			'ENVOYE' => "Vous avez envoyé votre corrigé. L'élève n'a pas encore fait de remarques.",
@@ -75,6 +76,18 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	public function reservationActionWd()
 	{
 		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Vous ne pouvez plus réserver cet exercice !');
+		
+		//Peut-on accéder à l'exo ?
+		$Deja = Sql::singleQuery(
+			'SELECT COUNT(*) AS Vu
+			FROM Exercices_Correcteurs
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+		);
+		if($Deja['Vu'] > 0)
+		{
+			$this->View->setMessage("error", "Vous avez déjà fait une offre sur cet exercice.");
+			$this->redirect('/correcteur/liste');
+		}
 		
 		$this->View->setTitle(
 			'Réservation de « ' . $this->Exercice->Titre . ' »',
@@ -126,8 +139,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					'InfosCorrecteur' => $_POST['infos'],
 				);
 				
+				Sql::start();
+				
 				$this->Exercice->setStatus('ATTENTE_ELEVE', $_SESSION['Correcteur'], 'Proposition correcteur pour ' . $_POST['prix'] . ' points.', $ToUpdate);
 
+				//Logger l'offre.
+				Sql::insert(
+					'Exercices_Correcteurs',
+					array(
+						'Exercice' => $this->Exercice->ID,
+						'Correcteur' => $_SESSION['Correcteur']->ID,
+						'Action' => 'ENCHERE'
+					)
+				);
+				
+				Sql::commit();
+				
 				Event::dispatch(
 					Event::CORRECTEUR_EXERCICE_PROPOSITION,
 					array(
