@@ -185,10 +185,7 @@ abstract class DbObject
 			$Values['Exercice'] = intval($Exercice->ID);
 		}
 		
-		if(!SQL::insert($Table, $Values))
-		{
-			Debug::fail('Log : ' . SQL::error());
-		}
+		return SQL::insert($Table, $Values);
 	}
 	
 	/**

@@ -92,6 +92,7 @@ class Membre extends DbObject
 	/**
 	 * Débite l'utilisateur de la somme indiquée.
 	 * Si l'utilisateur ne peut pas payer cette somme, la fonction renvoie false.
+	 * Attention ! Cette fonction doit être appellée depuis une transaction.
 	 * 
 	 * @param int $Value la valeur à débiter
 	 * @param string $Log le message de log. Si non spécifié, l'enregistrement des logs est à la charge de l'appelant.
@@ -101,50 +102,66 @@ class Membre extends DbObject
 	 */
 	public function debit($Value, $Log, Exercice $Exercice = null)
 	{
-		if(!is_int($Value))
-		{
-			return false;
-		}
-			
-		if($this->isAbleToDebit($Value))
-		{
-			$this->setAndSave(array('_Points'=>'Points - ' . $Value));
-
-			$this->log('Logs', $Log, $this, $Exercice, array('Delta'=>-$Value));
-			
-			$R = Sql::insert(
-				'Banque',
-				array(
-					'_Date' => 'NOW()',
-					'Delta' => $Value,
-					'Action' => $Log,
-					'Log' => Sql::lastId()
-				)
-			);
-			
-			return $R;
-		}
-		
-		return false;
+		return $this->changePoints(-$Value, $Log, $Exercice);
 	}
 	
 	/**
 	 * Crédite l'utilisateur de la somme indiquée.
+	 * Attention ! Cette fonction doit être appellée depuis une transaction.
 	 * 
 	 * @param int $Value la valeur à créditer
 	 * @param string $Log le message de log.
 	 * 
 	 * @return bool true si la transaction a réussie
 	 */
-	public function credit($Value, $Log)
+	public function credit($Value, $Log, Exercice $Exercice = null)
+	{
+		return $this->changePoints($Value, $Log, $Exercice);
+	}
+
+	/**
+	 * Met à jour le solde.
+	 * 
+	 * @param int $Value entier signé
+	 * @param string $Log message à evoyer.
+	 * @param Exercice $Exercice l'exercice sur lequel appliquer le log.
+	 * @throws Exception la valeur spécifiée n'est pas numérique
+	 * @throws Exception l'échange ne se déroule pas dans une transaction
+	 * 
+	 * @return bool true si succès, false sinon. En cas de false, un ROLLBACK peut avoir été effectué.
+	 */
+	private function changePoints($Value, $Log, Exercice $Exercice = null)
 	{
 		if(!is_int($Value))
 		{
+			throw new Exception("La valeur doit être numérique", 1);
+		}
+		if(!Sql::$isTransaction)
+		{
+			throw new Exception("Débit et crédit dans une transaction !", 2);
+		}
+		if($Value == 0)
+		{
+			return false;
+		}
+		//Enregistrer et logger
+		$Signe = ($Value > 0) ? '+':'';
+		$this->setAndSave(array('_Points' => 'Points ' . $Signe . $Value));
+
+		if(!$this->log('Logs', $Log, $this, $Exercice, array('Delta'=>$Value)))
+		{
+			Sql::rollback();
+			return false;
+		}
+
+		//Les points sont devenus négatifs ? On annule.
+		if($this->Points < 0)
+		{
+			Sql::rollback();
 			return false;
 		}
 		
-		$this->setAndSave(array('_Points' => 'Points + ' . $Value));
-		$this->log('Logs', $Log, $this, null, array('Delta'=>$Value));
+		return true;
 	}
 	
 	/**

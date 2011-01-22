@@ -58,27 +58,6 @@ CREATE TABLE IF NOT EXISTS `Alertes` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Banque`
---
-
-CREATE TABLE IF NOT EXISTS `Banque` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Date` datetime NOT NULL,
-  `Delta` int(11) NOT NULL,
-  `Action` varchar(50) NOT NULL,
-  `Log` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `Log` (`Log`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='La banque centrale et ses points' AUTO_INCREMENT=1 ;
-
---
--- Contenu de la table `Banque`
---
-
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `Classes`
 --
 
@@ -575,12 +554,6 @@ ALTER TABLE `Alertes`
   ADD CONSTRAINT `Alertes_ibfk_2` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`),
   ADD CONSTRAINT `Alertes_ibfk_3` FOREIGN KEY (`FAQ`) REFERENCES `Exercices_FAQ` (`ID`);
 
---
--- Contraintes pour la table `Banque`
---
-ALTER TABLE `Banque`
-  ADD CONSTRAINT `Banque_ibfk_1` FOREIGN KEY (`Log`) REFERENCES `Logs` (`ID`);
-  
 --
 -- Contraintes pour la table `Correcteurs`
 --
