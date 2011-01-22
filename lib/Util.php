@@ -19,6 +19,7 @@
  
 /**
  * Fonctions utilisées un peu partout.
+ * Ce n'est pas une classe poubelle !
  * 
  * @category Default
  * @package  Root
@@ -28,7 +29,6 @@
  */
 class Util
 {
-	
 	/**
 	 * Renvoie l'extension du fichier passé en paramètre
 	 * 
@@ -39,5 +39,17 @@ class Util
 	public static function extension($Filename)
 	{
 		return strtolower(substr(strrchr($Filename, '.'), 1));
+	}
+	
+	/**
+	 * Hashe le mot de passe fourni
+	 * 
+	 * @param string $Pass
+	 * 
+	 * @return string du sha1.
+	 */
+	public static function hashPass($Pass)
+	{
+		return sha1(SALT . $Pass);
 	}
 }
