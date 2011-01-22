@@ -517,17 +517,21 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			elseif($_POST['choix'] == 'oui')
 			{
+				Sql::start();
 				if(!$_SESSION['Eleve']->debit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
 				{
+					Sql::rollback();
 					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
 				}
 				else
 				{
 					//Logger la bonne nouvelle
 					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
+
+					//Terminer la transaction
+					Sql::commit();
 					
 					//Dispatch de l'évènement ACCEPTATION
-					
 					Event::dispatch(
 						Event::ELEVE_EXERCICE_ACCEPTATION,
 						array(
