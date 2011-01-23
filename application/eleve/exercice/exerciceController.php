@@ -65,6 +65,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
 			'ENVOYE' => "Le corrigé est disponible !",
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
 		);
 
 		$this->View->setTitle(
@@ -545,6 +546,43 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Noter l'exercice
+	 * ENVOYE => TERMINE
+	 */
+	public function noteActionWd() 
+	{
+		$this->canAccess(array('ENVOYE'));
+		
+		$this->View->setTitle(
+			'Noter la correction de « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet de noter le travail du correcteur."
+		);
+		$this->View->setSeelink('/eleve/exercice/reclamation/' . $this->Exercice->Hash, "Émettre une réclamation");
+		
+		if(isset($_POST['note-exercice']))
+		{
+			if(!is_numeric($_POST['note']) || $_POST['note'] < 0 || $_POST['note'] > 5)
+			{
+				$this->View->setMessage('error', 'La note doit être comprise entre 0 et 5.');
+			}
+			else
+			{
+				$ToUpdate = array(
+					'Notation' => intval($_POST['note'])
+				);
+				
+				$this->Exercice->setStatus("TERMINE", $_SESSION['Eleve'], "Notation de l'exercice", $ToUpdate);
+				
+				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE);
+				
+				$this->View->setMessage('info', 'La note a été enregistrée, l\'exercice est terminé.');
+				$this->redirectExercice();
+			}
+		}
+		
 	}
 	/**
 	 * Liste les actions effectuées sur un exercice

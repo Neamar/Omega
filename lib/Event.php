@@ -32,12 +32,14 @@ class Event
 	const ELEVE_EXERCICE_ENVOI = 'eleve/exercice/envoi';
 	const ELEVE_EXERCICE_ACCEPTATION = 'eleve/exercice/acceptation';
 	const ELEVE_EXERCICE_REFUS = 'eleve/exercice/refus';
+	const ELEVE_EXERCICE_TERMINE = 'eleve/exercice/termine';
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';
 	const CORRECTEUR_EXERCICE_ENVOI = 'correcteur/exercice/envoi';
 	
 	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
+	
 	/**
 	* Transmet un événement aux écouteurs associés.
 	* @param string $Event l'évenement à dispatcher.

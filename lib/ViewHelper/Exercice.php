@@ -177,7 +177,7 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}
-	if(!is_null($Exercice->TimeoutCorrecteur))
+	if(!is_null($Exercice->TimeoutCorrecteur) && $Exercice->Statut == 'ATTENTE_ELEVE')
 	{
 		$Dates[] = 'Annulation automatique correcteur : ' . ViewHelper_Date_countdown($Exercice->TimeoutCorrecteur);
 	}

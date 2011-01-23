@@ -9,7 +9,7 @@ $Annulation = array(
 );
 
 $Sujet = array('Revoir le sujet de l\'exercice', 'Pour bien se le remettre en tête !');
-$Correction = array('Consulter le corrigé envoyé', 'Lire le corrigé qui a été envoyé.');
+$Corrige = array('Consulter le corrigé envoyé', 'Lire le corrigé qui a été envoyé.');
 
 /**
  * Liste des actions possibles.
@@ -36,9 +36,13 @@ $ListeActions = array(
 	'EN_COURS' => 'Aucune action n\'est actuellement disponible pour cet exercice. Vous serez informé lorsque le correcteur aura terminé sa correction.',
 	'ENVOYE' => array(
 		'sujet' => $Sujet,
-		'corrige' => $Correction,
+		'corrige' => $Corrige,
 		'note' => array('Noter l\'exercice', 'Le travail du correcteur me convient, noter son œuvre.'),
 		'reclamation' => array('Émettre une réclamation', 'Ce travail est clairement mal fait, faux, ou rempli de contenu interdit. Émettre une réclamation pour demander un remboursement.'),
+	),
+	'TERMINE' => array(
+		'sujet' => $Sujet,
+		'corrige' => $Corrige
 	),
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
