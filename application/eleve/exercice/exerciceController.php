@@ -574,9 +574,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					'Notation' => intval($_POST['note'])
 				);
 				
-				$this->Exercice->setStatus("TERMINE", $_SESSION['Eleve'], "Notation de l'exercice", $ToUpdate);
-				
-				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE);
+				$this->cloreExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
 				
 				$this->View->setMessage('info', 'La note a été enregistrée, l\'exercice est terminé.');
 				$this->redirectExercice();

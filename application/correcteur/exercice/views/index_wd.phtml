@@ -16,7 +16,8 @@ $ListeActions = array(
 	'EN_COURS' => array(
 		'envoi' => array('Rédiger le corrigé', 'Votre offre a été acceptée, vous pouvez donc écrire le corrigé.')
 	),
-	'ENVOYE' => 'Votre exercice a été transmis. Vous serez payé dès que l\'élève aura donné son accord (ou au plus tard le ' . date('d/m/y à H\h', strtotime($this->Exercice->Expiration) + DELAI_REMBOURSEMENT * 24 * 3600) . ')'
+	'ENVOYE' => 'Votre exercice a été transmis. Vous serez payé dès que l\'élève aura donné son accord (ou au plus tard le ' . date('d/m/y à H\h', strtotime($this->Exercice->Expiration) + DELAI_REMBOURSEMENT * 24 * 3600) . ')',
+	'TERMINE' => 'Votre correction a été acceptée et jugée comme valide. Vous avez dû être payé.',
 );
 ?>
 
