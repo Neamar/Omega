@@ -36,6 +36,8 @@ class Correcteur_IndexController extends IndexAbstractController
 			'Accueil correcteur',
 			'Cette page regroupe les différentes actions qui vous sont disponibles en tant que correcteur.'
 		);
+		
+		$this->View->Exo = $this->concat('/correcteur/exercice/');
 
 	}
 	

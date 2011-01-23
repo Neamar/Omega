@@ -1,1 +1,13 @@
-<a href="/correcteur/liste">Foire aux exercices</a>
+<h2>Foire aux exercices</h2>
+<?php 
+$Foire = array(
+	'/correcteur/liste' => 'Accéder à la foire aux exercices',
+	'/correcteur/options/matieres' => 'Définir mes compétences'
+);
+
+echo $this->Html_listAnchor($Foire);
+?>
+
+<?php 
+echo $this->View_render($this->Exo, 1);
+?>
