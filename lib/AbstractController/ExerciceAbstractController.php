@@ -143,10 +143,10 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 		
 		$Correcteur = $this->Exercice->getCorrecteur();
-		
+		$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
 		Sql::start();
-		$Correcteur->credit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice);
-		
+		$Correcteur->credit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice);
+		Membre::getBanque()->debit($this->Exercice->Enchere, 'Paiement exercice.');
 		$this->Exercice->setStatus('TERMINE', $ChangeAuthor, $Message . " et paiement du correcteur.", $Changes);
 		
 		Sql::commit();

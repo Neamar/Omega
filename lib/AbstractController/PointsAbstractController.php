@@ -37,6 +37,26 @@ abstract class PointsAbstractController extends AbstractController
 	}
 	
 	/**
+	 * Opération d'ajouts de points
+	 */
+	public function ajoutAction()
+	{
+		$this->View->setTitle(
+			'Ajout de points',
+			'Sélectionnez la méthode avec laquelle vous souhaitez procéder à l\'ajout de points.'
+		);
+		
+		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
+		{
+			Sql::start();
+			$_SESSION[ucfirst($_GET['module'])]->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
+			Sql::commit();
+			$this->View->setMessage('info', 'Argent ajouté !');
+		}
+		
+		$this->deflectView(OO2FS::genericViewPath('membre/points/ajout'));
+	}
+	/**
 	 * Opération de retrait de points
 	 */
 	public function retraitAction()
@@ -167,6 +187,6 @@ abstract class PointsAbstractController extends AbstractController
 			}
 		}//Fin test $_POST
 		
-		$this->deflectView(OO2FS::genericViewPath('membre/retrait'));
+		$this->deflectView(OO2FS::genericViewPath('membre/points/retrait'));
 	}
 }

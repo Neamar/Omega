@@ -31,7 +31,17 @@ class Membre extends DbObject
 	const TABLE_NAME = 'Membres';
 	public static $Props;
 	
-		protected $Foreign = array(
+	/**
+	 * Récupérer le banquier.
+	 * 
+	 * @return Membre
+	 */
+	public static function getBanque()
+	{
+		return Membre::load(1);
+	}
+	
+	protected $Foreign = array(
 		'Createur'=>'Eleve',
 		//'Matiere'=>'Matiere',
 		'Classe'=>'Classe',
