@@ -69,7 +69,20 @@ class Event
         }
 
         //Logger le dispatch de l'évènement.
-        self::log('Dispatch : ' . $Event);
+        if($_GET['module'] == 'correcteur' && isset($_SESSION['Correcteur']))
+        {
+        	$Membre = $_SESSION['Correcteur'];
+        }
+	    else if($_GET['module'] == 'eleve' && isset($_SESSION['Eleve']))
+        {
+        	$Membre = $_SESSION['Eleve'];
+        }
+        else
+        {
+        	$Membre = null;
+        }
+        
+        self::log('Dispatch : ' . $Event, $Membre);
 	}
 
 	/**
