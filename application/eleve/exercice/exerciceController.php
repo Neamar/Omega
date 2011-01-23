@@ -540,7 +540,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					);
 
 					//Et rediriger.
-					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...");
+					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...", 'eleve/acceptation');
 					$this->redirect('/eleve/');					
 				}
 			}
