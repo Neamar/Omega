@@ -6,9 +6,11 @@ Ajouter un graphique pour les deltas de points
 Ajouter une coloration syntaxique pour le LaTeX.
 Enregistrer les différentes versions du fichier
 Afficher le contenu du PDF en aperçu
+Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
 
 HTML5 Forms :
 Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
+Les composants numeric ne peuvent prendre que des chiffres, mais n'ont pas de min / max. (cf par exemple form_RIB)
 Ajouter des attributs "required" sur les éléments de formulaire http://diveintohtml5.org/forms.html#required
 Ajouter des attributs pattern http://www.tomsyweb.com/component/content/article/43-html/88-les-formulaires-html-5-dans-firefox-4
 Passer les sliders en véritables sliders [type=range]

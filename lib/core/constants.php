@@ -115,7 +115,7 @@ define('MAX_REFUS', 3);
  * 
  * @var int
  */
-define('POURCENTAGE_SURACTIVITE', 200);
+define('POURCENTAGE_SURACTIVITE', 10);
 
 /**
  * Surcharge maximum ajoutée pour le cumul de la correction d'exercice
@@ -132,7 +132,7 @@ define('POURCENTAGE_MAX_SURACTIVITE', 150);
 define('CALCUL_CUMUL', 7);
 
 /**
- * Délai minimum (min) avant le timeout correcteur
+ * Délai minimum (h) avant le timeout correcteur
  * 
  * @var int
  */

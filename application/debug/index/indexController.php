@@ -49,6 +49,22 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Page de test pour les transactions.
+	 * 
+	 */
+	public function transactionAction()
+	{
+		$this->View->setTitle('Transactions.');
+		
+		Sql::start();
+		$Eleve = Eleve::load(1);
+		echo 'OK';
+		var_dump($Eleve->credit(50, "Essai transaction"));
+		Sql::commit();
+		exit();
+	}
+	
+	/**
 	 * Dumping de la session
 	 * 
 	 */

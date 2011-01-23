@@ -117,6 +117,54 @@ function ViewHelper_Form_submit($name, $value)
 }
 
 /**
+ * Génère un input pouvant prendre un RIB en paramètre.
+ * 
+ * @param string $name Nom / id du composant, qui servira de préfixe.
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_rib($name)
+{
+	$H = ViewHelper_Form_input(
+		$name . '-banque',
+		array(
+			'placeholder' => 'BBBBB',
+			'maxlength' => 5,
+			'type' => 'numeric',
+			'min' => '11111',
+		)
+	);
+	
+	$H .= '-' . ViewHelper_Form_input(
+		$name . '-guichet',
+		array(
+			'placeholder' => 'GGGGG',
+			'maxlength' => 5,
+			'type' => 'numeric'
+		)
+	);
+	
+	$H .= '-' . ViewHelper_Form_input(
+		$name . '-compte',
+		array(
+			'placeholder' => 'CCCCCCCCCCC',
+			'maxlength' => 11,
+		)
+	);
+	
+	$H .= '-' . ViewHelper_Form_input(
+		$name . '-cle',
+		array(
+			'placeholder' => 'RR',
+			'maxlength' => 2,
+			'type' => 'numeric',
+		)
+	);
+	
+	return $H;
+}
+
+/**
  * Génère un input de type numérique gérant les points.
  * 
  * @param string $name Nom / id du composant
@@ -271,7 +319,20 @@ function ViewHelper_Form_label($name, $label)
  */
 function ViewHelper_Form_inputLabel($name, $label, array $args=array())
 {
-	return ViewHelper_Form_label($name, $label) . viewHelper_Form_input($name, $args);
+	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_input($name, $args);
+}
+
+/**
+ * Génère un input-rib et son label avec les arguments spécifiés.
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_ribLabel($name, $label)
+{
+	return ViewHelper_Form_label($name . '-banque', $label) . ViewHelper_Form_rib($name);
 }
 
 /**
@@ -285,7 +346,7 @@ function ViewHelper_Form_inputLabel($name, $label, array $args=array())
  */
 function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $args=array())
 {
-	return ViewHelper_Form_label($name, $label) . viewHelper_Form_points($name, $max, $args);
+	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_points($name, $max, $args);
 }
 
 /**

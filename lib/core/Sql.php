@@ -26,6 +26,8 @@
  */
 class Sql
 {
+	public static $isTransaction = false;
+	
 	/**
 	 * Ouvrir une connexion à la base de données.
 	 */
@@ -93,7 +95,8 @@ class Sql
 	 */
 	public static function start()
 	{
-		return self::query('BEGIN');
+		self::$isTransaction = true;
+		return self::query('START TRANSACTION');
 	}
 	
 	/**
@@ -101,6 +104,7 @@ class Sql
 	 */
 	public static function commit()
 	{
+		self::$isTransaction = false;
 		return self::query('COMMIT');
 	}
 	
@@ -109,6 +113,7 @@ class Sql
 	 */
 	public static function rollback()
 	{
+		self::$isTransaction = false;
 		return self::query('ROLLBACK');
 	}
 

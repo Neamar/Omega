@@ -1,0 +1,9 @@
+<?php 
+echo $this->Doc_box(
+	'correcteur',
+	'retrait',
+	"Convertissez vos points durement gagnés en euros sonnants et trébuchants !"
+);
+
+echo $this->Points_formRetrait($_SESSION['Correcteur']->getPoints());
+?>

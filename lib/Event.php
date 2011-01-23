@@ -28,8 +28,10 @@
 class Event
 {
 	const ELEVE_INSCRIPTION = 'eleve/index/inscription';
-	const ELEVE_EXERCICE_CREATION = 'eleve/exercice/inscription';
+	const ELEVE_EXERCICE_CREATION = 'eleve/exercice/creation';
 	const ELEVE_EXERCICE_ENVOI = 'eleve/exercice/envoi';
+	const ELEVE_EXERCICE_ACCEPTATION = 'eleve/exercice/acceptation';
+	const ELEVE_EXERCICE_REFUS = 'eleve/exercice/refus';
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';

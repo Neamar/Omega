@@ -58,26 +58,6 @@ CREATE TABLE IF NOT EXISTS `Alertes` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Banque`
---
-
-CREATE TABLE IF NOT EXISTS `Banque` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Date` datetime NOT NULL,
-  `Solde` int(11) NOT NULL,
-  `Action` varchar(50) NOT NULL,
-  `Delta` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='La banque centrale et ses points' AUTO_INCREMENT=1 ;
-
---
--- Contenu de la table `Banque`
---
-
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `Classes`
 --
 
@@ -246,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Exercice` int(11) NOT NULL,
   `Correcteur` int(11) NOT NULL,
-  `Action` enum('VUE','ENCHERE','SIGNALEMENT') NOT NULL,
+  `Action` enum('ENCHERE','SIGNALEMENT') NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Correcteur` (`Correcteur`),
   KEY `Exercice` (`Exercice`)

@@ -28,11 +28,21 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 1)
 {
 	ob_start();
 	
+	//Le titre.
 	echo str_replace(
 		'Cette page',
 		'Cette section',
 		$ViewObject->renderTitle()
 	);
+	
+	//Le see-link (s'il existe)
+	if($ViewObject->issetMeta('seelink'))
+	{
+		$SeeLink = $ViewObject->getMeta('seelink');
+		echo '<p class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></p>' . "\n";
+	}
+	
+	//Le contenu.
 	$ViewObject->renderContent();
 	
 	$R = ob_get_clean();

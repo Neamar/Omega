@@ -478,6 +478,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			elseif($_POST['choix'] == 'non')
 			{
+				//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
+				$Correcteur = $this->Exercice->getCorrecteur();
+				
+				//Mettre à jour l'objet Exercice
 				$ToUpdate = array(
 					'_Correcteur' => 'NULL',
 					'_TimeoutCorrecteur' => 'NULL',
@@ -488,6 +492,16 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				
 				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Refus de l'offre", $ToUpdate);
 				
+				//Dispatch de l'évènement REFUS
+				Event::dispatch(
+					Event::ELEVE_EXERCICE_REFUS,
+					array(
+						'Exercice' => $this->Exercice,
+						'Correcteur' => $Correcteur
+					)
+				);
+								
+				//Passer à la suite ; soit on annule l'exercice, soit on le rerend disponible.
 				if($this->Exercice->NbRefus == MAX_REFUS)
 				{
 					//Annuler l'exercice.
@@ -497,31 +511,34 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				else
 				{
-					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé");
+					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé.");
 					$this->redirectExercice();
 				}
 			}
 			elseif($_POST['choix'] == 'oui')
 			{
+				Sql::start();
 				if(!$_SESSION['Eleve']->debit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
 				{
+					Sql::rollback();
 					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
 				}
 				else
 				{
 					//Logger la bonne nouvelle
 					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
+
+					//Terminer la transaction
+					Sql::commit();
 					
-					//Envoyer un mail au correcteur
-					$Datas = array(
-						'hash' => $this->Exercice->Hash,
-						'titre' => $this->Exercice->Titre,
-						'nom' => $_SESSION['Correcteur']->Prenom . ' ' . $_SESSION['Correcteur']->Nom,
-						'prix' => $this->Exercice->Enchere,
-						'delai' => date('d/m/Y à h\h', strtotime($this->Exercice->Expiration))
+					//Dispatch de l'évènement ACCEPTATION
+					Event::dispatch(
+						Event::ELEVE_EXERCICE_ACCEPTATION,
+						array(
+							'Exercice' => $this->Exercice
+						)
 					);
-					External::templateMail($_SESSION['Correcteur']->Mail, '/correcteur/acceptation', $Datas);
-					
+
 					//Et rediriger.
 					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...");
 					$this->redirect('/eleve/');					

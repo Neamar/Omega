@@ -52,6 +52,7 @@ class Eleve_IndexController extends IndexAbstractController
 			'Connexion élève',
 			'Connectez-vous pour accéder au site.'
 		);
+		$this->View->setSeelink('/eleve/inscription', 'Pas encore inscrit ?');
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Eleve']))
@@ -101,6 +102,7 @@ class Eleve_IndexController extends IndexAbstractController
 			'Inscription élève',
 			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permettre de profiter rapidement des services offerts par le site."
 		);
+		$this->View->setSeelink('/eleve/connexion', 'Déjà membre ?');
 		
 		//Charger la liste des classes pour le combobox :
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');

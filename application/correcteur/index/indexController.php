@@ -50,6 +50,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			'Connexion correcteur',
 			'Connectez-vous pour accéder au site.'
 		);
+		$this->View->setSeelink('/correcteur/inscription', 'Pas encore inscrit ?');
 		
 		//Si on est connecté au moment d'arriver sur cette page, déconnexion.
 		if(isset($_SESSION['Correcteur']))
@@ -98,6 +99,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			'Marché aux exercices',
 			"Cette page liste les articles en attente de correcteur... pourquoi pas vous ?"
 		);
+		$this->View->setSeelink('/correcteur/options/matieres', 'Modifier mes compétences');
 	}
 	
 	/**
@@ -133,6 +135,13 @@ JOIN Correcteurs_Capacites ON (
 )
 
 WHERE Statut = "ATTENTE_CORRECTEUR"
+AND Exercices.ID NOT IN (
+	SELECT Exercice
+	FROM Exercices_Correcteurs
+	WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+)
+
+ORDER BY Exercices.TimeoutEleve
 			',
 			'Hash'
 		);
@@ -149,6 +158,7 @@ WHERE Statut = "ATTENTE_CORRECTEUR"
 			'Inscription correcteur',
 			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."
 		);
+		$this->View->setSeelink('/correcteur/connexion', 'Déjà membre ?');
 		
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))

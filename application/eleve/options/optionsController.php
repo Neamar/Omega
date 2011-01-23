@@ -6,7 +6,7 @@
  * 
  * PHP Version 5
  * 
- * @category  Default
+ * @category  Controller
  * @package   Root
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
@@ -19,7 +19,7 @@
 /**
  * Les différentes pages d'option
  *
- * @category Default
+ * @category Controller
  * @package  Root
  * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @license  Copyright http://fr.wikipedia.org/wiki/Copyright

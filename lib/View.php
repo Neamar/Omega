@@ -65,7 +65,9 @@ class View
 			),
 			'meta'=>array(),
 			'style'=>array(
+				'/public/css/head.css' => true,
 				'/public/css/base.css' => true,
+				'/public/css/' . $Controller->getModule() . '.css' => true,
 				'/public/css/ui/ui.css' => true,
 				'/public/css/prettyPhoto/prettyPhoto.css' => true,
 			),
@@ -425,7 +427,7 @@ class View
 		if($this->issetMeta('seelink'))
 		{
 			$SeeLink = $this->getMeta('seelink');
-			$R .= '<div class="seelink"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
+			$R .= '<div class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
 		}
 		
 		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
