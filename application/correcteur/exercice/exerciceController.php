@@ -249,7 +249,6 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 */
 	public function _actionsAction()
 	{
-		//TODO : à compléter
 		$this->ajax(
 			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/correcteur/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
