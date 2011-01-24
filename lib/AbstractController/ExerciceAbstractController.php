@@ -127,6 +127,34 @@ abstract class ExerciceAbstractController extends AbstractController
 	}
 	
 	/**
+	 * Termine un exercice.
+	 * Peut-être appelé à la notation, sur un timeout après DELAI_REMBOURSEMENT, ou sur une décision administrateur.
+	 * 
+	 * @param string $Message le message. Le texte "et paiement du correcteur" sera automatiquement ajouté.
+	 * @param Membre $ChangeAuthor l'auteur du changement
+	 * @param array $Changes les modifications à apporter en plus
+	 * @throws Exception l'exercice ne peut être clos maintenant.
+	 */
+	protected function cloreExercice($Message, Membre $ChangeAuthor, array $Changes = array())
+	{
+		if(!in_array($this->Exercice->Statut, array('ENVOYE', 'REFUSE')))
+		{
+			throw new Exception('Impossible de clore ici.');
+		}
+		
+		$Correcteur = $this->Exercice->getCorrecteur();
+		$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
+		Sql::start();
+		$Correcteur->credit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice);
+		Membre::getBanque()->debit($this->Exercice->Enchere, 'Paiement exercice.');
+		$this->Exercice->setStatus('TERMINE', $ChangeAuthor, $Message . " et paiement du correcteur.", $Changes);
+		
+		Sql::commit();
+		
+		Event::dispatch(Event::ELEVE_EXERCICE_TERMINE);
+	}
+	
+	/**
 	 * Vérifie que l'exercice associé à la page est dans un des statuts tolérés.
 	 * Sinon, affiche un message d'erreur et redirige vers l'accueil de l'exercice.
 	 * 

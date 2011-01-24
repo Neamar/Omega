@@ -31,7 +31,17 @@ class Membre extends DbObject
 	const TABLE_NAME = 'Membres';
 	public static $Props;
 	
-		protected $Foreign = array(
+	/**
+	 * Récupérer le banquier.
+	 * 
+	 * @return Membre
+	 */
+	public static function getBanque()
+	{
+		return Membre::load(1);
+	}
+	
+	protected $Foreign = array(
 		'Createur'=>'Eleve',
 		//'Matiere'=>'Matiere',
 		'Classe'=>'Classe',
@@ -41,7 +51,7 @@ class Membre extends DbObject
 	);
 	
 	public $Mail;
-	//private $Pass;
+	protected $Pass;
 	protected $Points;
 	public $Creation;
 	public $Connexion;
@@ -194,6 +204,19 @@ class Membre extends DbObject
 	public function isBlocked()
 	{
 		return ($this->Statut=='BLOQUE');
+	}
+	
+	/**
+	 * Compare le mot de passe fourni avec le mot de passe du membre et renvoie true en cas de succès.
+	 * @see Util::hashPass()
+	 * 
+	 * @param string $Pass le mot de passe à essayer (encrypté !)
+	 * 
+	 * @return bool true si similaire au mdp du membre
+	 */
+	public function comparePass($Pass)
+	{
+		return ($this->Pass == $Pass);
 	}
 }
 

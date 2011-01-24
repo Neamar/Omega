@@ -427,8 +427,6 @@ CREATE TABLE IF NOT EXISTS `Membres` (
   `Connexion` datetime NOT NULL,
   `Statut` enum('EN_ATTENTE','OK','BLOQUE','DESINSCRIT') NOT NULL DEFAULT 'EN_ATTENTE',
   `Type` enum('ELEVE','CORRECTEUR','ADMIN') NOT NULL,
-  `RIB` int(23) DEFAULT NULL,
-  `Paypal` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Mail` (`Mail`,`Type`),
   KEY `Mail_2` (`Mail`,`Pass`)
@@ -648,11 +646,12 @@ ALTER TABLE `Virements`
 -- Valeurs par défaut
 --
 
-INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`, `RIB`, `Paypal`) VALUES
-(1, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 500, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE', NULL, NULL),
-(2, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR', NULL, NULL);
+INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`) VALUES
+(1, 'Banque', NULL, 0, '2011-01-22 12:00:00', '2011-01-22 12:00:00', 'OK', 'ADMIN'),
+(2, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE'),
+(3, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR');
 INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
-(1, 2, 'ES');
+(2, 2, 'ES');
 INSERT INTO `Correcteurs` (`ID`, `Prenom`, `Nom`, `Telephone`, `Siret`, `SiretOK`) VALUES
-(2, 'Matthieu', 'Bacconnier', '0669347015', NULL, '0');
+(3, 'Matthieu', 'Bacconnier', '0669347015', NULL, '0');
 

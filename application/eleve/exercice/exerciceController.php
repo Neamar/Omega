@@ -65,6 +65,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
 			'ENVOYE' => "Le corrigé est disponible !",
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
 		);
 
 		$this->View->setTitle(
@@ -517,14 +518,18 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			elseif($_POST['choix'] == 'oui')
 			{
+				$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
 				Sql::start();
-				if(!$_SESSION['Eleve']->debit((int) $this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+				if(!$_SESSION['Eleve']->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
 				{
 					Sql::rollback();
 					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
 				}
 				else
 				{
+					//Créditer la banque pour valider les contraintes
+					Membre::getBanque()->credit($this->Exercice->Enchere, 'Stockage exercice', $this->Exercice);
+					
 					//Logger la bonne nouvelle
 					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
 
@@ -540,11 +545,46 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					);
 
 					//Et rediriger.
-					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...");
+					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...", 'eleve/acceptation');
 					$this->redirect('/eleve/');					
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Noter l'exercice
+	 * ENVOYE => TERMINE
+	 */
+	public function noteActionWd() 
+	{
+		$this->canAccess(array('ENVOYE'));
+		
+		$this->View->setTitle(
+			'Noter la correction de « ' . $this->Exercice->Titre . ' »',
+			"Cette page permet de noter le travail du correcteur."
+		);
+		$this->View->setSeelink('/eleve/exercice/reclamation/' . $this->Exercice->Hash, "Émettre une réclamation");
+		
+		if(isset($_POST['note-exercice']))
+		{
+			if(!is_numeric($_POST['note']) || $_POST['note'] < 0 || $_POST['note'] > 5)
+			{
+				$this->View->setMessage('error', 'La note doit être comprise entre 0 et 5.');
+			}
+			else
+			{
+				$ToUpdate = array(
+					'Notation' => intval($_POST['note'])
+				);
+				
+				$this->cloreExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
+				
+				$this->View->setMessage('info', 'La note a été enregistrée, l\'exercice est terminé.');
+				$this->redirectExercice();
+			}
+		}
+		
 	}
 	/**
 	 * Liste les actions effectuées sur un exercice

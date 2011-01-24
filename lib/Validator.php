@@ -143,6 +143,7 @@ class Validator
 	
 	/**
 	 * Valide un numéro de RIB.
+	 * Exemple : 20041 01005 0500013M026 06
 	 * @see http://pear.php.net/package/Validate_FR/download
 	 * 
 	 * @param array $rib le numéro de RIB à valider

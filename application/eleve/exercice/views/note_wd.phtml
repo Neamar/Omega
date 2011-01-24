@@ -1,0 +1,25 @@
+<?php 
+echo $this->Doc_box(
+	'eleve',
+	'contestation',
+	"Attention, en donnant une note, vous perdez la possibilité d'émettre une réclamation remboursée.");
+?>
+
+<form id="form_note-exercice" method="post" action="">
+<p>Une note de 0 indique un travail clairement mal fait mais toutefois correct (complet, et ne nécessitant donc pas une réclamation).<br />
+Une note de 5 indique un travail parfait.</p>
+<?php 
+echo $this->Form_inputLabelBr(
+	'note',
+	'Votre note',
+	array(
+		'type' => 'number',
+		'min' => 0,
+		'max' => 5,
+		'step' => 1
+	)
+);
+
+echo $this->Form_submit('note-exercice', 'Noter l\'exercice.');
+?>
+</form>

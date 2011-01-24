@@ -49,7 +49,7 @@ abstract class IndexAbstractController extends AbstractController
 				'Membres',
 				$this->View->Membre->getFilteredId(),
 				array('Statut' =>  'DESINSCRIT'),
-				'AND Pass="' . $this->hashPass($_POST['password']) . '"
+				'AND Pass="' . Util::hashPass($_POST['password']) . '"
 				 AND Type = "' . strtoupper($this->getModule()) . '"'
 			);
 			
@@ -121,7 +121,7 @@ abstract class IndexAbstractController extends AbstractController
 					'Membres',
 					'-1',
 					array(
-						'Pass' => $this->hashPass($Password)
+						'Pass' => Util::hashPass($Password)
 					),
 					'OR (Mail = "' . Sql::escape($_POST['email']) . '" AND Type = "' . strtoupper($this->getModule()) . '")'
 				);
@@ -187,7 +187,7 @@ abstract class IndexAbstractController extends AbstractController
 			SQL::start();
 			$ToInsert = array(
 				'Mail' => $Datas['email'],
-				'Pass' => $this->hashPass($Datas['password']),
+				'Pass' => Util::hashPass($Datas['password']),
 				'_Creation' => 'NOW()',
 				'_Connexion' => 'NOW()',
 				'Type' => $Type,
@@ -246,7 +246,7 @@ abstract class IndexAbstractController extends AbstractController
 		FROM Membres
 		WHERE
 			Mail="' . SQL::escape($Mail) . '"
-			AND Pass="' . $this->hashPass($Pass) . '"
+			AND Pass="' . Util::hashPass($Pass) . '"
 			AND Statut !="DESINSCRIT"
 			AND Type="' . Sql::escape($Type) . '"
 		)';
@@ -261,17 +261,5 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		
 		return $Membre;
-	}
-	
-	/**
-	 * Hashe le mot de passe fourni
-	 * 
-	 * @param string $Pass
-	 * 
-	 * @return string du sha1.
-	 */
-	private function hashPass($Pass)
-	{
-		return sha1(SALT . $Pass);
 	}
 }
