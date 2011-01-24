@@ -26,7 +26,7 @@ $(function()
 	if(Tables.length > 0)
 	{
 		Tables.each(function(){
-			Table = $(this);
+			var Table = $(this);
 			function update()
 			{
 				$.ajax({
