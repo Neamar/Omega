@@ -26,14 +26,28 @@
 abstract class PointsAbstractController extends AbstractController
 {
 	/**
+	 * Dévie automatiquement la vue vers une solution générique.
+	 * 
+	 * @param string $Module
+	 * @param string $Controller
+	 * @param string $View
+	 * @param string $Data
+	 */
+	public function __construct($Module, $Controller, $View, $Data)
+	{
+		parent::__construct($Module, $Controller, $View, $Data);
+		
+		$this->deflectView(OO2FS::genericViewPath('membre/points/' . str_replace('.','',$View)));
+	}
+	/**
 	 * Index du contrôleur de points
 	 */
 	public function indexAction()
 	{
 		$this->View->setTitle(
-			'Vos points',
+			'Informations solde',
 			'Cette page liste les différentes informations disponibles concernant vos points.'
-		);		
+		);
 	}
 	
 	/**
@@ -53,8 +67,6 @@ abstract class PointsAbstractController extends AbstractController
 			Sql::commit();
 			$this->View->setMessage('info', 'Argent ajouté !');
 		}
-		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/ajout'));
 	}
 	/**
 	 * Opération de retrait de points
@@ -186,7 +198,5 @@ abstract class PointsAbstractController extends AbstractController
 				}
 			}
 		}//Fin test $_POST
-		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/retrait'));
 	}
 }
