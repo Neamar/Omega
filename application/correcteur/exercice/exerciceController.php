@@ -62,6 +62,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'EN_COURS' => "Votre offre a été acceptée, vous pouvez commencer à travailler.",
 			'ENVOYE' => "Vous avez envoyé votre corrigé. L'élève n'a pas encore fait de remarques.",
 			'TERMINE' => "L'exercice est terminé. Vous avez été payé.",
+			'REFUSE' => "L'élève a émis une réclamation. Une équipe vérifie actuellement la justesse de cette accusation...",
 		);
 
 		$this->View->setTitle(

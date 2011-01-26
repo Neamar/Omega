@@ -123,7 +123,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		$this->canAccess(array('TERMINE', 'REFUSE', 'REMBOURSE'), 'Aucune réclamation n\'a été émise.');
 		
-		if(empty($this->Exercice->InfosReclamation))
+		if($this->Exercice->Reclamation == 'NON')
 		{
 			$this->View->setMessage('warning', 'Aucune réclamation n\'a été émise.');
 			$this->redirectExercice();

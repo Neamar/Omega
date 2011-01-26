@@ -194,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `Exercices` (
   `InfosCorrecteur` mediumtext,
   `Enchere` int(11) NOT NULL DEFAULT '0',
   `NbRefus` int(11) NOT NULL DEFAULT '0',
+  `Reclamation` enum('NON','REMBOURSEMENT','CONTESTATION') NOT NULL,
   `InfosReclamation` mediumtext,
   `Remboursement` int(11) DEFAULT NULL,
   `Notation` int(11) DEFAULT NULL,

@@ -111,6 +111,7 @@ WHERE Hash="%ID%"';
 	public $InfosCorrecteur;
 	public $Enchere;
 	public $NbRefus;
+	public $Reclamation;
 	public $InfosReclamation;
 	public $Remboursement;
 	public $Notation;

@@ -580,6 +580,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('ENVOYE', 'TERMINE'), "Vous ne pouvez pas émettre de réclamation actuellement.");
 		
+		if($this->Exercice->Reclamation != 'NON')
+		{
+			$this->View->setMessage('warning', 'Vous avez déjà envoyé une réclamation.');
+			$this->redirectExercice();
+		}
+		
 		$this->View->setTitle(
 			"Émettre une réclamation",
 			"Cette page permet de demander un jugement externe si le travail du correcteur n'est pas correct."
@@ -661,7 +667,12 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				else
 				{
 					//Modifier le statut
-					$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', array('InfosReclamation' => $_POST['message']));
+					$ToUpdate = array(
+						'Reclamation' => ($this->View->EstRemboursable?'REMBOURSEMENT':'CONTESTATION'),
+						'InfosReclamation' => $_POST['message']
+					);
+					
+					$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', $ToUpdate);
 					
 					//Et enregistrer
 					Sql::commit();
