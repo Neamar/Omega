@@ -3,6 +3,15 @@
 $Images = array('jpg', 'jpeg', 'png', 'gif');
 $Documents = array('pdf', 'doc', 'docx', 'odt');
 
+if(!empty($this->Infos))
+{
+	?>
+	<p>Informations associées :</p>
+	<p class="infos">
+		<?php echo $this->Infos; ?>
+	</p>
+	<?php
+}
 foreach($this->Fichiers as $URL => $Infos)
 {
 	echo '<p class="fichier"><span>' . $Infos['NomUpload'] . '</span><br />' . "\n";

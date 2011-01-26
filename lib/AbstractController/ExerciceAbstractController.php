@@ -95,6 +95,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
+		$this->View->Infos = $this->Exercice->InfosEleve;
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -109,7 +110,29 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		$this->View->setTitle("Affichage du corrigé de l'exercice « " . $this->Exercice->Titre . ' »');
 
+		$this->View->Infos = $this->Exercice->InfosCorrecteur;
 		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
+		
+		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
+	}
+	
+	/**
+	 * Afficher la contestation.
+	 */
+	public function reclamationActionWd()
+	{
+		$this->canAccess(array('TERMINE', 'REFUSE', 'REMBOURSE'), 'Aucune réclamation n\'a été émise.');
+		
+		if(empty($this->Exercice->InfosReclamation))
+		{
+			$this->View->setMessage('warning', 'Aucune réclamation n\'a été émise.');
+			$this->redirectExercice();
+		}
+		
+		$this->View->setTitle("Affichage de la réclamation déposée sur l'exercice « " . $this->Exercice->Titre . ' »');
+
+		$this->View->Infos = $this->Exercice->InfosReclamation;
+		$this->View->Fichiers = $this->Exercice->getFiles(array('RECLAMATION'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
 	}
@@ -167,7 +190,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		if(!in_array($this->Exercice->Statut, $Status))
 		{
-			$this->View->setMessage("warning", $Message);
+			$this->View->setMessage('warning', $Message);
 			$this->redirectExercice();
 		}
 	}

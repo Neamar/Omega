@@ -71,17 +71,30 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 		}
 	}
 	//Mettre en forme les remarques :
+	$Remarques = '';
 	if(!empty($Exercice->InfosEleve))
 	{
-		$Remarques = '
-		<p>Informations complémentaires :</p>
-		<p class="infos-eleve">
+		$Remarques .= '
+		<p>Informations complémentaires élèves :</p>
+		<p class="infos">
 			' . $Exercice->InfosEleve . '
 		</p>';
 	}
-	else
+	if(!empty($Exercice->InfosCorrecteur))
 	{
-		$Remarques = '';
+		$Remarques .= '
+		<p>Informations complémentaires correcteur :</p>
+		<p class="infos">
+			' . $Exercice->InfosCorrecteur . '
+		</p>';
+	}
+	elseif(!empty($Exercice->InfosReclamation))
+	{
+		$Remarques .= '
+		<p>Informations complémentaires réclamation :</p>
+		<p class="infos">
+			' . $Exercice->InfosReclamation . '
+		</p>';
 	}
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);

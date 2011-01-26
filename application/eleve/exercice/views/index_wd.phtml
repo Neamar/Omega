@@ -44,7 +44,11 @@ $ListeActions = array(
 		'sujet' => $Sujet,
 		'corrige' => $Corrige
 	),
-	'REFUSE' => 'Cet exercice a été contesté.',
+	'REFUSE' => array(
+		'sujet' => $Sujet,
+		'corrige' => $Corrige,
+		'reclamation' => array('Consulter la réclamation déposée', 'Vous avez émis une réclamation, en cours d\'examination par les administrateurs.')
+	),
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
 ?>

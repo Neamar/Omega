@@ -600,69 +600,76 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			$Messages = array();
 			$NbFichiersPresents = 0;
 			
-			//Démarrer une transaction : soit tout passe, soit tout casse.
-			Sql::start();
-			for($i=0;$i<$NbFiles;$i++)
+			if(empty($_POST['message']))
 			{
-				if($_FILES['fichiers']['name'][$i]=='')
-				{
-					continue;
-				}
-				
-				//Calcul du chemin du fichier
-				$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
-				$URL = '/Reclamation/' . $NbFichiersPresents . '.' . $ExtensionFichier;
-				$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
-				
-				//Effectuer la plupart des tests.
-				$Retour = $this->checkUploadedFile($i, $ExtensionFichier, $URLAbsolue, $NbFichiersPresents);
-				
-				if($Retour !== true)
-				{
-					//Enregistrer le message d'erreur et passer à la suite
-					$Messages[] = $Retour;
-				}
-				else
-				{
-					$ToInsert = array
-					(
-						'Exercice' => $this->Exercice->ID,
-						'Type' => 'RECLAMATION',
-						'URL' => $URL,
-						'ThumbURL' => Thumbnail::create($URLAbsolue),
-						'NomUpload' => $_FILES['fichiers']['name'][$i],
-					);
-					
-					if(!Sql::insert('Exercices_Fichiers', $ToInsert))
-					{
-						//Erreur à l'enregistrement en base de données
-						$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
-					}
-					else
-					{
-						$NbFichiersPresents++;
-					}
-				}
-			}//fin for
-			
-			
-			if(count($Messages) != 0)
-			{
-				//Il y a des erreurs
-				$this->View->setMessage('error', implode("<br />\n", $Messages));
-				Sql::rollback();
+				$this->View->setMessage('error', 'Vous devez entrer un message détaillant votre réclamation');
 			}
 			else
 			{
-				//Modifier le statut
-				$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', array('InfosReclamation' => $_POST['message']));
+				//Démarrer une transaction : soit tout passe, soit tout casse.
+				Sql::start();
+				for($i=0;$i<$NbFiles;$i++)
+				{
+					if($_FILES['fichiers']['name'][$i]=='')
+					{
+						continue;
+					}
+					
+					//Calcul du chemin du fichier
+					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
+					$URL = '/Reclamation/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+					$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
+					
+					//Effectuer la plupart des tests.
+					$Retour = $this->checkUploadedFile($i, $ExtensionFichier, $URLAbsolue, $NbFichiersPresents);
+					
+					if($Retour !== true)
+					{
+						//Enregistrer le message d'erreur et passer à la suite
+						$Messages[] = $Retour;
+					}
+					else
+					{
+						$ToInsert = array
+						(
+							'Exercice' => $this->Exercice->ID,
+							'Type' => 'RECLAMATION',
+							'URL' => $URL,
+							'ThumbURL' => Thumbnail::create($URLAbsolue),
+							'NomUpload' => $_FILES['fichiers']['name'][$i],
+						);
+						
+						if(!Sql::insert('Exercices_Fichiers', $ToInsert))
+						{
+							//Erreur à l'enregistrement en base de données
+							$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
+						}
+						else
+						{
+							$NbFichiersPresents++;
+						}
+					}
+				}//fin for
 				
-				//Et enregistrer
-				Sql::commit();
 				
-				$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
-				$this->redirectExercice();
-			}
+				if(count($Messages) != 0)
+				{
+					//Il y a des erreurs
+					$this->View->setMessage('error', implode("<br />\n", $Messages));
+					Sql::rollback();
+				}
+				else
+				{
+					//Modifier le statut
+					$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', array('InfosReclamation' => $_POST['message']));
+					
+					//Et enregistrer
+					Sql::commit();
+					
+					$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
+					$this->redirectExercice();
+				}
+			}//fin empty(message)
 		}//fin POST
 	}
 	
