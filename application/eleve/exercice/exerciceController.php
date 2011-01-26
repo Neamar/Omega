@@ -252,70 +252,49 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			$Messages = array();
 			$Extensions = explode('|', EXTENSIONS);
 			
-			//Ajout des messages
+			//Commencer une transaction pour rollbacker en cas d'erreur.
+			Sql::start();
+
 			for($i=0;$i<$NbFiles;$i++)
 			{
 				if($_FILES['fichiers']['name'][$i]=='')
 				{
-					//Fichier vide envoyé en mode no-script.
-					//À ignorer.
+					continue;
 				}
-				elseif($_FILES['fichiers']['error'][$i] > 0)
+
+				$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
+				$URL = '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+				$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
+				
+				//Effectuer les vérifications usuelles
+				$Retour = $this->checkUploadedFile($i, $ExtensionFichier, $URLAbsolue, $NbFichiersPresents);
+				
+				if($Retour !== true)
 				{
-					//Erreur côté http
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
-				}
-				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
-				{
-					//Dépassement de la taille maximale
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
-				}
-				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
-				{
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+					$Messages[] = $Retour;
 				}
 				else
 				{
-					//Vérification de l'extension
-					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
-					if (!in_array($ExtensionFichier, $Extensions))
+					$ToInsert = array
+					(
+						'Exercice' => $this->Exercice->ID,
+						'Type' => 'SUJET',
+						'URL' => $URL,
+						'ThumbURL' => Thumbnail::create($URLAbsolue),
+						'NomUpload' => $_FILES['fichiers']['name'][$i],
+					);
+					
+					if(!Sql::insert('Exercices_Fichiers', $ToInsert))
 					{
-						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+						//Erreur à l'enregistrement en base de données
+						$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
 					}
 					else
 					{
-						//Enregistrement du fichier.
-						$URL = '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
-						$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
-						
-						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URLAbsolue))
-						{
-							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
-						}
-						else
-						{
-							$ToInsert = array
-							(
-								'Exercice' => $this->Exercice->ID,
-								'Type' => 'SUJET',
-								'URL' => $URL,
-								'ThumbURL' => Thumbnail::create($URLAbsolue),
-								'NomUpload' => $_FILES['fichiers']['name'][$i],
-							);
-							
-							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
-							{
-								//Erreur à l'enregistrement en base de données
-								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
-							}
-							else
-							{
-								$NbFichiersPresents++;
-								$NbFichiersAjoutes++;
-							}
-						}
-					}					
-				}
+						$NbFichiersPresents++;
+						$NbFichiersAjoutes++;
+					}
+				}		
 			}
 			
 			if($NbFichiersAjoutes>0)
@@ -329,50 +308,55 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				$CorrectsClass = 'warning';
 			}
 			
-			if(count($Messages)!=0)
+			if(!empty($Messages))
 			{
 				//Il y a des erreurs
-				$Messages[] = $Corrects;
-				$this->View->setMessage('error', implode("<br />\n", $Messages));
-			}
-			elseif($_POST['next_page']!='resume')
-			{
-				//Il n'y a pas d'erreurs
-				$this->View->setMessage($CorrectsClass, $Corrects);
+				Sql::rollback();
+				$this->View->setMessage('error', 'Envoi de fichier annulé.<br />' . implode("<br />\n", $Messages));
 			}
 			else
 			{
-				//Vérifier que l'on peut passer à l'étape suivante.
-				$CanForward = true;
-				
-				//Si on veut passer à la suite sans aucun fichier :
-				if($NbFichiersPresents==0)
+				//Ok !
+				Sql::commit();
+				if($_POST['next_page'] != 'resume')
 				{
-					if($this->Exercice->InfosEleve == '')
-					{
-						$this->View->setMessage('error', "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
-						$CanForward = false;
-					}
-					else
-					{
-						$this->View->setMessage(
-							'warning',
-							"Attention, vous avez validé cet exercice sans aucun fichier.<br />
-							Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
-							S'il s'agit d'une erreur, vous pouvez <a href='/eleve/ajout/" . $this->Exercice->Hash . "'>retourner à l'ajout de fichier</a>."
-						);
-					}
+					//Il n'y a pas d'erreurs
+					$this->View->setMessage($CorrectsClass, $Corrects);
 				}
-				
-				if($CanForward)
-				{					
-					$this->redirectExercice('/eleve/exercice/recapitulatif/');
+				else
+				{
+					//Vérifier que l'on peut passer à l'étape suivante.
+					$CanForward = true;
+					
+					//Si on veut passer à la suite sans aucun fichier :
+					if($NbFichiersPresents==0)
+					{
+						if($this->Exercice->InfosEleve == '')
+						{
+							$this->View->setMessage('error', "Cet exercice ne contient aucun fichier et aucune information. Impossible de passer à l'étape suivante.");
+							$CanForward = false;
+						}
+						else
+						{
+							$this->View->setMessage(
+								'warning',
+								"Attention, vous avez validé cet exercice sans aucun fichier.<br />
+								Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
+								S'il s'agit d'une erreur, vous pouvez <a href='/eleve/ajout/" . $this->Exercice->Hash . "'>retourner à l'ajout de fichier</a>."
+							);
+						}
+					}
+					
+					if($CanForward)
+					{					
+						$this->redirectExercice('/eleve/exercice/recapitulatif/');
+					}
 				}
 			}
 		}
 		
 		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
-		$this->View->NbFiles = $NbFichiersPresents;
+		$this->View->NbFiles = $this->Exercice->getFilesCount(array('SUJET'));
 	}
 	
 	/**
@@ -614,94 +598,72 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		{
 			$NbFiles = count($_FILES['fichiers']['name']);
 			$Messages = array();
-			$Extensions = explode('|', EXTENSIONS);
-			$NbFichiersPresents = $NbFichiersAjoutes = 0;
+			$NbFichiersPresents = 0;
 			
+			//Démarrer une transaction : soit tout passe, soit tout casse.
 			Sql::start();
-			//Ajout des messages
 			for($i=0;$i<$NbFiles;$i++)
 			{
-				if($_FILES['fichiers']['error'][$i] > 0)
+				if($_FILES['fichiers']['name'][$i]=='')
 				{
-					//Erreur côté http
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+					continue;
 				}
-				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
+				
+				//Calcul du chemin du fichier
+				$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
+				$URL = '/Reclamation/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+				$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
+				
+				//Effectuer la plupart des tests.
+				$Retour = $this->checkUploadedFile($i, $ExtensionFichier, $URLAbsolue, $NbFichiersPresents);
+				
+				if($Retour !== true)
 				{
-					//Dépassement de la taille maximale
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
-				}
-				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
-				{
-					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+					//Enregistrer le message d'erreur et passer à la suite
+					$Messages[] = $Retour;
 				}
 				else
 				{
-					//Vérification de l'extension
-					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
-					if (!in_array($ExtensionFichier, $Extensions))
+					$ToInsert = array
+					(
+						'Exercice' => $this->Exercice->ID,
+						'Type' => 'RECLAMATION',
+						'URL' => $URL,
+						'ThumbURL' => Thumbnail::create($URLAbsolue),
+						'NomUpload' => $_FILES['fichiers']['name'][$i],
+					);
+					
+					if(!Sql::insert('Exercices_Fichiers', $ToInsert))
 					{
-						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+						//Erreur à l'enregistrement en base de données
+						$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
 					}
 					else
 					{
-						//Enregistrement du fichier.
-						$URL = '/Reclamation/' . $NbFichiersPresents . '.' . $ExtensionFichier;
-						$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
-						
-						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URLAbsolue))
-						{
-							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
-						}
-						else
-						{
-							$ToInsert = array
-							(
-								'Exercice' => $this->Exercice->ID,
-								'Type' => 'RECLAMATION',
-								'URL' => $URL,
-								'ThumbURL' => Thumbnail::create($URLAbsolue),
-								'NomUpload' => $_FILES['fichiers']['name'][$i],
-							);
-							
-							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
-							{
-								//Erreur à l'enregistrement en base de données
-								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
-							}
-							else
-							{
-								$NbFichiersPresents++;
-								$NbFichiersAjoutes++;
-							}
-						}
-					}					
+						$NbFichiersPresents++;
+					}
 				}
-			}
+			}//fin for
 			
-			if($NbFichiersAjoutes>0)
-			{
-				$Corrects = (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.";
-				$CorrectsClass = 'ok';
-			}
-
 			
 			if(count($Messages) != 0)
 			{
 				//Il y a des erreurs
-				$Messages[] = $Corrects;
 				$this->View->setMessage('error', implode("<br />\n", $Messages));
 				Sql::rollback();
 			}
 			else
 			{
+				//Modifier le statut
 				$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', array('InfosReclamation' => $_POST['message']));
 				
+				//Et enregistrer
 				Sql::commit();
+				
 				$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
 				$this->redirectExercice();
 			}
-		}
+		}//fin POST
 	}
 	
 	/**
@@ -727,6 +689,57 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()
 		);
+	}
+	
+	/**
+	 * Vérifie si un fichier uploadé est correct et l'enregistre dans le dossier $URL spécifié.
+	 * Teste les erreurs HTTP, la taille, le nombre de fichiers et l'extension.
+	 * 
+	 * @param int $i le numéro dans le tableau $_FILES
+	 * @param string $ExtensionFichier l'extension du fichier.
+	 * @param string $URL le path dans lequel enregistrer le fichier.
+	 * @param int $NbFichiersPresents le nombre de fichiers déjà enregistrés.
+	 * 
+	 * @return bool|string true si tout va bien, ou un message d'erreur.
+	 */
+	protected function checkUploadedFile($i, $ExtensionFichier, $URL, $NbFichiersPresents)
+	{
+		static $Extensions = array();
+		
+		if(empty($Extensions))
+		{
+			$Extensions = explode('|', EXTENSIONS);
+		}
+		
+		if($_FILES['fichiers']['error'][$i] > 0)
+		{
+			//Erreur côté http
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+		}
+		elseif($_FILES['fichiers']['size'][$i] > self::FORM_SIZE_LIMIT)
+		{
+			//Dépassement de la taille maximale
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
+		}
+		elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
+		{
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+		}
+		else
+		{
+			//Vérification de l'extension
+			if (!in_array($ExtensionFichier, $Extensions))
+			{
+				return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+			}
+			
+			if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URL))
+			{
+				return 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
+			}
+			
+			return true;
+		}
 	}
 	
 	/**
