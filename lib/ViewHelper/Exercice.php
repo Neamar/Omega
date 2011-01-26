@@ -205,7 +205,7 @@ function ViewHelper_Exercice_classe($DetailsClasse, $Section = '')
 {
 	if($Section != '')
 	{
-		$Section = '<small>(' . $Section . ')</small>';
+		$Section = ' <small>(' . $Section . ')</small>';
 	}
 	return '<span class="classe">' . $DetailsClasse . $Section . '</span>';
 }

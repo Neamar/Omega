@@ -26,6 +26,8 @@
  */
 class Eleve_ExerciceController extends ExerciceAbstractController
 {
+	const FORM_SIZE_LIMIT = 20971520;
+	
 	/**
 	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
 	 * 
@@ -66,6 +68,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'ENVOYE' => "Le corrigé est disponible !",
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
 			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
+			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
 		);
 
 		$this->View->setTitle(
@@ -241,7 +244,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$NbFichiersAjoutes = 0;
 		
 		//La taille maximale du formulaire (20Mo) :
-		$this->View->SizeLimit = 20*1048576;
+		$this->View->SizeLimit = self::FORM_SIZE_LIMIT;
 
 		if(isset($_POST['upload-noscript']) || isset($_POST['upload']))
 		{
@@ -584,8 +587,123 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				$this->redirectExercice();
 			}
 		}
-		
 	}
+	
+	/**
+	 * Émet une réclamation pour remboursement (ou simple contestation si trop tard).
+	 */
+	public function contestationActionWd()
+	{
+		$this->canAccess(array('ENVOYE', 'TERMINE'), "Vous ne pouvez pas émettre de réclamation actuellement.");
+		
+		$this->View->setTitle(
+			"Émettre une réclamation",
+			"Cette page permet de demander un jugement externe si le travail du correcteur n'est pas correct."
+		);
+				
+		$this->View->addScript('/public/js/jquery-multiupload.min.js');
+		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
+		
+		
+		$this->View->EstRemboursable = ($this->Exercice->Statut == 'ENVOYE');
+		
+		$this->View->SizeLimit = self::FORM_SIZE_LIMIT;
+		$this->View->NbFilesUpload = MAX_FICHIERS_EXERCICE;
+		
+		if(isset($_POST['contestation-exercice']))
+		{
+			$NbFiles = count($_FILES['fichiers']['name']);
+			$Messages = array();
+			$Extensions = explode('|', EXTENSIONS);
+			$NbFichiersPresents = $NbFichiersAjoutes = 0;
+			
+			Sql::start();
+			//Ajout des messages
+			for($i=0;$i<$NbFiles;$i++)
+			{
+				if($_FILES['fichiers']['error'][$i] > 0)
+				{
+					//Erreur côté http
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+				}
+				elseif($_FILES['fichiers']['size'][$i] > $this->View->SizeLimit)
+				{
+					//Dépassement de la taille maximale
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
+				}
+				elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
+				{
+					$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+				}
+				else
+				{
+					//Vérification de l'extension
+					$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
+					if (!in_array($ExtensionFichier, $Extensions))
+					{
+						$Messages[] = 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+					}
+					else
+					{
+						//Enregistrement du fichier.
+						$URL = '/Reclamation/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+						$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
+						
+						if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URLAbsolue))
+						{
+							$Messages[] = 'Impossible de récupérer ' . $_FILES['fichiers']['name'][$i];
+						}
+						else
+						{
+							$ToInsert = array
+							(
+								'Exercice' => $this->Exercice->ID,
+								'Type' => 'RECLAMATION',
+								'URL' => $URL,
+								'ThumbURL' => Thumbnail::create($URLAbsolue),
+								'NomUpload' => $_FILES['fichiers']['name'][$i],
+							);
+							
+							if(!Sql::insert('Exercices_Fichiers', $ToInsert))
+							{
+								//Erreur à l'enregistrement en base de données
+								$Messages[] = 'Impossible d\'enregistrer ' . $_FILES['fichiers']['name'][$i] . ' en base de données.';
+							}
+							else
+							{
+								$NbFichiersPresents++;
+								$NbFichiersAjoutes++;
+							}
+						}
+					}					
+				}
+			}
+			
+			if($NbFichiersAjoutes>0)
+			{
+				$Corrects = (($NbFichiersAjoutes>1)?$NbFichiersAjoutes . ' fichiers ont bien été ajoutés' : 'Votre fichier a bien été ajouté') . '. Vous pouvez encore ajouter jusqu\'à ' . (MAX_FICHIERS_EXERCICE - $NbFichiersPresents) . " fichiers.";
+				$CorrectsClass = 'ok';
+			}
+
+			
+			if(count($Messages) != 0)
+			{
+				//Il y a des erreurs
+				$Messages[] = $Corrects;
+				$this->View->setMessage('error', implode("<br />\n", $Messages));
+				Sql::rollback();
+			}
+			else
+			{
+				$this->Exercice->setStatus('REFUSE', $_SESSION['Eleve'], 'Contestation sur l\'exercice', array('InfosReclamation' => $_POST['message']));
+				
+				Sql::commit();
+				$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
+				$this->redirectExercice();
+			}
+		}
+	}
+	
 	/**
 	 * Liste les actions effectuées sur un exercice
 	 */

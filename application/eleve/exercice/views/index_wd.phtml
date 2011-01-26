@@ -37,13 +37,14 @@ $ListeActions = array(
 	'ENVOYE' => array(
 		'sujet' => $Sujet,
 		'corrige' => $Corrige,
-		'note' => array('Noter l\'exercice', 'Le travail du correcteur me convient, noter son œuvre.'),
-		'reclamation' => array('Émettre une réclamation', 'Ce travail est clairement mal fait, faux, ou rempli de contenu interdit. Émettre une réclamation pour demander un remboursement.'),
+		'note' => array('Noter l\'exercice', 'Le travail du correcteur me convient, noter son œuvre et clore l\'exercice.'),
+		'contestation' => array('Émettre une réclamation et demander un remboursement', 'Ce travail est clairement mal fait, faux, ou rempli de contenu interdit. Émettre une réclamation pour demander un remboursement.', 'contestation'),
 	),
 	'TERMINE' => array(
 		'sujet' => $Sujet,
 		'corrige' => $Corrige
 	),
+	'REFUSE' => 'Cet exercice a été contesté.',
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
 ?>
