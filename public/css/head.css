@@ -32,7 +32,7 @@ height:202px;
 }
 
 ul, p, h1 {margin:0; padding:0; list-style-type:none;}
-a { text-decoration: none; color: #fff;}
+a { text-decoration: none; color: #666;}
 a:visited {  } 
 a:hover, a:focus, a:active { text-decoration: none;} 
 a:focus, a:active { outline: none; }
@@ -43,7 +43,7 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-section {
+section, aside {
 width:1000px;
 margin:auto;
 }
@@ -54,7 +54,7 @@ width:1000px;
 background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*image*/
 }
 	#ribbon-left {
-	padding-left:55px;
+	padding-left:30px;
 	display:inline;
 	line-height:52px;
 	float:left;
@@ -83,7 +83,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		color:#acacac;
 		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
 		text-shadow: #000 1px 1px 1px;
-		}
+		}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 2. Logo --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
@@ -104,7 +104,7 @@ height:103px; /*taille du bloc*/
 	}		
 		#logo-liens ul {
 		position:absolute;
-		right:50px;
+		right:42px;
 		top:35px;
 		}
 			#logo-liens ul li {
@@ -117,7 +117,7 @@ height:103px; /*taille du bloc*/
 				text-transform:uppercase;
 				color:#777;
 				text-shadow:1px 1px 0px #fff;
-				}	
+				}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 3. Ariane / see-link -------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
@@ -126,23 +126,29 @@ clear:both;
 background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*image*/
 height:40px;
 }
-
-.see-link {
+/*Lien de retour*/
+#ariane .see-link {
 float:right;
 }
+	#ariane .see-link a{
+	line-height:40px;
+	}
+
 #ariane ul {
-clear:both;
 }
-#ariane ul li {
-float:left;
-}
-#ariane ul li a {
-font-size:14px;
-color:#484848;
-}
+	#ariane ul li {
+	float:left;
+	padding-right:35px;
+	line-height:40px;
+	}
+		#ariane ul li a {
+		font-size:14px;
+		color:#484848;
+		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------- 4. Title -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #title {
 clear:both;
+background-color: #CCCCCC;
 }
