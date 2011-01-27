@@ -10,6 +10,7 @@ Testé positivement sur :
 
 0. CSS Reset  --------------------------------  Start ! (toutes les pages)
 1. ribbon     --------------------------------  /section - Ruban haut
+2. logo       --------------------------------  /section - Le logo / menu
 
 **********************************************************************************************/
 
@@ -17,6 +18,7 @@ Testé positivement sur :
 /*-------------------------------------------------------- 0. CSS Reset -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
 body { 
 margin: 0;
 padding: 0; 
@@ -45,9 +47,8 @@ width:1000px;
 margin:auto;
 }
 
-
 #ribbon{
-height:59px;
+height:59px; /*taille du bloc*/
 width:1000px;
 background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*image*/
 }
@@ -57,7 +58,6 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	line-height:52px;
 	float:left;
 	}
-	
 	#ribbon-center {
 	position:relative;
 	top:6px;
@@ -72,7 +72,6 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		height:39px;
 		margin:auto;
 	}
-	
 	#ribbon-right {
 	padding-right:55px;
 	display:inline;
@@ -84,15 +83,44 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
 		text-shadow: #000 1px 1px 1px;
 		}
-		#ribbon-right a:hover {
-		color:#1eaed2;
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------- 2. Logo --------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/	
+#logo {
+position:relative;
+height:110px; /*taille du bloc*/
+}
+	#logo-logo {
+	position:absolute;
+	top:0;
+	left:47px;
+	background:url('/public/css/images/logo.jpg') top left scroll no-repeat; /*image*/
+	width:342px;
+	height:103px;
+	}
+	
+	#logo-liens {
+	}		
+		#logo-liens ul {
+		position:absolute;
+		right:100px;
+		top:20px;
+		
 		}
-	
-	
-	
-	
-	
-	
+			#logo-liens ul li {
+			display:inline;
+			font-weight:bold;
+			font-size:18px;
+			padding-left:15px;
+			}
+				#logo-liens ul li a {
+				color:#666;
+				text-shadow:1px 1px 0px #fff;
+				}	
+
+#ariane {
+clear:both;
+}
 	
 	
 	
