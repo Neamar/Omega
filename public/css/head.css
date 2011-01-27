@@ -11,6 +11,7 @@ Testé positivement sur :
 0. CSS Reset  --------------------------------  Start ! (toutes les pages)
 1. ribbon     --------------------------------  /section - Ruban haut
 2. logo       --------------------------------  /section - Le logo / menu
+3. Ariane     --------------------------------  /section - L'ariane - lien de retour -
 
 **********************************************************************************************/
 
@@ -73,10 +74,10 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		margin:auto;
 	}
 	#ribbon-right {
-	padding-right:55px;
+	padding-right:45px;
 	display:inline;
 	float:right;
-	margin-top:-26px;
+	margin-top:-25px;
 	}
 		#ribbon, #ribbon a{
 		color:#acacac;
@@ -88,12 +89,12 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
 #logo {
 position:relative;
-height:110px; /*taille du bloc*/
+height:103px; /*taille du bloc*/
 }
 	#logo-logo {
 	position:absolute;
 	top:0;
-	left:47px;
+	left:31px;
 	background:url('/public/css/images/logo.jpg') top left scroll no-repeat; /*image*/
 	width:342px;
 	height:103px;
@@ -103,24 +104,45 @@ height:110px; /*taille du bloc*/
 	}		
 		#logo-liens ul {
 		position:absolute;
-		right:100px;
-		top:20px;
-		
+		right:50px;
+		top:35px;
 		}
 			#logo-liens ul li {
 			display:inline;
 			font-weight:bold;
 			font-size:18px;
-			padding-left:15px;
+			padding-left:18px;
 			}
 				#logo-liens ul li a {
-				color:#666;
+				text-transform:uppercase;
+				color:#777;
 				text-shadow:1px 1px 0px #fff;
 				}	
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------- 3. Ariane / see-link -------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/	
 #ariane {
 clear:both;
+background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*image*/
+height:40px;
 }
-	
-	
-	
+
+.see-link {
+float:right;
+}
+#ariane ul {
+clear:both;
+}
+#ariane ul li {
+float:left;
+}
+#ariane ul li a {
+font-size:14px;
+color:#484848;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------- 4. Title -------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#title {
+clear:both;
+}
