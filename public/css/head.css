@@ -38,7 +38,14 @@ a:hover, a:focus, a:active { text-decoration: none;}
 a:focus, a:active { outline: none; }
 a img, hr {  border: none; }
 em { font-style: italic; } /* autres */ 
-strong { font-weight: bold; } 
+strong { font-weight: bold; }
+
+.edevoir span {	
+-webkit-transform: rotate(-15deg);
+-moz-transform: rotate(-15deg);
+-o-transform: rotate(-15deg);
+/*writing-mode: tb-rl;*/
+}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
@@ -135,15 +142,20 @@ float:right;
 	}
 
 #ariane ul {
+padding-left:20px;
 }
 	#ariane ul li {
 	float:left;
 	padding-right:35px;
-	line-height:40px;
+	padding-top:11px;
 	}
 		#ariane ul li a {
-		font-size:14px;
 		color:#484848;
+		font-size:16px;
+		text-shadow:1px 1px 0px #e8e8e8;
+		}
+		#ariane ul li a:hover {
+		color:#202020;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------- 4. Title -------------------------------------------------------------------------*/
