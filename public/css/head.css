@@ -50,18 +50,23 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-section, aside {
+#content-head {
+border:1px solid #FF0000;
 width:1000px;
 margin:auto;
 }
+	section {
+	padding: 0 35px;
+	}
 
-#ribbon{
+#content-ribbon{
 height:59px; /*taille du bloc*/
 width:1000px;
-background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*image*/
+margin:auto;
+background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*CONTENT*/
 }
+
 	#ribbon-left {
-	padding-left:30px;
 	display:inline;
 	line-height:52px;
 	float:left;
@@ -81,7 +86,6 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		margin:auto;
 	}
 	#ribbon-right {
-	padding-right:45px;
 	display:inline;
 	float:right;
 	margin-top:-25px;
@@ -111,7 +115,7 @@ height:103px; /*taille du bloc*/
 	}		
 		#logo-liens ul {
 		position:absolute;
-		right:42px;
+		right:0px;
 		top:35px;
 		}
 			#logo-liens ul li {
@@ -130,24 +134,34 @@ height:103px; /*taille du bloc*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
 #ariane {
 clear:both;
-background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*image*/
+background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*CONTENT*/
 height:40px;
+width:1000px;
 }
 /*Lien de retour*/
 #ariane .see-link {
 float:right;
+
 }
 	#ariane .see-link a{
-	line-height:40px;
-	}
+	background:url('/public/css/images/see-link.png') top left scroll no-repeat; /*image*/
+	background-position:0px 0px;
+	height:18px;
+	display:block;
+	padding-left:22px;
+	margin-top:12px;
+	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 
 #ariane ul {
-padding-left:20px;
+display:block;
+height:40px;
 }
 	#ariane ul li {
 	float:left;
-	padding-right:35px;
-	padding-top:11px;
+	padding-right:40px;
+	display:block;
+	padding-top:15px;
+	background:url('/public/css/images/ariane-sep.png') right bottom scroll no-repeat;
 	}
 		#ariane ul li a {
 		color:#484848;

@@ -9,12 +9,16 @@
 </head>
 <body>
 
+<div id="content-head">
+
+<div id="content-ribbon">
 <section id="ribbon">
 <?php 
 	//Gestion du ruban
 	echo $this->renderRibbon()
 ?>
 </section>
+</div><!-- /content-ribbon-->
 
 <section id="logo">
 	<section id="logo-logo">
@@ -46,7 +50,7 @@
 	//Gestion des messages
 	echo $this->renderMessage()
 ?>
-
+</div><!-- /content- head --->
 <section id="content">	
 <?php
 	//Et le contenu de la page.
