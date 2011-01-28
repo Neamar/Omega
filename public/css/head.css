@@ -4,7 +4,7 @@ Version : Pour la première partie - ext
 Changements récents : 
 HACK ie6,7 : / ? *
 HACK ie6 : - _
-Testé positivement sur : 
+Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox 
 
 /***********************************************************************************************
 
@@ -52,12 +52,10 @@ strong { font-weight: bold; }
 .content-head {
 width:1000px;
 margin:auto;
-border:1px solid #FF0000;
 }
 .content-base {
 width:1000px;
 margin:auto;
-border:1px solid #FF0000;
 background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
 margin-bottom:25px;
 }
@@ -159,7 +157,10 @@ padding-right:65px;
 	display:block;
 	padding-left:22px;
 	margin-top:12px;
-	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/	
+	#ariane .see-link a:hover {
+	color:#000000;
+	}
 
 #ariane ul {
 display:block;
@@ -198,15 +199,29 @@ margin:auto;
 }
 	#title h1, #title p{
 	padding:0 35px;
-	color:#f0eeee;
 	}
-	#title h1 {
-	padding:0 35px;
-	color:#f0eeee;
-	}
-	#title p{
-	padding-bottom:10px;
-	}
-
-
-
+		#title h1 {
+		padding:0 35px;
+		color:#f0eeee;
+		font:bold 36px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		text-shadow:1px 1px 0px #292929;
+		}
+		#title p{
+		padding-bottom:10px;
+		color:#eaeaea;
+		font:normal 24px/1.2em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		text-shadow:1px 1px 0px #000;
+		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------- 5. Message -----------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.error {
+background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; /*image r*/
+height:auto;
+}
+#content-message {
+}
+#bottom-message {
+height:13px;
+background:url('/public/css/images/bottom-r.png') top scroll repeat-x; /*image r*/
+}
