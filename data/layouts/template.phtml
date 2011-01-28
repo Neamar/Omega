@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div id="content-head">
+<div class="content-head">
 
 <div id="content-ribbon">
 <section id="ribbon">
@@ -38,19 +38,22 @@
 	echo $this->renderBreadcrumbs()
 ?>
 </section>
+</div><!-- /content-head --->
 
+<div id="content-title">
 <section id="title">
 <?php 
 	//Gestion du titre et de l'introduction
 	echo $this->renderTitle()
 ?>
 </section>
+</div>
 
 <?php 
 	//Gestion des messages
 	echo $this->renderMessage()
 ?>
-</div><!-- /content- head --->
+
 <section id="content">	
 <?php
 	//Et le contenu de la page.
