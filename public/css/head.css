@@ -45,6 +45,7 @@ strong { font-weight: bold; }
 -moz-transform: rotate(-15deg);
 -o-transform: rotate(-15deg);
 /*writing-mode: tb-rl;*/
+text-transform:lowercase!important;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
@@ -57,7 +58,7 @@ margin:auto;
 width:1000px;
 margin:auto;
 background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
-margin-bottom:25px;
+padding-bottom:60px;
 }
 	section {
 	padding: 0 35px;
@@ -87,7 +88,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	text-shadow: #323232 1px 1px 1px;
 	text-align:center;
 	padding-top:4px;
-		background:url('/public/css/images/top-c-correcteur.png') top scroll no-repeat; /*correcteur*/
+		background:url('/public/css/images/top-c-doc.png') top scroll no-repeat; /*neutre*/
 		width:291px;
 		height:39px;
 		margin:auto;
@@ -165,6 +166,7 @@ padding-right:65px;
 #ariane ul {
 display:block;
 height:40px;
+padding-left:20px;
 }
 	#ariane ul li {
 	float:left;
@@ -176,7 +178,12 @@ height:40px;
 		#ariane ul li a {
 		color:#484848;
 		font-size:16px;
-		text-shadow:1px 1px 0px #e8e8e8;
+		text-shadow:1px 1px 0px #f5f5f5;
+		text-transform:uppercase;
+		font-size:14px;
+		}
+		#ariane ul li:last-child a {
+		font-weight:bold;
 		}
 		#ariane ul li a:hover {
 		color:#202020;
@@ -219,9 +226,9 @@ margin:auto;
 background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; /*image r*/
 height:auto;
 }
-#content-message {
-}
-#bottom-message {
-height:13px;
-background:url('/public/css/images/bottom-r.png') top scroll repeat-x; /*image r*/
-}
+	#content-message {
+	}
+	#bottom-message {
+	height:13px;
+	background:url('/public/css/images/bottom-r.png') top scroll repeat-x; /*image r*/
+	}
