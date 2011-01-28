@@ -12,6 +12,8 @@ Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox
 1. ribbon     --------------------------------  /section - Ruban haut
 2. logo       --------------------------------  /section - Le logo / menu
 3. Ariane     --------------------------------  /section - L'ariane - lien de retour -
+4. Title      --------------------------------  /section - title (intro) -
+5. Message    --------------------------------  /section - message (error, info, warning etc.. -
 
 **********************************************************************************************/
 
@@ -222,13 +224,37 @@ margin:auto;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------- 5. Message -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.error {
-background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; /*image r*/
-height:auto;
+.message {
+position:relative;
+padding-top:5px;
+width:1000px;
+margin:auto;
 }
-	#content-message {
+.message p {
+padding:0 35px;
+}
+	/*message erreur*/
+	.error p:first-child {
+	color:#d43b3e;
+	font-weight:bold;
+	text-shadow:1px 1px 0px #fff;
 	}
-	#bottom-message {
-	height:13px;
-	background:url('/public/css/images/bottom-r.png') top scroll repeat-x; /*image r*/
-	}
+	
+		#content-message {
+		padding:5px 0;
+		background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; /*image r*/
+		height:auto;
+		}
+		#bottom-message {
+		height:13px;
+		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x; /*image r*/
+		}
+
+
+.message .doc-box-link {
+position:absolute;
+bottom:-15px;
+right:20px;
+display:inline-block;
+
+}
