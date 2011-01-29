@@ -445,6 +445,12 @@ class View
 		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417
 		foreach($Ariane as $Url => &$Caption)
 		{
+			//Réduire les parties trop longues
+			if(strlen($Caption) > 60)
+			{
+				$Caption = trim(mb_substr($Caption, 0, 57, 'UTF-8')) . '&hellip;';
+			}
+			
 			$Caption = '
 		<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
 			<a href="' . $Url . '" itemprop="url">
