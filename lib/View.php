@@ -374,14 +374,23 @@ class View
 			if($this->issetMeta('messageDoc'))
 			{
 				$Parties = explode("/", $this->getMeta("messageDoc"));
-				return $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
+				$Content = $this->Doc_box($Parties[0], $Parties[1], $this->getMeta('message'), 'message ' . $this->getMeta('messageClass'));
 			}
 			else
 			{
-				return '<aside class="message ' . $this->getMeta('messageClass')  . '">
+				$Content = '<aside class="message ' . $this->getMeta('messageClass')  . '">
 	<p>' . $this->getMeta('message') . '</p>
 </aside>';
 			}
+			
+			return '<div id="content-message" class="' . $this->getMeta('messageClass')  . '">
+' . $Content . '
+</div><!-- /content-message --->
+<div id="bottom-message" class="' . $this->getMeta('messageClass')  . '"></div>';
+		}
+		else
+		{
+			return '<div id="bottom-message"></div>';
 		}
 	}
 	

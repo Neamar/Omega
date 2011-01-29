@@ -112,7 +112,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 position:relative;
 height:103px; /*taille du bloc*/
 }
-	#logo-logo {
+	#section_logo {
 	position:absolute;
 	top:0;
 	left:31px;
