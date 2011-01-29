@@ -38,7 +38,7 @@ class Correcteur_IndexController extends IndexAbstractController
 		);
 		
 		$this->View->Exo = $this->concat('/correcteur/exercice/');
-
+		$this->View->Points = $this->concat('/correcteur/points/');
 	}
 	
 	/**

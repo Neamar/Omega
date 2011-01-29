@@ -38,6 +38,7 @@ class Eleve_IndexController extends IndexAbstractController
 		);
 		
 		$this->View->Exo = $this->concat('/eleve/exercice/');
+		$this->View->Points = $this->concat('/eleve/points/');
 
 	}
 	

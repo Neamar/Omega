@@ -26,14 +26,37 @@
 abstract class PointsAbstractController extends AbstractController
 {
 	/**
+	 * Le membre ayant demandé le chargement de la page
+	 * 
+	 * @var Membre
+	 */
+	private $Membre;
+	
+	/**
+	 * Dévie automatiquement la vue vers une solution générique.
+	 * 
+	 * @param string $Module
+	 * @param string $Controller
+	 * @param string $View
+	 * @param string $Data
+	 */
+	public function __construct($Module, $Controller, $View, $Data)
+	{
+		parent::__construct($Module, $Controller, $View, $Data);
+		
+		$this->deflectView(OO2FS::genericViewPath('membre/points/' . str_replace('.','',$View)));
+		
+		$this->Membre = $_SESSION[ucfirst($this->getModule())];
+	}
+	/**
 	 * Index du contrôleur de points
 	 */
 	public function indexAction()
 	{
 		$this->View->setTitle(
-			'Vos points',
+			'Informations solde',
 			'Cette page liste les différentes informations disponibles concernant vos points.'
-		);		
+		);
 	}
 	
 	/**
@@ -49,12 +72,10 @@ abstract class PointsAbstractController extends AbstractController
 		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
 		{
 			Sql::start();
-			$_SESSION[ucfirst($_GET['module'])]->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
+			$this->Membre->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
 			Sql::commit();
 			$this->View->setMessage('info', 'Argent ajouté !');
 		}
-		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/ajout'));
 	}
 	/**
 	 * Opération de retrait de points
@@ -66,15 +87,10 @@ abstract class PointsAbstractController extends AbstractController
 			'Retirez ici des points vers un compte bancaire ou paypal.'
 		);
 		
-		/**
-		 * Le membre qui tente de retirer des points
-		 * 
-		 * @var Membre
-		 */
-		$Membre = $_SESSION[ucfirst($_GET['module'])];
-		$this->View->Membre = $Membre;
+
+		$this->View->Membre = $this->Membre;
 		
-		if($Membre->getPoints() == 0)
+		if($this->Membre->getPoints() == 0)
 		{
 			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
 			$this->redirect('/' . $this->getModule() . '/points/');
@@ -82,7 +98,7 @@ abstract class PointsAbstractController extends AbstractController
 		$DernierVirement = strtotime(Sql::singleColumn(
 			'SELECT Date
 			FROM Virements
-			WHERE Membre = ' . $Membre->getFilteredId() . '
+			WHERE Membre = ' . $this->Membre->getFilteredId() . '
 			ORDER BY ID DESC
 			LIMIT 1',
 			'Date'
@@ -104,7 +120,7 @@ abstract class PointsAbstractController extends AbstractController
 			{
 				$this->View->setMessage("error", "Pour des raisons de sécurité, vous devez fournir votre mot de passe.");
 			}
-			elseif(!$Membre->comparePass(Util::hashPass($_POST['password'])))
+			elseif(!$this->Membre->comparePass(Util::hashPass($_POST['password'])))
 			{
 				$this->View->setMessage("error", "Mot de passe non valide.");
 			}
@@ -112,7 +128,7 @@ abstract class PointsAbstractController extends AbstractController
 			{
 				$this->View->setMessage("error", "Valeur invalide ou nulle.");
 			}
-			elseif($_POST['retrait'] > $Membre->getPoints())
+			elseif($_POST['retrait'] > $this->Membre->getPoints())
 			{
 				$this->View->setMessage("error", "Vous ne pouvez pas retirer autant !");
 			}
@@ -144,7 +160,7 @@ abstract class PointsAbstractController extends AbstractController
 				}
 				
 				Sql::start();
-				if(!$Membre->debit($_POST['retrait'], 'Virement pour ' . $Ordre))
+				if(!$this->Membre->debit($_POST['retrait'], 'Virement pour ' . $Ordre))
 				{
 					Sql::rollback();
 					$this->View->setMessage('error', 'Impossible de débiter une telle somme. La transaction a été annulée');
@@ -152,7 +168,7 @@ abstract class PointsAbstractController extends AbstractController
 				else
 				{
 					$ToInsert = array(
-						'Membre' => $Membre->getFilteredId(),
+						'Membre' => $this->Membre->getFilteredId(),
 						'_Date' => 'NOW()',
 						'Montant' => $_POST['retrait'],
 						'Type' => strtoupper($_POST['type']),
@@ -172,7 +188,7 @@ abstract class PointsAbstractController extends AbstractController
 						Event::dispatch(
 							Event::MEMBRE_POINTS_RETRAIT,
 							array(
-								'mail' => $Membre->Mail,
+								'mail' => $this->Membre->Mail,
 								'delta' => $_POST['retrait'],
 								'type' => $_POST['type'],
 								'ordre' => $Ordre,
@@ -186,7 +202,40 @@ abstract class PointsAbstractController extends AbstractController
 				}
 			}
 		}//Fin test $_POST
+	}
+
+	/**
+	 * Liste les actions sur le compte.
+	 */
+	public function _actionsAction()
+	{
+		$Query = '
+			SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action, Delta
+			FROM Logs
+			WHERE Membre = ' . $this->Membre->getFilteredID() . '
+			ORDER BY Logs.Date DESC';
+		 
+		$ResultatsSQL = Sql::query($Query);
+		$Resultats = array();
+		$Points = $this->Membre->getPoints();
 		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/retrait'));
+		while($Resultat = mysql_fetch_row($ResultatsSQL))
+		{
+			$Delta = $Resultat[2];
+			if($Delta > 0)
+			{
+				$Resultat[2] = '<small style="color:green;">' . $Delta . '</small>';
+			}
+			else
+			{
+				$Resultat[2] = '<small style="color:red;">' . $Delta . '</small>';
+			}
+			$Resultat[2] = $Points . ' (' . $Resultat[2] . ')';
+			$Points -= $Delta; // Remonter dans le temps.
+			
+			$Resultats[] = $Resultat;
+		}
+		
+		$this->json($Resultats);
 	}
 }
