@@ -163,6 +163,7 @@ function initTypo()
 	//Gestion de la documentation
 	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
 	Typo::addBalise('#\\\\doc\[([a-z]+/[a-z_-]+)\]{(.+)}#isU', '<a href="/documentation/$1">$2</a>');
+	Typo::addBalise('#\\\\eDevoir#', ViewHelper_Html_eDevoir());
 	
 	//Empêcher de mettre en forme le texte dans les ref.
 	Typo::$Escape_And_Prepare['#\\\\doc\[.+(oe).+\]{(.+)}#isU']=array
