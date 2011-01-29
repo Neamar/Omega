@@ -58,6 +58,12 @@ abstract class ExerciceAbstractController extends AbstractController
 				$this->redirect('/' . $_GET['module'] . '/exercice/');
 			}
 			
+			//Lien vers la FAQ
+			if($this->Exercice->isFaq())
+			{
+				$this->View->setSeelink('/' . $_GET['module'] . '/exercice/faq/' . $this->Exercice->Hash, 'Chat exercice');
+			}
+			
 			//Récupérer les données pour la vue :
 			$this->View->Exercice = $this->Exercice;
 		}

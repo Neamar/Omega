@@ -9,6 +9,8 @@ Afficher le contenu du PDF en aperçu
 Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
 Édulcorer au maximum les utilisations de $_GET['module'] pour $controller->getModule()
 Utilisation de DbObject::create() au lie ude Sql::insert() là ou possible
+Placer plus de list-action là où nécessaire
+Placer un select "quickjump" dans les list-action
 
 HTML5 Forms :
 - Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
