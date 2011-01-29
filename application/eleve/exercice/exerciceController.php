@@ -677,6 +677,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					//Et enregistrer
 					Sql::commit();
 					
+					Event::dispatch(
+						Event::ELEVE_EXERCICE_RECLAMATION,
+						array(
+							'Exercice' => $this->Exercice
+						)
+					);
+					
 					$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
 					$this->redirectExercice();
 				}
