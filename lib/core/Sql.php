@@ -51,6 +51,8 @@ class Sql
 	 * Non récursif.
 	 * 
 	 * @param mixed $Data
+	 * 
+	 * @return mixed les données échappées
 	 */
 	public static function escape($Data)
 	{
@@ -68,6 +70,8 @@ class Sql
 	
 	/**
 	 * Renvoie le texte de la dernière erreur SQL.
+	 * 
+	 * @return string l'erreur
 	 */
 	public static function error()
 	{
@@ -76,6 +80,8 @@ class Sql
 	
 	/**
 	 * Renvoie le numéro du dernier identifiant inséré
+	 * 
+	 * @returun int le dernier ID
 	 */
 	public static function lastId()
 	{
@@ -84,6 +90,8 @@ class Sql
 	
 	/**
 	 * Renvoie le nombre de tuples affectés par la dernière requête
+	 * 
+	 * @return int
 	 */
 	public static function affectedRows()
 	{
@@ -92,6 +100,8 @@ class Sql
 	
 	/**
 	 * Débute une transaction.
+	 * 
+	 * @return SQLResource
 	 */
 	public static function start()
 	{
@@ -101,6 +111,8 @@ class Sql
 	
 	/**
 	 * Enregistre les modifications de la transaction.
+	 * 
+	 * @return SQLResource
 	 */
 	public static function commit()
 	{
@@ -110,6 +122,8 @@ class Sql
 	
 	/**
 	 * Annule les modifications de la transaction.
+	 * 
+	 * @return SQLResource
 	 */
 	public static function rollback()
 	{
@@ -321,101 +335,5 @@ class Sql
 		}
 			
 		return date("Y-m-d H:i:s", $time);
-	}
-}
-
-/**
- * Classe générique de paramètre d'appel à la base de donnée.
- *
- * @category Db
- * @package  Root
- * @author   Matthieu Bacconnier <matthieu@bacconnier.fr>
- * @license  Copyright http://fr.wikipedia.org/wiki/Copyright
- * @link     http://edevoir.com
- *
- */
-class SqlParam
-{
-	public $Select;
-	public $Where;
-	public $Limit;
-	public $Having;
-	public $Group;
-	public $Order;
-
-	/**
-	 * Construit un objet SQLParam avec les paramètres demandés.
-	 */
-	public function __construct(array &$Param=null)
-	{
-		if(is_null($Param))
-		{
-			return;
-		}
-
-		//Construire l'objet avec les propriétés par défaut et les valeurs spécifiées.
-		static $Defaut = array
-		(
-			'Select'=>'*',
-			'Where'=>null,
-			'Limit'=>null,
-			'Having'=>null,
-			'Order'=>null,
-		);
-
-		$Param = array_merge($Defaut, $Param);
-
-		foreach($Param as $Item=>$Value)
-		{
-			$this->{$Item} = $Value;
-		}
-	}
-
-	/**
-	 * Récupère les éléments.
-	 */
-	public function getSelect()
-	{
-		return 'SELECT ' . $this->Select;
-	}
-
-	public function getWhere()
-	{
-		if(!is_null($this->Where))
-		{
-			return 'WHERE ' . $this->Where;
-		}
-	}
-
-	public function getLimit()
-	{
-		if(!is_null($this->Limit))
-		{
-			return 'LIMIT ' . $this->Limit;
-		}
-	}
-
-	public function getHaving()
-	{
-		if(!is_null($this->Having))
-		{
-			return 'HAVING ' . $this->Having;
-		}
-	}
-
-	public function getGroup()
-	{
-		if(!is_null($this->Group))
-		{
-			return 'GROUP BY ' . $this->Group;
-		}
-	}
-
-	public function getOrder()
-	{
-		if(!is_null($this->Order))
-		{
-			return 'ORDER BY ' . $this->Order;
-		}
 	}
 }
