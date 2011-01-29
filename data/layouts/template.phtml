@@ -9,12 +9,16 @@
 </head>
 <body>
 
+<div class="content-head">
+
+<div id="content-ribbon">
 <section id="ribbon">
 <?php 
 	//Gestion du ruban
 	echo $this->renderRibbon()
 ?>
 </section>
+</div><!-- /content-ribbon-->
 
 <section id="logo">
 	<section id="logo-logo">
@@ -34,25 +38,32 @@
 	echo $this->renderBreadcrumbs()
 ?>
 </section>
+</div><!-- /content-head --->
 
+<div id="content-title">
 <section id="title">
 <?php 
 	//Gestion du titre et de l'introduction
 	echo $this->renderTitle()
 ?>
 </section>
+</div><!-- /content-title --->
 
+<div id="content-message">
 <?php 
 	//Gestion des messages
 	echo $this->renderMessage()
 ?>
+</div><!-- /content-message --->
+<div id="bottom-message"></div>
 
+<div class="content-base">
 <section id="content">	
 <?php
 	//Et le contenu de la page.
 	$this->renderContent();
 ?>
 </section>
-
+</div><!-- /content-base --->
 </body>
 </html>

@@ -1,0 +1,260 @@
+/*********************************************************************************************
+
+Version : Pour la première partie - ext
+Changements récents : 
+HACK ie6,7 : / ? *
+HACK ie6 : - _
+Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox 
+
+/***********************************************************************************************
+
+0. CSS Reset  --------------------------------  Start ! (toutes les pages)
+1. ribbon     --------------------------------  /section - Ruban haut
+2. logo       --------------------------------  /section - Le logo / menu
+3. Ariane     --------------------------------  /section - L'ariane - lien de retour -
+4. Title      --------------------------------  /section - title (intro) -
+5. Message    --------------------------------  /section - message (error, info, warning etc.. -
+
+**********************************************************************************************/
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 0. CSS Reset -----------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+body { 
+margin: 0;
+padding: 0; 
+font-family: Arial, Helvetica, sans-serif; 
+font-size: 0.9em; 
+line-height: 1.4; 
+color:#4d4b45;
+background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll repeat-x; /*image r*/
+height:202px;
+}
+
+ul, p, h1 {margin:0; padding:0; list-style-type:none;}
+a { text-decoration: none; color: #666;}
+a:visited {  } 
+a:hover, a:focus, a:active { text-decoration: none;} 
+a:focus, a:active { outline: none; }
+a img, hr {  border: none; }
+em { font-style: italic; } /* autres */ 
+strong { font-weight: bold; }
+
+.edevoir span {	
+-webkit-transform: rotate(-15deg);
+-moz-transform: rotate(-15deg);
+-o-transform: rotate(-15deg);
+/*writing-mode: tb-rl;*/
+text-transform:lowercase!important;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.content-head {
+width:1000px;
+margin:auto;
+}
+.content-base {
+width:1000px;
+margin:auto;
+background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
+padding-bottom:60px;
+}
+	section {
+	padding: 0 35px;
+	}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#content-ribbon{
+height:59px; /*taille du bloc*/
+width:1000px;
+margin:auto;
+background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*CONTENT*/
+}
+
+	#ribbon-left {
+	display:inline;
+	line-height:52px;
+	float:left;
+	}
+	#ribbon-center {
+	position:relative;
+	top:6px;
+	color:#fff;
+	font:bold 20px/1.2em "Arno Pro", Georgia, serif;
+	text-transform:uppercase;
+	text-shadow: #323232 1px 1px 1px;
+	text-align:center;
+	padding-top:4px;
+		background:url('/public/css/images/top-c-doc.png') top scroll no-repeat; /*neutre*/
+		width:291px;
+		height:39px;
+		margin:auto;
+	}
+	#ribbon-right {
+	display:inline;
+	float:right;
+	margin-top:-25px;
+	}
+		#ribbon, #ribbon a{
+		color:#acacac;
+		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
+		text-shadow: #000 1px 1px 1px;
+		}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------- 2. Logo --------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/	
+#logo {
+position:relative;
+height:103px; /*taille du bloc*/
+}
+	#logo-logo {
+	position:absolute;
+	top:0;
+	left:31px;
+	background:url('/public/css/images/logo.jpg') top left scroll no-repeat; /*image*/
+	width:342px;
+	height:103px;
+	}
+	
+	#logo-liens {
+	}		
+		#logo-liens ul {
+		position:absolute;
+		right:35px;
+		top:35px;
+		}
+			#logo-liens ul li {
+			display:inline;
+			font-weight:bold;
+			font-size:18px;
+			padding-left:18px;
+			}
+				#logo-liens ul li a {
+				text-transform:uppercase;
+				color:#777;
+				text-shadow:1px 1px 0px #fff;
+				}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------- 3. Ariane / see-link -------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/	
+#ariane {
+clear:both;
+background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*CONTENT*/
+height:40px;
+width:1000px;
+}
+/*Lien de retour*/
+#ariane .see-link {
+float:right;
+padding-right:65px;
+}
+	#ariane .see-link a{
+	background:url('/public/css/images/see-link.png') top left scroll no-repeat; /*image*/
+	background-position:0px 0px;
+	height:18px;
+	display:block;
+	padding-left:22px;
+	margin-top:12px;
+	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/	
+	#ariane .see-link a:hover {
+	color:#000000;
+	}
+
+#ariane ul {
+display:block;
+height:40px;
+padding-left:20px;
+}
+	#ariane ul li {
+	float:left;
+	padding-right:40px;
+	display:block;
+	padding-top:15px;
+	background:url('/public/css/images/ariane-sep.png') right bottom scroll no-repeat;
+	}
+		#ariane ul li a {
+		color:#484848;
+		font-size:16px;
+		text-shadow:1px 1px 0px #f5f5f5;
+		text-transform:uppercase;
+		font-size:14px;
+		}
+		#ariane ul li:last-child a {
+		font-weight:bold;
+		}
+		#ariane ul li a:hover {
+		color:#202020;
+		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------- 4. Title -------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#content-title {
+background:#f1f1ef url('/public/css/images/title-r.jpg') top left scroll repeat-x; /*image r*/
+height:auto;
+}
+
+#title {
+clear:both;
+background-color: #CCCCCC;
+background:url('/public/css/images/title.jpg') top left scroll no-repeat; /*CONTENT*/
+padding-top:5px;
+width:1000px;
+margin:auto;
+}
+	#title h1, #title p{
+	padding:0 35px;
+	}
+		#title h1 {
+		padding:0 35px;
+		color:#f0eeee;
+		font:bold 36px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		text-shadow:1px 1px 0px #292929;
+		}
+		#title p{
+		padding-bottom:10px;
+		color:#eaeaea;
+		font:normal 24px/1.2em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		text-shadow:1px 1px 0px #000;
+		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------- 5. Message -----------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.message {
+position:relative;
+padding-top:5px;
+width:1000px;
+margin:auto;
+}
+.message p {
+padding:0 35px;
+}
+	/*message erreur*/
+	.error p:first-child {
+	color:#d43b3e;
+	font-weight:bold;
+	text-shadow:1px 1px 0px #fff;
+	}
+	
+		#content-message {
+		padding:5px 0;
+		background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; /*image r*/
+		height:auto;
+		}
+		#bottom-message {
+		height:13px;
+		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x; /*image r*/
+		}
+
+
+.message .doc-box-link {
+position:absolute;
+bottom:-15px;
+right:20px;
+display:inline-block;
+
+}
