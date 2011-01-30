@@ -414,7 +414,7 @@ class View
 		' . $RibbonParts['left'] . '
 	</div>
 	<div id="ribbon-center">
-		Espace ' .$this->Controller->getModule() . '
+		' . $RibbonParts['center'] . '
 	</div>
 	<div id="ribbon-right">
 		' . $RibbonParts['right'] . '

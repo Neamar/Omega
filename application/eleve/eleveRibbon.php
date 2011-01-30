@@ -16,6 +16,8 @@
 
 $Retour = array();
 
+$Retour['center'] = 'Espace Élève';
+
 if(!isset($_SESSION['Eleve']))
 {
 	$Retour['left'] = 'Non connecté';
