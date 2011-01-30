@@ -101,7 +101,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosEleve;
+		$this->View->Type = 'Eleve';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -116,7 +116,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		$this->View->setTitle("Affichage du corrigé de l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosCorrecteur;
+		$this->View->Type = 'Correcteur';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -137,7 +137,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		$this->View->setTitle("Affichage de la réclamation déposée sur l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosReclamation;
+		$this->View->Type = 'Reclamation';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('RECLAMATION'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -183,6 +183,7 @@ abstract class ExerciceAbstractController extends AbstractController
 				if(Sql::insert('Exercices_FAQ', $ToInsert))
 				{
 					$this->View->setMessage('ok', 'Message enregistré.');
+					unset($_POST['question']);
 				}
 				else
 				{
@@ -220,6 +221,7 @@ abstract class ExerciceAbstractController extends AbstractController
 				if(Sql::insert('Exercices_FAQ', $ToInsert))
 				{
 					$this->View->setMessage('ok', 'Message enregistré.');
+					unset($_POST['question'], $_POST['reponse']);
 				}
 				else
 				{

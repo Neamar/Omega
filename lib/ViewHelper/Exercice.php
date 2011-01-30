@@ -72,30 +72,10 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	}
 	//Mettre en forme les remarques :
 	$Remarques = '';
-	if(!empty($Exercice->InfosEleve))
-	{
-		$Remarques .= '
-		<p>Informations complémentaires élèves :</p>
-		<p class="infos">
-			' . $Exercice->InfosEleve . '
-		</p>';
-	}
-	if(!empty($Exercice->InfosCorrecteur))
-	{
-		$Remarques .= '
-		<p>Informations complémentaires correcteur :</p>
-		<p class="infos">
-			' . $Exercice->InfosCorrecteur . '
-		</p>';
-	}
-	elseif(!empty($Exercice->InfosReclamation))
-	{
-		$Remarques .= '
-		<p>Informations complémentaires réclamation :</p>
-		<p class="infos">
-			' . $Exercice->InfosReclamation . '
-		</p>';
-	}
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Eleve');
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Correcteur');
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Reclamation');
+	
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);
 	
@@ -209,6 +189,45 @@ function ViewHelper_Exercice_matiere($Matiere)
 	return '<span class="matiere">' . $Matiere . '</span>';
 }
 
+/**
+ * Renvoie une balise <p> contenant les infos demandées.
+ * @see Exercice::infosEleve
+ * @see Exercice::infosCorrecteur
+ * @see Exercice::infosReclamation
+ * 
+ * @param Exercice $Exercice l'exercice à afficher
+ * @param string $Info le nom de la propriété à afficher (Eleve, Correcteur ou Reclamation).
+ */
+function ViewHelper_Exercice_infos(Exercice $Exercice, $Info)
+{
+	$Caption = array(
+			'Eleve' => 'élève',
+			'Correcteur' => 'correcteur',
+			'Reclamation' => 'réclamation'
+	);
+	
+	if(!isset($Caption[$Info]))
+	{
+		throw new Exception('Type inconnu.');
+		return;
+	}
+		
+	$Texte = $Exercice->{'Infos' . $Info};
+	
+	if(empty($Texte))
+	{
+		return '';
+	}
+	else
+	{
+		$IsTex = preg_match('((\$.+\$)|(\\\\(.+\\\\))|(\$\$.+\$\$)|(\\\\[.+\\\\]))', $Texte);
+
+		return '<p>Informations complémentaires ' . $Caption[$Info] . ' :</p>
+		<p class="infos' . ($IsTex?' texable':'') . '">
+			' . nl2br($Texte) . '
+		</p>';
+	}
+}
 /**
  * Renvoie la classe correctement formatée
  * 
