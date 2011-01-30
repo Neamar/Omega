@@ -692,6 +692,27 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Chat de l'exercice
+	 * @see ExerciceAbstractController::faqActionWd()
+	 */
+	public function faqActionWd()
+	{
+		if(!$this->Exercice->isFaq())
+		{
+			$this->View->setMessage('warning', 'La FAQ n\'est pas encore ouverte.');
+			$this->redirectExercice();
+		}
+		
+		$this->View->setTitle(
+			"Chat de l'exercice",
+			"Cette page permet de dialoguer avec le correcteur pour éclaircir les points restés obscurs."
+		);
+		
+		//Enregistrer les données
+		parent::faqActionWd();
+	}
+		
+	/**
 	 * Liste les actions effectuées sur un exercice
 	 */
 	public function _actionsActionWd()

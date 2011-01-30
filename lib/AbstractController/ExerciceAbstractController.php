@@ -156,6 +156,39 @@ abstract class ExerciceAbstractController extends AbstractController
 	}
 	
 	/**
+	 * Chat de l'exercice
+	 */
+	public function faqActionWd()
+	{
+		if(isset($_POST['faq-question-exercice']))
+		{
+			if(empty($_POST['question']))
+			{
+				$this->View->setMessage('warning', 'Message vide.');
+			}
+			else 
+			{
+				$ToInsert = array(
+					'Exercice' => $this->Exercice->ID,
+					'_Creation' => 'NOW()',
+					'Texte' => $_POST['question'],
+					'Statut' => 'OK',
+					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID
+				);
+				
+				if(Sql::insert('Exercices_FAQ', $ToInsert))
+				{
+					$this->View->setMessage('ok', 'Message enregistré.');
+				}
+				else
+				{
+					$this->View->setMessage('error', 'Impossible de sauvegarder votre message.');
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Termine un exercice.
 	 * Peut-être appelé à la notation, sur un timeout après DELAI_REMBOURSEMENT, ou sur une décision administrateur.
 	 * 
