@@ -42,13 +42,6 @@ a img, hr {  border: none; }
 em { font-style: italic; } /* autres */ 
 strong { font-weight: bold; }
 
-.edevoir span {	
--webkit-transform: rotate(-15deg);
--moz-transform: rotate(-15deg);
--o-transform: rotate(-15deg);
-/*writing-mode: tb-rl;*/
-text-transform:lowercase!important;
-}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -112,7 +105,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 position:relative;
 height:103px; /*taille du bloc*/
 }
-	#section_logo {
+	#section_logo a {
 	position:absolute;
 	top:0;
 	left:31px;
