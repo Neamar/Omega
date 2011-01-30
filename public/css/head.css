@@ -105,14 +105,14 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 position:relative;
 height:103px; /*taille du bloc*/
 }
-	/*#section_logo a {
+	#section_logo a {
 	position:absolute;
 	top:0;
 	left:31px;
-	background:url('/public/css/images/logo.jpg') top left scroll no-repeat;
+	background:url('/public/css/images/logo.jpg') top left scroll no-repeat; /*image*/
 	width:342px;
 	height:103px;
-	}*/
+	}
 	
 	#logo-liens {
 	}		
