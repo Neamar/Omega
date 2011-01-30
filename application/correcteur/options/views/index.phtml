@@ -7,9 +7,16 @@ echo $this->View_render($this->Matieres, 1);
 <?php 
 $Actions = array
 (
-	'/correcteur/desinscription'=> 'Fermer mon compte',
-	'/correcteur/points/retrait' => 'Retirer des points',
+	'desinscription'=> array(
+		'Fermer mon compte',
+		'Vous pouvez vous désinscrire défintivement d\'' . $this->Html_eDevoir() . '.',
+		'desinscription',
+	), 
+	'points/retrait' => array(
+		'Retirer des points',
+		'Vous avez bien travaillé ? Alors pourquoi ne pas transformer vos points en argent !',
+		'retrait'
+	),
 );
 
-echo $this->Html_listAnchor($Actions);
-?>
+echo $this->Html_listAction($Actions, '/correcteur/__URL__', 'correcteur');

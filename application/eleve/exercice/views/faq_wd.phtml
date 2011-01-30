@@ -1,5 +1,5 @@
 <?php 
-$AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="%data%">Ajouter une réponse</a></p>';
+$AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__">Ajouter une réponse</a></p>';
 
 echo $this->Doc_box('eleve', 'faq', 'Besoin d\'aide sur cette page ?');
 ?>
@@ -33,7 +33,7 @@ else
 			if(!is_null($LastQuestion))
 			{
 				//Lien d'ajout de réponse à la question
-				echo str_replace('%data%', $LastQuestion, $AddReply);
+				echo str_replace('__data__', $LastQuestion, $AddReply);
 			}
 			
 			//QUESTION
@@ -54,7 +54,7 @@ else
 	if(!is_null($LastQuestion))
 	{
 		//Lien d'ajout de réponse à la question
-		echo str_replace('%data%', $LastQuestion, $AddReply);
+		echo str_replace('__data__', $LastQuestion, $AddReply);
 	}
 }
 ?>
