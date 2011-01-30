@@ -72,7 +72,7 @@ MathJax.Hub.Config({
   //
   //  Example:    extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
   //
-  extensions: ["tex2jax.js"],
+  extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js","TeX/autobold.js"],
 
   //
   //  Patterns to remove from before and after math script tags.  If you are not
@@ -216,7 +216,7 @@ MathJax.Hub.Config({
     //  in the class name.  Assigning an element this class name will
     //  prevent `tex2jax` from processing its contents.
     //
-    ignoreClass: "tex2jax_ignore",
+    ignoreClass: "content-base|tex-ignore",
 
     //
     //  This is the class name used to mark elements whose contents SHOULD
@@ -229,21 +229,21 @@ MathJax.Hub.Config({
     //  restart processing within an element that has been marked as
     //  ignored above.
     //
-    processClass: "tex2jax_process",
+    processClass: "texable",
 
     //
     //  Set to "true" to allow \$ to produce a dollar without starting in-line
     //  math mode.  If you uncomment the ['$','$'] line above, you should change
     //  this to true so that you can insert plain dollar signs into your documents
     //
-    processEscapes: false,
+    processEscapes: true,
 
     //
     //  Controls whether tex2jax processes LaTeX environments outside of math
     //  mode.  Set to "false" to prevent processing of environments except within
     //  math mode.
     //
-    processEnvironments: true,
+    processEnvironments: false,
 
     //
     //  Controls whether tex2jax inserts MathJax_Preview spans to make a
@@ -435,7 +435,7 @@ MathJax.Hub.Config({
     //  will be required to to download and install either the STIX fonts or the
     //  MathJax TeX fonts.
     //
-    imageFont: null
+    imageFont: null,
 
     //
     //  This controls whether the MathJax contextual menu will be available

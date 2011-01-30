@@ -3,7 +3,7 @@ $AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="%data%">
 
 echo $this->Doc_box('eleve', 'faq', 'Besoin d\'aide sur cette page ?');
 ?>
-<h2>Poster une nouvelle question</h2>
+<h2>Poster une nouvelle question $\pi + \Sigma$</h2>
 <form id="form_faq-question-exercice" method="post" action="">
 <?php 
 echo $this->Form_textareaLabeLBr('question', 'Votre question');
@@ -13,6 +13,7 @@ echo $this->Form_submit('faq-question-exercice', 'Envoyer cette question');
 </form>
 
 <h2>Chat actuel</h2>
+<div class="texable">
 <?php 
 if(empty($this->Datas))
 {
@@ -55,3 +56,5 @@ else
 		echo str_replace('%data%', $LastQuestion, $AddReply);
 	}
 }
+?>
+</div>

@@ -11,6 +11,7 @@ Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
 Utilisation de DbObject::create() au lie ude Sql::insert() là ou possible
 Placer plus de list-action là où nécessaire
 Placer un select "quickjump" dans les list-action
+Ajouter à LaTeX une commande eDevoir ;)
 
 HTML5 Forms :
 - Les composants number ne peuvent prendre que des chiffres. this.value = this.value.replace(/[^0-9\.]/g,'');
