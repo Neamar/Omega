@@ -59,7 +59,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			}
 			
 			//Lien vers la FAQ
-			if($this->Exercice->isFaq())
+			if($this->Exercice->isFaq() && $this->getAction() != 'faq')
 			{
 				$this->View->setSeelink('/' . $_GET['module'] . '/exercice/faq/' . $this->Exercice->Hash, 'Chat exercice');
 			}
@@ -160,6 +160,10 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	public function faqActionWd()
 	{
+		
+		$this->View->addScript('/public/js/eleve/exercice/faq.js');
+		
+		//Ajout d'une question
 		if(isset($_POST['faq-question-exercice']))
 		{
 			if(empty($_POST['question']))
@@ -186,6 +190,51 @@ abstract class ExerciceAbstractController extends AbstractController
 				}
 			}
 		}
+		
+		//Ajout d'une réponse
+		if(isset($_POST['faq-reponse-exercice']))
+		{
+			if(empty($_POST['reponse']))
+			{
+				$this->View->setMessage('warning', 'Message vide.');
+			}
+			elseif(empty($_POST['question']) || ($_POST['question'] = intval($_POST['question'])) == 0)
+			{
+				$this->View->setMessage('error', 'Un problème a été détecté avec la question référente.');
+			}
+			elseif(Sql::singleColumn('SELECT COUNT(*) AS S FROM Exercices_FAQ WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '" AND ID=' . $_POST['question'] . ' AND ISNULL(Parent)', 'S') == 0)
+			{
+				$this->View->setMessage('error', 'Impossible de trouver la question auquel se réfère ce message.');
+			}
+			else 
+			{
+				$ToInsert = array(
+					'Exercice' => $this->Exercice->ID,
+					'_Creation' => 'NOW()',
+					'Texte' => $_POST['reponse'],
+					'Statut' => 'OK',
+					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID,
+					'Parent' => $_POST['question']
+				);
+				
+				if(Sql::insert('Exercices_FAQ', $ToInsert))
+				{
+					$this->View->setMessage('ok', 'Message enregistré.');
+				}
+				else
+				{
+					$this->View->setMessage('error', 'Impossible de sauvegarder votre message.');
+				}
+			}
+		}
+		
+		$this->View->FAQ = Sql::queryAssoc(
+			'SELECT ID, Creation, Texte, Parent, Statut, Membre
+			FROM Exercices_FAQ
+			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
+			ORDER BY COALESCE(Parent, ID), Creation',
+			'ID'
+		);
 	}
 	
 	/**

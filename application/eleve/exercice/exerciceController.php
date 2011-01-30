@@ -708,7 +708,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			"Cette page permet de dialoguer avec le correcteur pour éclaircir les points restés obscurs."
 		);
 		
-		//Enregistrer les données
+		//Enregistrer et récupérer les données
 		parent::faqActionWd();
 	}
 		

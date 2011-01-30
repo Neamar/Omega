@@ -1,4 +1,6 @@
 <?php 
+$AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="%data%">Ajouter une réponse</a></p>';
+
 echo $this->Doc_box('eleve', 'faq', 'Besoin d\'aide sur cette page ?');
 ?>
 <h2>Poster une nouvelle question</h2>
@@ -9,3 +11,47 @@ echo $this->Form_textareaLabeLBr('question', 'Votre question');
 echo $this->Form_submit('faq-question-exercice', 'Envoyer cette question');
 ?>
 </form>
+
+<h2>Chat actuel</h2>
+<?php 
+if(empty($this->Datas))
+{
+	?>
+	<p>Aucune question posée pour l'instant !</p>
+	<?php 
+}
+else
+{
+	$LastQuestion = null;
+	foreach($this->FAQ as $ID => $Datas)
+	{
+		if(empty($Datas['Parent']))
+		{
+			//Lien ajout réponse
+			if(!is_null($LastQuestion))
+			{
+				//Lien d'ajout de réponse à la question
+				echo str_replace('%data%', $LastQuestion, $AddReply);
+			}
+			
+			//QUESTION
+			?>
+			<h3 class="faq-question"><?php echo $Datas['Texte'] ?></h3>
+			<?php
+			$LastQuestion = $ID;
+		}
+		else
+		{
+			//RÉPONSE
+			?>
+			<p class="faq-reponse"><?php echo $Datas['Texte'] ?></p>		
+			<?php
+		}
+	}
+	
+	if(!is_null($LastQuestion))
+	{
+		//Lien d'ajout de réponse à la question
+		echo str_replace('%data%', $LastQuestion, $AddReply);
+	}
+}
