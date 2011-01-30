@@ -61,8 +61,11 @@ abstract class IndexAbstractController extends AbstractController
 			{
 				unset($_SESSION[ucfirst($this->getModule())]);
 				
-				$this->View->setMessage('ok', "Vous avez été désinscrit. Que les vents vous soient favorables !<br />
-				Vous avez été déconnecté.");
+				$this->View->setMessage(
+					'ok',
+					"Vous avez été désinscrit. Que les vents vous soient favorables !<br />
+					Vous avez été déconnecté."
+				);
 				$this->redirect('/' . $this->getModule() . '/connexion');
 			}
 		}
@@ -112,7 +115,10 @@ abstract class IndexAbstractController extends AbstractController
 					$r = $chars{rand(0, $chars_length)};
 		
 					// Make sure the same two characters don't appear next to each other
-					if ($r != $string{$i - 1}) $string .=  $r;
+					if ($r != $string{$i - 1})
+					{
+						$string .=  $r;
+					}
 				}
 				
 				$Password = $string;

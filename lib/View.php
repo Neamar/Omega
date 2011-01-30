@@ -409,8 +409,8 @@ class View
 			$this->setMeta('links', $RibbonParts['links']);
 		}
 		
-		$R = 
-'	<div id="ribbon-left">
+		$R = '
+	<div id="ribbon-left">
 		' . $RibbonParts['left'] . '
 	</div>
 	<div id="ribbon-center">

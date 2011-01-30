@@ -438,7 +438,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 * Consulte une offre et agit en conséquence.
 	 * ATTENTE_ELEVE => (ANNULE|ATTENTE_CORRECTEUR|EN_COURS)
 	 */
-	public function consultation_OffreActionWd()
+	public function consultation_offreActionWd()
 	{
 		$this->canAccess(array('ATTENTE_ELEVE'), 'Ce n\'est pas le moment de consulter les offres !');
 		

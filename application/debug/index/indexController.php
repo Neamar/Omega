@@ -108,7 +108,8 @@ class Debug_IndexController extends AbstractController
 	{
 		$this->View->setTitle(
 			'Exemple de contenu HTML',
-			"Exemple de texte d'introduction présentant l'utilité de la page et son contenu.");
+			"Exemple de texte d'introduction présentant l'utilité de la page et son contenu."
+		);
 		
 		$this->View->setSeelink('/', 'Exemple de lien à voir aussi');
 		
@@ -118,7 +119,8 @@ class Debug_IndexController extends AbstractController
 		
 		$this->View->SousPage->setTitle(
 			'Exemple de sous page',
-			"Exemple de texte d'introduction présentant l'utilité de la sous page et son contenu. Ici, sous-page inscription élève");		
+			"Exemple de texte d'introduction présentant l'utilité de la sous page et son contenu. Ici, sous-page inscription élève"
+		);		
 	}
 	
 	/**

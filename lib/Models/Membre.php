@@ -112,7 +112,7 @@ class Membre extends DbObject
 	 */
 	public function debit($Value, $Log, Exercice $Exercice = null)
 	{
-		return $this->changePoints(-$Value, $Log, $Exercice);
+		return $this->_changePoints(-$Value, $Log, $Exercice);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ class Membre extends DbObject
 	 */
 	public function credit($Value, $Log, Exercice $Exercice = null)
 	{
-		return $this->changePoints($Value, $Log, $Exercice);
+		return $this->_changePoints($Value, $Log, $Exercice);
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Membre extends DbObject
 	 * 
 	 * @return bool true si succès, false sinon. En cas de false, un ROLLBACK peut avoir été effectué.
 	 */
-	private function changePoints($Value, $Log, Exercice $Exercice = null)
+	private function _changePoints($Value, $Log, Exercice $Exercice = null)
 	{
 		if(!is_int($Value))
 		{

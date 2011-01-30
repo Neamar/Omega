@@ -35,11 +35,11 @@ echo $this->Form_textareaLabelBr('message', 'Justifiez votre demande');
 <p>Vous pouvez aussi envoyer des fichiers (scan d'un corrigé fait en classe, remarques du professeur...)</p>
 <?php
 echo $this->Doc_box(
-		'eleve',
-		'fichiers',
-		"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
-		Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
-	);
+	'eleve',
+	'fichiers',
+	"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
+	Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
+);
 echo $SizeLimit . "\n";
 ?>
 <input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />
