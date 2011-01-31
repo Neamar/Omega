@@ -38,11 +38,8 @@ color:#d29d1e;
 		#logo-liens ul li a:hover span {
 		height:33px;
 		display:block;
-		padding-right:15px;
 		background:url('/public/css/images/menu_top-e-r.png') top right scroll no-repeat;
-		}
-		#logo-liens ul li a span {
-		padding-right:15px;
+		cursor:pointer;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 3. Ariane --------------------------------------------------------------------------*/
