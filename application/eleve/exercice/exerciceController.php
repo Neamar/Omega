@@ -363,9 +363,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		$this->View->setTitle(
 			'Récapitulatif des données envoyées aux correcteurs',
-			"Cette page liste les informations qui seront envoyées au correcteur.<br />
-			Vérifiez la cohérence de vos données, puis cliquez sur le bouton « Envoyer aux correcteurs ».<br />
-			En cas de souci, corrigez les problèmes avant d'envoyer."
+			"Cette page liste les informations qui seront envoyées au correcteur."
 		);
 		
 		if(isset($_POST['change-info']))
@@ -410,16 +408,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		);
 		
 		if(isset($_POST['annulation']))
-		{
-			$Changes = array(
-				'_Correcteur' => 'NULL',
-				'_TimeoutCorrecteur' => 'NULL',
-				'_InfosCorrecteur' => 'NULL',
-				'Enchere' => '0',
-				'NbRefus' => min(MAX_REFUS, $this->Exercice->NbRefus + 1),
-			);
-			
-			$this->Exercice->setStatus('ANNULE', $_SESSION['Eleve'], 'Annulation de l\'exercice.', $Changes);
+		{		
+			$this->Exercice->cancelExercice($_SESSION['Eleve'], 'Annulation de l\'exercice.');
 			
 			$this->View->setMessage('info', "Votre exercice a été annulé.");
 			$this->redirect("/eleve/exercice/");
@@ -461,16 +451,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
 				$Correcteur = $this->Exercice->getCorrecteur();
 				
-				//Mettre à jour l'objet Exercice
-				$ToUpdate = array(
-					'_Correcteur' => 'NULL',
-					'_TimeoutCorrecteur' => 'NULL',
-					'_InfosCorrecteur' => 'NULL',
-					'Enchere' => '0',
-					'_NbRefus' => 'NbRefus + 1'
-				);
-				
-				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Refus de l'offre", $ToUpdate);
+				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre");
 				
 				//Dispatch de l'évènement REFUS
 				Event::dispatch(
@@ -480,20 +461,18 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						'Correcteur' => $Correcteur
 					)
 				);
-								
-				//Passer à la suite ; soit on annule l'exercice, soit on le rerend disponible.
-				if($this->Exercice->NbRefus == MAX_REFUS)
+
+				if($this->Exercice->Statut == 'ANNULE')
 				{
-					//Annuler l'exercice.
-					$_POST['annulation'] = true;
-					$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
-					//Jamais de retour (annulation redirige).
+					$this->View->setMessage('info', "L'offre a bien été refusée. L'exercice est maintenant annulé.");
 				}
 				else
 				{
 					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé.");
-					$this->redirectExercice();
 				}
+				
+				$this->redirectExercice();
+				
 			}
 			elseif($_POST['choix'] == 'oui')
 			{

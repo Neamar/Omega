@@ -22,8 +22,6 @@ HTML5 Forms :
 - Passer les sliders en véritables sliders [type=range]
 
 Cron :
-- Annuler automatiquement un exercice si Statut = ATTENTE_CORRECTEUR | VIERGE && TimeOutEleve dépassé
-- Annuler automatiquement une offre sur un exercice si Statut = ATTENTE_ELEVE && TimeOutCorrecteur dépassé
 - Terminer automatiquement un exercice si Statut = ENVOYE && Expiration dépassé de 7 jours
 
 En production :

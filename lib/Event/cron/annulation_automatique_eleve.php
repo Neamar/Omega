@@ -14,23 +14,15 @@ $Exercices = Sql::query('SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash
 	'ID'
 );
 
-$Banque = Membre::getBanque();
+$Banque = $Params['Membre'];
 
 //Afin de ne pas alourdir le script, on se contente d'un mysql_fetch_object.
 //Notons cependant que l'objet Exercice retourné ne correspond pas forcément aux normes définies dans le reste du code
 //La plupart de ses propriétés ne sont pas définies, et Createur ne correspond pas à l'id du membre, mais à son mail.
 //En conséquence, la plupart des fonctions sur Exercice ne sont pas correctes ET NE DOIVENT PAS ÊTRE APPELÉES
 while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
-{
-	$Changes = array(
-		'_Correcteur' => 'NULL',
-		'_TimeoutCorrecteur' => 'NULL',
-		'_InfosCorrecteur' => 'NULL',
-		'Enchere' => '0',
-		'NbRefus' => min(MAX_REFUS, $Exercice->NbRefus + 1),
-	);
-			
-	$Exercice->setStatus('ANNULE', $Banque, 'Annulation automatique de l\'exercice.', $Changes);
+{	
+	$Exercice->cancelExercice($Banque, 'Annulation automatique de l\'exercice.');
 	
 	$Datas = array(
 		'titre' => $Exercice->Titre,
