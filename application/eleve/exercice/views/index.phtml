@@ -4,10 +4,18 @@
 <?php 
 if(count($this->ExercicesActifs) > 0)
 {
+	$ExercicesActifs = array();
+	foreach($this->ExercicesActifs as $Hash => $Datas)
+	{
+		$ExercicesActifs[$Hash] = array(
+			$Datas['Titre'],
+			$this->Messages[$Datas['Statut']]
+		);
+	}
 	?>
 	<h2>Mes exercices actifs</h2>
 	<?php 
-	echo $this->Html_listAnchor($this->ExercicesActifs, 'ul', '/eleve/exercice/index/');
+	echo $this->Html_listAction($ExercicesActifs, '/eleve/exercice/index/__URL__', 'eleve');
 }
 ?>
 

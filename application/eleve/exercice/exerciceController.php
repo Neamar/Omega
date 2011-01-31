@@ -40,13 +40,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		);
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
-			'SELECT Hash, Titre
+			'SELECT Hash, Titre, Statut
 			FROM Exercices
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
 			AND Statut NOT IN("ANNULE", "TERMINE", "REMBOURSE")',
-			'Hash',
-			'Titre'
+			'Hash'
 		);
+		
+		$this->View->Messages = $this->statusString();
 	}
 	
 	/**
@@ -60,16 +61,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		 * 
 		 * @var array
 		 */
-		$ListeMessage = array(
-			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
-			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
-			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
-			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
-			'ENVOYE' => "Le corrigé est disponible !",
-			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
-			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
-			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
-		);
+		$ListeMessage = $this->statusString();
 
 		$this->View->setTitle(
 			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
@@ -793,5 +785,24 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	protected function hasAccess(Exercice $Exercice)
 	{
 		return ($Exercice->Createur == $_SESSION['Eleve']->ID);
+	}
+	
+	/**
+	 * Liste des messages à afficher en fonction du statut.
+	 * 
+	 * @return array
+	 */
+	protected function statusString()
+	{
+		return array(
+			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
+			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
+			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
+			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
+			'ENVOYE' => "Le corrigé est disponible !",
+			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
+			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
+		);
 	}
 }
