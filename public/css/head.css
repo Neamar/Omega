@@ -48,7 +48,6 @@ strong { font-weight: bold; }
 .content-head {
 width:1000px;
 margin:auto;
-border:1px solid #FF0000;
 }
 .content-base {
 width:1000px;
@@ -128,7 +127,6 @@ height:103px; /*taille du bloc*/
 	#logo-liens {	
 	}		
 		#logo-liens ul {
-		border:1px solid #FF0000;
 		max-width:660px;
 		position:absolute;
 		z-index:15;
@@ -138,21 +136,17 @@ height:103px; /*taille du bloc*/
 			#logo-liens ul li {
 			float:left;
 			font-weight:bold;
-			font-size:18px;
-			padding-left:18px;
+			font-size:16px;
 			}
 				#logo-liens ul li a {
 				height:33px;
 				display:block;
 				text-transform:uppercase;
 				color:#777;
+				line-height:34px;
 				text-shadow:1px 1px 0px #fff;
-				background:url('/public/css/images/menu_top-e-l.png') top left scroll no-repeat;
+				padding-left:15px;
 				}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
-				
-				#logo-liens ul li a span {
-				background:url('/public/css/images/menu_top-e-r.png') top left scroll no-repeat;
-				}
 				
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 3. Ariane / see-link -------------------------------------------------------------------*/
