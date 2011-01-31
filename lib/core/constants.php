@@ -185,3 +185,10 @@ define('MAX_FICHIERS_EXERCICE', 25);
  * @var int
  */
 define('DELAI_VIREMENT', 7);
+
+/**
+ * Identifiant du membre-banque
+ *
+ * @var int
+ */
+define('BANQUE_ID', 1);

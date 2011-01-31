@@ -123,6 +123,18 @@ class Debug_IndexController extends AbstractController
 		);		
 	}
 	
+	public function cronAction()
+	{
+		echo '<pre>';
+		Event::dispatch(Event::CRON);
+		
+		$this->View->setTitle(
+			'Dispatch Cron'
+		);
+		
+		exit();
+	}
+	
 	/**
 	 * Affiche toute la documentation.
 	 */
