@@ -48,6 +48,7 @@ strong { font-weight: bold; }
 .content-head {
 width:1000px;
 margin:auto;
+border:1px solid #FF0000;
 }
 .content-base {
 width:1000px;
@@ -124,10 +125,13 @@ height:103px; /*taille du bloc*/
 		z-index:10;
 		}
 	
-	#logo-liens {
+	#logo-liens {	
 	}		
 		#logo-liens ul {
+		border:1px solid #FF0000;
+		max-width:660px;
 		position:absolute;
+		z-index:15;
 		right:35px;
 		top:35px;
 		}
@@ -165,7 +169,7 @@ float:right;
 padding-right:65px;
 }
 	#ariane .see-link a{
-	background:url('/public/css/images/see-link.png') top left scroll no-repeat; /*image*/
+	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
 	background-position:0px 0px;
 	height:18px;
 	display:block;
@@ -252,12 +256,18 @@ padding:0 35px;
 	
 		#content-message {
 		padding:5px 0;
-		background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; /*image r*/
+		background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x;
 		height:auto;
 		}
+			#content-base #content-message .error{
+			padding:5px 0;
+			background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; 
+			height:auto;
+			}
+
 		#bottom-message {
 		height:13px;
-		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x; /*image r*/
+		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 		}
 
 
@@ -266,5 +276,4 @@ position:absolute;
 bottom:-15px;
 right:20px;
 display:inline-block;
-
 }
