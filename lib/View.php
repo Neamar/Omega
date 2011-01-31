@@ -430,6 +430,18 @@ class View
 	 */
 	public function renderBreadcrumbs()
 	{
+		//Un tableau de mots pour lesquels un accent n'est pas du luxe/
+		//Les clés représentent la valeur non accentuée (en ucfirst), les valeurs le remplacement sémantiquement correct.
+		$Remplacements = array(
+			'Eleve' => 'Élève', //as in /eleve/
+			'Desinscription' => 'Désinscription', //as in /eleve/desinscription
+			'Recuperation' => 'Récupération', //as in /eleve/recuperation
+			'Reclamation' => 'Réclamation', //as in /eleve/exercice/reclamation/hash
+			'Corrige' => 'Corrigé', //as in /eleve/exercice/corrige/hash
+			'Matieres' => 'Matières', //as in /correcteur/options/matiere
+			'Matieres_rapide' => 'Matières_rapide', //as in /correcteur/options/matiere_rapide
+		);
+		
 		$R = '';
 		
 		//Lien "voir aussi"
@@ -449,6 +461,11 @@ class View
 			if(strlen($Caption) > 60)
 			{
 				$Caption = trim(mb_substr($Caption, 0, 57, 'UTF-8')) . '&hellip;';
+			}
+			
+			if(isset($Remplacements[$Caption]))
+			{
+				$Caption = $Remplacements[$Caption];
 			}
 			
 			$Caption = '
