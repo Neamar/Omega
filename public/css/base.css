@@ -9,12 +9,10 @@ Version : Pour la deuxième partie - ext
 **********************************************************************************************/
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*-------------------------------------------------------- 0. CSS Reset -----------------------------------------------------------------------*/
+/*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.edevoir span {	
--webkit-transform: rotate(-15deg);
--moz-transform: rotate(-15deg);
--o-transform: rotate(-15deg);
-/*writing-mode: tb-rl;*/
-text-transform:lowercase!important;
-}
+.edevoir span {	-webkit-transform: rotate(-15deg);-moz-transform: rotate(-15deg);-o-transform: rotate(-15deg);/*writing-mode: tb-rl;*/text-transform:lowercase!important;}
+
+#content ul {margin:0; padding:0; list-style-type: circle; list-style-position:inside;}
+#content a { text-decoration: none; color: #424242;}
+#content a:hover { text-decoration: underline; color:#666;} 
