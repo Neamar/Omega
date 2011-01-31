@@ -478,8 +478,16 @@ class View
 				)
 			);
 		}
-
-		return $this->Html_listAnchor($this->getMeta('links'));
+		
+		$Liens = $this->getMeta('links');
+		
+		//Wrapper dans un span pour le CSS
+		foreach($Liens as &$Caption)
+		{
+			$Caption = '<span>' . $Caption . '</span>';
+		}
+		
+		return $this->Html_listAnchor($Liens);
 	}
 	
 	/**
