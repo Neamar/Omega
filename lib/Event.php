@@ -43,6 +43,8 @@ class Event
 	const MEMBRE_FAQ_QUESTION = 'membre/faq/question';
 	const MEMBRE_FAQ_REPONSE = 'membre/faq/reponse';
 	
+	const CRON = 'cron';
+	
 	/**
 	* Transmet un événement aux écouteurs associés.
 	* @param string $Event l'évenement à dispatcher.

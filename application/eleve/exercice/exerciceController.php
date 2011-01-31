@@ -40,13 +40,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		);
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
-			'SELECT Hash, Titre
+			'SELECT Hash, Titre, Statut
 			FROM Exercices
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
 			AND Statut NOT IN("ANNULE", "TERMINE", "REMBOURSE")',
-			'Hash',
-			'Titre'
+			'Hash'
 		);
+		
+		$this->View->Messages = $this->statusString();
 	}
 	
 	/**
@@ -60,16 +61,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		 * 
 		 * @var array
 		 */
-		$ListeMessage = array(
-			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
-			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
-			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
-			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
-			'ENVOYE' => "Le corrigé est disponible !",
-			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
-			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
-			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
-		);
+		$ListeMessage = $this->statusString();
 
 		$this->View->setTitle(
 			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
@@ -371,9 +363,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		$this->View->setTitle(
 			'Récapitulatif des données envoyées aux correcteurs',
-			"Cette page liste les informations qui seront envoyées au correcteur.<br />
-			Vérifiez la cohérence de vos données, puis cliquez sur le bouton « Envoyer aux correcteurs ».<br />
-			En cas de souci, corrigez les problèmes avant d'envoyer."
+			"Cette page liste les informations qui seront envoyées au correcteur."
 		);
 		
 		if(isset($_POST['change-info']))
@@ -418,16 +408,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		);
 		
 		if(isset($_POST['annulation']))
-		{
-			$Changes = array(
-				'_Correcteur' => 'NULL',
-				'_TimeoutCorrecteur' => 'NULL',
-				'_InfosCorrecteur' => 'NULL',
-				'Enchere' => '0',
-				'NbRefus' => min(MAX_REFUS, $this->Exercice->NbRefus + 1),
-			);
-			
-			$this->Exercice->setStatus('ANNULE', $_SESSION['Eleve'], 'Annulation de l\'exercice.', $Changes);
+		{		
+			$this->Exercice->cancelExercice($_SESSION['Eleve'], 'Annulation de l\'exercice.');
 			
 			$this->View->setMessage('info', "Votre exercice a été annulé.");
 			$this->redirect("/eleve/exercice/");
@@ -469,16 +451,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
 				$Correcteur = $this->Exercice->getCorrecteur();
 				
-				//Mettre à jour l'objet Exercice
-				$ToUpdate = array(
-					'_Correcteur' => 'NULL',
-					'_TimeoutCorrecteur' => 'NULL',
-					'_InfosCorrecteur' => 'NULL',
-					'Enchere' => '0',
-					'_NbRefus' => 'NbRefus + 1'
-				);
-				
-				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Refus de l'offre", $ToUpdate);
+				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre");
 				
 				//Dispatch de l'évènement REFUS
 				Event::dispatch(
@@ -488,20 +461,18 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						'Correcteur' => $Correcteur
 					)
 				);
-								
-				//Passer à la suite ; soit on annule l'exercice, soit on le rerend disponible.
-				if($this->Exercice->NbRefus == MAX_REFUS)
+
+				if($this->Exercice->Statut == 'ANNULE')
 				{
-					//Annuler l'exercice.
-					$_POST['annulation'] = true;
-					$this->concat('/eleve/exercice/annulation/' . $this->Exercice->Hash);
-					//Jamais de retour (annulation redirige).
+					$this->View->setMessage('info', "L'offre a bien été refusée. L'exercice est maintenant annulé.");
 				}
 				else
 				{
 					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé.");
-					$this->redirectExercice();
 				}
+				
+				$this->redirectExercice();
+				
 			}
 			elseif($_POST['choix'] == 'oui')
 			{
@@ -793,5 +764,24 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	protected function hasAccess(Exercice $Exercice)
 	{
 		return ($Exercice->Createur == $_SESSION['Eleve']->ID);
+	}
+	
+	/**
+	 * Liste des messages à afficher en fonction du statut.
+	 * 
+	 * @return array
+	 */
+	protected function statusString()
+	{
+		return array(
+			'VIERGE' => "Cet exercice attend encore vos fichiers. Si vous en avec fini avec l'envoi, vous pouvez l'envoyer aux correcteurs en sélectionnant l'option appropriée.",
+			'ATTENTE_CORRECTEUR' => "Cet exercice est actuellement disponible chez les correcteurs, qui se battent tels des bêtes sauvages pour avoir l'honneur de le corriger. Vous serez informé par mail dès que l'un d'eux vous fera une offre !",
+			'ATTENTE_ELEVE' => "Une offre vous a été faite ; acceptez-la ou déclinez-la.",
+			'EN_COURS' => "Le correcteur s'occupe de tout... relax !",
+			'ENVOYE' => "Le corrigé est disponible !",
+			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
+			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
+			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
+		);
 	}
 }

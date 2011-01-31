@@ -167,6 +167,55 @@ WHERE Hash="%ID%"';
 	}
 	
 	/**
+	 * Annuler un exercice.
+	 * 
+	 * @param Membre $Canceller le membre demandant l'annulation
+	 * @param string $Message le message d'annulation
+	 */
+	public function cancelExercice(Membre $Canceller, $Message)
+	{
+		$Changes = array(
+			'_Correcteur' => 'NULL',
+			'_TimeoutCorrecteur' => 'NULL',
+			'_InfosCorrecteur' => 'NULL',
+			'Enchere' => '0',
+		);
+				
+		$this->setStatus('ANNULE', $Canceller, $Message, $Changes);		
+	}
+	
+	/**
+	 * Annule une offre.
+	 * Si plus de MAX_REFUS offres ont déjà été déclinées, annule l'exercice.
+	 * 
+	 * @param Membre $Canceller
+	 * @param string $Message
+	 * 
+	 * @return string le nouveau statut de l'exercice
+	 */
+	public function cancelOffer(Membre $Canceller, $Message)
+	{
+		//Mettre à jour l'objet Exercice
+		$ToUpdate = array(
+			'_Correcteur' => 'NULL',
+			'_TimeoutCorrecteur' => 'NULL',
+			'_InfosCorrecteur' => 'NULL',
+			'Enchere' => '0',
+			'_NbRefus' => 'NbRefus + 1'
+		);
+	
+		$this->setStatus('ATTENTE_CORRECTEUR', $Canceller, $Message, $ToUpdate);
+		
+		//Faut-il annuler l'exercice ?
+		if($this->NbRefus >= MAX_REFUS)
+		{	
+			$this->cancelExercice($Canceller, 'Annulation automatique (trop de refus).');
+		}
+
+		return $this->Statut;
+	}
+	
+	/**
 	 * Renvoie true si la FAQ de l'exercice est ouverte
 	 * 
 	 * @return bool

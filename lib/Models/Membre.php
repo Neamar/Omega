@@ -3,7 +3,7 @@
  * Membre.php - 2 déc. 2010
  * 
  * Un membre du site.
- * Classe abstraite.
+ * Classe théoriquement abstraite, mais certaines fonctions s'en servent "bas niveau" (rechercher Membre::get)
  * 
  * PHP Version 5
  * 
@@ -38,7 +38,7 @@ class Membre extends DbObject
 	 */
 	public static function getBanque()
 	{
-		return Membre::load(1);
+		return Membre::load(BANQUE_ID);
 	}
 	
 	protected $Foreign = array(
