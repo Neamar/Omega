@@ -40,6 +40,8 @@ class Event
 	const CORRECTEUR_EXERCICE_ENVOI = 'correcteur/exercice/envoi';
 	
 	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
+	const MEMBRE_FAQ_QUESTION = 'membre/faq/question';
+	const MEMBRE_FAQ_REPONSE = 'membre/faq/reponse';
 	
 	/**
 	* Transmet un événement aux écouteurs associés.

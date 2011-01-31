@@ -246,6 +246,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Chat de l'exercice
+	 * @see ExerciceAbstractController::faqActionWd()
+	 */
+	public function faqActionWd()
+	{
+		//Lest tests d'accès sont effectués dans la méthode parente	
+		$this->View->setTitle(
+			"Chat de l'exercice",
+			"Cette page permet de dialoguer avec l'élève pour éclaircir les points restés obscurs. Soyez clair et concis !"
+		);
+		
+		//Enregistrer et récupérer les données
+		parent::faqActionWd();
+	}
+	
+	/**
 	 * Liste les actions des exercices
 	 */
 	public function _actionsAction()

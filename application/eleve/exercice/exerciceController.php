@@ -697,12 +697,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function faqActionWd()
 	{
-		if(!$this->Exercice->isFaq())
-		{
-			$this->View->setMessage('warning', 'La FAQ n\'est pas encore ouverte.');
-			$this->redirectExercice();
-		}
-		
+		//Lest tests d'accès sont effectués dans la méthode parente	
 		$this->View->setTitle(
 			"Chat de l'exercice",
 			"Cette page permet de dialoguer avec le correcteur pour éclaircir les points restés obscurs."
