@@ -19,8 +19,7 @@ $Retour = array(
 	'center' => 'Documentation',
 	'right' => '',
 	'links' => array(
-		'/' => 'Accueil site',
-		'/documentation/' => 'Accueil documentation',
+		'/documentation/' => 'Accueil',
 		'/documentation/eleve/' => 'Documentation élève',
 		'/documentation/correcteur' => 'Documentation correcteur'
 	)
