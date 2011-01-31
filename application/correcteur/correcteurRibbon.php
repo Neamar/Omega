@@ -15,6 +15,7 @@
  */
 
 $Retour = array();
+$Retour['center'] = 'Correcteur';
 
 if(!isset($_SESSION['Correcteur']))
 {

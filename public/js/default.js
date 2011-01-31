@@ -55,3 +55,27 @@ $(function()
 		});
 	}
 });
+
+$(function()
+{
+	if($('.texable').length > 0)
+	{
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "/public/js/MathJax/MathJax.js";
+
+		var config = 'MathJax.Hub.Config({ config: "MathJax.js" }); ' +
+					'MathJax.Hub.Startup.onload();';
+
+		if (window.opera)
+		{
+			script.innerHTML = config;
+		}
+		else
+		{
+			script.text = config;
+		}
+
+		document.getElementsByTagName("head")[0].appendChild(script);
+	}
+});

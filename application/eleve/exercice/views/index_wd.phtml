@@ -1,11 +1,12 @@
 <?php
+//La page d'accueil d'un exercice, assez conséquente.
 /*
  * Quelques actions communes.
  */
 $Annulation = array(
 	'Annuler l\'exercice.',
 	"Vous pouvez annuler l'exercice. Celui-ci ne vous sera pas facturé et ne comptera pas dans votre quota suractivité.",
-	'supplement'
+	'annulation'
 );
 
 $Sujet = array('Revoir le sujet de l\'exercice', 'Pour bien se le remettre en tête !');
@@ -51,6 +52,7 @@ $ListeActions = array(
 	),
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
+
 ?>
 
 <h2>Options de l'exercice</h2>
@@ -63,10 +65,13 @@ if(!is_array($Actions))
 }
 else
 {
-	echo $this->Html_listAction($Actions, '/eleve/exercice/_URL_/' . $this->Exercice->Hash, 'eleve');
-	//TODO : un select "quickjump" pour activer rapidement différentes options.
+	echo $this->Html_listAction($Actions, '/eleve/exercice/__URL__/' . $this->Exercice->Hash, 'eleve');
 }
 
+if($this->Exercice->isFaq())
+{
+	echo '<p><a href="/eleve/exercice/faq/' . $this->Exercice->Hash . '">Accéder au chat avec le correcteur</a></p>';
+}
 ?>
 
 <h2>Affichage de l'exercice</h2>

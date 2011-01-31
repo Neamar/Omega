@@ -30,7 +30,7 @@ abstract class PointsAbstractController extends AbstractController
 	 * 
 	 * @var Membre
 	 */
-	private $Membre;
+	protected $Membre;
 	
 	/**
 	 * Dévie automatiquement la vue vers une solution générique.
@@ -44,7 +44,7 @@ abstract class PointsAbstractController extends AbstractController
 	{
 		parent::__construct($Module, $Controller, $View, $Data);
 		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/' . str_replace('.','',$View)));
+		$this->deflectView(OO2FS::genericViewPath('membre/points/' . str_replace('.', '', $View)));
 		
 		$this->Membre = $_SESSION[ucfirst($this->getModule())];
 	}
@@ -95,14 +95,16 @@ abstract class PointsAbstractController extends AbstractController
 			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
 			$this->redirect('/' . $this->getModule() . '/points/');
 		}
-		$DernierVirement = strtotime(Sql::singleColumn(
-			'SELECT Date
-			FROM Virements
-			WHERE Membre = ' . $this->Membre->getFilteredId() . '
-			ORDER BY ID DESC
-			LIMIT 1',
-			'Date'
-		));
+		$DernierVirement = strtotime(
+			Sql::singleColumn(
+				'SELECT Date
+				FROM Virements
+				WHERE Membre = ' . $this->Membre->getFilteredId() . '
+				ORDER BY ID DESC
+				LIMIT 1',
+				'Date'
+			)
+		);
 		if($DernierVirement != false && $DernierVirement > time() - DELAI_VIREMENT * 7 * 24 * 3600)
 		{
 			$this->View->setMessage(

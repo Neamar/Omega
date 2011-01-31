@@ -1,11 +1,19 @@
 <h2>Foire aux exercices</h2>
 <?php 
 $Foire = array(
-	'/correcteur/liste' => 'Accéder à la foire aux exercices',
-	'/correcteur/options/matieres' => 'Définir mes compétences'
+	'liste' => array(
+		'Accéder à la foire aux exercices',
+		'Consulter la liste des exercices actuellement disponibles correspondant à vos compétences',
+		'marche'
+	),
+	'options/matieres' => array(
+		'Définir vos compétences',
+		'Indiquer au site les matières dans lesquels vous êtes compétents.',
+		'matieres'
+	)
 );
 
-echo $this->Html_listAnchor($Foire);
+echo $this->Html_listAction($Foire, '/correcteur/__URL__', 'correcteur');
 ?>
 
 <?php 

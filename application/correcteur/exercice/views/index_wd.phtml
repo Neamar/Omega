@@ -1,4 +1,6 @@
 <?php
+//Index de l'exercice
+
 /**
  * Liste des actions possibles.
  * Structure :
@@ -32,7 +34,7 @@ if(!is_array($Actions))
 }
 else
 {
-	echo $this->Html_listAction($Actions, '/correcteur/exercice/_URL_/' . $this->Exercice->Hash, 'correcteur');
+	echo $this->Html_listAction($Actions, '/correcteur/exercice/__URL__/' . $this->Exercice->Hash, 'correcteur');
 	//TODO : un select "quickjump" pour activer rapidement différentes options.	
 }
 ?>

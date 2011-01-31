@@ -33,6 +33,7 @@ class Event
 	const ELEVE_EXERCICE_ACCEPTATION = 'eleve/exercice/acceptation';
 	const ELEVE_EXERCICE_REFUS = 'eleve/exercice/refus';
 	const ELEVE_EXERCICE_TERMINE = 'eleve/exercice/termine';
+	const ELEVE_EXERCICE_RECLAMATION = 'eleve/exercice/reclamation';
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';

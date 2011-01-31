@@ -16,6 +16,7 @@
  
 return array(
 	'left' => 'ADMIN',
+	'center' => 'Espace Debug',
 	'right' => '<a href="/admin/">Accès à l\'administration</a>',
 	'links' => array(
 		'/' => 'Accueil',

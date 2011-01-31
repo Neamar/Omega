@@ -16,6 +16,7 @@
 
 $Retour = array(
 	'left' => '',
+	'center' => 'Documentation',
 	'right' => '',
 	'links' => array(
 		'/' => 'Accueil site',

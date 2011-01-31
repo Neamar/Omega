@@ -438,7 +438,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 * Consulte une offre et agit en conséquence.
 	 * ATTENTE_ELEVE => (ANNULE|ATTENTE_CORRECTEUR|EN_COURS)
 	 */
-	public function consultation_OffreActionWd()
+	public function consultation_offreActionWd()
 	{
 		$this->canAccess(array('ATTENTE_ELEVE'), 'Ce n\'est pas le moment de consulter les offres !');
 		
@@ -677,6 +677,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					//Et enregistrer
 					Sql::commit();
 					
+					Event::dispatch(
+						Event::ELEVE_EXERCICE_RECLAMATION,
+						array(
+							'Exercice' => $this->Exercice
+						)
+					);
+					
 					$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
 					$this->redirectExercice();
 				}
@@ -684,6 +691,27 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}//fin POST
 	}
 	
+	/**
+	 * Chat de l'exercice
+	 * @see ExerciceAbstractController::faqActionWd()
+	 */
+	public function faqActionWd()
+	{
+		if(!$this->Exercice->isFaq())
+		{
+			$this->View->setMessage('warning', 'La FAQ n\'est pas encore ouverte.');
+			$this->redirectExercice();
+		}
+		
+		$this->View->setTitle(
+			"Chat de l'exercice",
+			"Cette page permet de dialoguer avec le correcteur pour éclaircir les points restés obscurs."
+		);
+		
+		//Enregistrer et récupérer les données
+		parent::faqActionWd();
+	}
+		
 	/**
 	 * Liste les actions effectuées sur un exercice
 	 */

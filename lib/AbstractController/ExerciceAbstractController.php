@@ -58,6 +58,12 @@ abstract class ExerciceAbstractController extends AbstractController
 				$this->redirect('/' . $_GET['module'] . '/exercice/');
 			}
 			
+			//Lien vers la FAQ
+			if($this->Exercice->isFaq() && $this->getAction() != 'faq')
+			{
+				$this->View->setSeelink('/' . $_GET['module'] . '/exercice/faq/' . $this->Exercice->Hash, 'Chat exercice');
+			}
+			
 			//Récupérer les données pour la vue :
 			$this->View->Exercice = $this->Exercice;
 		}
@@ -95,7 +101,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosEleve;
+		$this->View->Type = 'Eleve';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -110,7 +116,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		$this->View->setTitle("Affichage du corrigé de l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosCorrecteur;
+		$this->View->Type = 'Correcteur';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -131,7 +137,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		$this->View->setTitle("Affichage de la réclamation déposée sur l'exercice « " . $this->Exercice->Titre . ' »');
 
-		$this->View->Infos = $this->Exercice->InfosReclamation;
+		$this->View->Type = 'Reclamation';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('RECLAMATION'));
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
@@ -147,6 +153,90 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		//Et dévier la vue :
 		$this->deflectView(OO2FS::genericViewPath('exercice/zip_wd'));
+	}
+	
+	/**
+	 * Chat de l'exercice
+	 */
+	public function faqActionWd()
+	{
+		
+		$this->View->addScript('/public/js/eleve/exercice/faq.js');
+		
+		//Ajout d'une question
+		if(isset($_POST['faq-question-exercice']))
+		{
+			if(empty($_POST['question']))
+			{
+				$this->View->setMessage('warning', 'Message vide.');
+			}
+			else 
+			{
+				$ToInsert = array(
+					'Exercice' => $this->Exercice->ID,
+					'_Creation' => 'NOW()',
+					'Texte' => $_POST['question'],
+					'Statut' => 'OK',
+					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID
+				);
+				
+				if(Sql::insert('Exercices_FAQ', $ToInsert))
+				{
+					$this->View->setMessage('ok', 'Message enregistré.');
+					unset($_POST['question']);
+				}
+				else
+				{
+					$this->View->setMessage('error', 'Impossible de sauvegarder votre message.');
+				}
+			}
+		}
+		
+		//Ajout d'une réponse
+		if(isset($_POST['faq-reponse-exercice']))
+		{
+			if(empty($_POST['reponse']))
+			{
+				$this->View->setMessage('warning', 'Message vide.');
+			}
+			elseif(empty($_POST['question']) || ($_POST['question'] = intval($_POST['question'])) == 0)
+			{
+				$this->View->setMessage('error', 'Un problème a été détecté avec la question référente.');
+			}
+			elseif(Sql::singleColumn('SELECT COUNT(*) AS S FROM Exercices_FAQ WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '" AND ID=' . $_POST['question'] . ' AND ISNULL(Parent)', 'S') == 0)
+			{
+				$this->View->setMessage('error', 'Impossible de trouver la question auquel se réfère ce message.');
+			}
+			else 
+			{
+				$ToInsert = array(
+					'Exercice' => $this->Exercice->ID,
+					'_Creation' => 'NOW()',
+					'Texte' => $_POST['reponse'],
+					'Statut' => 'OK',
+					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID,
+					'Parent' => $_POST['question']
+				);
+				
+				if(Sql::insert('Exercices_FAQ', $ToInsert))
+				{
+					$this->View->setMessage('ok', 'Message enregistré.');
+					unset($_POST['question'], $_POST['reponse']);
+				}
+				else
+				{
+					$this->View->setMessage('error', 'Impossible de sauvegarder votre message.');
+				}
+			}
+		}
+		
+		$this->View->FAQ = Sql::queryAssoc(
+			'SELECT ID, Creation, Texte, Parent, Statut, Membre
+			FROM Exercices_FAQ
+			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
+			ORDER BY COALESCE(Parent, ID), Creation',
+			'ID'
+		);
 	}
 	
 	/**

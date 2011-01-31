@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_FAQ` (
   `Exercice` int(11) NOT NULL,
   `Creation` date NOT NULL,
   `Texte` mediumtext NOT NULL,
-  `Parent` int(11) NOT NULL,
+  `Parent` int(11) DEFAULT NULL,
   `Statut` enum('OK','HORS_SUJET','REPETITION','AUTRE_EXERCICE','PAS_COMPRIS') NOT NULL DEFAULT 'OK',
   `Membre` int(11) NOT NULL,
   PRIMARY KEY (`ID`),

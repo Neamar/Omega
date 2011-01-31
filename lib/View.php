@@ -409,12 +409,12 @@ class View
 			$this->setMeta('links', $RibbonParts['links']);
 		}
 		
-		$R = 
-'	<div id="ribbon-left">
+		$R = '
+	<div id="ribbon-left">
 		' . $RibbonParts['left'] . '
 	</div>
 	<div id="ribbon-center">
-		Espace ' .$this->Controller->getModule() . '
+		' . $RibbonParts['center'] . '
 	</div>
 	<div id="ribbon-right">
 		' . $RibbonParts['right'] . '
@@ -445,6 +445,12 @@ class View
 		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417
 		foreach($Ariane as $Url => &$Caption)
 		{
+			//Réduire les parties trop longues
+			if(strlen($Caption) > 60)
+			{
+				$Caption = trim(mb_substr($Caption, 0, 57, 'UTF-8')) . '&hellip;';
+			}
+			
 			$Caption = '
 		<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
 			<a href="' . $Url . '" itemprop="url">

@@ -167,6 +167,18 @@ WHERE Hash="%ID%"';
 	}
 	
 	/**
+	 * Renvoie true si la FAQ de l'exercice est ouverte
+	 * 
+	 * @return bool
+	 */
+	public function isFaq()
+	{
+		$Faq = array('EN_COURS', 'ENVOYE', 'TERMINE', 'REFUSE', 'ANNULE');
+		
+		return (in_array($this->Statut, $Faq));
+	}
+	
+	/**
 	 * Renvoie true si l'exercice est clos.
 	 * 
 	 * @return bool

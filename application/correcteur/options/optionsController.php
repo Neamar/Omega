@@ -159,7 +159,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	/**
 	 * Page d'options pour la mise à jour (rapide) des compétences
 	 */
-	public function matieres_RapideAction()
+	public function matieres_rapideAction()
 	{
 		$this->View->setTitle(
 			'Modifications rapide des compétences',
