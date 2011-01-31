@@ -160,6 +160,11 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	public function faqActionWd()
 	{
+		if(!$this->Exercice->isFaq())
+		{
+			$this->View->setMessage('warning', 'La FAQ n\'est pas encore ouverte.');
+			$this->redirectExercice();
+		}
 		
 		$this->View->addScript('/public/js/eleve/exercice/faq.js');
 		
@@ -182,6 +187,16 @@ abstract class ExerciceAbstractController extends AbstractController
 				
 				if(Sql::insert('Exercices_FAQ', $ToInsert))
 				{
+					$Params = array(
+						'Exercice' => $this->Exercice,
+						'Eleve' => $this->Exercice->getEleve(),
+						'Correcteur' => $this->Exercice->getCorrecteur(),
+						'Question' => $_POST['question'],
+						'Membre' => $_SESSION[ucfirst($this->getModule())]
+					);
+					
+					Event::dispatch(Event::MEMBRE_FAQ_QUESTION, $Params);
+					
 					$this->View->setMessage('ok', 'Message enregistré.');
 					unset($_POST['question']);
 				}
@@ -220,6 +235,17 @@ abstract class ExerciceAbstractController extends AbstractController
 				
 				if(Sql::insert('Exercices_FAQ', $ToInsert))
 				{
+					$Params = array(
+						'Exercice' => $this->Exercice,
+						'Eleve' => $this->Exercice->getEleve(),
+						'Correcteur' => $this->Exercice->getCorrecteur(),
+						'Question' => Sql::singleColumn('SELECT Texte FROM Exercices_FAQ WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '" AND ID=' . $_POST['question'] . ' AND ISNULL(Parent)', 'Texte'),
+						'Reponse' => $_POST['reponse'],
+						'Membre' => $_SESSION[ucfirst($this->getModule())]
+					);
+					
+					Event::dispatch(Event::MEMBRE_FAQ_REPONSE, $Params);
+					
 					$this->View->setMessage('ok', 'Message enregistré.');
 					unset($_POST['question'], $_POST['reponse']);
 				}
@@ -231,12 +257,15 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 		
 		$this->View->FAQ = Sql::queryAssoc(
-			'SELECT ID, Creation, Texte, Parent, Statut, Membre
+			'SELECT Exercices_FAQ.ID, Exercices_FAQ.Creation, Exercices_FAQ.Texte, Exercices_FAQ.Parent, Exercices_FAQ.Statut, LOWER(Membres.Type) AS Type
 			FROM Exercices_FAQ
+			LEFT JOIN Membres ON (Exercices_FAQ.Membre = Membres.ID)
 			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
-			ORDER BY COALESCE(Parent, ID), Creation',
+			ORDER BY COALESCE(Exercices_FAQ.Parent, Exercices_FAQ.ID), Exercices_FAQ.Creation',
 			'ID'
 		);
+		
+		$this->deflectView(OO2FS::genericViewPath('exercice/faq_wd'));
 	}
 	
 	/**

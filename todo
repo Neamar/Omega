@@ -8,6 +8,7 @@ Enregistrer les différentes versions du fichier
 Afficher le contenu du PDF en aperçu
 Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
 Édulcorer au maximum les utilisations de $_GET['module'] pour $controller->getModule()
+Édulcorer au maximum les utilisations de $_SESSION[ucfirst($this->getModule())] pour une fonction réucpérant le membre
 Utilisation de DbObject::create() au lie ude Sql::insert() là ou possible
 Placer plus de list-action là où nécessaire
 Placer un select "quickjump" dans les list-action

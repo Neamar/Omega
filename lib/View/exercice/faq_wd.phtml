@@ -1,7 +1,7 @@
 <?php 
 $AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__">Ajouter une réponse</a></p>';
 
-echo $this->Doc_box('eleve', 'faq', 'Besoin d\'aide sur cette page ?');
+echo $this->Doc_box($_GET['module'], 'faq', 'Besoin d\'aide sur cette page ?');
 ?>
 
 <h2>Poster une nouvelle question</h2>
@@ -38,7 +38,7 @@ else
 			
 			//QUESTION
 			?>
-			<h3 class="faq-question"><?php echo $Datas['Texte'] ?></h3>
+			<h3 class="faq-question faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></h3>
 			<?php
 			$LastQuestion = $ID;
 		}
@@ -46,7 +46,7 @@ else
 		{
 			//RÉPONSE
 			?>
-			<p class="faq-reponse"><?php echo $Datas['Texte'] ?></p>		
+			<p class="faq-reponse faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></p>		
 			<?php
 		}
 	}
