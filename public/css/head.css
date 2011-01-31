@@ -105,14 +105,24 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 position:relative;
 height:103px; /*taille du bloc*/
 }
-	#section_logo a {
+	#section_logo {
 	position:absolute;
 	top:0;
 	left:31px;
-	background:url('/public/css/images/logo.jpg') top left scroll no-repeat; /*image*/
-	width:342px;
+	background:url('/public/css/images/logo-fond.png') top left scroll no-repeat; /*image*/
+	width:376px;
 	height:103px;
+	z-index:5;
 	}
+		#section_logo a#a_logo {
+		position:absolute;
+		top:25px;
+		left:inherit;
+		width:261px;
+		height:58px;
+		background:url('/public/css/images/logo-doc.png') top left scroll no-repeat; /*Gris*/
+		z-index:10;
+		}
 	
 	#logo-liens {
 	}		
@@ -137,8 +147,6 @@ height:103px; /*taille du bloc*/
 				}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 				
 				#logo-liens ul li a span {
-				display:block;
-				height:33px;
 				background:url('/public/css/images/menu_top-e-r.png') top left scroll no-repeat;
 				}
 				
