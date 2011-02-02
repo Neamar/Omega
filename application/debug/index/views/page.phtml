@@ -1,11 +1,75 @@
-<p>Du blabla explicatif si nécessaire...</p>
+<h2>Fonctionnalités textuelles basiques</h2>
+<!-- texte normal -->
+<p>Du texte normal qui peut si nécessaire s'étendre sur plusieurs lignes comme je vais essayer de le prouver en faisant une phrase tellement longue qu'il faudra un master en philogogie pour comprendre son sens et une mémoire d'élphant pour ne pas avroi oublié le premier mot une fois le point final atteint, d'ailleurs courage ! il n'est plus très loin... le voila ! (ah ! c'est pas un point final ! je vous ai eu !)</p>
+<p>Le texte peut aussi s'étendre sur plusieurs paragraphes...<br />
+ou sur plusieurs lignes, ce qui devrait être distinguable.</p>
 
-<p class="important">Un message important.</p>
+<!-- .important -->
+<p class="important">Un message important (qui peut aussi s'étendre sur plusieurs lignes, mais là j'ai un peu la flemme).</p>
 
+<!-- eDevoir -->
 <p>Encore du blabla... et <?php echo $this->Html_eDevoir() ?> (avec une classe pour pencher le e)</p>
 
+<!-- Doc_box -->
 <?php 
 echo $this->Doc_box('eleve', 'inscription', 'Un lien vers une page d\'aide');
+?>
 
+<h2>Fonctionnalités de formulaire</h2>
+<!-- Form items -->
+<form>
+<?php 
+echo $this->Form_inputLabelBr('form','Un élément de formulaire');
+echo $this->Form_inputLabel('form2','Un élément de formulaire suivi d\'aide') . $this->Doc_inputBr('eleve','ajout');
+echo $this->Form_textareaLabelBr('form3', 'Un élément textarea');
+
+echo $this->Form_submit('envoi', 'Et le bouton d\'envoi.');
+?>
+</form>
+
+
+
+
+<h2>Fonctionnalités de liste</h2>
+<!-- listAnchor -->
+<p>Une liste de liens :</p>
+<?php 
+$Liens = array(
+	'/' => 'Un lien',
+	'/eleve' => 'Un autre lien',
+	'/eleve/exercice/' => 'Etc'
+);
+echo $this->Html_listAnchor($Liens);
+?>
+
+
+
+<!-- listAction -->
+<p>Une liste d'actions (plus détaillée qu'une simple liste de liens)</p>
+<?php 
+$Actions = array(
+	'/' => array('Un lien 1', 'La description du lien 1'),
+	'/eleve/' => array('Un lien 2', 'La description du lien 2 suivi de documentation pour le lien 2', 'ajout')
+);
+
+echo $this->Html_listAction($Actions, '__URL__', 'eleve');
+?>
+
+<?php
 echo $this->View_render($this->SousPage);
 ?>
+
+<h2>C'est pas fini !</h2>
+<p>Il reste quelques composants intéressants à voir, que j'affiche ici dans une liste (ouais, je profite).</p>
+<?php 
+$Liste = array(
+	"Un composant exercice : il suffit de se connecter en tant qu\'élève (compte ok@neamar.fr, mdp: 123 déjà créé) puis de créer un nouvel exercice, d'ajouter des fichiers et d'envoyer aux correcteurs. La page qui s'affichera alors montrera le composant exercice dans toute sa splendeur",
+	"Cela dit, n'allez pas trop vite : lors de la création de l'exercice, vous pourrez admirer le composant de sélection de date qui apparaît en cliquant sur le champ « date de rendu ».",
+	"Sur la page qui suit la création, pour l'envoi de fichiers, on peut aussi voir un joli élément à onglets.",
+	"Ajoutons aussi les « tableaux Ajax dynamiques », dont on trouvera un exemple sur la page résumant les propriétés d'un exercice (toujours après avoir uploadé les fichiers et validé l'envoi aux correcteurs, sous le composant exercice)",
+	"N'oublions pas les « fieldset déroulants », dont l'exemple le plus simple à trouver est dans la page de création, sur le composant pour afficher les options avancées. Je précise d'ailleurs que tous les exemples donnés sont sur la création d'exercice, mais que les composants cités sont génériques et utilisés à différents endroits."
+);
+
+echo $this->Html_list($Liste);
+?>
+	
