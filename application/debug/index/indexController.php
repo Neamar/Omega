@@ -118,7 +118,7 @@ class Debug_IndexController extends AbstractController
 		$this->View->SousPage = $this->concat('/eleve/inscription');
 		
 		$this->View->SousPage->setTitle(
-			'Exemple de sous page',
+			'Fonctionnalités de sous page',
 			"Exemple de texte d'introduction présentant l'utilité de la sous page et son contenu. Ici, sous-page inscription élève"
 		);		
 	}
