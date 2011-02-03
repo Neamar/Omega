@@ -69,12 +69,12 @@ abstract class AbstractController
 	 * @param string $module
 	 * @param string $controller
 	 * @param string $view
-	 * @param string $data
+	 * @param array $data
 	 */
-	public function __construct($Module,$Controller,$View,$Data)
+	public function __construct($Module, $Controller, $View, array $Data = null)
 	{
-		$this->Module= $Module;
-		$this->Controller= $Controller;
+		$this->Module = strtolower($Module);
+		$this->Controller = strtolower($Controller);
 		$this->Action = $View;
 		$this->Data = $Data;
 

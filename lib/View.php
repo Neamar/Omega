@@ -119,6 +119,16 @@ class View
 	{
 		return $this->Metas[$Key];
 	}
+	
+	/**
+	 * Récupérer le contrôleur de la vue.
+	 * 
+	 * @return AbstractController le contrôleur.
+	 */
+	public function getController()
+	{
+		return $this->Controller;
+	}
 
 	/**
 	 * Règle une nouvelle valeur sur la vue

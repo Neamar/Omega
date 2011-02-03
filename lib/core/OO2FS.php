@@ -38,7 +38,7 @@ class OO2FS
 	*/
 	public static function modulePath($Module)
 	{
-		return APPLICATION_PATH . '/' . $Module . '/' . $_GET['module'] . 'Module.php';
+		return APPLICATION_PATH . '/' . $Module . '/' . $Module . 'Module.php';
 	}
 	
 	/**

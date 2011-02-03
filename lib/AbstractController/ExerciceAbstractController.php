@@ -55,13 +55,13 @@ abstract class ExerciceAbstractController extends AbstractController
 			{
 				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
-				$this->redirect('/' . $_GET['module'] . '/exercice/');
+				$this->redirect('/' . $this->getModule() . '/exercice/');
 			}
 			
 			//Lien vers la FAQ
 			if($this->Exercice->isFaq() && $this->getAction() != 'faq')
 			{
-				$this->View->setSeelink('/' . $_GET['module'] . '/exercice/faq/' . $this->Exercice->Hash, 'Chat exercice');
+				$this->View->setSeelink('/' . $this->getModule() . '/exercice/faq/' . $this->Exercice->Hash, 'Chat exercice');
 			}
 			
 			//Récupérer les données pour la vue :

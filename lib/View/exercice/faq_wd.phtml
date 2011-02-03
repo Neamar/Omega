@@ -1,7 +1,7 @@
 <?php 
 $AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__">Ajouter une réponse</a></p>';
 
-echo $this->Doc_box($_GET['module'], 'faq', 'Besoin d\'aide sur cette page ?');
+echo $this->Doc_box($this->getController()->getModule(), 'faq', 'Besoin d\'aide sur cette page ?');
 ?>
 
 <h2>Poster une nouvelle question</h2>

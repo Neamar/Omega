@@ -74,11 +74,11 @@ class Event
         }
 
         //Logger le dispatch de l'évènement.
-        if($_GET['module'] == 'correcteur' && isset($_SESSION['Correcteur']))
+        if($this->getController()->getModule() == 'correcteur' && isset($_SESSION['Correcteur']))
         {
         	$Membre = $_SESSION['Correcteur'];
         }
-	    else if($_GET['module'] == 'eleve' && isset($_SESSION['Eleve']))
+	    else if($this->getController()->getModule() == 'eleve' && isset($_SESSION['Eleve']))
         {
         	$Membre = $_SESSION['Eleve'];
         }

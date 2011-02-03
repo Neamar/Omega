@@ -1,6 +1,6 @@
 <?php 
 echo $this->Html_ajaxTable(
-	'/' . $_GET['module'] . '/points/_actions',
+	'/' . $this->getController()->getModule() . '/points/_actions',
 	'Actions sur le compte',
 	array(
 		'Date',
