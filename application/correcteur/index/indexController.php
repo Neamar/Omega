@@ -148,6 +148,7 @@ ORDER BY Exercices.TimeoutEleve
 			',
 			'Hash'
 		);
+		//TODO: problème pour les exercices sans images
 	}
 	
 	

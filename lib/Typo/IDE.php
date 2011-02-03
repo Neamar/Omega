@@ -24,7 +24,7 @@ var Previews=[];
 function renderIDE($Texte,$Param)
 {
 	$_Param=array(
-	'Name'=>'texte',
+	'Name' => 'texte',
 	'Rows'=>10,
 	'Cols'=>25,
 	'Preview'=>false,

@@ -1,41 +1,41 @@
 <?php
 self::$Balise=array(
 //Balise à un argument.
-	'#\\\\(emph|i){(.+)}#isU'=>'<em>$2</em>',													//Mise en emphase (italique le plus souvent)
-	'#\\\\(emph|i){(.+)}#sUi'=>'<em>$2</em>',													//On est obligé de tricher pour permettre l'imbrication de cette balise.
-	'#\\\\(emph|i){(.+)}#Uis'=>'<em>$2</em>',													//...
-	'#\\\\emph\[([1-6])\]{(.+)}#sUi'=>'<em class="emph$1">$2</em>',				//Emphases spéciales.
-	'#\\\\textit{(.+)}#Uis'=>'<em class="italique">$1</em>',								//Vraie mise en italique (ne s'annule pas quand imbriquée)
-	'#\\\\(textbf|b){(.+)}#isU'=>'<strong>$2</strong>',										//Mise en gras (bold face)
+	'#\\\\(emph|i){(.+)}#isU' => '<em>$2</em>',													//Mise en emphase (italique le plus souvent)
+	'#\\\\(emph|i){(.+)}#sUi' => '<em>$2</em>',													//On est obligé de tricher pour permettre l'imbrication de cette balise.
+	'#\\\\(emph|i){(.+)}#Uis' => '<em>$2</em>',													//...
+	'#\\\\emph\[([1-6])\]{(.+)}#sUi' => '<em class="emph$1">$2</em>',				//Emphases spéciales.
+	'#\\\\textit{(.+)}#Uis' => '<em class="italique">$1</em>',								//Vraie mise en italique (ne s'annule pas quand imbriquée)
+	'#\\\\(textbf|b){(.+)}#isU' => '<strong>$2</strong>',										//Mise en gras (bold face)
 
-	'#\\\\textss{(.+)}#isU'=>'<span class="ss">$1</span>',								//Texte sans serif
-	'#\\\\(textms|texttt){(.+)}#isU'=>'<tt>$2</tt>',												//Texte monospace
+	'#\\\\textss{(.+)}#isU' => '<span class="ss">$1</span>',								//Texte sans serif
+	'#\\\\(textms|texttt){(.+)}#isU' => '<tt>$2</tt>',												//Texte monospace
 
-	'#\\\\quote{(.+)}#isU'=>'<q>$1</q>',															//Citation
-	'#\\\\up{(.+)}#isU'=>'<sup>$1</sup>',															//Texte en exposant
-	'#\\\\down{(.+)}#isU'=>'<sub>$1</sub>',														//Texte en indice
-	'#\\\\small{(.+)}#isU'=>'<small>$1</small>',												//Petit texte
-	'#\\\\big{(.+)}#isU'=>'<big>$1</big>',															//Gros texte
-	'#\\\\quickref{(.+)}#isU'=>'<span class="quickref">$1</span>',					//Référence rapide.
-	'#\\\\verse{(.+)}#isU'=>'<span class="ver">$1</span>',								//Pour écrire des vers.
-	'#\\\\(century|c){\s?-?([XVICM]+)}#isU'=>'<span class="century">$2</span><sup>e</sup>',//Pour écrire un siècle en chiffres romains confortables
-	'#\\\\roman{([XVICM]+)}#isU'=>'<span class="roman">$1</span>',			//Pour écrire un siècle en chiffres romains confortables
-	'#\\\\verbatim{(.+)}#isU'=>'$1',																		//Pour écrire des balises sans les parser. Cf. $Escape_And_Prepare.
-	'#\\\\date{-?([0-9]+)}#'=>'$1',																			//Balise purement sémantique
-	'#\\\\taxonomy{(.+)}#'=>'<em>$1</em>',																			//Nom taxonomique
+	'#\\\\quote{(.+)}#isU' => '<q>$1</q>',															//Citation
+	'#\\\\up{(.+)}#isU' => '<sup>$1</sup>',															//Texte en exposant
+	'#\\\\down{(.+)}#isU' => '<sub>$1</sub>',														//Texte en indice
+	'#\\\\small{(.+)}#isU' => '<small>$1</small>',												//Petit texte
+	'#\\\\big{(.+)}#isU' => '<big>$1</big>',															//Gros texte
+	'#\\\\quickref{(.+)}#isU' => '<span class="quickref">$1</span>',					//Référence rapide.
+	'#\\\\verse{(.+)}#isU' => '<span class="ver">$1</span>',								//Pour écrire des vers.
+	'#\\\\(century|c){\s?-?([XVICM]+)}#isU' => '<span class="century">$2</span><sup>e</sup>',//Pour écrire un siècle en chiffres romains confortables
+	'#\\\\roman{([XVICM]+)}#isU' => '<span class="roman">$1</span>',			//Pour écrire un siècle en chiffres romains confortables
+	'#\\\\verbatim{(.+)}#isU' => '$1',																		//Pour écrire des balises sans les parser. Cf. $Escape_And_Prepare.
+	'#\\\\date{-?([0-9]+)}#' => '$1',																			//Balise purement sémantique
+	'#\\\\taxonomy{(.+)}#' => '<em>$1</em>',																			//Nom taxonomique
 
 //Balise à deux arguments
-	'#\\\\acronym\[(.+)\]{(.+)}#isU'=>'<acronym title="$1">$2</acronym>',		//Acronyme
-	'#\\\\abrev\[(.+)\]{(.+)}#isU'=>'<abbr title="$1">$2</abbr>',						//Abréviation
-	'#\\\\color\[(.+)\]{(.+)}#isU'=>'<span style="color:$1;">$2</span>',			//Texte en couleur
-	'#\\\\color\[(.+)\]{(.+)}#siU'=>'<span style="color:$1;">$2</span>',			//Texte en couleur (2)
-	'#\\\\color\[(.+)\]{(.+)}#sUi'=>'<span style="color:$1;">$2</span>',			//Texte en couleur (2)
-	'#\\\\(lien|link|l)\[(.+)\]{(.+)}#iU'=>'<a href="$2">$3</a>',							//Lien
-	'#\\\\image\[nf\|(.*)\]{(.+)}#iU'=>'<img src="$2" alt="$1" title="$1" class="nonflottant centre"/>',			//Mettre une omage et son texte alternatif
-	'#\\\\image\[(.*)\]{(.+)}#iU'=>'<img src="$2" alt="$1" title="$1" />',			//Mettre une image et son texte alternatif
-	'#\\\\labelimage\[(.*)\]{(.+)}#iU'=>'<span class="labelimage"><span><img src="$2" alt="$1" title="$1" /><br />$1</span></span>',			//Mettre une image et son texte alternatif
-	'#\\\\label\[([a-z]+)\]{(.*)}#isU'=>'<span id="$1">$2</span>',						//Pour faire des références dans les longs textes. (signalement)
-	'#\\\\ref\[(.+)\]{(.+)}#isU'=>'<a href="#$1" title="Voir $1">$2</a>',			//Pour faire des références dans les longs textes. (déplacement)
+	'#\\\\acronym\[(.+)\]{(.+)}#isU' => '<acronym title="$1">$2</acronym>',		//Acronyme
+	'#\\\\abrev\[(.+)\]{(.+)}#isU' => '<abbr title="$1">$2</abbr>',						//Abréviation
+	'#\\\\color\[(.+)\]{(.+)}#isU' => '<span style="color:$1;">$2</span>',			//Texte en couleur
+	'#\\\\color\[(.+)\]{(.+)}#siU' => '<span style="color:$1;">$2</span>',			//Texte en couleur (2)
+	'#\\\\color\[(.+)\]{(.+)}#sUi' => '<span style="color:$1;">$2</span>',			//Texte en couleur (2)
+	'#\\\\(lien|link|l)\[(.+)\]{(.+)}#iU' => '<a href="$2">$3</a>',							//Lien
+	'#\\\\image\[nf\|(.*)\]{(.+)}#iU' => '<img src="$2" alt="$1" title="$1" class="nonflottant centre"/>',			//Mettre une omage et son texte alternatif
+	'#\\\\image\[(.*)\]{(.+)}#iU' => '<img src="$2" alt="$1" title="$1" />',			//Mettre une image et son texte alternatif
+	'#\\\\labelimage\[(.*)\]{(.+)}#iU' => '<span class="labelimage"><span><img src="$2" alt="$1" title="$1" /><br />$1</span></span>',			//Mettre une image et son texte alternatif
+	'#\\\\label\[([a-z]+)\]{(.*)}#isU' => '<span id="$1">$2</span>',						//Pour faire des références dans les longs textes. (signalement)
+	'#\\\\ref\[(.+)\]{(.+)}#isU' => '<a href="#$1" title="Voir $1">$2</a>',			//Pour faire des références dans les longs textes. (déplacement)
 	);
 
 self::$_SpecialChar=array(

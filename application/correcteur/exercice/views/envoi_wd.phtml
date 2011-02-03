@@ -15,7 +15,10 @@ echo $this->Html_list($Rappels);
 <?php
 echo $this->Form_textareaLabelBr(
 	'corrige',
-	'Votre texte'
+	'Votre texte',
+	array(
+		'required' => 'required'
+	)
 );
 echo $this->Doc_inputBr('correcteur', 'aide_tex');
 

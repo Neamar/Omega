@@ -45,52 +45,52 @@ class Typo
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>1,
-		'Protect'=>'CODEù',
+		'Protect' => 'CODEù',
 		),
 	'#\\\\verbatim{([^@]+)}#isU'=>array//Verbatim indique un texte qui ne doit pas être modifié. Pas environnement, pour inline. Doit être en premier pour éviter d'autres échappements à l'intérieur.
 		(
-		'Protect'=>'VERBATIM-INLINE',
+		'Protect' => 'VERBATIM-INLINE',
 		'RegexpCode'=>1,
 		),
 	'#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU'=>array//Idem pour les environnements mathématiques. À échapper avant la suite !
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>2,
-		'Protect'=>'MATHù',
-		'Replace'=>'<math>%n</math>',
-		'Modifications'=>array('$'=>'','&amp;'=>'&'),
+		'Protect' => 'MATHù',
+		'Replace' => '<math>%n</math>',
+		'Modifications'=>array('$' => '','&amp;' => '&'),
 		),
 	'#\\\\(~|\{|\}|\[|\]|\$|\&|\"|oe|ae|\.|,|;|:|!|\?|\%)#iU'=>array//Certains caractères doivent être échappés : l'accolade par exemple.
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>0,
-		'Protect'=>'ESCAPE-SYMBOL',
-		'Modifications'=>array('\\'=>''),
+		'Protect' => 'ESCAPE-SYMBOL',
+		'Modifications'=>array('\\' => ''),
 		),
 
 	'#&(\#?[0-9A-Z]+);#iU'=>array//Échapper les entités HTML
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>0,
-		'Protect'=>'HTML-ENTITY',
+		'Protect' => 'HTML-ENTITY',
 		),
 	'#\\\\(lien|link|l)\[([^\[]+)\]{(.+)}#iU'=>array//Les liens ne doivent pas être parsés, sinon http://neamar.fr/i.php?test devient http : //neamar. fr /i. php&nbsp;? test
 		(
 		'RegexpCode'=>2,
-		'Protect'=>'LINK',
-		'Modifications'=>array('&'=>'&amp;'),
+		'Protect' => 'LINK',
+		'Modifications'=>array('&' => '&amp;'),
 		),
 	'#\\\\(label)?image\[(.+)\]{([^\[]+)}#iU'=>array//Idem pour les images
 		(
 		'RegexpCode'=>3,
-		'Protect'=>'IMAGE',
-		'Modifications'=>array('&'=>'&amp;'),
+		'Protect' => 'IMAGE',
+		'Modifications'=>array('&' => '&amp;'),
 		),
 	'#\\\\begin{verbatim}\s(.[^@].+)\s\\\\end{verbatim}#isU'=>array//Verbatim indique un texte qui ne doit pas être modifié. Environnement.
 		(
 		'NoBrace'=>true,
 		'RegexpCode'=>1,
-		'Protect'=>'VERBATIM',
+		'Protect' => 'VERBATIM',
 		),
 	);
 

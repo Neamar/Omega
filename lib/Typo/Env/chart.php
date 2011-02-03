@@ -12,19 +12,19 @@ $Param['cht']=$Opt[0];
 $Param['chs']=$Opt[1];
 
 $Alias=array(
-'Type'=>'cht',
-'Size'=>'chs',
-'Data'=>'chd',
-'Datas'=>'chd',
-'Label'=>'chl',
-'Labels'=>'chl',
-'Legend'=>'chl',
-'Title'=>'chtt',
-'Titre'=>'chtt',
-'Color'=>'chco',
-'Colors'=>'chco',
-'Axis'=>'chxt',
-'AxisLabel'=>'chxl');
+'Type' => 'cht',
+'Size' => 'chs',
+'Data' => 'chd',
+'Datas' => 'chd',
+'Label' => 'chl',
+'Labels' => 'chl',
+'Legend' => 'chl',
+'Title' => 'chtt',
+'Titre' => 'chtt',
+'Color' => 'chco',
+'Colors' => 'chco',
+'Axis' => 'chxt',
+'AxisLabel' => 'chxl');
 preg_match_all('#(\w+):(\S+);?#',$envContent,$Params,PREG_SET_ORDER);
 foreach($Params as $Opt)
 {
@@ -43,5 +43,5 @@ $URL='http://chart.apis.google.com/chart?1';
 foreach($Param as $Opt=>$Val)
 	$URL .= '&amp;' . $Opt . '=' . str_replace('_','+',$Val);
 
-$envContent='<p class="centre no_lettrine"><img class="nonflottant" alt="Graphique de données" src="' . $URL . '" /></p>';
+$envContent='<p class="centre no_lettrine"><img class="nonflottant" alt="Graphique de donnï¿½es" src="' . $URL . '" /></p>';
 ?>

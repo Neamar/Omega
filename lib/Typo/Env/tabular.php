@@ -20,7 +20,7 @@ foreach($Lignes as $ligne)
 	}
 	elseif(preg_match('#^\s*\\\\(head|body|foot)$#',$ligne,$match))
 	{
-		//Si il y a des restes en mémoire les sauver
+		//Si il y a des restes en mï¿½moire les sauver
 		if($LigneActuelle!='')
 		{
 			$StructureActuelle[] = explode('&amp;',$LigneActuelle);
@@ -41,10 +41,10 @@ foreach($Lignes as $ligne)
 		$LigneActuelle='';
 	}
 	elseif($ligne!='')
-		//Ligne de tableau étalée sur plusieurs lignes de code
+		//Ligne de tableau ï¿½talï¿½e sur plusieurs lignes de code
 		$LigneActuelle .=$ligne . "\n";
 }
-//La dernière ligne
+//La derniï¿½re ligne
 if($LigneActuelle !='')
 	$StructureActuelle[] = explode('&amp;',$LigneActuelle);
 
@@ -57,7 +57,7 @@ unset($Lignes);
 // print_r($Foot);
 
 $Table=array('head'=>&$Head,'foot'=>&$Foot,'body'=>&$Body);
-$CellType=array('head'=>'th','foot'=>'th','body'=>'td');
+$CellType=array('head' => 'th','foot' => 'th','body' => 'td');
 
 $envContent='<table>' . "\n";
 if($Caption!='')
@@ -81,7 +81,7 @@ foreach($Table as $Categorie=>$Data)
 				$ID++;
 
 				$Column = trim($Column);
-				if(strpos(substr($Column,0,-1),"\n")!==false)//pas besoin d'avoir des éléments blocks.
+				if(strpos(substr($Column,0,-1),"\n")!==false)//pas besoin d'avoir des ï¿½lï¿½ments blocks.
 					$Column=Typo_parseLines($Column);
 
 				$envContent .= '			<' . $CellType[$Categorie] . $Class . '>' . $Column . '</' . $CellType[$Categorie] . '>' . "\n";

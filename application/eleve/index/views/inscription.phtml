@@ -8,22 +8,25 @@ echo $this->Form_inputLabelBr(
 	'email',
 	'Votre adresse mail',
 	array(
-		'type'=>'email',
-		'placeholder'=>'nom@fai.fr',
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+		'required' => 'required',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password',
 	'Votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
+		'required' => 'required',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password_confirm',
 	'Confirmez votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
+		'required' => 'required',
 	)
 );
 	
@@ -38,7 +41,7 @@ echo $this->Form_inputLabelBr(
 	'section',
 	'Section (si nécessaire)',
 	array(
-		'placeholder'=>'S, ES, L...'
+		'placeholder' => 'S, ES, L...'
 	)
 );
 ?>

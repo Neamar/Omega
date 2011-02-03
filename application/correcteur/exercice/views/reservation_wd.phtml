@@ -19,6 +19,7 @@ echo $this->Form_pointsLabel(
 	MAX_SOMME,
 	array(
 		'value' => 1000,
+		'required' => 'required'
 	)
 ) . $this->Doc_inputBr('correcteur', 'prix');
 //TODO: documentation/correcteur/prix
@@ -31,6 +32,7 @@ $HeureData = array(
 	'maxlength' => 2,
 	'placeholder' => 'HH',
 	'size' => 2,
+	'required' => 'required',
 );
 
 //Rendu
@@ -41,8 +43,10 @@ echo $this->Form_inputLabel(
 	'Mon offre est valide jusqu\'au',
 	array(
 		'value'=> date('d/m/Y', $AnnulationAuto),
-		'placeholder'=>'JJ/MM/AAAA',
+		'placeholder' => 'JJ/MM/AAAA',
 		'data-maxdate' => strtotime($this->Exercice->Expiration),
+		'required' => 'required',
+		'pattern' => '[0-3][0-9]/[0-1][0-9]/201[1-9]'
 	)
 );
 echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('correcteur', 'champ_annulation');

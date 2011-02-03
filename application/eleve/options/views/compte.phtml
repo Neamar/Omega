@@ -4,9 +4,10 @@ echo $this->Form_inputLabelBr(
 	'email',
 	'Votre adresse mail',
 	array(
-		'type'=>'email',
-		'placeholder'=>'nom@fai.fr',
-		'value' => $_SESSION['Eleve']->Mail
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+		'value' => $_SESSION['Eleve']->Mail,
+		'required' => 'required'
 	)
 );
 
@@ -14,14 +15,14 @@ echo $this->Form_inputLabelBr(
 	'password',
 	'Votre mot de passe (laissez vide pour conserver le mot de passe actuel)',
 	array(
-		'type'=>'password',
+		'type' => 'password',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password_confirm',
 	'Confirmez votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
 	)
 );
 

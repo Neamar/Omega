@@ -36,7 +36,7 @@ abstract class DbObject
 	public static $Props;
 	
 	protected $Foreign = array(
-		'Nom'=>'Objet');
+		'Nom' => 'Objet');
 	
 	/**
 	 * 

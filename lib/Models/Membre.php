@@ -42,12 +42,12 @@ class Membre extends DbObject
 	}
 	
 	protected $Foreign = array(
-		'Createur'=>'Eleve',
-		//'Matiere'=>'Matiere',
-		'Classe'=>'Classe',
-		'Type'=>'Type',
-		//'Statut'=>'Statut',
-		'Correcteur'=>'Correcteur'
+		'Createur' => 'Eleve',
+		//'Matiere' => 'Matiere',
+		'Classe' => 'Classe',
+		'Type' => 'Type',
+		//'Statut' => 'Statut',
+		'Correcteur' => 'Correcteur'
 	);
 	
 	public $Mail;

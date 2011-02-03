@@ -107,7 +107,7 @@ function ViewHelper_Form_textarea($name, array $args = array())
  */
 function ViewHelper_Form_submit($name, $value)
 {
-	$args = array('type'=>'submit','value'=>$value);
+	$args = array('type' => 'submit','value'=>$value);
 	if($name!=null)
 	{
 		$args['name'] = $args['id'] = $name;

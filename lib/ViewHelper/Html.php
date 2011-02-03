@@ -199,7 +199,7 @@ function initTypo()
 	//Empêcher de mettre en forme le texte dans les ref.
 	Typo::$Escape_And_Prepare['#\\\\doc\[.+(oe).+\]{(.+)}#isU']=array
 	(
-		'Protect'=>'DOC-REF',
+		'Protect' => 'DOC-REF',
 		'RegexpCode'=>1,
  	);
 	
