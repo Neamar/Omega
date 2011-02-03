@@ -148,7 +148,7 @@ class Membre extends DbObject
 		}
 		if(!Sql::$isTransaction)
 		{
-			throw new Exception("Débit et crédit dans une transaction !", 2);
+			throw new Exception("Débit et crédit doivent être effectués dans une transaction !", 2);
 		}
 		if($Value == 0)
 		{

@@ -171,9 +171,15 @@ WHERE Hash="%ID%"';
 	 * 
 	 * @param Membre $Canceller le membre demandant l'annulation
 	 * @param string $Message le message d'annulation
+	 * @throws Exception l'exercice ne peut pas être annulé
 	 */
 	public function cancelExercice(Membre $Canceller, $Message)
 	{
+		if(!in_array('ANNULE', self::$Workflow[$this->Statut]))
+		{
+			throw new Exception("Impossible d'annuler l'exercice maintenant");
+		}
+		
 		$Changes = array(
 			'_Correcteur' => 'NULL',
 			'_TimeoutCorrecteur' => 'NULL',
@@ -195,6 +201,11 @@ WHERE Hash="%ID%"';
 	 */
 	public function cancelOffer(Membre $Canceller, $Message)
 	{
+		if(!in_array('ATTENTE_CORRECTEUR', self::$Workflow[$this->Statut]))
+		{
+			throw new Exception("Impossible d'annuler une offre maintenant");
+		}
+		
 		//Mettre à jour l'objet Exercice
 		$ToUpdate = array(
 			'_Correcteur' => 'NULL',
@@ -240,6 +251,34 @@ WHERE Hash="%ID%"';
 	}
 	
 	/**
+	 * Termine l'exercice.
+	 * Peut-être appelé à la notation, sur un timeout après DELAI_REMBOURSEMENT, ou sur une décision administrateur.
+	 * Note : le dispatch de l'évènement est laissé à la charge de l'appelant.
+	 * 
+	 * @param string $Message le message. Le texte "et paiement du correcteur" sera automatiquement ajouté.
+	 * @param Membre $ChangeAuthor l'auteur du changement
+	 * @param array $Changes les modifications à apporter en plus
+	 * @throws Exception l'exercice ne peut être clos maintenant.
+	 */
+	public function closeExercice($Message, Membre $ChangeAuthor, array $Changes = array())
+	{
+		if(!in_array('TERMINE', self::$Workflow[$this->Statut]))
+		{
+			throw new Exception('Impossible de clore ici.');
+		}
+		
+		$Correcteur = $this->getCorrecteur();
+		$this->Enchere = (int) $this->Enchere;
+		
+		//Démarrer une transaction pour assurer la cohérence des données
+		Sql::start();
+		$Correcteur->credit($this->Enchere, 'Paiement pour l\'exercice « ' . $this->Titre . ' »', $this);
+		Membre::getBanque()->debit($this->Enchere, 'Paiement exercice.', $this);
+		$this->setStatus('TERMINE', $ChangeAuthor, $Message . " et paiement du correcteur.", $Changes);
+		Sql::commit();
+	}
+	
+	/**
 	 * Récupère le correcteur associé à l'exercice.
 	 * 
 	 * @return Correcteur
@@ -276,7 +315,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function pricePaid()
 	{
-		return $this->priceAsked()*MARGE;
+		return $this->priceAsked() * MARGE;
 	}
 	
 	/**
