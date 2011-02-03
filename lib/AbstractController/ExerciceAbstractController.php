@@ -166,10 +166,20 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->redirectExercice();
 		}
 		
+		if(strtotime($this->Exercice->Expiration) < time() - DELAI_FAQ * 24 * 3600)
+		{
+			$this->View->setMessage('warning', 'La FAQ est fermée, vous ne pouvez plus poster de question.');
+			$this->View->Ouvert = false;
+		} 
+		else
+		{
+			$this->View->Ouvert = true;
+		}
+		
 		$this->View->addScript('/public/js/eleve/exercice/faq.js');
 		
 		//Ajout d'une question
-		if(isset($_POST['faq-question-exercice']))
+		if($this->View->Ouvert && isset($_POST['faq-question-exercice']))
 		{
 			if(empty($_POST['question']))
 			{
