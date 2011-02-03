@@ -91,10 +91,14 @@ abstract class DbObject
 
 	/**
 	 * Crée un nouvel élément et renvoie le nouvel objet.
+	 * @deprecated cette fonction manque de puissance, puisqu'elle ne permet pas de sélectionner l'identifiant sur lequel effectuer le load (ID par défaut, mais ce n'est pas forcément ce qui est voulu). De plus, elle ne permet pas facilement de gérer des transactions ou des héritages d'objets.
+	 * @see Sql::insert() pour les créations d'objet
+	 * @see Sql::start() pour les transactions 
+	 * @see DbObject::load() pour la récupération après la création
 	 * 
 	 * @param array $Values les données de l'objet. Les champs non renseignés prendront la valeur par défaut de la table
 	 *
-	 * @return DbObject l'objet inséré.
+	 * @return DbObject l'objet inséré ou null si échec.
 	 */
 	public static function create(array $Values)
 	{	
@@ -104,7 +108,7 @@ abstract class DbObject
 		}
 		else
 		{
-			Debug::fail('Impossible de créer l\'objet demandé : ' . SQL::error());
+			return null;
 		}
 	}
 	
