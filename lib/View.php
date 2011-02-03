@@ -28,18 +28,18 @@
 class View
 {
 	/**
-	 * 
+	 *
 	 * La liste des données contenues par la vue
 	 * @var array
 	 */
 	protected $Datas;
-	
+
 	/**
 	 * Les méta données de la vue : le contrôleur parent, le nom, le titre de la page...
 	 * @var array
 	 */
 	protected $Metas;
-	
+
 	/**
 	 * Le contrôleur possédant cette vue
 	 * @var AbstractController
@@ -58,7 +58,7 @@ class View
 		$this->Metas = array(
 			'name'=>$Name,
 			'script'=>array(
-				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' => true,
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js' => true,
 				'/public/js/jquery-ui.min.js' => true,
 				'/public/js/jquery.prettyPhoto.js' => true,
 				'/public/js/default.js' => true,
@@ -72,7 +72,7 @@ class View
 				'/public/css/prettyPhoto/prettyPhoto.css' => true,
 			),
 		);
-		
+
 		$this->Controller = $Controller;
 	}
 
@@ -85,7 +85,7 @@ class View
 	{
 		return $this->Datas;
 	}
-	
+
 	/**
 	 * Récupérer la liste des méta-données contenues dans la vue sous forme d'un tableau associatif.
 	 *
@@ -107,22 +107,22 @@ class View
 	{
 		return $this->Datas[$Key];
 	}
-	
+
 	/**
 	 * Récupère une des méta-informations
-	 * 
+	 *
 	 * @param string $Key
-	 * 
+	 *
 	 * @return mixed la valeur
 	 */
 	public function getMeta($Key)
 	{
 		return $this->Metas[$Key];
 	}
-	
+
 	/**
 	 * Récupérer le contrôleur de la vue.
-	 * 
+	 *
 	 * @return AbstractController le contrôleur.
 	 */
 	public function getController()
@@ -140,7 +140,7 @@ class View
 	{
 		$this->Datas[$Key] = $Value;
 	}
-	
+
 	/**
 	 * Règle une nouvelle méta donnée
 	 *
@@ -151,7 +151,7 @@ class View
 	{
 		$this->Metas[$Key] = $Value;
 	}
-	
+
 	/**
 	 * Teste l'existence d'une clé.
 	 *
@@ -163,7 +163,7 @@ class View
 	{
 		return isset($this->Datas[$Key]);
 	}
-	
+
 	/**
 	 * Teste l'existence d'une clé méta.
 	 *
@@ -185,7 +185,7 @@ class View
 	{
 		unset($this->Datas[$Key]);
 	}
-	
+
 	/**
 	 * Efface la valeur d'une clé méta.
 	 *
@@ -213,26 +213,26 @@ class View
 
 		return call_user_func_array($Helper, $args);
 	}
-	
+
 	/**
 	 * Définit le titre de la page Web (balise <title>)
-	 * 
+	 *
 	 * @param string $Title
 	 * @param string $Intro le texte présentant la page
 	 */
 	public function setTitle($Title, $Intro = null)
 	{
 		self::setMeta('title', $Title);
-		
+
 		if($Intro != null)
 		{
 			self::setMeta('intro', $Intro);
 		}
 	}
-	
+
 	/**
 	 * Définit le message à afficher en tête de page
-	 * 
+	 *
 	 * @param string $Title
 	 */
 	public function setMessage($Type, $Message, $DocLink = null)
@@ -241,20 +241,20 @@ class View
 		self::setMeta('messageClass', $Type);
 		self::setMeta('messageDoc', $DocLink);
 	}
-	
+
 	/**
 	 * Définit la liste des liens composant le chemin / breadcrumb.
-	 * 
+	 *
 	 * @param array $Breads le tableau, du type Lien => Caption. Order matters.
 	 */
 	public function setBreadcrumbs(array $Breads)
 	{
 		self::setMeta('breadcrumbs', $Breads);
 	}
-	
+
 	/**
 	 * Ajoute une URL "à voir aussi" qui s'affichera à droite du breadcrumb.
-	 * 
+	 *
 	 * @param string $URL
 	 * @param string $Caption
 	 */
@@ -262,10 +262,10 @@ class View
 	{
 		self::setMeta('seelink', array('url' => $URL, 'caption' => $Caption));
 	}
-	
+
 	/**
 	 * Ajoute un script en haut de page
-	 * 
+	 *
 	 * @param string $Src l'URL du script à ajouter. Si vide, ajoutera le fichier js associé à la page dans le fichier public/js
 	 */
 	public function addScript($Src = '')
@@ -274,23 +274,23 @@ class View
 		{
 			$Src = '/public/js/' . $this->Controller->getModule() . '/' . $this->Controller->getController() . '/' . $this->Controller->getAction() . '.js';
 		}
-		
+
 		$this->Metas['script'][$Src] = true;
 	}
-	
+
 	/**
 	 * Supprime un script en haut de page
-	 * 
+	 *
 	 * @param string $Src le script à supprimer
 	 */
 	public function removeScript($Src)
 	{
 		unset($this->Metas['script'][$Src]);
 	}
-	
+
 	/**
 	 * Ajoute une donnée de balise méta
-	 * 
+	 *
 	 * @param string $Meta le nom de la balise
 	 * @param string $Valeur la valeur à donner
 	 */
@@ -298,83 +298,83 @@ class View
 	{
 		$this->Metas['meta'][$Meta] = $Valeur;
 	}
-	
+
 	/**
 	 * Supprime une donnée de balise méta
-	 * 
+	 *
 	 * @param string $Meta la balise à supprimer
 	 */
 	public function removeMeta($Meta)
 	{
 		unset($this->Metas['meta'][$Meta]);
 	}
-	
+
 	/**
 	 * Ajoute une feuille de style externe
-	 * 
+	 *
 	 * @param string $Src l'URL à ajouter
 	 */
 	public function addStyle($Src)
 	{
 		$this->Metas['style'][$Src] = true;
 	}
-	
+
 	/**
 	 * Supprime une feuille de style externe
-	 * 
+	 *
 	 * @param string $Src l'URL à supprimer
 	 */
 	public function removeStyle($Src)
 	{
 		unset($this->Metas['style'][$Src]);
 	}
-	
+
 	/**
 	 * Définit le fichier de vue à utiliser.
-	 * 
+	 *
 	 * @param unknown_type $URL
 	 */
 	public function setFile($URL)
 	{
 		$this->setMeta('viewFile', $URL);
 	}
-	
+
 	/**
 	 * Écrit le contenu de la balise <head>
-	 * 
+	 *
 	 * Dans l'ordre :
 	 * Titre
 	 * Balises Meta
 	 * Feuilles de style
 	 * Scripts
-	 * 
+	 *
 	 * @return html
 	 */
 	public function renderHead()
 	{
 		$Head = '	<title>' . $this->getMeta('title') . '</title>' . "\n";
-		
+
 		foreach($this->Metas['meta'] as $Meta=> $Value)
 		{
 			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
 		}
-		
+
 		foreach($this->Metas['style'] as $URL=>$_)
 		{
 			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
 		}
-		
+
 		foreach($this->Metas['script'] as $URL=>$_)
 		{
 			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
 		}
-		
+
 		return $Head;
 	}
-	
+
 	/**
 	 * Renvoie le message enregistré pour la page (s'il existe)
-	 * 
+	 *
 	 * @return html
 	 */
 	public function renderMessage()
@@ -392,7 +392,7 @@ class View
 	<p>' . $this->getMeta('message') . '</p>
 </aside>';
 			}
-			
+
 			return '<div id="content-message" class="' . $this->getMeta('messageClass')  . '">
 ' . $Content . '
 </div><!-- /content-message --->
@@ -403,22 +403,22 @@ class View
 			return '<div id="bottom-message"></div>';
 		}
 	}
-	
+
 	/**
 	 * Renvoie le contenu du ruban à afficher sur la page.
-	 * 
+	 *
 	 * @return string une liste HTML.
 	 */
 	public function renderRibbon()
 	{
 		$RibbonParts = include OO2FS::ribbonPath($this->Controller->getModule());
-		
+
 		//Si les liens sont précisés, les enregistrer pour le rendu depuis ->renderLinks()
 		if(isset($RibbonParts['links']))
 		{
 			$this->setMeta('links', $RibbonParts['links']);
 		}
-		
+
 		$R = '
 	<div id="ribbon-left">
 		' . $RibbonParts['left'] . '
@@ -429,13 +429,13 @@ class View
 	<div id="ribbon-right">
 		' . $RibbonParts['right'] . '
 	</div>
-';		
+';
 		return $R;
 	}
-	
+
 	/**
 	 * Renvoie le fil d'Ariane de la page
-	 * 
+	 *
 	 * @return string une liste HTML.
 	 */
 	public function renderBreadcrumbs()
@@ -451,18 +451,18 @@ class View
 			'Matieres' => 'Matières', //as in /correcteur/options/matiere
 			'Matieres_rapide' => 'Matières_rapide', //as in /correcteur/options/matiere_rapide
 		);
-		
+
 		$R = '';
-		
+
 		//Lien "voir aussi"
 		if($this->issetMeta('seelink'))
 		{
 			$SeeLink = $this->getMeta('seelink');
 			$R .= '<div class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
 		}
-		
+
 		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
-		
+
 		//Mettre au format microdata décrit par Google
 		//http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=185417
 		foreach($Ariane as $Url => &$Caption)
@@ -472,12 +472,12 @@ class View
 			{
 				$Caption = trim(mb_substr($Caption, 0, 57, 'UTF-8')) . '&hellip;';
 			}
-			
+
 			if(isset($Remplacements[$Caption]))
 			{
 				$Caption = $Remplacements[$Caption];
 			}
-			
+
 			$Caption = '
 		<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
 			<a href="' . $Url . '" itemprop="url">
@@ -487,10 +487,10 @@ class View
 	';
 		}
 		$R .= $this->Html_List($Ariane);
-		
+
 		return $R;
 	}
-	
+
 	public function renderLinks()
 	{
 		if(!$this->issetMeta('links'))
@@ -505,48 +505,48 @@ class View
 				)
 			);
 		}
-		
+
 		$Liens = $this->getMeta('links');
-		
+
 		//Wrapper dans un span pour le CSS
 		foreach($Liens as &$Caption)
 		{
 			$Caption = '<span>' . $Caption . '</span>';
 		}
-		
+
 		return $this->Html_listAnchor($Liens);
 	}
-	
+
 	/**
 	 * Renvoie le message de titre et l'introduction.
-	 * 
+	 *
 	 * @return html
 	 */
 	public function renderTitle()
 	{
 		$Title = '	<h1>' . $this->getMeta('title') . '</h1>' . "\n";
-		
+
 		if($this->issetMeta('intro'))
 		{
 			$Title .= '	<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
 		}
-		
+
 		return $Title;
 	}
 
 	/**
 	 * Écrit le contenu du fichier vue sur la sortie standard
-	 * 
+	 *
 	 * @return void tout est écrit.
 	 */
 	public function renderContent()
 	{
 			include $this->getMeta('viewFile');
 	}
-	
+
 	/**
 	 * Écrit la vue sur la sortie standard
-	 * 
+	 *
 	 * @return void tout est écrit via echo.
 	 */
 	public function render()
