@@ -459,6 +459,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre");
 				
 				//Dispatch de l'évènement REFUS
+				//Adjoindre le correcteur, qui n'est plus disponible sur l'exercice.
 				Event::dispatch(
 					Event::ELEVE_EXERCICE_REFUS,
 					array(

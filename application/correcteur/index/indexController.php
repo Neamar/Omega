@@ -143,6 +143,7 @@ AND Exercices.ID NOT IN (
 	WHERE Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
 )
 
+GROUP BY Exercices.ID
 ORDER BY Exercices.TimeoutEleve
 			',
 			'Hash'

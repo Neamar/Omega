@@ -160,12 +160,69 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				Event::dispatch(
 					Event::CORRECTEUR_EXERCICE_PROPOSITION,
 					array(
-						'Exercice' => $this->Exercice,
-						'Prix' => $_POST['prix'],
+						'Exercice' => $this->Exercice
 					)
 				);
 				
 				$this->View->setMessage('info', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
+				
+				//Gestion de l'auto-accept.
+				if(!empty($this->Exercice->AutoAccept))
+				{
+					$Eleve = $this->Exercice->getEleve();
+					$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
+					
+					//prendre le minimum entre le solde et la valeur indiquée.
+					$AutoAccept = min($Eleve->getPoints(), $this->Exercice->AutoAccept);
+					if($this->Exercice->Enchere <= $AutoAccept)
+					{
+						//Auto-acceptation.
+						Sql::start();
+						if(!$Eleve->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+						{
+							Event::log('CRITIQUE ! Fail sur autoaccept incohérent.', $Eleve);
+							Sql::rollback();
+							$this->View->setMessage('error', "Une erreur critique s'est produite, nous mettons tout en œuvre pour la corriger rapidement.");
+						}
+						else
+						{
+							//Créditer la banque pour valider les contraintes
+							Membre::getBanque()->credit($this->Exercice->Enchere, 'Stockage exercice', $this->Exercice);
+							
+							//Logger la bonne nouvelle
+							$this->Exercice->setStatus('EN_COURS', $Eleve, "Acceptation automatique de l'offre.");
+		
+							//Terminer la transaction
+							Sql::commit();
+							
+							//Dispatch de l'évènement ACCEPTATION
+							Event::dispatch(
+								Event::ELEVE_EXERCICE_ACCEPTATION_AUTOMATIQUE,
+								array(
+									'Exercice' => $this->Exercice
+								)
+							);
+							
+							$this->View->setMessage('info', 'Votre proposition a été automatiquement acceptée par l\'élève ; félicitations !');
+						}
+					}
+					else
+					{
+						$this->Exercice->cancelOffer($Eleve, "Refus automatique de l'offre");
+				
+						//Dispatch de l'évènement REFUS.
+						//Adjoindre le correcteur, qui n'est plus disponible sur l'exercice.
+						Event::dispatch(
+							Event::ELEVE_EXERCICE_REFUS_AUTOMATIQUE,
+							array(
+								'Exercice' => $this->Exercice,
+								'Correcteur' => $this->getMembre()
+							)
+						);
+						
+						$this->View->setMessage('warning', 'Votre proposition a été automatiquement refusée par l\'élève ; désolé !');
+					}
+				}
 				$this->redirect('/correcteur/');
 			}
 		}

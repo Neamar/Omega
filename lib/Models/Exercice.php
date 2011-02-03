@@ -102,7 +102,7 @@ WHERE Hash="%ID%"';
 	public $Demande;
 	public $DetailsDemande;
 	public $InfosEleve;
-	public $Autoaccept;
+	public $AutoAccept;
 	public $Modificateur;
 	public $Statut;
 	public $DetailsStatut;
