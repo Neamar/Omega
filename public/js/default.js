@@ -118,3 +118,58 @@ $(function()
 		}
 	});
 });
+
+/**
+ * Gestion des composants HTML5.
+ * 
+ * Ajoute des fonctionnalités basiques HMTL5 pour les navigateurs ne le supportant pas.
+ * Qu'IE aille rotir en enfer.
+ */
+$(function()
+{
+	//Prend un input et enlève tous les caractères non numériques
+	var Numeric = function()
+	{
+		Valeur = parseInt(this.value.replace(/[^0-9\.]/g,''), 10);
+		
+		if(isNaN(Valeur))
+			this.value = '';
+		else
+			this.value = Valeur;
+	}
+	
+	//Prend un input, enlève tous les caractères non numériques et vérifie la validité de la donnée saisie par rapport aux bornes min et max
+	var Number = function()
+	{
+		Numeric.call(this);
+		
+		if(this.value == '')
+			return;
+		
+		jItem = $(this);
+		
+		if(jItem.attr('min'))
+		{
+			if(this.value < parseInt(jItem.attr('min')))
+			{
+				jItem.val(jItem.attr('min'));
+			}
+		}
+		
+		if(jItem.attr('max'))
+		{
+			if(this.value > parseInt(jItem.attr('max')))
+			{
+				jItem.val(jItem.attr('max'));
+			}
+		}
+	}
+	
+	$('input[type=number]').change(Number);
+	$('input[type=number]').keyup(Number);
+	$('input[type=number]').keydown(Number);
+	
+	$('input[type=numeric]').change(Numeric);
+	$('input[type=numeric]').keyup(Numeric);
+	$('input[type=numeric]').keydown(Numeric);
+})
