@@ -80,11 +80,19 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
  */
 function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
 {
+	static $NbActions = 1;
+	
+	//Le tableau pour la liste déroulante rapide
+	$Quickjump = array('' => 'Choisissez une action...');
 	foreach($Actions as $URL => &$Action)
 	{
+		$URL = str_replace('__URL__', $URL, $BaseURL);
+		
 		if(is_array($Action))
 		{
-			$Texte = '<a href="' . str_replace('__URL__', $URL, $BaseURL) . '">' . $Action[0] . '</a><br />
+			$Quickjump[$URL] = $Action[0];
+			
+			$Texte = '<a href="' . $URL . '">' . $Action[0] . '</a><br />
 	<p class="action-detail">' . $Action[1];
 			if(isset($Action[2]))
 			{
@@ -96,14 +104,37 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
 			}
 			
 			$Action = $Texte . '</p>';
+			
+			
 		}
 		else
 		{
-			$Action = '<a href="' . str_replace('__URL__', $URL, $BaseURL) . '">' . $Action . '</a>';
+			$Quickjump[$URL] = $Action;
+			
+			$Action = '<a href="' . $URL . '">' . $Action . '</a>';
 		}
 	}
 	
-	return ViewHelper_Html_list($Actions);
+	if(!function_exists('ViewHelper_Form_selectLabelBr'))
+	{
+		include OO2FS::viewHelperPath('Form');
+	}
+	
+	$R = '<form method="get" action="">
+	' . ViewHelper_Form_selectLabelBr(
+		'quickjump',
+		'Liens rapides',
+		$Quickjump,
+		null,
+		array(
+			'id' => 'quickjump-' . $NbActions++,
+			'class' => 'quickjump'
+		)
+	) . '
+	</form>
+	' . ViewHelper_Html_list($Actions);
+	
+	return $R;
 }
 
 /**

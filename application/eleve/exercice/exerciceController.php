@@ -366,31 +366,36 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			"Cette page liste les informations qui seront envoyées au correcteur."
 		);
 		
+		if($this->Exercice->getFilesCount(array('SUJET')) == 0 && empty($this->Exercice->InfosEleve))
+		{
+			$this->View->setMessage('warning', 'Vous ne pouvez pas envoyer un exercice ne contenant aucun fichier et aucun message. Entrez un texte dans le champ information ou ajoutez des fichiers en cliquant sur le lien approprié.');
+		}
+		
 		if(isset($_POST['change-info']))
 		{
-			if($_POST['infos']=='')
-			{
-				$this->View->setMessage('warning', "Vous ne pouvez pas vider le champ information maintenant.");
-			}
-			else
-			{
-				$this->View->setMessage('ok', "Les informations de l'exercice ont bien été modifiées.");
-				$this->Exercice->setAndSave(array('InfosEleve'=>$_POST['infos']));
-			}
+			$this->View->setMessage('ok', "Les informations de l'exercice ont bien été modifiées.");
+			$this->Exercice->setAndSave(array('InfosEleve'=>$_POST['infos']));
 		}
 		if(isset($_POST['resume']))
 		{
-			$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Envoi de l'exercice aux correcteurs.");
-			
-			Event::dispatch(
-				Event::ELEVE_EXERCICE_ENVOI,
-				array(
-					'Exercice' => $this->Exercice
-				)
-			);
-			
-			$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
-			$this->redirectExercice();
+			if($this->Exercice->getFilesCount(array('SUJET')) == 0 && empty($this->Exercice->InfosEleve))
+			{
+				$this->View->setMessage('error', 'Vous ne pouvez pas envoyer un exercice ne contenant aucun fichier et aucun message.');
+			}
+			else
+			{
+				$this->Exercice->setStatus('ATTENTE_CORRECTEUR', $_SESSION['Eleve'], "Envoi de l'exercice aux correcteurs.");
+				
+				Event::dispatch(
+					Event::ELEVE_EXERCICE_ENVOI,
+					array(
+						'Exercice' => $this->Exercice
+					)
+				);
+				
+				$this->View->setMessage('info', "Votre exercice a bien été envoyé ! Vous serez averti par mail lorsqu'une offre vous sera faite.");
+				$this->redirectExercice();
+			}
 		}
 	}
 	

@@ -75,6 +75,7 @@ set_error_handler('Debug::errHandler', -1);
  * Lecture des données de la requête
  * 
  */
+$_GET['module'] = strtolower($_GET['module']);
 $ModulePath = OO2FS::modulePath($_GET['module']);
 $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
 $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
