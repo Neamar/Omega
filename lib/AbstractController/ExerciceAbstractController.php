@@ -182,7 +182,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					'_Creation' => 'NOW()',
 					'Texte' => $_POST['question'],
 					'Statut' => 'OK',
-					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID
+					'Membre' => $this->getMembre()->ID
 				);
 				
 				if(Sql::insert('Exercices_FAQ', $ToInsert))
@@ -192,7 +192,7 @@ abstract class ExerciceAbstractController extends AbstractController
 						'Eleve' => $this->Exercice->getEleve(),
 						'Correcteur' => $this->Exercice->getCorrecteur(),
 						'Question' => $_POST['question'],
-						'Membre' => $_SESSION[ucfirst($this->getModule())]
+						'Membre' => $this->getMembre()
 					);
 					
 					Event::dispatch(Event::MEMBRE_FAQ_QUESTION, $Params);
@@ -229,7 +229,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					'_Creation' => 'NOW()',
 					'Texte' => $_POST['reponse'],
 					'Statut' => 'OK',
-					'Membre' => $_SESSION[ucfirst($this->getModule())]->ID,
+					'Membre' => $this->getMembre()->ID,
 					'Parent' => $_POST['question']
 				);
 				
@@ -241,7 +241,7 @@ abstract class ExerciceAbstractController extends AbstractController
 						'Correcteur' => $this->Exercice->getCorrecteur(),
 						'Question' => Sql::singleColumn('SELECT Texte FROM Exercices_FAQ WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '" AND ID=' . $_POST['question'] . ' AND ISNULL(Parent)', 'Texte'),
 						'Reponse' => $_POST['reponse'],
-						'Membre' => $_SESSION[ucfirst($this->getModule())]
+						'Membre' => $this->getMembre()
 					);
 					
 					Event::dispatch(Event::MEMBRE_FAQ_REPONSE, $Params);

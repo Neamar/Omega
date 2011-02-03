@@ -148,6 +148,37 @@ abstract class AbstractController
 	}
 	
 	/**
+	 * Renvoie le membre actuellement connecté sur le module en cours.
+	 * Une exception est lancée si le membre n'est pas défini à cet endroit.
+	 * 
+	 * @throws Exception le membre n'existe pas
+	 * 
+	 * @return Membre le membre actuellement connecté
+	 */
+	public function getMembre()
+	{
+		$Cle = $this->getMembreIndex();
+		if(!isset($_SESSION[$Cle]) || !$_SESSION[$Cle] instanceOf Membre)
+		{
+			throw new Exception("Le membre n'est pas disponible !");
+			return null;
+		}
+		else
+		{
+			return $_SESSION[$Cle];
+		}
+	}
+	
+	/**
+	 * Renvoie l'index théorique qu'aurait le membre dans $_SESSION s'il était connecté.
+	 * Notez qu'il peut être connecté ou non, cette fonctione ne renvoie que la clé théorique.
+	 */
+	public function getMembreIndex()
+	{
+		return ucfirst($this->getModule());
+	}
+	
+	/**
 	 * Calcule le fil d'Ariane.
 	 * 
 	 * @return array le fil calculé

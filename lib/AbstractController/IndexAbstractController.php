@@ -40,7 +40,7 @@ abstract class IndexAbstractController extends AbstractController
 		 * Le membre qui demande la désinscription.
 		 * @var Membre
 		 */
-		$this->View->Membre = $_SESSION[ucfirst($this->getModule())];
+		$this->View->Membre = $this->getMembre();
 		
 		if(isset($_POST['desinscription-membre']))
 		{
@@ -59,7 +59,7 @@ abstract class IndexAbstractController extends AbstractController
 			}
 			else
 			{
-				unset($_SESSION[ucfirst($this->getModule())]);
+				unset($_SESSION[$this->getMembreIndex()]);
 				
 				$this->View->setMessage(
 					'ok',
@@ -87,7 +87,7 @@ abstract class IndexAbstractController extends AbstractController
 		
 		//Récupérer un mot de passe alors qu'on est connecté ?
 		//WTF ?
-		if(isset($_SESSION[ucfirst($this->getModule())]))
+		if(isset($_SESSION[$this->getMembreIndex()]))
 		{
 			$this->redirect('/' . $this->getModule());
 		}
