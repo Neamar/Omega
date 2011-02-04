@@ -33,7 +33,7 @@ background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll re
 height:202px;
 }
 
-ul, p, h1 {margin:0; padding:0; list-style-type:none;}
+ul, p {margin:0; padding:0; list-style-type:none;}
 a { text-decoration: none; color: #666;}
 a:visited {} 
 a:hover, a:focus, a:active { text-decoration: none;} 
@@ -49,15 +49,6 @@ strong { font-weight: bold; }
 width:1000px;
 margin:auto;
 }
-.content-base {
-width:1000px;
-margin:auto;
-background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
-padding-bottom:60px;
-}
-	section {
-	padding: 0 35px;
-	}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
@@ -162,7 +153,7 @@ width:1000px;
 /*Lien de retour*/
 #ariane .see-link {
 float:right;
-padding-right:65px;
+padding-right:70px;
 }
 	#ariane .see-link a{
 	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
@@ -266,10 +257,47 @@ padding:0 35px;
 		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 		}
 
-
-.message .doc-box-link {
+.message .doc-box-link a{
 position:absolute;
 bottom:-15px;
 right:20px;
 display:inline-block;
+padding:0 5px;
+	color:#fff;
+	text-shadow: 1px 1px 0px #921008;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	border-radius: 5px;	
+outline-offset: -2px;
+-moz-box-shadow: inset 0px 0px 7px #943c31;
+box-shadow: inset 0px 0px 7px #943c31;	
+	background: #b43725 url("/public/css/images/message-doc-box-link-a-bg.png") repeat-x top;
+	-o-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;	
+	/* Internet Explorer */
+	*background: #b43725;
+	background: #b43725\0/;
+	filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#FFd74d38, endColorstr=#FFb43725);
+	 
+@media all and (min-width: 0px) {
+	/* Navigateurs récents */
+	background-image: -moz-linear-gradient(
+	top,
+	#d74d38,
+	#b43725;
+);
+}
+.message .doc-box-link a:hover {
+	*background: #d74d38;
+	background: #d74d38\0/;
+	
+@media all and (min-width: 0px) {
+	/* Navigateurs récents */
+	background-image: -moz-linear-gradient(
+	top,
+	#b43725,
+	#d74d38
+);
 }
