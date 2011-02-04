@@ -19,11 +19,32 @@ color:#1eaed2;
 	background:url('/public/css/images/top-c-correcteur.png') top scroll no-repeat; /*neutre*/
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*-------------------------------------------------------- 1. Menu/logo -----------------------------------------------------------------------*/
+/*-------------------------------------------------------- 2. Menu/logo -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #logo #section_logo a#a_logo {
 	background:url('/public/css/images/logo-cor.png') top left scroll no-repeat; /*image*/
 }
+
+	#logo-liens ul li a:hover {
+	color:#fff;
+	text-shadow:1px 1px 0px #1389ff;
+	background:url('/public/css/images/menu_top-c-l.png') top left scroll no-repeat;
+	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+	/*#logo-liens:before {
+	position:absolute;
+	content: "";
+	top:0;
+	height:14px;
+	width:25px;
+	background: url('/public/css/images/index/menu-top.png') top left scroll no-repeat;
+	}*/
+			
+		#logo-liens ul li a:hover span {
+		height:33px;
+		display:block;
+		background:url('/public/css/images/menu_top-c-r.png') top right scroll no-repeat;
+		cursor:pointer;
+		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 2. Ariane --------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

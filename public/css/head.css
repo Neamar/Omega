@@ -256,7 +256,7 @@ padding:0 35px;
 		height:13px;
 		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 		}
-
+/*message droite*/
 .message .doc-box-link a{
 position:absolute;
 bottom:-15px;
@@ -290,14 +290,5 @@ box-shadow: inset 0px 0px 7px #943c31;
 );
 }
 .message .doc-box-link a:hover {
-	*background: #d74d38;
-	background: #d74d38\0/;
-	
-@media all and (min-width: 0px) {
-	/* Navigateurs récents */
-	background-image: -moz-linear-gradient(
-	top,
-	#b43725,
-	#d74d38
-);
+
 }
