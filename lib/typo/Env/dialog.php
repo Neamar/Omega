@@ -1,5 +1,5 @@
 <?php
-$Scenes = explode("\n",$envContent);
+$Scenes = explode(PHP_EOL,$envContent);
 
 $envContent='<div class="dialogue">';
 

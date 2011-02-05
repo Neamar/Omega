@@ -352,21 +352,21 @@ class View
 	 */
 	public function renderHead()
 	{
-		$Head = '	<title>' . $this->getMeta('title') . '</title>' . "\n";
+		$Head = '	<title>' . $this->getMeta('title') . '</title>' . PHP_EOL;
 
 		foreach($this->Metas['meta'] as $Meta=> $Value)
 		{
-			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . "\n";
+			$Head .= '	<meta name="' . $Meta . '" value="' . $Value . '" />' . PHP_EOL;
 		}
 
 		foreach($this->Metas['style'] as $URL=>$_)
 		{
-			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . "\n";
+			$Head .= '	<link href="' . $URL . '" rel="stylesheet" type="text/css" media="screen" />' . PHP_EOL;
 		}
 
 		foreach($this->Metas['script'] as $URL=>$_)
 		{
-			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . "\n";
+			$Head .= '	<script type="text/javascript" src="' . $URL . '"></script>' . PHP_EOL;
 		}
 
 		return $Head;
@@ -458,7 +458,7 @@ class View
 		if($this->issetMeta('seelink'))
 		{
 			$SeeLink = $this->getMeta('seelink');
-			$R .= '<div class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . "\n";
+			$R .= '<div class="see-link"><a href="' . $SeeLink['url'] . '">' . $SeeLink['caption'] . '</a></div>' . PHP_EOL;
 		}
 
 		$Ariane = array('/' => $this->Html_eDevoir('span')) + self::getMeta('breadcrumbs');
@@ -524,11 +524,11 @@ class View
 	 */
 	public function renderTitle()
 	{
-		$Title = '	<h1>' . $this->getMeta('title') . '</h1>' . "\n";
+		$Title = '	<h1>' . $this->getMeta('title') . '</h1>' . PHP_EOL;
 
 		if($this->issetMeta('intro'))
 		{
-			$Title .= '	<p class="intro">' . $this->getMeta('intro') . '</p>' . "\n";
+			$Title .= '	<p class="intro">' . $this->getMeta('intro') . '</p>' . PHP_EOL;
 		}
 
 		return $Title;

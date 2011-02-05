@@ -38,7 +38,7 @@ if($this->NbFiles > 0)
 		<p>Ne remplissez que les champs nécessaires, puis cliquez sur envoyer.</p>
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
 		<?php 
-		echo $SizeLimit . "\n";
+		echo $SizeLimit . PHP_EOL;
 for($i=0; $i < $this->NbFilesUpload; $i++)
 		{
 			echo $this->Form_input(
@@ -65,7 +65,7 @@ for($i=0; $i < $this->NbFilesUpload; $i++)
 		Sélectionnez vos fichiers un par un, puis cliquez sur Envoyer.</p>
 		
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-script">
-		<?php echo $SizeLimit . "\n";
+		<?php echo $SizeLimit . PHP_EOL;
 if($this->NbFilesUpload > 0)
 		{?>
 			<input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />

@@ -118,7 +118,7 @@ function Typo_Parse($texte)
 
 //Footnote : préparer dès maintenant.
 	if(isset(Typo::$Options[ALLOW_FOOTNOTE]))
-		$texte=Typo::preg_replace_wb('#\\\\footnote{(.+)}#isU','@[FN:$1' . "\n" . ']@',$texte);
+		$texte=Typo::preg_replace_wb('#\\\\footnote{(.+)}#isU','@[FN:$1' . PHP_EOL . ']@',$texte);
 
 
 
@@ -170,7 +170,7 @@ function Typo_Parse($texte)
 
 	if(count(Typo::$Footnotes)!=0)
 	{
-		$texte .='<hr class="footnote court" />' . "\n";
+		$texte .='<hr class="footnote court" />' . PHP_EOL;
 		$texte .='<ol>';
 		foreach(Typo::$Footnotes as $Nb=>$Note)
 		{
@@ -179,7 +179,7 @@ function Typo_Parse($texte)
 			$NoteMEF=Typo_parseLines($Note);
 			$NoteMEF=preg_replace('#^<p>(.+)<\/p>\s?$#','$1',$NoteMEF);
 
-			$texte .='	<li><a class="footnote" id="Ref-' . $Nb . '" href="#Note-' . $Nb . '"><sup>' . str_replace('%n',$Nb,Typo::$Options[ALLOW_FOOTNOTE]) . '</sup> <small>&uarr;</small></a> ' . $NoteMEF . '</li>' . "\n";
+			$texte .='	<li><a class="footnote" id="Ref-' . $Nb . '" href="#Note-' . $Nb . '"><sup>' . str_replace('%n',$Nb,Typo::$Options[ALLOW_FOOTNOTE]) . '</sup> <small>&uarr;</small></a> ' . $NoteMEF . '</li>' . PHP_EOL;
 		}
 		$texte .='</ol>';
 
@@ -202,7 +202,7 @@ function Typo_Parse($texte)
 function Typo_parseLines($texte)
 {
 	//Mise en paragraphe
-	$arrTexte=explode("\n",str_replace("\r",'',$texte));//Passer en mode "End Of Line \n", et couper le texte à chaque saut de ligne.
+	$arrTexte=explode(PHP_EOL,str_replace("\r",'',$texte));//Passer en mode "End Of Line \n", et couper le texte à chaque saut de ligne.
 	$NbLignes=count($arrTexte);
 	$texte='';
 	$parOpen=false;//Détermine si un paragraphe est ouvert.
@@ -224,14 +224,14 @@ function Typo_parseLines($texte)
 			}
 			if($listeOpen)
 			{
-				$texte .='</ul>' . "\n";;//Fermer la dernière liste.
+				$texte .='</ul>' . PHP_EOL;;//Fermer la dernière liste.
 				$listeOpen=false;
 			}
 			$envContent='';
 			$arrTexte[$i]=str_replace($Env[0],'',$arrTexte[$i]);
 			while(!preg_match('#^\s*\\\\end{' .$Env[3] . '}#',$arrTexte[$i]))
 			{
-				$envContent .= $arrTexte[$i] . "\n";
+				$envContent .= $arrTexte[$i] . PHP_EOL;
 				$i++;
 				if($i>=$NbLignes)
 				{
@@ -239,7 +239,7 @@ function Typo_parseLines($texte)
 					break;
 				}
 			}
-			if(substr($envContent,0,1)=="\n")
+			if(substr($envContent,0,1)==PHP_EOL)
 				$envContent=substr($envContent,1);
 
 			$File= substr(__FILE__,0,strrpos(__FILE__,'/')) . '/Env/' . $Env[3] . '.php';
@@ -247,7 +247,7 @@ function Typo_parseLines($texte)
 				include($File);
 			else
 				Typo::RaiseError('Utilisation d\'un environnement inconnu ("' . $Env[3] . '").');
-			$texte .= "\n" . $envContent . "\n";
+			$texte .= PHP_EOL . $envContent . PHP_EOL;
 			$envOpen=true;
 		}
 //Éléments de liste
@@ -259,15 +259,15 @@ function Typo_parseLines($texte)
 					FermeParagraphe($texte);
 				$parOpen=false;
 				$listeOpen=true;
-				$texte .='<ul>' . "\n";
+				$texte .='<ul>' . PHP_EOL;
 			}
-			$texte .='	<li>' . $ListItem[1] . '</li>' . "\n";
+			$texte .='	<li>' . $ListItem[1] . '</li>' . PHP_EOL;
 			$Ligne='';
 		}
 		elseif($listeOpen)
 		{//Pas d'item détécté, mais que l'on est quand même en environnement liste :
 			$listeOpen=false;
-			$texte .='</ul>' . "\n";
+			$texte .='</ul>' . PHP_EOL;
 		}
 
 //Paragraphes standards
@@ -292,7 +292,7 @@ function Typo_parseLines($texte)
 		{
 			if($parOpen)
 				FermeParagraphe($texte);
-			$texte .="\n" . '<p class="displaymath">' . $Formule[1] . '</p>' . "\n";
+			$texte .=PHP_EOL . '<p class="displaymath">' . $Formule[1] . '</p>' . PHP_EOL;
 			$parOpen=false;
 		}
 		elseif(isset(Typo::$Options[ALLOW_SECTIONING]) && Typo::preg_match_wb("#\\\\(sub|subsub)?section{(.+)}#sU",$Ligne,$titre))
@@ -306,7 +306,7 @@ function Typo_parseLines($texte)
 				$texte .='<h3>' . $titre[2] . '</h3>';
 			elseif($titre[1]=='subsub')
 				$texte .='<h4>' . $titre[2] . '</h4>';
-			$texte .= "\n";
+			$texte .= PHP_EOL;
 			$parOpen=false;
 		}
 		else
@@ -323,7 +323,7 @@ function Typo_parseLines($texte)
 			}
 
 			if($parOpen)
-				$texte .=$Ligne . '<br />' . "\n";
+				$texte .=$Ligne . '<br />' . PHP_EOL;
 		}
 	}
 	//////////
@@ -332,7 +332,7 @@ function Typo_parseLines($texte)
 	if($parOpen)
 		FermeParagraphe($texte);//Fermer le dernier paragraphe.
 	if($listeOpen)
-		$texte .='</ul>' . "\n";;//Fermer la dernière liste.
+		$texte .='</ul>' . PHP_EOL;;//Fermer la dernière liste.
 
 	if(preg_match('#\\\\(.+)(\\[|{)#',$texte,$Match))
 		Typo::RaiseError('Attention, une balise inconnue (ou mal utilisée) a été trouvée : <strong>' . $Match[0] . '</strong>.');

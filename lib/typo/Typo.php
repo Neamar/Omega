@@ -172,7 +172,7 @@ class Typo
 	//Parsage linéaire, c-à-d que toutes les balises HTML sons supprimées. Seul reste le texte et les entités HTML.
 	public static function parseLinear($ShowWarning=false)
 	{//Retourne le texte sans les balises entourantes.
-		return str_replace("\n",'',preg_replace('#<([A-Z][A-Z0-9]*)\b[^>]*>(.*)</\1>#Ui','$2',self::Parse()));
+		return str_replace(PHP_EOL,'',preg_replace('#<([A-Z][A-Z0-9]*)\b[^>]*>(.*)</\1>#Ui','$2',self::Parse()));
 	}
 
 	//Créer un IDE pour la modification du texte.
@@ -208,7 +208,7 @@ class Typo
 		$Caption=str_replace('%n',$NbFootNote,Typo::$Options[ALLOW_FOOTNOTE]);//Récupérer le style d'affichage du footnote.
 		$Partie[1]=str_replace('"','\'',preg_replace('#\<([^\<]+)\>#','',$Partie[1]));
 		$Partie[1]=preg_replace('#\[@=INTERNAL-(.+)-(.+)\]#iU','[cliquez pour voir]',$Partie[1]);
-		return '<sup><a class="footnote" id="Note-' . $NbFootNote . $Identifier . '" href="#Ref-' . $NbFootNote . '" title="' . str_replace(array("\n",'\\'),'',$Partie[1]) .'">' . $Caption . '</a></sup>';
+		return '<sup><a class="footnote" id="Note-' . $NbFootNote . $Identifier . '" href="#Ref-' . $NbFootNote . '" title="' . str_replace(array(PHP_EOL,'\\'),'',$Partie[1]) .'">' . $Caption . '</a></sup>';
 	}
 
 	//Gestionnaire des chiffres.

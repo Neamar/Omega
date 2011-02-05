@@ -2,6 +2,7 @@ Ajouter une coloration syntaxique pour le LaTeX.
 Enregistrer les différentes versions du fichier aperçu
 Afficher le contenu du PDF en aperçu
 Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
+Upload AJAX
 
 HTML5 Forms :
 - Passer les sliders en véritables sliders [type=range]

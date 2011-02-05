@@ -1,4 +1,4 @@
 <?php
 //Environnement pour afficher du code.
-	$envContent='<pre>' . "\n" . $envContent . "\n" . '</pre>';
+	$envContent='<pre>' . PHP_EOL . $envContent . PHP_EOL . '</pre>';
 ?>

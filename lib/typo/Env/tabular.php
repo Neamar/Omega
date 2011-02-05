@@ -10,7 +10,7 @@ $Body=array();
 
 $StructureActuelle=&$Body;
 
-$Lignes=explode("\n",$envContent);
+$Lignes=explode(PHP_EOL,$envContent);
 $LigneActuelle='';
 foreach($Lignes as $ligne)
 {
@@ -42,7 +42,7 @@ foreach($Lignes as $ligne)
 	}
 	elseif($ligne!='')
 		//Ligne de tableau �tal�e sur plusieurs lignes de code
-		$LigneActuelle .=$ligne . "\n";
+		$LigneActuelle .=$ligne . PHP_EOL;
 }
 //La derni�re ligne
 if($LigneActuelle !='')
@@ -59,18 +59,18 @@ unset($Lignes);
 $Table=array('head'=>&$Head,'foot'=>&$Foot,'body'=>&$Body);
 $CellType=array('head' => 'th','foot' => 'th','body' => 'td');
 
-$envContent='<table>' . "\n";
+$envContent='<table>' . PHP_EOL;
 if($Caption!='')
-	$envContent .='	<caption>' . $Caption . '</caption>' . "\n";
+	$envContent .='	<caption>' . $Caption . '</caption>' . PHP_EOL;
 
 foreach($Table as $Categorie=>$Data)
 {
 	if(count($Data)!=0)
 	{
-		$envContent .= '	<t' . $Categorie . '>' . "\n";
+		$envContent .= '	<t' . $Categorie . '>' . PHP_EOL;
 		foreach($Data as $Row)
 		{
-			$envContent .= '		<tr>' . "\n";
+			$envContent .= '		<tr>' . PHP_EOL;
 			$ID=0;
 			foreach($Row as $Column)
 			{
@@ -81,14 +81,14 @@ foreach($Table as $Categorie=>$Data)
 				$ID++;
 
 				$Column = trim($Column);
-				if(strpos(substr($Column,0,-1),"\n")!==false)//pas besoin d'avoir des �l�ments blocks.
+				if(strpos(substr($Column,0,-1),PHP_EOL)!==false)//pas besoin d'avoir des �l�ments blocks.
 					$Column=Typo_parseLines($Column);
 
-				$envContent .= '			<' . $CellType[$Categorie] . $Class . '>' . $Column . '</' . $CellType[$Categorie] . '>' . "\n";
+				$envContent .= '			<' . $CellType[$Categorie] . $Class . '>' . $Column . '</' . $CellType[$Categorie] . '>' . PHP_EOL;
 			}
-			$envContent .= '		</tr>' . "\n";
+			$envContent .= '		</tr>' . PHP_EOL;
 		}
-		$envContent .= '	</t' . $Categorie . '>' . "\n";
+		$envContent .= '	</t' . $Categorie . '>' . PHP_EOL;
 	}
 }
-$envContent.='</table>' . "\n";
+$envContent.='</table>' . PHP_EOL;

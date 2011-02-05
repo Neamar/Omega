@@ -110,7 +110,7 @@ class Event
 			$Auteur = '-----';
 		}
 
-		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'], 15) . '	' . str_pad($Auteur, 20) . '	' . $Event . "\n";
+		$Ligne = date('H\hi\ms') . '	' . str_pad($_SERVER['REMOTE_ADDR'], 15) . '	' . str_pad($Auteur, 20) . '	' . $Event . PHP_EOL;
 		
 		$f = fopen(DATA_PATH . '/logs/' . date('Y-m-d') . '.log', 'a');
 		fputs($f, $Ligne);

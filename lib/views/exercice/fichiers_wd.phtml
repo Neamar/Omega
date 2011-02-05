@@ -7,7 +7,7 @@ echo $this->Exercice_infos($this->Exercice, $this->Type);
 
 foreach($this->Fichiers as $URL => $Infos)
 {
-	echo '<p class="fichier"><span>' . $Infos['NomUpload'] . '</span><br />' . "\n";
+	echo '<p class="fichier"><span>' . $Infos['NomUpload'] . '</span><br />' . PHP_EOL;
 	
 	$Extension = Util::extension($URL);
 	if(in_array($Extension, $Images))
