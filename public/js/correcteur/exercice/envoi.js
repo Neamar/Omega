@@ -2,22 +2,43 @@ var IsCompiling = false;
 var NbPages = 0;
 var Tabs;
 var Modal;
+var Historique;
 
 //Mise en onglets et préparation des messages et des liens comiler.
 $(function()
 {
 	//Mettre en onglets
 	Tabs = $("#tabs").tabs();
-	//Préparer les messages modaux
-	Modal = $('#modal').dialog({ autoOpen: false, modal:true, buttons: {
-		Ok: function() {
-			$( this ).dialog( "close" );
-		}
-	}
- });
 	
+	//Préparer les messages modaux
+	Modal = $('#modal').dialog({
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			OK: function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+	
+	Historique = $('#historique').change(function()
+	{
+		if(confirm('Voulez-vous vraiment remplacer votre texte actuel par la révision du ' + this.value + ' ?'))
+		{
+			console.log('ok');
+		}
+	});
+	
+	
+	if(Historique.child('option').length == 0)
+	{
+		Tabs.tabs('disable', 'apercu-historique');
+	}
+			
 	//Faire en sorte que les liens .compiler compilent.
-	$('.compiler').click(function(){$('#apercu-exercice').click();});
+	$('.compiler').click(function(){
+		$('#apercu-exercice').click();
+	});
 });
 
 //Gestion de l'éditeur
@@ -48,10 +69,11 @@ $(function()
 		Modal.html('<p>Veuillez patienter pendant la compilation du document...</p>')
 			.dialog('open')
 			.bind("dialogbeforeclose", function(){return !IsCompiling;});
+		var Texte = editor.getCode();
 		
 		$.post(
 				CompilationURL,
-				{texte:editor.getCode()},
+				{texte:Texte},
 				function(data)
 				{
 					IsCompiling = false;
@@ -78,19 +100,22 @@ $(function()
 						//Compilation ok 
 						Modal.dialog('close');
 						
+						//Mettre à jour les onglets
 						Tabs.tabs('enable', 'envoi-apercu')
+							.tabs('enable', 'apercu-historique')
 							.tabs('select', 'envoi-apercu');
-						
 						$('a[href=#envoi-log]').css('color', 'green');
 						
+						//Récupérer le nombre de pages.
 						NbPages = data.match(/pdf \(([0-9]+) pages?,/)[1];
 						R = '<p class="pager">';
 						for(var i = 1; i <= NbPages; i++)
 						{
-							R += '<a href="#" data-page="' + i + '">' + i + '</a> '
+							R += '<a href="#" data-page="' + i + '">' + i + '</a> ';
 						}
 						R += '</p>';
 						
+						//Mettre à jour l'onglet aperçu
 						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(1) + '</p>' + R);
 						$('#envoi-apercu .pager a').click(function()
 						{
@@ -98,6 +123,10 @@ $(function()
 							return false;
 						});
 						
+						//Mettre à jour l'onglet historique
+						Revision = data.match(/Révision #([0-9]+)\n/)[1];
+						var Now = new Date();
+						$('#historique').prepend('<option value="' + Revision + '">' + Now.getHours() + ':' + Now.getMinutes() + '(' + Texte.length + ' caractères)</option>');
 					}
 				}
 		);

@@ -290,8 +290,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					$this->redirect('/correcteur/exercice/');					
 				}
 			}
-
 		}
+
+		$this->View->Historique = Sql::queryAssoc(
+			'SELECT
+				ID,
+				CONCAT(
+					DATE_FORMAT(Date,"%d/%c/%y à %H:%m"),
+					" (",
+					Longueur,
+					" caractères)"
+				) AS Caption
+			FROM Exercices_Corriges
+			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
+			ORDER BY ID DESC',
+			'ID',
+			'Caption');
 	}
 	
 	/**
@@ -303,6 +317,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['texte']))
 		{
+			$ToInsert = array(
+				'Exercice' => $this->Exercice->ID,
+				'_Date' => 'NOW()',
+				'Contenu' => $_POST['texte'],
+				'Longueur' => mb_strlen($_POST['texte'], 'utf-8')
+			);
+			Sql::insert('Exercices_Corriges', $ToInsert);
+			$this->View->ID = Sql::lastId();
+			//exit(mysql_error());
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = 'preview';
 

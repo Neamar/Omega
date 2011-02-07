@@ -229,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
   `Exercice` int(11) NOT NULL,
   `Correcteur` int(11) NOT NULL,
   `Action` enum('ENCHERE','SIGNALEMENT') NOT NULL,
+  `Longueur` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Correcteur` (`Correcteur`),
   KEY `Exercice` (`Exercice`)

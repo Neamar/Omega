@@ -14,6 +14,7 @@ echo $this->Html_list($Rappels);
 		<li><a href="#envoi-texte">Source TeX</a></li>
 		<li><a href="#envoi-apercu">Aperçu</a></li>
 		<li><a href="#envoi-log">Console</a></li>
+		<li><a href="#envoi-historique">Historique</a></li>
 	</ul>
 	<div id="envoi-texte">
 		<form id="form_envoi-exercice" method="post" action="">
@@ -44,6 +45,15 @@ echo $this->Html_list($Rappels);
 		Aucune information disponible pour l'instant.
 		<a href="#" class="compiler">Prévisualiser maintenant</a>.
 		</pre>
+	</div>
+	<div id="envoi-historique">
+		<p>Besoin de récupérer les anciennes versions de votre travail ? Tout est sauvegardé ici !</p>
+		<form>
+			<?php 
+			echo $this->Form_selectLabelBr('historique', 'Liste des sauvegardes', $this->Historique);
+			?>
+		</form>
+		<p>À chaque fois que vous prévisualisez votre document, le texte est enregistré pour vous permettre de le consulter à nouveau si nécessaire.</p>
 	</div>
 </div>
 
