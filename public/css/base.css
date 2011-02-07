@@ -16,3 +16,16 @@ Version : Pour la deuxième partie - ext
 #content ul {margin:0; padding:0; list-style-type: circle; list-style-position:inside;}
 #content a { text-decoration: none; color: #424242;}
 #content a:hover { text-decoration: underline; color:#666;} 
+h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.content-base {
+width:1000px;
+margin:auto;
+background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
+padding-bottom:60px;
+}
+	section {
+	padding: 0 35px;
+	}

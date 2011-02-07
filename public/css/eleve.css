@@ -38,11 +38,8 @@ color:#d29d1e;
 		#logo-liens ul li a:hover span {
 		height:33px;
 		display:block;
-		padding-right:15px;
 		background:url('/public/css/images/menu_top-e-r.png') top right scroll no-repeat;
-		}
-		#logo-liens ul li a span {
-		padding-right:15px;
+		cursor:pointer;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 3. Ariane --------------------------------------------------------------------------*/
@@ -51,7 +48,7 @@ color:#d29d1e;
 color:#996600;
 }
 	#ariane .see-link a:hover{
-	background:url('/public/css/images/see-link.png') top left scroll no-repeat; /*image*/
+	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
 	background-position:0px -18px;
 	}
 	
