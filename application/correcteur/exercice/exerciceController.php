@@ -294,6 +294,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 	}
 	
+	/**
+	 * Compile un PDF d'aperçu, et renvoie la sortie console.
+	 */
 	public function _compilationActionWd()
 	{
 		$this->canAccess(array('EN_COURS'));
@@ -317,6 +320,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			$this->View->Out = 'Appel incorrect.';
 		}
 	}
+	
+
 	
 	/**
 	 * Chat de l'exercice
@@ -398,7 +403,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	protected function compileTex($URL)
 	{
 		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
-		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL), $Return, $Code);
+		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
+		
+		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
 		$Erreurs = array();
 		foreach($Return as &$Line)
 		{

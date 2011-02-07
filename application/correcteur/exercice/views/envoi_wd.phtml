@@ -23,7 +23,7 @@ echo $this->Html_list($Rappels);
 			'Votre texte',
 			array(
 				'required' => 'required',
-				'style' => 'height:720px;',
+				'style' => 'height:500px;',
 				'value' => '\maketitle
 \LaTeX{} is a document preparation system for the \TeX{} typesetting program. It offers programmable desktop publishing',
 			)
@@ -36,6 +36,8 @@ echo $this->Html_list($Rappels);
 		</form>
 	</div>
 	<div id="envoi-apercu">
+		<p>Aucune information disponible pour l'instant.
+		<a href="#" class="compiler">Prévisualiser maintenant</a>.</p>
 	</div>
 	<div id="envoi-log">
 		<pre id="pre_envoi-log">
@@ -52,3 +54,11 @@ echo $this->Exercice($this->Exercice);
 <!-- Texte affiché pendant la compilation -->
 <div id="modal" title="Information">
 </div>
+
+<script type="text/javascript">
+var Hash = "<?php echo $this->Exercice->Hash;?>";
+var LongHash = "<?php echo $this->Exercice->LongHash;?>";
+var CompilationURL = "/correcteur/exercice/_compilation/<?php echo $this->Exercice->Hash;?>";
+var PageURL = "/correcteur/exercice/_preview/<?php echo $this->Exercice->Hash;?>/page/__PAGE__/width/__LARGEUR__";
+var PdfURL = "/public/exercices/<?php echo $this->Exercice->LongHash;?>/Corrige/preview.pdf";
+</script>
