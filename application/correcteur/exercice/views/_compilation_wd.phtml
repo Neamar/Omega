@@ -1,3 +1,11 @@
-<?php 
-echo $this->Out;
+<?php
+//Échapper la base
+$Out = htmlspecialchars($this->Out);
+
+//Mettre les erreurs en rouge
+$Out = preg_replace("`(^|\n)! (.+)(\n|$)`sU", '$1! <span style="color:red">$2</span>$3', $Out);
+
+//Rendre les numéros de lignes cliquables
+$Out = preg_replace("`l\.([0-9]+) `", '<a href="#line-$1" class="line-jump">l.$1</a> ', $Out);
+echo $Out;
 ?>

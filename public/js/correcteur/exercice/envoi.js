@@ -1,4 +1,5 @@
 var IsCompiling = false;
+var NbPages = 0;
 var Tabs;
 var Modal;
 
@@ -44,7 +45,7 @@ $(function()
 	$('#apercu-exercice').click(function()
 	{
 		IsCompiling = true;
-		Modal.html('<p>Veuillez patienter pendant la compilation du document...')
+		Modal.html('<p>Veuillez patienter pendant la compilation du document...</p>')
 			.dialog('open')
 			.bind("dialogbeforeclose", function(){return !IsCompiling;});
 		
@@ -55,15 +56,26 @@ $(function()
 				{
 					IsCompiling = false;
 					$('#pre_envoi-log').html(data);
+					
+					//Les liens vers des numéros de ligne.
+					$('#pre_envoi-log a.line-jump').click(function()
+					{
+						Tabs.tabs('select', 'envoi-texte');
+						editor.focus();
+						editor.jumpToLine(this.href.replace('line-',''));
+					});
+					
 					if(data.match('color:red'))
 					{
+						//Échec de compilation. Donner le focus à la console.
 						Tabs.tabs('select', 'envoi-log')
 							.tabs('disable', 'envoi-apercu');
 						$('a[href=#envoi-log]').css('color', 'red');
-						Modal.html('Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet « Console » qui vient de s\'afficher (lignes en rouge).');
+						Modal.html('<p>Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet « Console » qui vient de s\'afficher (lignes en rouge).</p>');
 					}
 					else
 					{
+						//Compilation ok 
 						Modal.dialog('close');
 						
 						Tabs.tabs('enable', 'envoi-apercu')
@@ -71,7 +83,20 @@ $(function()
 						
 						$('a[href=#envoi-log]').css('color', 'black');
 						
-						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p><p class="pdf-image">' + pageImg(1) + '</p>');
+						NbPages = data.match(/pdf \(([0-9]+) pages?,/)[1];
+						R = '<p class="pager">';
+						for(var i = 1; i <= NbPages; i++)
+						{
+							R += '<a href="#" data-page="' + i + '">' + i + '</a> '
+						}
+						R += '</p>';
+						
+						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(1) + '</p>' + R);
+						$('#envoi-apercu .pager a').click(function()
+						{
+							$('#pdf-image').html(pageImg($(this).data('page')));
+							return false;
+						});
 						
 					}
 				}

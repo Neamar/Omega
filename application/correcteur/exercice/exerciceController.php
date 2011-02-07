@@ -435,13 +435,11 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
 		$Erreurs = array();
-		foreach($Return as &$Line)
+		foreach($Return as $Line)
 		{
-			$Line = htmlspecialchars($Line);
 			if(isset($Line[0]) && $Line[0] == '!')
 			{
 				$Erreurs[] = substr($Line, 2);
-				$Line = '<span style="color:red">' . $Line . '</span>';
 			}
 		}
 		
