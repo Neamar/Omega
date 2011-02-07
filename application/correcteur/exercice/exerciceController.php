@@ -321,7 +321,35 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 	}
 	
+	public function _previewActionWd()
+	{
+		if(!isset($this->Data['page']) || !is_numeric($this->Data['page']))
+		{
+			exit('Page mal spécifiée.');
+		}
+		elseif(!isset($this->Data['width']) || !is_numeric($this->Data['width']))
+		{
+			exit('Largeur mal spécifiée.');
+		}
+		else
+		{
+			//Effectuer une translation de 1.
+			$Page = intval($this->Data['page']) - 1;
+			$Largeur = min(1000, intval($this->Data['width']));
+			$Filename = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.pdf';
+			$FilenameOut = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.png';
+			if(!is_file($Filename))
+			{
+				exit('Aperçu inexistant.');
+			}
+			else
+			{
+				exec('convert ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
 
+				$this->View->Img = $FilenameOut;
+			}
+		}
+	}
 	
 	/**
 	 * Chat de l'exercice

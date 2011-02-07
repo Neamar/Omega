@@ -25,7 +25,7 @@ $(function()
 	//Récupère une image de page de l'aperçu.
 	function pageImg(page)
 	{
-		return '<img src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', parseInt($('#envoi-apercu').width()) - 40) + '" alt="Image de la page ' + page + ' de l\'aperçu" />';
+		return '<img src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', parseInt($('#envoi-apercu').width()) - 40) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" />';
 	}
 	
 	//Utilisation de la coloration syntaxique
