@@ -240,6 +240,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet de rédiger le corrigé d'un exercice."
 		);
+		$this->View->addScript('/public/js/CodeMirror/codemirror.js');
+		$this->View->addScript();
 		
 		if(isset($_POST['envoi-exercice']))
 		{
