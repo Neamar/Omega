@@ -31,10 +31,12 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	}
 	
 	$Infos .= '</p><p class="image-preview">';
-	
-	$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
-	$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
-	$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+	if(!is_null($ExerciceDatas['Sujets']))
+	{
+		$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
+		$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
+		$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+	}
 	
 	$Infos .= '</p>';
 	

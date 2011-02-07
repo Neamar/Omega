@@ -33,7 +33,7 @@ class Sql
 	 */
 	public static function connect()
 	{
-		mysql_connect('localhost', 'root', '');
+		mysql_connect('localhost', 'eDevoir', 'sarl_omega');
 		mysql_select_db('work');
 		mysql_set_charset('utf8');
 	}

@@ -3,9 +3,12 @@ Enregistrer les différentes versions du fichier aperçu
 Afficher le contenu du PDF en aperçu
 Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
 Upload AJAX
+http://code.google.com/p/latex-lab/source/browse/#svn%2Ftrunk%2Flatexlab%2Feclipse%2Fwar%2Fcodemirror%2Fjs
+http://codemirror.net/manual.html
 
 HTML5 Forms :
 - Passer les sliders en véritables sliders [type=range]
+- input type=radio avec http://jqueryui.com/demos/button/#radio
 
 En production :
 - ajouter captcha à l'inscription élève
