@@ -344,6 +344,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 	}
 	
+	/**
+	 * Prévisualiser un document Tex.
+	 */
 	public function _previewActionWd()
 	{
 		if(!isset($this->Data['page']) || !is_numeric($this->Data['page']))
@@ -372,6 +375,25 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				$this->View->Img = $FilenameOut;
 			}
 		}
+	}
+	
+	/**
+	 * Renvoie une révision antérieure du document
+	 */
+	public function _revertActionWd()
+	{
+		if(!isset($this->Data['id']) || !is_numeric($this->Data['id']))
+		{
+			exit('Impossible d\'effectuer un revert vers cette révision.');
+		}
+
+		$this->View->Texte = Sql::singleColumn('
+			SELECT Contenu
+			FROM Exercices_Corriges
+			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
+			AND ID = "' . intval($this->Data['id']) . '"',
+			'Contenu'
+		);
 	}
 	
 	/**

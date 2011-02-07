@@ -7,6 +7,18 @@ var Historique;
 //Mise en onglets et préparation des messages et des liens comiler.
 $(function()
 {
+	//Utilisation de la coloration syntaxique
+	var editor = CodeMirror.fromTextArea("corrige", {
+		  parserfile: "parselatex.js",
+		  path: "/public/js/CodeMirror/",
+		  stylesheet: "/public/css/codeMirror/latexcolors.css",
+		  autoMatchParens: true,
+		  lineNumbers: true,
+		  //lineNumberDelay: 2000,
+		  indentUnit: 4,
+		  tabMode: 'shift'
+	});
+	
 	//Mettre en onglets
 	Tabs = $("#tabs").tabs();
 	
@@ -21,50 +33,48 @@ $(function()
 		}
 	});
 	
+	//Revert vers une ancienne version
 	Historique = $('#historique').change(function()
 	{
-		if(confirm('Voulez-vous vraiment remplacer votre texte actuel par la révision du ' + this.value + ' ?'))
+		if(confirm('Voulez-vous vraiment remplacer votre texte actuel par la révision du ' + Historique.find('option:selected').text() + ' ?'))
 		{
-			console.log('ok');
+			$.ajax({
+				url: RevertURL.replace('__ID__', this.value),
+				success: function(data){
+					Tabs.tabs('select', 'envoi-texte');
+					editor.setCode(data);
+				}
+			});
 		}
 	});
 	
-	
-	if(Historique.child('option').length == 0)
+	//Disabler l'onglet historique s'il est vide
+	if(Historique.find('option').length == 0)
 	{
 		Tabs.tabs('disable', 'apercu-historique');
 	}
 			
-	//Faire en sorte que les liens .compiler compilent.
+	//Faire en sorte que les liens .compiler lancent la compilation
 	$('.compiler').click(function(){
 		$('#apercu-exercice').click();
 	});
-});
 
-//Gestion de l'éditeur
-$(function()
-{
-	//Récupère une image de page de l'aperçu.
+	/**
+	 * Helper-function pour récupérer une image d'une des pages de l'aperçu.
+	 * 
+	 * @param int page le numéro de page à récupérer
+	 * 
+	 * @return string le code HTML de l'image représentant la page
+	 */
 	function pageImg(page)
 	{
 		return '<img src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', parseInt($('#envoi-apercu').width()) - 40) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" />';
 	}
 	
-	//Utilisation de la coloration syntaxique
-	var editor = CodeMirror.fromTextArea("corrige", {
-		  parserfile: "parselatex.js",
-		  path: "/public/js/CodeMirror/",
-		  stylesheet: "/public/css/codeMirror/latexcolors.css",
-		  autoMatchParens: true,
-		  lineNumbers: true,
-		  //lineNumberDelay: 2000,
-		  indentUnit: 4,
-		  tabMode: 'shift'
-	});
-	
-	//Interception du submit formulaire pour l'aperçu
+	//Clic sur le bouton aperçu
 	$('#apercu-exercice').click(function()
 	{
+		//Lancer la compilation en réucpérant le code et en affichant un message modal
 		IsCompiling = true;
 		Modal.html('<p>Veuillez patienter pendant la compilation du document...</p>')
 			.dialog('open')
@@ -77,6 +87,8 @@ $(function()
 				function(data)
 				{
 					IsCompiling = false;
+					
+					//Mettre à jout l'onglet console
 					$('#pre_envoi-log').html(data);
 					
 					//Les liens vers des numéros de ligne.
@@ -87,6 +99,7 @@ $(function()
 						editor.jumpToLine(this.href.replace('line-',''));
 					});
 					
+					//Détecter de façon très laide la présence d'erreurs
 					if(data.match('color:red'))
 					{
 						//Échec de compilation. Donner le focus à la console.
