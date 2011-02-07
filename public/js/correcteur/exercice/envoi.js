@@ -81,7 +81,7 @@ $(function()
 						Tabs.tabs('enable', 'envoi-apercu')
 							.tabs('select', 'envoi-apercu');
 						
-						$('a[href=#envoi-log]').css('color', 'black');
+						$('a[href=#envoi-log]').css('color', 'green');
 						
 						NbPages = data.match(/pdf \(([0-9]+) pages?,/)[1];
 						R = '<p class="pager">';
