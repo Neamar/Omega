@@ -16,7 +16,7 @@ echo $this->Form_inputLabelBr(
 	'section',
 	'Section (si nécessaire)',
 	array(
-		'placeholder'=>'S, ES, L...',
+		'placeholder' => 'S, ES, L...',
 		'value'=>$_SESSION['Eleve']->Section
 	)
 );
@@ -34,6 +34,7 @@ echo $this->Form_inputLabelBr(
 	array(
 		'placeholder' => 'DM de maths décembre',
 		'maxlength' => 50,
+		'required' => 'required'
 	)
 );
 
@@ -48,13 +49,14 @@ echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET')
 <p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu.<br />
 <?php
 $HeureData = array(
-	'type'=>'number',
+	'type' => 'number',
 	'min'=>0,
 	'max'=>23,
 	'step'=>1,
 	'maxlength'=>2,
-	'placeholder'=>'HH',
-	'size'=>2
+	'placeholder' => 'HH',
+	'size'=>2,
+	'required' => 'required'
 );
 
 //Rendu
@@ -64,7 +66,8 @@ echo $this->Form_inputLabel(
 	'Date de rendu',
 	array(
 		'value'=> date('d/m/Y', time()+3600*24*7),
-		'placeholder'=>'JJ/MM/AAAA'
+		'placeholder' => 'JJ/MM/AAAA',
+		'required' => 'required'
 	)
 );
 echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_rendu');
@@ -80,7 +83,9 @@ echo $this->Form_inputLabel(
 	'Date d\'annulation',
 	array(
 		'value'=> date('d/m/Y', time()+3600*24*3),
-		'placeholder'=>'JJ/MM/AAAA'
+		'placeholder' => 'JJ/MM/AAAA',
+		'required' => 'required',
+		'pattern' => '[0-3][0-9]/[0-1][0-9]/201[1-9]'
 	)
 );
 echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
@@ -90,7 +95,7 @@ echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->D
 <h3>Informations complémentaires</h3>
 <?php
 echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires');
-echo $this->Doc_input('eleve', 'champ_info') . "\n";
+echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 ?>
 
 <h3>Options avancées</h3>

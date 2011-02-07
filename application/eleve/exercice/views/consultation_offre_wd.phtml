@@ -9,8 +9,7 @@ En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Ench
 if(!empty($this->Exercice->InfosCorrecteur))
 {
 	echo '<p>Le correcteur fait passer le message suivant :</p>
-	<p class="infos-correcteur">
-		' . $this->Exercice->InfosCorrecteur . '
+	' . $this->Exercice_infos($this->Exercice, 'Correcteur') . '
 	</p>';
 }?>
 

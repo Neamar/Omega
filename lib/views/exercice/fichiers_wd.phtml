@@ -1,0 +1,28 @@
+<div class="fichiers">
+<?php
+$Images = array('jpg', 'jpeg', 'png', 'gif');
+$Documents = array('pdf', 'doc', 'docx', 'odt');
+
+echo $this->Exercice_infos($this->Exercice, $this->Type);
+
+foreach($this->Fichiers as $URL => $Infos)
+{
+	echo '<p class="fichier"><span>' . $Infos['NomUpload'] . '</span><br />' . PHP_EOL;
+	
+	$Extension = Util::extension($URL);
+	if(in_array($Extension, $Images))
+	{
+		echo '<img src="/public/exercices/' . $this->Exercice->LongHash . $URL . '" alt="' . $this->Exercice->Titre . ', fichier ' . $Infos['NomUpload'] . '" class="fichier-sujet" />';
+	}
+	elseif(in_array($Extension, $Documents))
+	{
+		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode($URL) . '&embedded=true" width="80%" height="780" style="border: none;"></iframe>';
+	}
+	else
+	{
+		echo '<a href="' . $URL . '">Télécharger</a>.';
+	}
+	echo "\n</p>";
+}
+?>
+</div>

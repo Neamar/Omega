@@ -38,14 +38,14 @@ class OO2FS
 	*/
 	public static function modulePath($Module)
 	{
-		return APPLICATION_PATH . '/' . $Module . '/' . $_GET['module'] . 'Module.php';
+		return APPLICATION_PATH . '/' . $Module . '/' . $Module . 'Module.php';
 	}
-	
+
 	/**
 	 * Renvoie le chemin vers le ruban de haut de page du module.
-	 * 
+	 *
 	 * @param string $Module
-	 * 
+	 *
 	 * @return string /{$Module}/{$Module}Ribbon.php
 	 */
 	public static function ribbonPath($Module)
@@ -93,29 +93,29 @@ class OO2FS
 	{
 		return APPLICATION_PATH . '/' . $Module . '/' . $Controller . '/views/' . $View . (empty($Data)?'':'_wd') . '.phtml';
 	}
-	
+
 	/**
 	 * Renvoie le chemin vers une vue générique
-	 * 
+	 *
 	 * @param string $GenericView la vue générique
-	 * 
+	 *
 	 * @return  /lib/View/{$View}.phtml
 	 */
 	public static function genericViewPath($GenericView)
 	{
-		return LIB_PATH . '/View/' . $GenericView . '.phtml';
+		return LIB_PATH . '/views/' . $GenericView . '.phtml';
 	}
-	
+
 	/**
 	 * Renvoie le chemin vers un dossier d'évènements
-	 * 
+	 *
 	 * @param string $Event l'évènement
-	 * 
+	 *
 	 * @return  /lib/Event/{$Event}
 	 */
 	public static function eventPath($Event)
 	{
-		return LIB_PATH . '/Event/' . $Event;
+		return LIB_PATH . '/events/' . $Event;
 	}
 
 	/**
@@ -132,7 +132,7 @@ class OO2FS
 	{
 		return $View . 'Action' . (empty($Data)?'':'Wd');
 	}
-	
+
 	/**
 	* Récupérer le chemin vers une aide vue
 	*
@@ -142,7 +142,7 @@ class OO2FS
 	*/
 	public static function viewHelperPath($ViewHelper)
 	{
-		return LIB_PATH . '/ViewHelper/' . $ViewHelper . '.php';
+		return LIB_PATH . '/viewhelpers/' . $ViewHelper . '.php';
 	}
 
 }

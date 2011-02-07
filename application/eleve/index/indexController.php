@@ -166,7 +166,7 @@ class Eleve_IndexController extends IndexAbstractController
 		{
 			if($Eleve->Statut == 'EN_ATTENTE')
 			{
-				$Eleve->setAndSave(array('Statut'=>'OK'));
+				$Eleve->setAndSave(array('Statut' => 'OK'));
 			}
 			
 			$this->View->setMessage('info', "Votre compte est validé ! Vous pouvez maintenant vous connecter");

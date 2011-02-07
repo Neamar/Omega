@@ -8,9 +8,10 @@ echo $this->Form_inputLabelBr(
 	'email',
 	'Votre adresse mail',
 	array(
-		'type'=>'email',
-		'placeholder'=>'nom@fai.fr',
-		'value' => $_SESSION['Correcteur']->Mail
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+		'value' => $_SESSION['Correcteur']->Mail,
+		'required' => 'required'
 	)
 );
 
@@ -18,14 +19,14 @@ echo $this->Form_inputLabelBr(
 	'password',
 	'Votre mot de passe (laissez vide pour conserver le mot de passe actuel)',
 	array(
-		'type'=>'password',
+		'type' => 'password',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password_confirm',
 	'Confirmez votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
 	)
 );
 
@@ -35,6 +36,8 @@ echo $this->Form_inputLabel(
 	array(
 		'placeholder' => '06 00 00 00 00',
 		'value' => $_SESSION['Correcteur']->Telephone,
+		'required' => 'required',
+		'pattern' => '^0[1-8]([-. ]?[0-9]{2}){4}$'
 	)
 ) . $this->Doc_inputBr('correcteur', 'champ_telephone');
 

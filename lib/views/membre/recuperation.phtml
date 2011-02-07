@@ -1,0 +1,17 @@
+<p>Pour votre sécurité, <?php echo $this->Html_eDevoir() ?> ne stocke pas les mots de passe en clair.<br />
+Cela signifie que nous ne pouvons pas vous renvoyer votre ancien mot de passe. En revanche, nous pouvons générer un nouveau mot de passe qui vous sera envoyé par mail.</p>
+
+<form id="form_recuperation-membre" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
+	array(
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+	)
+);
+echo $this->Form_submit('recuperation-membre', 'Générer un nouveau mot de passe pour mon compte');
+?>
+</form>

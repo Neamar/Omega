@@ -8,22 +8,25 @@ echo $this->Form_inputLabelBr(
 	'email',
 	'Votre adresse mail',
 	array(
-		'type'=>'email',
-		'placeholder'=>'nom@fai.fr',
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+		'required' => 'required',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password',
 	'Votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
+		'required' => 'required',
 	)
 );
 echo $this->Form_inputLabelBr(
 	'password_confirm',
 	'Confirmez votre mot de passe',
 	array(
-		'type'=>'password',
+		'type' => 'password',
+		'required' => 'required',
 	)
 );
 	
@@ -31,7 +34,8 @@ echo $this->Form_inputLabelBr(
 	'nom',
 	'Votre nom',
 	array(
-		'placeholder'=>'Dupont',
+		'placeholder' => 'Dupont',
+		'required' => 'required',
 	)
 );
 
@@ -39,7 +43,8 @@ echo $this->Form_inputLabelBr(
 	'prenom',
 	'Votre prénom',
 	array(
-		'placeholder'=>'Jean',
+		'placeholder' => 'Jean',
+		'required' => 'required',
 	)
 );
 
@@ -47,7 +52,10 @@ echo $this->Form_inputLabelBr(
 	'telephone',
 	'Votre numéro de téléphone',
 	array(
-		'placeholder'=>'06 00 00 00 00',
+		'type' => 'tel',
+		'placeholder' => '06 00 00 00 00',
+		'required' => 'required',
+		'pattern' => '^0[1-8]([-. ]?[0-9]{2}){4}$'
 	)
 );
 
@@ -55,7 +63,8 @@ echo $this->Form_inputLabel(
 	'cv',
 	'Votre CV (PDF uniquement)',
 	array(
-		'type'=>'file',
+		'type' => 'file',
+		'required' => 'required',
 	)
 ) . $this->Doc_inputBr('correcteur', 'pourquoi_cv');
 
@@ -70,7 +79,7 @@ echo $this->Form_inputLabel(
 	'siret',
 	'Votre numéro de SIRET',
 	array(
-		'placeholder'=>'000 000 000 00000',
+		'placeholder' => '000 000 000 00000',
 	)
 ) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
 ?>

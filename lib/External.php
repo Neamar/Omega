@@ -97,7 +97,7 @@ class External
 		$File = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::_templateReplace', $File);
 		
 		//Réucpérer ses composantes
-		$Items = explode("\n", $File, 2);
+		$Items = explode(PHP_EOL, $File, 2);
 		$subject = $Items[0];
 		$message = $Items[1];
 		

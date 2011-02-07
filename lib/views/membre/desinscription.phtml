@@ -1,0 +1,31 @@
+<p>Vous allez vous désinscrire.<br />
+Notez qu'il s'agit d'une action définitive, et que vous ne pourrez plus rouvrir de compte sous l'adresse <?php echo $this->Membre->Mail;?>.</p>
+
+<?php 
+if($this->Membre->getPoints() != 0)
+{
+	$Message = "J'accepte de perdre mes points. Me désinscrire.";
+	?>
+	<p class="important">Attention ! Il vous reste encore de l'argent. Si vous vous désinscrivez maintenant, cet argent sera <strong>perdu</strong> !<br />
+	Nous vous conseillons de <a href="/<?php echo $this->getController()->getModule() ?>/points/retrait">retirer les points</a> avant de vous désinscrire.
+	<?php
+}
+else
+{
+	$Message = "Me désinscrire d'eDevoir.";
+}
+?>
+
+<form id="form_desinscription-membre" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
+	array(
+		'type' => 'password',
+	)
+);
+echo $this->Form_submit('desinscription-membre', $Message);
+?>
+</form>

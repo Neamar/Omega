@@ -352,7 +352,7 @@ class dBug {
 		
 		//read xml file
 		if($bFile) {
-			while($data=str_replace("\n","",fread($fp,4096)))
+			while($data=str_replace(PHP_EOL,"",fread($fp,4096)))
 				$this->xmlParse($xml_parser,$data,feof($fp));
 		}
 		//if xml is not a file, attempt to read it as a string

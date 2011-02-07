@@ -160,12 +160,69 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				Event::dispatch(
 					Event::CORRECTEUR_EXERCICE_PROPOSITION,
 					array(
-						'Exercice' => $this->Exercice,
-						'Prix' => $_POST['prix'],
+						'Exercice' => $this->Exercice
 					)
 				);
 				
 				$this->View->setMessage('info', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
+				
+				//Gestion de l'auto-accept.
+				if(!empty($this->Exercice->AutoAccept))
+				{
+					$Eleve = $this->Exercice->getEleve();
+					$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
+					
+					//prendre le minimum entre le solde et la valeur indiquée.
+					$AutoAccept = min($Eleve->getPoints(), $this->Exercice->AutoAccept);
+					if($this->Exercice->Enchere <= $AutoAccept)
+					{
+						//Auto-acceptation.
+						Sql::start();
+						if(!$Eleve->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+						{
+							Event::log('CRITIQUE ! Fail sur autoaccept incohérent.', $Eleve);
+							Sql::rollback();
+							$this->View->setMessage('error', "Une erreur critique s'est produite, nous mettons tout en œuvre pour la corriger rapidement.");
+						}
+						else
+						{
+							//Créditer la banque pour valider les contraintes
+							Membre::getBanque()->credit($this->Exercice->Enchere, 'Stockage exercice', $this->Exercice);
+							
+							//Logger la bonne nouvelle
+							$this->Exercice->setStatus('EN_COURS', $Eleve, "Acceptation automatique de l'offre.");
+		
+							//Terminer la transaction
+							Sql::commit();
+							
+							//Dispatch de l'évènement ACCEPTATION
+							Event::dispatch(
+								Event::ELEVE_EXERCICE_ACCEPTATION_AUTOMATIQUE,
+								array(
+									'Exercice' => $this->Exercice
+								)
+							);
+							
+							$this->View->setMessage('info', 'Votre proposition a été automatiquement acceptée par l\'élève ; félicitations !');
+						}
+					}
+					else
+					{
+						$this->Exercice->cancelOffer($Eleve, "Refus automatique de l'offre");
+				
+						//Dispatch de l'évènement REFUS.
+						//Adjoindre le correcteur, qui n'est plus disponible sur l'exercice.
+						Event::dispatch(
+							Event::ELEVE_EXERCICE_REFUS_AUTOMATIQUE,
+							array(
+								'Exercice' => $this->Exercice,
+								'Correcteur' => $this->getMembre()
+							)
+						);
+						
+						$this->View->setMessage('warning', 'Votre proposition a été automatiquement refusée par l\'élève ; désolé !');
+					}
+				}
 				$this->redirect('/correcteur/');
 			}
 		}
@@ -183,34 +240,26 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet de rédiger le corrigé d'un exercice."
 		);
+		$this->View->addScript('/public/js/CodeMirror/codemirror.js');
+		$this->View->addScript();
+		$this->View->addStyle('/public/css/envoi.css');
 		
 		if(isset($_POST['envoi-exercice']))
 		{
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = 'head';
-			
-			//Le template LaTeX générique
-			$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
-			
-			//En déduire le contenu par remplacement :
-			$Remplacements = array(
-				'__TITRE__' => $this->Exercice->Titre,
-				'__CONTENU__' => $_POST['corrige']
-			);
-			$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
-			
+
 			//L'url du fichier Tex
 			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
-			file_put_contents($CorrigeURL, $Contenu);
 			
-			unset($Template, $Contenu);
+			$this->texFromTemplate($_POST['corrige'], $CorrigeURL);
 			
 			$Erreurs = $this->compileTex($CorrigeURL);
 			
-			if(!empty($Erreurs))
+			if(!$Erreurs['ok'])
 			{
 				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
-				$this->View->Erreurs = $Erreurs;
+				$this->View->Erreurs = $Erreurs['errors'];
 			}
 			else
 			{
@@ -242,6 +291,63 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				}
 			}
 
+		}
+	}
+	
+	/**
+	 * Compile un PDF d'aperçu, et renvoie la sortie console.
+	 */
+	public function _compilationActionWd()
+	{
+		$this->canAccess(array('EN_COURS'));
+		
+		if(isset($_POST['texte']))
+		{
+			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
+			$FileName = 'preview';
+
+			//L'url du fichier Tex
+			$PreviewURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
+			
+			$this->texFromTemplate($_POST['texte'], $PreviewURL);
+			
+			$Back = $this->compileTex($PreviewURL);
+			
+			$this->View->Out = str_replace(PATH, '~', implode("\n",$Back['output']));
+		}
+		else
+		{
+			$this->View->Out = 'Appel incorrect.';
+		}
+	}
+	
+	public function _previewActionWd()
+	{
+		if(!isset($this->Data['page']) || !is_numeric($this->Data['page']))
+		{
+			exit('Page mal spécifiée.');
+		}
+		elseif(!isset($this->Data['width']) || !is_numeric($this->Data['width']))
+		{
+			exit('Largeur mal spécifiée.');
+		}
+		else
+		{
+			//Effectuer une translation de 1.
+			$Page = intval($this->Data['page']) - 1;
+			$Largeur = min(1000, intval($this->Data['width']));
+			$Filename = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.pdf';
+			$FilenameOut = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.png';
+			if(!is_file($Filename))
+			{
+				exit('Aperçu inexistant.');
+			}
+			else
+			{
+				exec('convert ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
+
+				$this->View->Img = $FilenameOut;
+			}
 		}
 	}
 	
@@ -320,12 +426,14 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 * 
 	 * @param string $URL le fichier TeX à compiler.
 	 * 
-	 * @return array une liste des erreurs rencontrées (ou un tableau vide si succès)
+	 * @return array un tableau ; la clé output contient la liste des lignes renvoyées, la clé errors la liste des lignes d'erreurs, et la clé ok est un booléen indiquant le résultat de la compilation
 	 */
 	protected function compileTex($URL)
 	{
 		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
-		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL), $Return, $Code);
+		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
+		
+		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
 		$Erreurs = array();
 		foreach($Return as $Line)
 		{
@@ -335,6 +443,32 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			}
 		}
 		
-		return $Erreurs;
+		return array(
+			'errors' => $Erreurs,
+			'output' => $Return,
+			'ok' => empty($Erreurs),
+		);
+	}
+	
+	/**
+	 * Construit un document TeX à partir d'un fichier générique.
+	 * 
+	 * @param string $Texte le texte de l'environnement {document}
+	 * @param string $Fichier le contenu du fichier
+	 */
+	protected function texFromTemplate($Texte, $Fichier)
+	{
+		//Le template LaTeX générique
+		$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
+		
+		//En déduire le contenu par remplacement :
+		$Remplacements = array(
+			'__TITRE__' => $this->Exercice->Titre,
+			'__CONTENU__' => $Texte,
+		);
+		
+		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
+		
+		file_put_contents($Fichier, $Contenu);
 	}
 }

@@ -40,7 +40,7 @@ echo $this->Doc_box(
 	"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
 	Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
 );
-echo $SizeLimit . "\n";
+echo $SizeLimit . PHP_EOL;
 ?>
 <input type="file" name="fichiers[]" id="fichiers" accept="<?php echo EXTENSIONS ?>" maxlength="<?php echo $this->NbFilesUpload ?>" />
 

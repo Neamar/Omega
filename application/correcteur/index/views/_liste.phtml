@@ -4,10 +4,11 @@ $Datas = array();
 foreach($this->RawDatas as $Hash => $ExerciceDatas)
 {
 	//GROUP_CONCAT fait remonter un tuple null si aucun exercice n'est disponible.
-	if(empty($Hash))
+	//TODO : à tester et à supprimer
+	/*if(empty($Hash))
 	{
 		continue;
-	}
+	}*/
 	
 	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
 	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
@@ -30,10 +31,12 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	}
 	
 	$Infos .= '</p><p class="image-preview">';
-	
-	$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
-	$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
-	$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+	if(!is_null($ExerciceDatas['Sujets']))
+	{
+		$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
+		$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
+		$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+	}
 	
 	$Infos .= '</p>';
 	

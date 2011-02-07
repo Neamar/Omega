@@ -33,7 +33,7 @@ class Sql
 	 */
 	public static function connect()
 	{
-		mysql_connect('localhost', 'root', '');
+		mysql_connect('localhost', 'eDevoir', 'sarl_omega');
 		mysql_select_db('work');
 		mysql_set_charset('utf8');
 	}
@@ -234,7 +234,7 @@ class Sql
 	 * @param array $Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs seront échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
 	 * @return SQLResource le résultat de la requête.
 	 * @example
-	 *	$ToInsert = array('Reference'=>$ArticleID,'URL'=>'http://neamar.fr');
+	 *	$ToInsert = array('Reference'=>$ArticleID,'URL' => 'http://neamar.fr');
 	 *	SQL::insert('More',$ToInsert);
 	 */
 	public static function insert($Table,array $Valeurs)
@@ -278,14 +278,14 @@ class Sql
 	 * //Explicitation du _
 	 *
 	 * //Incorrect : le now() sera updaté sous la forme "NOW()" (guillemets compris, ce qui sera invalidé car la chaîne de caractères "NOW()" n'est pas de type DATE.
-	 * SQL::update('Propositions',$_POST['proposition'],array('Date'=>'NOW()');
+	 * SQL::update('Propositions',$_POST['proposition'],array('Date' => 'NOW()');
 	 *
 	 * //Correct : pour indiquer qu'il s'agit d'un appel à une fonction / expression, précédez votre clé d'un _ :
-	 * SQL::update('Propositions',$_POST['proposition'],array('_Date'=>'NOW()');
+	 * SQL::update('Propositions',$_POST['proposition'],array('_Date' => 'NOW()');
 	 * @example
 	 * //Explicitation du $And
 	 * //Petit "hack" pour mettre à jour un tuple dont on ne connaît pas l'ID :
-	 * SQL::update('Propositions',-1,array('Titre'=>'Lol'),'OR ID=(SELECT MAX(ID) FROM Propositions)'
+	 * SQL::update('Propositions',-1,array('Titre' => 'Lol'),'OR ID=(SELECT MAX(ID) FROM Propositions)'
 	 */
 	public static function update($Table,$ID, array $Valeurs,$And='',$Limit=1)
 	{

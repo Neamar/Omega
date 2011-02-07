@@ -1,0 +1,68 @@
+<?php 
+echo $this->Doc_box($this->getController()->getModule(), 'faq', 'Besoin d\'aide sur cette page ?');
+
+$AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__">Ajouter une réponse</a></p>';
+
+if($this->Ouvert)
+{
+?>
+
+<h2>Poster une nouvelle question</h2>
+<form id="form_faq-question-exercice" method="post" action="">
+<?php 
+echo $this->Form_textareaLabeLBr('question', 'Votre question', array('required' => 'required'));
+
+echo $this->Form_submit('faq-question-exercice', 'Envoyer cette question');
+?>
+</form>
+
+<?php 
+}//Fin if($this->Ouvert)
+?>
+
+<h2>Chat actuel</h2>
+<div class="texable">
+<?php 
+if(empty($this->Datas))
+{
+	?>
+	<p>Aucune question posée pour l'instant !</p>
+	<?php 
+}
+else
+{
+	$LastQuestion = null;
+	foreach($this->FAQ as $ID => $Datas)
+	{
+		if(empty($Datas['Parent']))
+		{
+			//Lien ajout réponse
+			if(!is_null($LastQuestion))
+			{
+				//Lien d'ajout de réponse à la question
+				echo str_replace('__data__', $LastQuestion, $AddReply);
+			}
+			
+			//QUESTION
+			?>
+			<h3 class="faq-question faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></h3>
+			<?php
+			$LastQuestion = $ID;
+		}
+		else
+		{
+			//RÉPONSE
+			?>
+			<p class="faq-reponse faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></p>		
+			<?php
+		}
+	}
+	
+	if(!is_null($LastQuestion))
+	{
+		//Lien d'ajout de réponse à la question
+		echo str_replace('__data__', $LastQuestion, $AddReply);
+	}
+}
+?>
+</div>

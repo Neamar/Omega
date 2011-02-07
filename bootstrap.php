@@ -1,7 +1,7 @@
 <?php
 /**
  * bootstrap.php - 26 oct. 2010
- * 
+ *
  * Fichier de base du site pour toutes les requêtes dynamiques.
  *
  * Fonctionnement d'une requête :
@@ -14,9 +14,9 @@
  * 	- cette méthode charge template.phtml :
  * 		- template.phtml construit la page en appelant les méthodes appropriées : renderRibbon, renderHead() de la vue
  * 		- template.phtml inclut le fichier de vue
- * 
+ *
  * PHP Version 5
- * 
+ *
  * @category  Default
  * @package   Root
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
@@ -31,7 +31,7 @@
 
 /**
  * Strict minimum à définir pour un site fonctionnel
- * 
+ *
  */
 
 $File = str_replace('\\', '/', __FILE__);
@@ -45,26 +45,26 @@ session_start();
 
 /**
  * Définition de l'autoload
- * 
+ *
  * @param string $ClassName la classe à charger dynamiquement.
- * 
+ *
  * @return string le code retour de l'inclusion du fichier contenant la classe
  */
 
 function __autoload($ClassName)
 {
 	$Models = array('DbObject','Exercice','Membre','Correcteur','Eleve',);
-	
+
 	$FileName = $ClassName . '.php';
 	if(substr($ClassName, -18)=='AbstractController')
 	{
-		return include LIB_PATH . '/AbstractController/' . $FileName;
+		return include LIB_PATH . '/abstractcontrollers/' . $FileName;
 	}
 	if(in_array($ClassName, $Models))
 	{
-		return  include LIB_PATH . '/Models/' . $FileName;
+		return  include LIB_PATH . '/models/' . $FileName;
 	}
-	
+
 	return include LIB_PATH . '/' . $FileName;
 }
 //Démarrer le gestionnaire d'erreurs
@@ -73,8 +73,9 @@ set_error_handler('Debug::errHandler', -1);
 
 /**
  * Lecture des données de la requête
- * 
+ *
  */
+$_GET['module'] = strtolower($_GET['module']);
 $ModulePath = OO2FS::modulePath($_GET['module']);
 $ControllerPath = OO2FS::controllerPath($_GET['controller'], $_GET['module']);
 $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
@@ -106,7 +107,7 @@ if(!isset($_GET['view'], $_GET['controller'], $_GET['module'], $_GET['data']))
 {
 	exit('Appel incorrect.');
 }
-	
+
 //Vérifier que le module existe et lui demander s'il accepte la demande.
 if(!is_file($ModulePath))
 {
@@ -128,15 +129,15 @@ include $ControllerPath;
 if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName, '__call'))
 {
 	exit('Vue incorrecte : ' . $ViewName);
-}	
-	
+}
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 
 /**
  * Exploitation.
