@@ -242,34 +242,24 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		);
 		$this->View->addScript('/public/js/CodeMirror/codemirror.js');
 		$this->View->addScript();
+		$this->View->addStyle('/public/css/envoi.css');
 		
 		if(isset($_POST['envoi-exercice']))
 		{
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = 'head';
-			
-			//Le template LaTeX générique
-			$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
-			
-			//En déduire le contenu par remplacement :
-			$Remplacements = array(
-				'__TITRE__' => $this->Exercice->Titre,
-				'__CONTENU__' => $_POST['corrige']
-			);
-			$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
-			
+
 			//L'url du fichier Tex
 			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
-			file_put_contents($CorrigeURL, $Contenu);
 			
-			unset($Template, $Contenu);
+			$this->texFromTemplate($_POST['corrige'], $CorrigeURL);
 			
 			$Erreurs = $this->compileTex($CorrigeURL);
 			
-			if(!empty($Erreurs))
+			if(!$Erreurs['ok'])
 			{
 				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
-				$this->View->Erreurs = $Erreurs;
+				$this->View->Erreurs = $Erreurs['errors'];
 			}
 			else
 			{
@@ -301,6 +291,30 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				}
 			}
 
+		}
+	}
+	
+	public function _compilationActionWd()
+	{
+		$this->canAccess(array('EN_COURS'));
+		
+		if(isset($_POST['texte']))
+		{
+			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
+			$FileName = 'preview';
+
+			//L'url du fichier Tex
+			$PreviewURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
+			
+			$this->texFromTemplate($_POST['texte'], $PreviewURL);
+			
+			$Back = $this->compileTex($PreviewURL);
+			
+			$this->View->Out = str_replace(PATH, '~', implode("\n",$Back['output']));
+		}
+		else
+		{
+			$this->View->Out = 'Appel incorrect.';
 		}
 	}
 	
@@ -379,21 +393,49 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 * 
 	 * @param string $URL le fichier TeX à compiler.
 	 * 
-	 * @return array une liste des erreurs rencontrées (ou un tableau vide si succès)
+	 * @return array un tableau ; la clé output contient la liste des lignes renvoyées, la clé errors la liste des lignes d'erreurs, et la clé ok est un booléen indiquant le résultat de la compilation
 	 */
 	protected function compileTex($URL)
 	{
 		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
 		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL), $Return, $Code);
 		$Erreurs = array();
-		foreach($Return as $Line)
+		foreach($Return as &$Line)
 		{
+			$Line = htmlspecialchars($Line);
 			if(isset($Line[0]) && $Line[0] == '!')
 			{
 				$Erreurs[] = substr($Line, 2);
+				$Line = '<span style="color:red">' . $Line . '</span>';
 			}
 		}
 		
-		return $Erreurs;
+		return array(
+			'errors' => $Erreurs,
+			'output' => $Return,
+			'ok' => empty($Erreurs),
+		);
+	}
+	
+	/**
+	 * Construit un document TeX à partir d'un fichier générique.
+	 * 
+	 * @param string $Texte le texte de l'environnement {document}
+	 * @param string $Fichier le contenu du fichier
+	 */
+	protected function texFromTemplate($Texte, $Fichier)
+	{
+		//Le template LaTeX générique
+		$Template = file_get_contents(DATA_PATH . '/layouts/template.tex');
+		
+		//En déduire le contenu par remplacement :
+		$Remplacements = array(
+			'__TITRE__' => $this->Exercice->Titre,
+			'__CONTENU__' => $Texte,
+		);
+		
+		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
+		
+		file_put_contents($Fichier, $Contenu);
 	}
 }

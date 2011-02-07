@@ -7,7 +7,6 @@ $Rappels[] = 'Type de la demande : <strong>' . $this->Exercice->DetailsDemande .
 
 echo $this->Html_list($Rappels);
 ?>
-
 <p>Vous retrouverez l'exercice au complet ci-dessous.</p>
 
 <div id="tabs">
@@ -26,12 +25,12 @@ echo $this->Html_list($Rappels);
 				'required' => 'required',
 				'style' => 'height:720px;',
 				'value' => '\maketitle
-\LaTeX{} is a document preparation system for the \TeX{}
-typesetting program. It offers programmable desktop publishing',
+\LaTeX{} is a document preparation system for the \TeX{} typesetting program. It offers programmable desktop publishing',
 			)
 		);
 		echo $this->Doc_inputBr('correcteur', 'aide_tex');
 		
+		echo $this->Form_input('apercu-exercice', array('type' => 'button', 'value' => 'Prévisualiser'));
 		echo $this->Form_submit('envoi-exercice', "Envoyer ce texte");
 		?>
 		</form>
@@ -39,10 +38,17 @@ typesetting program. It offers programmable desktop publishing',
 	<div id="envoi-apercu">
 	</div>
 	<div id="envoi-log">
+		<pre id="pre_envoi-log">
+		Aucune information disponible pour l'instant.
+		<a href="#" class="compiler">Prévisualiser maintenant</a>.
+		</pre>
 	</div>
 </div>
-
 
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>
+
+<!-- Texte affiché pendant la compilation -->
+<div id="modal" title="Information">
+</div>

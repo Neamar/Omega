@@ -81,7 +81,7 @@ $(function()
  */
 $(function()
 {
-	if($('.texable').length > 0)
+	if(0 && $('.texable').length > 0)
 	{
 		var script = document.createElement("script");
 		script.type = "text/javascript";
@@ -136,7 +136,7 @@ $(function()
 			this.value = '';
 		else
 			this.value = Valeur;
-	}
+	};
 	
 	//Prend un input, enlève tous les caractères non numériques et vérifie la validité de la donnée saisie par rapport aux bornes min et max
 	var Number = function()
@@ -163,7 +163,7 @@ $(function()
 				jItem.val(jItem.attr('max'));
 			}
 		}
-	}
+	};
 	
 	$('input[type=number]').change(Number);
 	$('input[type=number]').keyup(Number);
@@ -172,4 +172,4 @@ $(function()
 	$('input[type=numeric]').change(Numeric);
 	$('input[type=numeric]').keyup(Numeric);
 	$('input[type=numeric]').keydown(Numeric);
-})
+});
