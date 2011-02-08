@@ -224,37 +224,50 @@ margin:auto;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------- 5. Message -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.message {
+.message { /*délimitation du message sur 1000px dans le aside*/
 position:relative;
 padding-top:5px;
 width:1000px;
 margin:auto;
 }
-.message p {
-padding:0 35px;
+	.message p {
+	padding:0 35px;
+	}
+	
+	
+/* -- Classe Globale --*/
+#content-message {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/message-r.jpg') center scroll repeat-x;
+height:auto;
 }
-	/*message erreur*/
-	.error p:first-child {
+	#bottom-message {
+	height:13px;
+	background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
+	}
+
+
+/* -- Classe Erreur / .error --*/		
+#main-message #content-message.error {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+	aside.error p:first-child {
 	color:#d43b3e;
 	font-weight:bold;
 	text-shadow:1px 1px 0px #fff;
 	}
 	
-		#content-message {
-		padding:5px 0;
-		background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x;
-		height:auto;
-		}
-			#content-base #content-message .error{
-			padding:5px 0;
-			background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; 
-			height:auto;
-			}
+	
+/*--  Message droite  --*/	
+.message .doc-box-link a{
+position:absolute;
+bottom:-15px;
+right:20px;
+display:inline-block;
+}	
 
-		#bottom-message {
-		height:13px;
-		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
-		}
 /*message droite - A REVOIR*/
 /*
 .message .doc-box-link a{
