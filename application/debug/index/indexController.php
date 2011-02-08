@@ -113,7 +113,7 @@ class Debug_IndexController extends AbstractController
 		
 		$this->View->setSeelink('/', 'Exemple de lien à voir aussi');
 		
-		$this->View->setMessage('warning', "Exemple de message d'erreur suivi d'un lien vers l'aide", "eleve/inscription");
+		$this->View->setMessage('error', "Exemple de message d'erreur suivi d'un lien vers l'aide", "eleve/inscription");
 		
 		$this->View->SousPage = $this->concat('/eleve/inscription');
 		
