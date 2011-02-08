@@ -13,7 +13,7 @@ Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox
 2. logo       --------------------------------  /section - Le logo / menu
 3. Ariane     --------------------------------  /section - L'ariane - lien de retour -
 4. Title      --------------------------------  /section - title (intro) -
-5. Message    --------------------------------  /section - message (error, info, warning etc.. -
+5. Message    --------------------------------  /section - message (error, info, warning, ok -
 
 **********************************************************************************************/
 
@@ -235,7 +235,7 @@ margin:auto;
 	}
 	
 	
-/* -- Classe Globale --*/
+/* -- Classe Globale -- */
 #content-message {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/message-r.jpg') center scroll repeat-x;
@@ -245,22 +245,72 @@ height:auto;
 	height:13px;
 	background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 	}
+	
+#main-message aside p:first-child {
+line-height:26px;
+font-weight:bold;
+text-shadow:1px 1px 0px #fff;
+}
 
-
-/* -- Classe Erreur / .error --*/		
+/* -- Classe Erreur / .error -- */		
 #main-message #content-message.error {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
 height:30px;
 }
+#main-message #bottom-message.error {
+height:13px;
+background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
+}
 	aside.error p:first-child {
 	color:#d43b3e;
-	font-weight:bold;
-	text-shadow:1px 1px 0px #fff;
+	}
+
+/* -- Classe OK / .ok -- */		
+#main-message #content-message.ok {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.ok {
+height:13px;
+background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
+}
+	aside.ok p:first-child {
+	color:#006600;
+	}
+
+/* -- Classe Information / .info -- */		
+#main-message #content-message.info {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.info {
+height:13px;
+background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
+}
+	aside.info p:first-child {
+	color:#006699;
+	text-shadow:1px 1px 0px #ebf8ff!important;
+	}
+
+/* -- Classe attention / .warning -- */		
+#main-message #content-message.warning {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.warning {
+height:13px;
+background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
+}
+	aside.warning p:first-child {
+	color:#704508;
+	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
 	
-	
-/*--  Message droite  --*/	
+/* --  Message droite  -- */	
 .message .doc-box-link a{
 position:absolute;
 bottom:-15px;
