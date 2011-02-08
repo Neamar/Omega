@@ -22,7 +22,7 @@ Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
 
-body { 
+body {
 margin: 0;
 padding: 0; 
 font-family: Arial, Helvetica, sans-serif; 
@@ -148,12 +148,11 @@ height:103px; /*taille du bloc*/
 clear:both;
 background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*CONTENT*/
 height:40px;
-width:1000px;
+width:930px; /*débordement 1000*/
 }
 /*Lien de retour*/
 #ariane .see-link {
 float:right;
-padding-right:70px;
 }
 	#ariane .see-link a{
 	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
@@ -204,7 +203,7 @@ clear:both;
 background-color: #CCCCCC;
 background:url('/public/css/images/title.jpg') top left scroll no-repeat; /*CONTENT*/
 padding-top:5px;
-width:1000px;
+width:931px; /*débordement (1000*/
 margin:auto;
 }
 	#title h1, #title p{
@@ -256,7 +255,8 @@ padding:0 35px;
 		height:13px;
 		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 		}
-/*message droite*/
+/*message droite - A REVOIR*/
+/*
 .message .doc-box-link a{
 position:absolute;
 bottom:-15px;
@@ -276,13 +276,13 @@ box-shadow: inset 0px 0px 7px #943c31;
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;	
-	/* Internet Explorer */
+
 	*background: #b43725;
 	background: #b43725\0/;
 	filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#FFd74d38, endColorstr=#FFb43725);
 	 
 @media all and (min-width: 0px) {
-	/* Navigateurs récents */
+
 	background-image: -moz-linear-gradient(
 	top,
 	#d74d38,
@@ -290,5 +290,5 @@ box-shadow: inset 0px 0px 7px #943c31;
 );
 }
 .message .doc-box-link a:hover {
-
 }
+*/
