@@ -171,6 +171,8 @@ $(document).ready(function() {
 		scriptData : {hash : LongHash, token : Token},
 		cancelImg : '/public/css/images/cancel.png',
 		folder : '/home',
+		fileExt : '*.png;*.jpg;*.gif;*.pdf;*.svg;*.dvi;*.ps;*.tex',
+		fileDesc : 'Fichiers de ressources',
 		auto : true,
 	});
 });

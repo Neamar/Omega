@@ -440,13 +440,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 */
 	public function _ressourceAction()
 	{
-		if (empty($_FILES) || !isset($_POST['hash']) || !isset($_POST['token']))
+		if (!isset($_FILES['Filedata']['name']) || !isset($_POST['hash']) || !isset($_POST['token']))
 		{
 			echo 'Connecteur mal utilisé.';
 		}
 		else
 		{
 			$this->Exercice = Exercice::load(substr($_POST['hash'], 0, HASH_LENGTH));
+			$ExtensionFichier = Util::extension($_FILES['Filedata']['name']);
+			$Extensions = array('png', 'jpg', 'gif', 'pdf', 'svg', 'dvi', 'ps', 'tex');
 			
 			if(is_null($this->Exercice))
 			{
@@ -455,6 +457,14 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			elseif($_POST['token'] != $this->correcteurToken($this->Exercice->Correcteur, $this->Exercice->LongHash))
 			{
 				exit('Token invalide.');
+			}
+			elseif($_FILES['Filedata']['error'] > 0)
+			{
+				exit('Erreur à l\'upload.');
+			}
+			elseif(!in_array($ExtensionFichier, $Extensions))
+			{
+				exit('Extensions non autorisées.');
 			}
 			else 
 			{
