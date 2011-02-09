@@ -169,7 +169,6 @@ float:right;
 #ariane ul {
 display:block;
 height:40px;
-padding-left:20px;
 }
 	#ariane ul li {
 	float:left;
@@ -207,10 +206,8 @@ width:931px; /*débordement (1000*/
 margin:auto;
 }
 	#title h1, #title p{
-	padding:0 35px;
 	}
 		#title h1 {
-		padding:0 35px;
 		color:#f0eeee;
 		font:bold 36px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
 		text-shadow:1px 1px 0px #292929;
