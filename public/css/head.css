@@ -13,7 +13,7 @@ Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox
 2. logo       --------------------------------  /section - Le logo / menu
 3. Ariane     --------------------------------  /section - L'ariane - lien de retour -
 4. Title      --------------------------------  /section - title (intro) -
-5. Message    --------------------------------  /section - message (error, info, warning etc.. -
+5. Message    --------------------------------  /section - message (error, info, warning, ok -
 
 **********************************************************************************************/
 
@@ -22,7 +22,7 @@ Testé positivement sur : IE7, IE8, Safari, GoogleChrome, FireFox
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; }
 
-body { 
+body {
 margin: 0;
 padding: 0; 
 font-family: Arial, Helvetica, sans-serif; 
@@ -148,12 +148,11 @@ height:103px; /*taille du bloc*/
 clear:both;
 background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*CONTENT*/
 height:40px;
-width:1000px;
+width:930px; /*débordement 1000*/
 }
 /*Lien de retour*/
 #ariane .see-link {
 float:right;
-padding-right:70px;
 }
 	#ariane .see-link a{
 	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
@@ -204,7 +203,7 @@ clear:both;
 background-color: #CCCCCC;
 background:url('/public/css/images/title.jpg') top left scroll no-repeat; /*CONTENT*/
 padding-top:5px;
-width:1000px;
+width:931px; /*débordement (1000*/
 margin:auto;
 }
 	#title h1, #title p{
@@ -225,70 +224,195 @@ margin:auto;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------- 5. Message -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.message {
+.message { /*délimitation du message sur 1000px dans le aside*/
 position:relative;
 padding-top:5px;
 width:1000px;
 margin:auto;
 }
-.message p {
-padding:0 35px;
-}
-	/*message erreur*/
-	.error p:first-child {
-	color:#d43b3e;
-	font-weight:bold;
-	text-shadow:1px 1px 0px #fff;
+	.message p {
+	padding:0 35px;
 	}
 	
-		#content-message {
-		padding:5px 0;
-		background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x;
-		height:auto;
-		}
-			#content-base #content-message .error{
-			padding:5px 0;
-			background:#f1f1ef url('/public/css/images/message-r.jpg') top scroll repeat-x; 
-			height:auto;
-			}
+	
+/* -- Classe Globale -- */
+#content-message {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/message-r.jpg') center scroll repeat-x;
+height:auto;
+}
+	#bottom-message {
+	height:13px;
+	background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
+	}
+	
+#main-message aside p:first-child {
+line-height:26px;
+font-weight:bold;
+text-shadow:1px 1px 0px #fff;
+}
 
-		#bottom-message {
-		height:13px;
-		background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
-		}
-/*message droite*/
+/* -- Classe Erreur / .error -- */		
+#main-message #content-message.error {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.error {
+height:13px;
+background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
+}
+	aside.error p:first-child {
+	color:#d43b3e;
+	}
+
+/* -- Classe OK / .ok -- */		
+#main-message #content-message.ok {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.ok {
+height:13px;
+background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
+}
+	aside.ok p:first-child {
+	color:#006600;
+	}
+
+/* -- Classe Information / .info -- */		
+#main-message #content-message.info {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.info {
+height:13px;
+background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
+}
+	aside.info p:first-child {
+	color:#006699;
+	text-shadow:1px 1px 0px #ebf8ff!important;
+	}
+
+/* -- Classe attention / .warning -- */		
+#main-message #content-message.warning {
+padding:5px 0;
+background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x; 
+height:30px;
+}
+#main-message #bottom-message.warning {
+height:13px;
+background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
+}
+	aside.warning p:first-child {
+	color:#704508;
+	text-shadow:1px 1px 0px #ebf8ff!important;
+	}
+	
+/* --  Message droite / Classe Global  -- */	
 .message .doc-box-link a{
 position:absolute;
 bottom:-15px;
 right:20px;
-display:inline-block;
-padding:0 5px;
-	color:#fff;
-	text-shadow: 1px 1px 0px #921008;
-	-webkit-border-radius: 5px; 
-	-moz-border-radius: 5px; 
-	border-radius: 5px;	
-outline-offset: -2px;
--moz-box-shadow: inset 0px 0px 7px #943c31;
-box-shadow: inset 0px 0px 7px #943c31;	
-	background: #b43725 url("/public/css/images/message-doc-box-link-a-bg.png") repeat-x top;
-	-o-background-size: 100% 100%;
-	-moz-background-size: 100% 100%;
-	-webkit-background-size: 100% 100%;
-	background-size: 100% 100%;	
-	/* Internet Explorer */
-	*background: #b43725;
-	background: #b43725\0/;
-	filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#FFd74d38, endColorstr=#FFb43725);
-	 
-@media all and (min-width: 0px) {
-	/* Navigateurs récents */
-	background-image: -moz-linear-gradient(
-	top,
-	#d74d38,
-	#b43725;
-);
+display: inline-block;
+outline: none;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+font: 14px/100% Arial, Helvetica, sans-serif;
+padding: .4em 1em .55em;
+text-shadow: 0 1px 1px rgba(0,0,0,.3);
+-webkit-border-radius: .5em;
+-moz-border-radius: .5em;
+border-radius: .5em;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+box-shadow: 0 1px 2px rgba(0,0,0,.2);
+background: #666666;
+color:#fff;
 }
-.message .doc-box-link a:hover {
+/* --  Message droite / .error / rouge  -- */	
+	.message.error p.doc-box-link a {
+	color: #fef4e9;
+	border: solid 1px #943c31;
+	background: #c5422e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#b43725)); /* clair > sombre*/
+	background: -moz-linear-gradient(top,  #d74d38,  #b43725);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#b43725');
+	}
+	.message.error p.doc-box-link a:hover {
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#90291b));
+	background: -moz-linear-gradient(top,  #d74d38,  #90291b);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#90291b');
+	}
+	.message.error p.doc-box-link a:active {
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#90291b), to(#d74d38));
+	background: -moz-linear-gradient(top,  #90291b,  #d74d38);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#90291b', endColorstr='#d74d38');
+	}
 
-}
+/* --  Message droite / .warning / orange  -- */	
+	.message.warning p.doc-box-link a {
+	color: #fef4e9;
+	border: solid 1px #da7c0c;
+	background: #f78d1d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	}
+	.message.warning p.doc-box-link a:hover {
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
+	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+	}
+	.message.warning p.doc-box-link a:active {
+	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+	}
+	
+/* --  Message droite / .ok / vert  -- */	
+	.message.ok p.doc-box-link a {
+	color: #e8f0de;
+	border: solid 1px #538312;
+	background: #64991e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#86b232), to(#588312e));
+	background: -moz-linear-gradient(top,  #86b232,  #588312);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#86b232', endColorstr='#588312');
+	}
+	.message.ok p.doc-box-link a:hover {
+	background: #538018;
+	background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+	background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+	}
+	.message.ok p.doc-box-link a:active {
+	background: -webkit-gradient(linear, left top, left bottom, from(#4e7d0e), to(#7db72f));
+	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
+	}
+
+/* --  Message droite / .info / bleu  -- */	
+	.message.info p.doc-box-link a {
+	color: #d9eef7;
+	border: solid 1px #0076a3;
+	background: #0095cd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+	background: -moz-linear-gradient(top,  #3496c7,  #2171b1);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');
+	}
+	.message.info p.doc-box-link a:hover {
+	background: #007ead;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+	background: -moz-linear-gradient(top,  #0095cc,  #00678e);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');
+	}
+	.message.info p.doc-box-link a:active {
+	background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));
+	background: -moz-linear-gradient(top,  #0078a5,  #00adee);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
+	}
