@@ -65,6 +65,9 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	line-height:52px;
 	float:left;
 	}
+		#ribbon-left a.deconnexion {
+		}
+
 	#ribbon-center {
 	position:relative;
 	top:6px;
@@ -79,6 +82,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		height:39px;
 		margin:auto;
 	}
+	
 	#ribbon-right {
 	display:inline;
 	float:right;
