@@ -231,6 +231,18 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	/**
 	 * Permet d'envoyer le corrigé.
 	 * EN_COURS => ENVOYE
+	 * 
+	 * @see Correcteur_ExerciceController::_compilationActionWd()
+	 * La page compilant une ressource temporaire pour l'aperçu.
+	 * 
+	 * @see Correcteur_ExerciceController::_previewActionWd()
+	 * La page récupérant une preview d'une des pages du PDF crée par _compilationAction
+	 * 
+	 * @see Correcteur_ExerciceController::_revertActionWd()
+	 * Retourner à une ancienne version du corrigé
+	 * 
+	 * @see Correcteur_ExerciceController::_ressourceActionWd()
+	 * Ajouter une nouvelle ressource.
 	 */
 	public function envoiActionWd()
 	{
@@ -240,9 +252,27 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
 			"Cette page permet de rédiger le corrigé d'un exercice."
 		);
+		//Coloration syntaxique
+		//http://codemirror.net/manual.html
 		$this->View->addScript('/public/js/CodeMirror/codemirror.js');
+		
+		//Le plugin uploadify pour l'envoi de ressources
+		//http://www.uploadify.com/documentation/
+		$this->View->addScript('/public/js/Uploadify/swfobject.js');
+		$this->View->addScript('/public/js/Uploadify/jquery-uploadify.min.js');
+		
+		//Gestion des onglets et du javascript de la page
 		$this->View->addScript();
+		
+		//Gestion des numéros de ligne à côté de l'éditeur
 		$this->View->addStyle('/public/css/envoi.css');
+		
+		//Gestion du style d'uploadify pour l'envoi des ressources
+		$this->View->addStyle('/public/css/uploadify/uploadify.css');
+		
+		//Le token.
+		//@see Correcteur_ExerciceController::correcteurToken() pour les détails.
+		$this->View->token = $this->correcteurToken($this->getMembre()->ID, $this->Exercice->LongHash);
 		
 		if(isset($_POST['envoi-exercice']))
 		{
@@ -310,6 +340,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Compile un PDF d'aperçu, et renvoie la sortie console.
+	 * 
+	 * @see Correcteur_ExerciceController::envoiActionWd()
 	 */
 	public function _compilationActionWd()
 	{
@@ -346,6 +378,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Prévisualiser un document Tex.
+	 * 
+	 * @see Correcteur_ExerciceController::envoiActionWd()
 	 */
 	public function _previewActionWd()
 	{
@@ -379,6 +413,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	
 	/**
 	 * Renvoie une révision antérieure du document
+	 * 
+	 * @see Correcteur_ExerciceController::envoiActionWd()
 	 */
 	public function _revertActionWd()
 	{
@@ -394,6 +430,46 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			AND ID = "' . intval($this->Data['id']) . '"',
 			'Contenu'
 		);
+	}
+	
+	/**
+	 * Ajouter une ressource pour la correction.
+	 * Cette page n'a pas de vue associée.
+	 * 
+	 * @see Correcteur_ExerciceController::envoiActionWd()
+	 */
+	public function _ressourceAction()
+	{
+		if (empty($_FILES) || !isset($_POST['hash']) || !isset($_POST['token']))
+		{
+			echo 'Connecteur mal utilisé.';
+		}
+		else
+		{
+			$this->Exercice = Exercice::load(substr($_POST['hash'], 0, HASH_LENGTH));
+			
+			if(is_null($this->Exercice))
+			{
+				exit('Exercice inconnu.');
+			}
+			elseif($_POST['token'] != $this->correcteurToken($this->Exercice->Correcteur, $this->Exercice->LongHash))
+			{
+				exit('Token invalide.');
+			}
+			else 
+			{
+				//Ça a marché !
+				$FinalURL = PATH . '/public/exercices/' . $_POST['hash'] . '/Corrige/Ressources/' . $_FILES['Filedata']['name'];
+				move_uploaded_file(
+					$_FILES['Filedata']['tmp_name'],
+					PATH . '/public/exercices/' . $_POST['hash'] . '/Corrige/Ressources/' . $_FILES['Filedata']['name']
+				);
+				echo $FinalURL;
+			}
+		}
+		
+		//Dans tous les cas, on stoppe ici. Pas de fichier de vue.
+		exit();
 	}
 	
 	/**
@@ -515,5 +591,25 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);
 		
 		file_put_contents($Fichier, $Contenu);
+	}
+	
+	/**
+	 * Crée un token à partir de l'identifiant du correcteur, du bigfish et de l'exercice.
+	 * Ce token permet de valider l'envoi d'une ressource sur un exercice sans utiliser le système de sessions.
+	 * 
+	 * En effet, uploadify passe par un fichier flash qui ne fait pas transiter les identifiants de sessions.
+	 * Autrement dit, il n'est pas possible d'avoir _ressource dans le "dossier" de l'exercice (/correcteur/exercice/_ressource/HASH)
+	 * puisque le script redirigerait automatiquement vers la page de connexion. 
+	 * Afin de pallier au problème, la page _ressource est rendue disponible hors connexion.
+	 * Cependant, elle demande un token justifiant que la personne derrière est habilitée à l'envoi de données sur cet exercice.
+	 * 
+	 * @param int $Correcteur l'identifiant du correcteur
+	 * @param string $Hash le hash de l'exercice (en version longue)
+	 * 
+	 * @return string un token.
+	 */
+	protected function correcteurToken($Correcteur, $Hash)
+	{
+		return sha1(substr($Hash, -10) . SALT . ($Correcteur * ord($Hash[0])));
 	}
 }

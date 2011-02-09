@@ -14,6 +14,7 @@ echo $this->Html_list($Rappels);
 		<li><a href="#envoi-texte">Source TeX</a></li>
 		<li><a href="#envoi-apercu">Aperçu</a></li>
 		<li><a href="#envoi-log">Console</a></li>
+		<li><a href="#envoi-ressources">Ressources</a></li>
 		<li><a href="#envoi-historique">Historique</a></li>
 	</ul>
 	<div id="envoi-texte">
@@ -46,6 +47,13 @@ echo $this->Html_list($Rappels);
 		<a href="#" class="compiler">Prévisualiser maintenant</a>.
 		</pre>
 	</div>
+	<div id="envoi-ressources">
+		<form method="post" action="">
+      		<?php 
+      		echo $this->Form_input('ressource-upload', array('type' => 'file'));
+      		?>
+      	</form>
+	</div>
 	<div id="envoi-historique">
 		<p>Besoin de récupérer les anciennes versions de votre travail ? Tout est sauvegardé ici !</p>
 		<form>
@@ -72,4 +80,6 @@ var CompilationURL = "/correcteur/exercice/_compilation/<?php echo $this->Exerci
 var PageURL = "/correcteur/exercice/_preview/<?php echo $this->Exercice->Hash;?>/page/__PAGE__/width/__LARGEUR__";
 var PdfURL = "/public/exercices/<?php echo $this->Exercice->LongHash;?>/Corrige/preview.pdf";
 var RevertURL = "/correcteur/exercice/_revert/<?php echo $this->Exercice->Hash;?>/id/__ID__";
+var UploadURL = "/correcteur/exercice/_ressource/";
+var Token = "<?php echo $this->token?>";
 </script>

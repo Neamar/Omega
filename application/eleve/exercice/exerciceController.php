@@ -190,6 +190,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Sujet/Thumbs');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Thumbs');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Ressources');
+					mkdir(PATH . '/public/exercices/' . $LongHash . '/Corrige/Thumbs/Ressources');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation');
 					mkdir(PATH . '/public/exercices/' . $LongHash . '/Reclamation/Thumbs/');
 					

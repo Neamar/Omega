@@ -25,7 +25,7 @@ if(isset($_SESSION['Correcteur']))
 }
 else 
 {//Sinon on dégage sauf si on demande une page accessible hors ligne.
-	$Allowed = array('inscription', 'connexion', 'recuperation');
+	$Allowed = array('inscription', 'connexion', 'recuperation', '_ressource');
 	
 	if(in_array($_GET['view'], $Allowed))
 	{

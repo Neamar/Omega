@@ -1,14 +1,20 @@
 var IsCompiling = false;
 var NbPages = 0;
+var CurrentPage = 1;
 var Tabs;
 var Modal;
 var Historique;
+var editor;
 
-//Mise en onglets et préparation des messages et des liens comiler.
+/**
+ * Gestion de la coloration syntaxique de la zone de texte
+ * 
+ * @see http://codemirror.net/manual.html
+ */
 $(function()
 {
 	//Utilisation de la coloration syntaxique
-	var editor = CodeMirror.fromTextArea("corrige", {
+	editor = CodeMirror.fromTextArea("corrige", {
 		  parserfile: "parselatex.js",
 		  path: "/public/js/CodeMirror/",
 		  stylesheet: "/public/css/codeMirror/latexcolors.css",
@@ -18,7 +24,14 @@ $(function()
 		  indentUnit: 4,
 		  tabMode: 'shift'
 	});
-	
+});
+
+/**
+ * Gestion de l'interface en onglets et des messages.
+ * Gestion de l'historique et de l'aperçu.
+ */
+$(function()
+{
 	//Mettre en onglets
 	Tabs = $("#tabs").tabs();
 	
@@ -31,6 +44,11 @@ $(function()
 				$(this).dialog("close");
 			}
 		}
+	});
+	
+	//Faire en sorte que les liens .compiler lancent la compilation
+	$('.compiler').click(function(){
+		$('#apercu-exercice').click();
 	});
 	
 	//Revert vers une ancienne version
@@ -53,11 +71,6 @@ $(function()
 	{
 		Tabs.tabs('disable', 'apercu-historique');
 	}
-			
-	//Faire en sorte que les liens .compiler lancent la compilation
-	$('.compiler').click(function(){
-		$('#apercu-exercice').click();
-	});
 
 	/**
 	 * Helper-function pour récupérer une image d'une des pages de l'aperçu.
@@ -68,6 +81,7 @@ $(function()
 	 */
 	function pageImg(page)
 	{
+		CurrentPage = page;
 		return '<img src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', parseInt($('#envoi-apercu').width()) - 40) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" />';
 	}
 	
@@ -129,7 +143,7 @@ $(function()
 						R += '</p>';
 						
 						//Mettre à jour l'onglet aperçu
-						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(1) + '</p>' + R);
+						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
 						$('#envoi-apercu .pager a').click(function()
 						{
 							$('#pdf-image').html(pageImg($(this).data('page')));
@@ -144,5 +158,19 @@ $(function()
 				}
 		);
 		return false;
+	});
+});
+
+/**
+ * Gestion d'uploadify.
+ */
+$(document).ready(function() {
+	$('#ressource-upload').uploadify({
+		uploader : '/public/js/Uploadify/uploadify.swf',
+		script : '/correcteur/exercice/_ressource',
+		scriptData : {hash : LongHash, token : Token},
+		cancelImg : '/public/css/images/cancel.png',
+		folder : '/home',
+		auto : true,
 	});
 });
