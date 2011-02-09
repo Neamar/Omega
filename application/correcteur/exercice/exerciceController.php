@@ -448,7 +448,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		{
 			$this->Exercice = Exercice::load(substr($_POST['hash'], 0, HASH_LENGTH));
 			$ExtensionFichier = Util::extension($_FILES['Filedata']['name']);
-			$Extensions = array('png', 'jpg', 'gif', 'pdf', 'svg', 'dvi', 'ps', 'tex');
+			$Extensions = array('png', 'jpg', 'gif', 'pdf', 'svg', 'ps');
 			
 			if(is_null($this->Exercice))
 			{
@@ -480,6 +480,24 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		//Dans tous les cas, on stoppe ici. Pas de fichier de vue.
 		exit();
+	}
+	
+	/**
+	 * Renvoie la liste des ressources présentes sur l'exercice.
+	 */
+	public function _ressourcesActionWd()
+	{
+		$Ressources = array();
+		$handle = opendir(PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/Ressources');
+		while (false !== ($file = readdir($handle)))
+		{
+			if ($file != "." && $file != "..")
+			{
+				$Ressources[] = $file;
+			}
+		}
+		
+		$this->View->Ressources = $Ressources;
 	}
 	
 	/**
@@ -596,6 +614,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$Remplacements = array(
 			'__TITRE__' => $this->Exercice->Titre,
 			'__CONTENU__' => $Texte,
+			'__GRAPHICS__' => PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/Ressources/',
 		);
 		
 		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);

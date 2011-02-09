@@ -1,9 +1,43 @@
+/**
+ * Sommes-nous en train de compiler le document ?
+ * (affichage d'une fenêtre modale)
+ * 
+ * @var Boolean
+ */
 var IsCompiling = false;
+
+/**
+ * Combien y-a-t-il de pages dans le document actuel ?
+ * 
+ * @var Number
+ */
 var NbPages = 0;
+
+/**
+ * Quelle page consultons-nous actuellement ? (1 = première page)
+ * 
+ * @var Number
+ */
 var CurrentPage = 1;
+
+/**
+ * Élément HTML contenant les différents onglets.
+ */
 var Tabs;
+
+/**
+ * Élément HTML contenant la fenêtre modale d'informations.
+ */
 var Modal;
+
+/**
+ * Élément HTML contenant la liste des anciennes versions du texte.
+ */
 var Historique;
+
+/**
+ * L'éditeur codemirror représentant le textarea amélioré.
+ */
 var editor;
 
 /**
@@ -165,14 +199,38 @@ $(function()
  * Gestion d'uploadify.
  */
 $(document).ready(function() {
+	var Ressources = $('#ressources');
+	
+	/**
+	 * Mettre à jour la liste des ressources affichées.
+	 */
+	function updateRessources()
+	{
+		Ressources.load(
+			RessourcesURL,
+			function()
+			{
+				Ressources.find('li').click(function()
+				{
+					Tabs.tabs('select', 'envoi-texte');
+					Modal.html('<p>Vous pouvez insérer cette ressource en utilisant ce code :<br />\\includegraphics{' + $(this).text() + '}</p>')
+						.dialog('open');
+					
+				});
+			});
+	}
+	
 	$('#ressource-upload').uploadify({
 		uploader : '/public/js/Uploadify/uploadify.swf',
 		script : '/correcteur/exercice/_ressource',
 		scriptData : {hash : LongHash, token : Token},
 		cancelImg : '/public/css/images/cancel.png',
 		folder : '/home',
-		fileExt : '*.png;*.jpg;*.gif;*.pdf;*.svg;*.dvi;*.ps;*.tex',
+		fileExt : '*.png;*.jpg;*.gif;*.pdf;*.svg;*.ps',
 		fileDesc : 'Fichiers de ressources',
 		auto : true,
+		onComplete : updateRessources
 	});
+	
+	updateRessources();
 });

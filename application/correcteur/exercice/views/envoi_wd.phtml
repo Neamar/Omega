@@ -52,6 +52,11 @@ echo $this->Html_list($Rappels);
       		<?php 
       		echo $this->Form_input('ressource-upload', array('type' => 'file'));
       		?>
+      		
+      		<h2>Ressources actuelles</h2>
+      		<p>Cliquez pour les insérer dans le document.</p>
+      		<div id="ressources">
+      		</div>
       	</form>
 	</div>
 	<div id="envoi-historique">
@@ -81,5 +86,6 @@ var PageURL = "/correcteur/exercice/_preview/<?php echo $this->Exercice->Hash;?>
 var PdfURL = "/public/exercices/<?php echo $this->Exercice->LongHash;?>/Corrige/preview.pdf";
 var RevertURL = "/correcteur/exercice/_revert/<?php echo $this->Exercice->Hash;?>/id/__ID__";
 var UploadURL = "/correcteur/exercice/_ressource/";
+var RessourcesURL = "/correcteur/exercice/_ressources/<?php echo $this->Exercice->Hash;?>";
 var Token = "<?php echo $this->token?>";
 </script>
