@@ -50,7 +50,6 @@ session_start();
  *
  * @return string le code retour de l'inclusion du fichier contenant la classe
  */
-
 function __autoload($ClassName)
 {
 	$Models = array('DbObject','Exercice','Membre','Correcteur','Eleve',);
