@@ -131,10 +131,12 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
 		)
 	);
 	
-	$R = '<form method="get" action="">
+	$R = '<div class="list-actions">
+	<form method="get" action="">
 	' . $Quickjump . '
 	</form>
-	' . ViewHelper_Html_list($Actions);
+	' . ViewHelper_Html_list($Actions) . '
+	</div>';
 
 	return $R;
 }
