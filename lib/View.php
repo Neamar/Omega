@@ -468,7 +468,7 @@ class View
 		foreach($Ariane as $Url => &$Caption)
 		{
 			//Réduire les parties trop longues
-			if(strlen($Caption) > 60)
+			if(isset($Caption[61]))
 			{
 				$Caption = trim(mb_substr($Caption, 0, 57, 'UTF-8')) . '&hellip;';
 			}

@@ -5,18 +5,18 @@ $AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__
 
 if($this->Ouvert)
 {
-?>
+	?>
 
-<h2>Poster une nouvelle question</h2>
-<form id="form_faq-question-exercice" method="post" action="">
-<?php 
-echo $this->Form_textareaLabeLBr('question', 'Votre question', array('required' => 'required'));
+	<h2>Poster une nouvelle question</h2>
+	<form id="form_faq-question-exercice" method="post" action="">
+	<?php 
+	echo $this->Form_textareaLabeLBr('question', 'Votre question', array('required' => 'required'));
+	
+	echo $this->Form_submit('faq-question-exercice', 'Envoyer cette question');
+	?>
+	</form>
 
-echo $this->Form_submit('faq-question-exercice', 'Envoyer cette question');
-?>
-</form>
-
-<?php 
+	<?php 
 }//Fin if($this->Ouvert)
 ?>
 

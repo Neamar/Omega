@@ -1,11 +1,13 @@
 <?php
+//Event : déclenchement du cron
 /**
  * Annuler automatiquement toutes les offres faites sur des exercices dont :
  * - le timeout correcteur est dépassé
  * - le statut est ATTENTE_ELEVE.
  */
 
-$Exercices = Sql::query('SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Createur, Correcteur, Exercices.NbRefus
+$Exercices = Sql::query(
+	'SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Createur, Correcteur, Exercices.NbRefus
 	FROM Exercices
 	WHERE Exercices.TimeoutCorrecteur < NOW()
 	AND Exercices.Statut = "ATTENTE_ELEVE"

@@ -1,11 +1,13 @@
-<?php 
+<?php
+//Event : déclenchement du cron
 /**
  * Clore automatiquement l'exercice si :
  * - Expiration + DELAI_REMBOURSEMENT jours sont passés 
  * - le statut est ENVOYÉ
  */
 
-$Exercices = Sql::query('SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Exercices.Createur, Exercices.Enchere, Exercices.Correcteur, Exercices.NbRefus
+$Exercices = Sql::query(
+	'SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Exercices.Createur, Exercices.Enchere, Exercices.Correcteur, Exercices.NbRefus
 	FROM Exercices
 	WHERE Exercices.Expiration < DATE_SUB(NOW(), INTERVAL ' . DELAI_REMBOURSEMENT . ' DAY)
 	AND Exercices.Statut = "ENVOYE"

@@ -1,11 +1,13 @@
 <?php
+//Event : déclenchement du cron
 /**
  * Annuler automatiquement tous les exercices dont :
  * - la date d'annulation est dépassée
  * - le statut est VIERGE, ATTENTE_CORRECTEUR ou ATTENTE_ELEVE.
  */
 
-$Exercices = Sql::query('SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Membres.Mail AS Createur, Exercices.NbRefus
+$Exercices = Sql::query(
+	'SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Membres.Mail AS Createur, Exercices.NbRefus
 	FROM Exercices
 	LEFT JOIN Membres ON (Membres.ID = Exercices.Createur)
 	WHERE Exercices.TimeoutEleve < NOW()

@@ -335,7 +335,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
 			ORDER BY ID DESC',
 			'ID',
-			'Caption');
+			'Caption'
+		);
 	}
 	
 	/**
@@ -368,7 +369,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			
 			$Back = $this->compileTex($PreviewURL);
 			
-			$this->View->Out = str_replace(PATH, '~', implode("\n",$Back['output']));
+			$this->View->Out = str_replace(PATH, '~', implode("\n", $Back['output']));
 		}
 		else
 		{
@@ -423,8 +424,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			exit('Impossible d\'effectuer un revert vers cette révision.');
 		}
 
-		$this->View->Texte = Sql::singleColumn('
-			SELECT Contenu
+		$this->View->Texte = Sql::singleColumn(
+			'SELECT Contenu
 			FROM Exercices_Corriges
 			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
 			AND ID = "' . intval($this->Data['id']) . '"',
