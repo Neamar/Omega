@@ -31,18 +31,53 @@ padding-bottom:60px;
 	section {
 	padding: 0 35px;
 	}
-
-#content h2 {
-font:bold  20px/1.22em "Verdana", "Geneva", sans-serif;
-color:#353232;
-padding:20px 0 8px 0;
-}
-
+	
 #content {
 font:normal 17px/1.4em "Georgia", serif;
-color:#666459;
+color:#5e5e5e;
 }
-
+	#content h2 {
+	font:bold  20px/1.22em "Verdana", "Geneva", sans-serif;
+	color:#353232;
+	padding:12px 0 8px 0;
+	text-shadow:1px 1px 0px #fff;
+	}
+	#content p {
+	text-shadow:1px 1px 0px #fff;
+	}
+	
 .doc-input {
 padding:0 8px;
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- 2. Contact -------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+form {	
+padding: 0 0 70px 0;
+}
+label{
+font-family: Georgia, sans-serif;
+font-size: 10px;
+color: #29241c;
+text-align: right;
+text-transform: uppercase;
+letter-spacing: 1px;
+width: 31%;
+padding:0 10px 0 0;
+
+float: left;
+
+}
+
+/*input {
+font-family: Georgia, sans-serif;
+color: #042d2e;
+font-size: 18px;
+width: 150px;
+height: 28px;
+margin: 0 0 14px 0; padding: 5px 0 0 20px;
+background: url(../imgs/input-bg.png) no-repeat;
+border: 4px solid #32a3ad;
+float: left;
+}*/
+

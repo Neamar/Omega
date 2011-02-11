@@ -26,12 +26,14 @@ body {
 margin: 0;
 padding: 0; 
 font-family: Arial, Helvetica, sans-serif; 
-font-size: 0.9em; 
+ 
 line-height: 1.4; 
 color:#2f2d29;
 background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll repeat-x; /*image r*/
 height:202px;
 }
+
+html {font-size: 16px;height: 100%;}
 
 ul, p {margin:0; padding:0; list-style-type:none;}
 a { text-decoration: none; color: #666;}
