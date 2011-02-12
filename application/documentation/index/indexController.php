@@ -165,6 +165,7 @@ class Documentation_IndexController extends AbstractController
 		
 		return $Ariane;
 	}
+	
 	/**
 	 * Accueil de la documentation.
 	 */
@@ -193,6 +194,14 @@ class Documentation_IndexController extends AbstractController
 		$this->View->setTitle(self::$Pages[$this->Controller]['niveaux']);
 		
 		$this->View->Classes = SQL::queryAssoc('SELECT Classe, DetailsClasse FROM Classes ORDER BY Classe DESC', 'Classe', 'DetailsClasse');
+	}
+	
+	/**
+	 * Liste des balises.
+	 */
+	public function texAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['tex'], 'Petit aide mémoire à l\'intention de ceux qui souhaient utiliser LaTeX');
 	}
 	
 	/**

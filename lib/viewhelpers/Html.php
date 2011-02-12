@@ -205,24 +205,6 @@ function initTypo()
 		'Protect' => 'DOC-REF',
 		'RegexpCode'=>1,
  	);
- 	
- 	unset(Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU']);
-	
- 	Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$\$([^ù\n\$]+)\$\$)#iU']=array(
-		'NoBrace'=>true,
-		'RegexpCode'=>2,
-		'Protect' => 'MATHù',
-		'Replace' => '\[%n\]',
-		'Modifications'=>array('$' => '','&amp;' => '&'),
-	);
-	
- 	Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU']=array(
-		'NoBrace'=>true,
-		'RegexpCode'=>2,
-		'Protect' => 'MATHù',
-		'Replace' => '\(%n\)',
-		'Modifications'=>array('$' => '','&amp;' => '&'),
-	);
 }
 
 /**

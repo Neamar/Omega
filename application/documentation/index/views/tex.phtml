@@ -1,0 +1,105 @@
+<p>Si un élève accepte une offre, une FAQ s'ouvre automatiquement (consulter <a href="/documentation/eleve/faq">cette page pour plus d'information élève</a>, <a href="/documentation/correcteur/faq">celle-ci pour plus d'information correcteur</a>). </p>
+
+<p>Les éléments de cette FAQ (question ou réponse) permettent l'insertion de formules mathématiques. <br />
+Toutes les formules sont indiquées entre $. Elles seront automatiquement mises en forme après avoir posté l'élément dans la FAQ. </p>
+
+<?php 
+$Constructions = array(
+	'Fraction' => '\frac{x}{y}',
+	'Intégrale' => '\int_{x}^{y}',
+	'Somme' => '\sum_{x}^{y}',
+	'Produit' => '\prod_{x}^{y}',
+	'Racine carrée' => '\sqrt{x}',
+	'Racine <em>n-ième</em>' => '\sqrt[y]{x}',
+	'Vecteur' => '\vec{AB}',
+	'Ensemble' => '\mathbb{R}',
+	'Indice' => 'x_{y}',
+	'Exposant' => 'x^{y}',
+);
+
+$Symboles = array(
+	'Alpha minuscule' => '\alpha',
+	'Beta minuscule' => '\beta',
+	'wait' => '...',
+	'Phi minuscule' => '\phi',
+	'Omega minuscule' => '\omega',
+	'wait2' => '...',
+	'Phi majuscule' => '\Phi',
+	'Omega majuscule ' => '\Omega',
+	'Inférieur ou égal' => '\leq',
+	'Supérieur ou égal' => '\geq',
+	'Environ égal' => '\simeq',
+	'Flèche à droite' => '\longrightarrow',
+	'Flèche à gauche' => '\Rightarrow',
+	'Équivalence' => '\Leftrightarrow',
+	'Pour tout' => '\forall',
+	'Il existe' => '\exists',
+	'Infini' => '\infty',
+	'Ensemble vide' => '\emptyset'
+);
+
+$Env = array(
+	'Équation' => '\left[\matrix{
+2 & 4 \cr
+0 & 5 \cr
+1 & 9 \cr
+0 & 0
+}\right]',
+	'Équation (2)' => '\begin{eqnarray*}
+x & = & 5 + 2 + \pi \\\\
+  & = & 7 + \pi
+\end{eqnarray*}'
+);
+
+/**
+ * Crée un tableau contenant les différents code LaTeX?
+ * 
+ * @param string $Caption le titre du tableau
+ * @param array $Codes les codes. Les clés représentent le nom de la formule, la valeur est la formule.
+ */
+function makeTable($Caption, array $Codes)
+{
+	$R = '
+	<table>
+<caption>' . $Caption . '</caption>
+<thead>
+	<tr>
+		<th>Type</th>
+		<th>Code</th>
+		<th>Rendu</th>
+</thead>
+<tbody>';
+	
+	foreach($Codes as $Nom => $Formule)
+	{
+		if($Formule == '...')
+		{
+			$R .= '<tr><td colspan=3>&hellip;</td></tr>' . PHP_EOL;	
+		}
+		else
+		{
+			$R .= '<tr><td>' . $Nom . '</td><td><code>' . nl2br($Formule) . '</code></td><td class="texable">\[' . $Formule . '\]</td></tr>' . PHP_EOL;
+		}
+	}
+	
+	$R .= '</tbody>
+</table>';
+	
+	return $R;
+}
+?>
+
+<h2>Structures</h2>
+<?php 
+echo makeTable('Constructions et structures usuelles', $Constructions);
+?>
+
+<h2>Symboles</h2>
+<?php 
+echo makeTable('Courte liste de symbole', $Symboles);
+?>
+
+<h2>Environnements</h2>
+<?php 
+echo makeTable('Environnements plus complexes', $Env);
+?>
