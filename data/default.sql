@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Administrateuristrateurs`
+-- Structure de la table `Administrateurs`
 --
 
 CREATE TABLE IF NOT EXISTS `Administrateurs` (
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `Membres` (
   `Creation` datetime NOT NULL,
   `Connexion` datetime NOT NULL,
   `Statut` enum('EN_ATTENTE','OK','BLOQUE','DESINSCRIT') NOT NULL DEFAULT 'EN_ATTENTE',
-  `Type` enum('ELEVE','CORRECTEUR','Administrateur') NOT NULL,
+  `Type` enum('ELEVE','CORRECTEUR','ADMINISTRATEUR') NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Mail` (`Mail`,`Type`),
   KEY `Mail_2` (`Mail`,`Pass`)

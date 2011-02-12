@@ -15,7 +15,7 @@
  */
  
 /**
- * ontrôleur d'index du module administrateur.
+ * Contrôleur d'index du module administrateur.
  *
  * @category Controller
  * @package  Root

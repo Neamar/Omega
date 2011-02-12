@@ -7,6 +7,12 @@
  * @author eDevoir <webmaster@edevoir.com>
  */
 
+
+/**
+ * Gestion des dates via la librairie prettyDate tweakée.
+ * 
+ * @see http://ejohn.org/blog/javascript-pretty-date/
+ */
 function dynamicDate()
 {
 	var Times = $('time.date');
