@@ -79,6 +79,7 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 /* - - mini doc box bloc - - */
 aside.doc-box {
 padding-left:44px;
+margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
 font: 16px/100% Georgia, Helvetica, sans-serif;
 color:#676767;
