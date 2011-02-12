@@ -337,6 +337,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'ID',
 			'Caption'
 		);
+		
+		$this->View->Head = Sql::singleColumn(
+			'SELECT Contenu
+			FROM Exercices_Corriges
+			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"
+			ORDER BY ID DESC
+			LIMIT 1',
+			'Contenu'
+		);
 	}
 	
 	/**
@@ -405,7 +414,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			}
 			else
 			{
-				exec('convert ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
+				exec('convert -density 250 ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
 
 				$this->View->Img = $FilenameOut;
 			}

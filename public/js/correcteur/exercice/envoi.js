@@ -178,10 +178,11 @@ $(function()
 						
 						//Mettre à jour l'onglet aperçu
 						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
-						$('#envoi-apercu .pager a').click(function()
+						$('#envoi-apercu .pager a').click(function(e)
 						{
 							$('#pdf-image').html(pageImg($(this).data('page')));
-							return false;
+							e.preventDefault();
+							console.log('fu');
 						});
 						
 						//Mettre à jour l'onglet historique

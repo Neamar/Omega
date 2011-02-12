@@ -26,8 +26,7 @@ echo $this->Html_list($Rappels);
 			array(
 				'required' => 'required',
 				'style' => 'height:500px;',
-				'value' => '\maketitle
-\LaTeX{} is a document preparation system for the \TeX{} typesetting program. It offers programmable desktop publishing',
+				'value' => (empty($this->Head)?'Entrez votre texte ici au format \LaTeX.':htmlspecialchars($this->Head)),
 			)
 		);
 		echo $this->Doc_inputBr('correcteur', 'aide_tex');
