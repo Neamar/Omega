@@ -104,7 +104,29 @@ class Administrateur_IndexController extends IndexAbstractController
 	 */
 	public function virementsAction()
 	{
+		$this->View->setTitle(
+			'Liste des virements',
+			'Cette page permet d\'effectuer les différents virements demandés.'
+		);
 		
+		$this->View->NbVirements = $this->virementsCount();
+		
+		$Query = 'SELECT Virements.ID, Membres.Mail, Virements.Date, Virements.Montant, Virements.Beneficiaire
+		FROM Virements
+		JOIN Membres ON (Membres.ID = Virements.Membre)
+		WHERE Virements.Type = "__TYPE__"
+		AND Virements.Statut = "INDETERMINE"';
+		
+		$this->View->VirementsRib = Sql::queryAssoc(
+			str_replace('__TYPE__', 'RIB', $Query),
+			'ID'
+		);
+		
+		$this->View->VirementsPaypal = Sql::queryAssoc(
+			str_replace('__TYPE__', 'PAYPAL', $Query),
+			'ID'
+		);
+			
 	}
 	
 	/**

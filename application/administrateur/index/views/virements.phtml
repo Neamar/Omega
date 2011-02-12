@@ -1,0 +1,69 @@
+<?php 
+/**
+ * Crée une ligne de tableau HTML
+ * 
+ * @param array $Row la ligne
+ * @param string $Type le type des colonnes
+ */
+function makeRow(array $Row, $Type = 'td')
+{
+	$R = '<tr>';
+	foreach($Row as $Col)
+	{
+		$R .= '<' . $Type . '>' . $Col . '</' . $Type . '>';
+	}
+	$R .= '</tr>' . PHP_EOL;
+	
+	return $R;
+}
+
+/**
+ * Crée un tableau affichable à partir d'un équivalent tuple SQL
+ * 
+ * @param array $Tuple
+ * 
+ * @return array un tableau colonne utilisable
+ */
+function formatTuple(array $Tuple)
+{
+	$Tuple['Date'] = date('d/m/Y à H\h', strtotime($Tuple['Date']));
+	
+	return $Tuple;
+}
+
+$Head = array('Date', 'Membre', 'Montant', 'Bénéficiaire', 'Action');
+?>
+
+<p>En attente : <?php echo $this->NbVirements; ?></p>
+
+<h2>Virements par RIB</h2>
+<table>
+	<caption>Virements RIB</caption>
+	<thead>
+		<?php echo makeRow($Head, 'th');?>
+	</thead>
+	<tbody>
+	<?php 
+	foreach($this->VirementsRib as $Tuple)
+	{
+		echo makeRow(formatTuple($Tuple));
+	}
+	?>
+	</tbody>
+</table>
+
+<h2>Virements par Paypal</h2>
+<table>
+	<caption>Virements RIB</caption>
+	<thead>
+		<?php echo makeRow($Head, 'th');?>
+	</thead>
+	<tbody>
+	<?php 
+	foreach($this->VirementsPaypal as $Tuple)
+	{
+		echo makeRow(formatTuple($Tuple));
+	}
+	?>
+	</tbody>
+</table>
