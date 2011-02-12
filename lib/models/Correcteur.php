@@ -41,7 +41,7 @@ class Correcteur extends Membre
 	public $SiretOK;
 	
 	/**
-	 * Renvoie vrai si l'élève peut créer un nouvel exercice
+	 * Renvoie vrai si le correcteur peut réserver un exercice.
 	 * 
 	 * @return bool
 	 */

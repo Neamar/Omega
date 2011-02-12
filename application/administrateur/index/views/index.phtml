@@ -1,0 +1,47 @@
+<h2>Tableau de bord administrateur</h2>
+<p>D'abord, on flâne un peu en consultant ces statistiques inutiles. <a href="/admin/logs/">Plus de stats ?</a></p>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_global', 'Statistiques globales', array('Action', '24h', '48h', '7j'));
+?>
+
+<h2>En attente</h2>
+<?php 
+$Attentes = array();
+
+if($this->Virements != 0)
+{
+	$Attentes['virements'] = array(
+		$this->Virements . ' virement' . ($this->Virements==1?'':'s') . ' en attente',
+		'Ces virements devraient être réalisés dans les plus brefs délais.'
+	);
+}
+
+if($this->Alertes != 0)
+{
+	$Attentes['alertes'] = array(
+		$this->Alertes . ' alerte' . ($this->Alertes==1?'':'s') . ' en attente',
+		'Des alertes ont été générées, elles demandent l\'avis d\'un exepert.'
+	);
+}
+
+if($this->Reclamations != 0)
+{
+	$Attentes['reclamations'] = array(
+		$this->Reclamations . ' réclamation' . ($this->Reclamations==1?'':'s') . ' en attente',
+		'Certains élèves ne sont pas content du corrigé proposé.'
+	);
+}
+
+if(empty($Attentes))
+{
+	?>
+	<p>Rien n'est en attente. Pourquoi ne pas ouvrir une bouteille de champagne en attendant que du travail arrive ?</p>
+	<?php 
+}
+else
+{
+	?>
+	<p>Maintenant au boulot ! Les catégories ci-dessous attendent une action de votre part.</p>
+	<?php 
+	echo $this->Html_listAction($Attentes, '/administrateur/__URL__', '');
+}

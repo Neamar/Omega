@@ -1,6 +1,34 @@
 <?php 
+$Module = $this->getController()->getModule();
+?>
+
+<h2>Actions</h2>
+<?php 
+$Actions = array(
+	'ajout' => array(
+		'Ajouter des points',
+		'Ajouter des points sur mon compte par SMS, virement bancaire...',
+		'depot'
+	),
+	'retrait' => array(
+		'Retirer des points',
+		'Récupérer des points depuis mon compte ' . $this->Html_eDevoir() . ' pour un compte bancaire ou paypal externe',
+		'retrait',
+	),
+);
+
+if($Module == 'correcteur')
+{
+	unset($Actions['ajout']);
+}
+
+echo $this->Html_listAction($Actions, '/' . $Module . '/points/__URL__', $Module);
+?>
+
+<h2>Récapitulatif de mon compte</h2>
+<?php 
 echo $this->Html_ajaxTable(
-	'/' . $this->getController()->getModule() . '/points/_actions',
+	'/' . $Module . '/points/_actions',
 	'Actions sur le compte',
 	array(
 		'Date',

@@ -131,7 +131,7 @@ function ViewHelper_Form_rib($name)
 			'placeholder' => 'BBBBB',
 			'maxlength' => 5,
 			'size' => 5,
-			'type' => 'numeric',
+			//'type' => 'numeric',
 			'min' => '11111'
 		)
 	);
@@ -142,7 +142,7 @@ function ViewHelper_Form_rib($name)
 			'placeholder' => 'GGGGG',
 			'maxlength' => 5,
 			'size' => 5,
-			'type' => 'numeric'
+			//'type' => 'numeric'
 		)
 	);
 	
@@ -161,7 +161,7 @@ function ViewHelper_Form_rib($name)
 			'placeholder' => 'RR',
 			'maxlength' => 2,
 			'size' => 2,
-			'type' => 'numeric',
+			//'type' => 'numeric',
 		)
 	);
 	

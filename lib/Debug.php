@@ -145,12 +145,12 @@ class Debug
 			echo "\n\n\n";
 		}
 
-		echo '<strong>SESSION : </strong>';
-		print_r($_SESSION);
-		echo "\n\n\n";
-
 		echo '<strong>TRACE : </strong>';
 		debug_print_backtrace();
+		echo "\n\n\n";
+		
+		echo '<strong>SESSION : </strong>';
+		print_r($_SESSION);
 		echo "\n\n\n";
 
 		echo '<strong>SERVEUR : </strong>';

@@ -103,7 +103,7 @@ abstract class PointsAbstractController extends AbstractController
 				'Date'
 			)
 		);
-		if($DernierVirement != false && $DernierVirement > time() - DELAI_VIREMENT * 7 * 24 * 3600)
+		if($DernierVirement != false && $DernierVirement > time() - DELAI_VIREMENT * 24 * 3600)
 		{
 			$this->View->setMessage(
 				"error",
@@ -126,7 +126,7 @@ abstract class PointsAbstractController extends AbstractController
 			}
 			elseif($_POST['retrait'] == 0)
 			{
-				$this->View->setMessage("error", "Valeur invalide ou nulle.");
+				$this->View->setMessage("error", "Valeur à retirer invalide ou nulle.");
 			}
 			elseif($_POST['retrait'] > $this->getMembre()->getPoints())
 			{
