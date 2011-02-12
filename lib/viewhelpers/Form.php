@@ -340,6 +340,21 @@ function ViewHelper_Form_ribLabel($name, $label)
 }
 
 /**
+ * Génère un input-rib et son label avec les arguments spécifiés. Ajoute un retour à la ligne
+ * 
+ * @param string $name Nom / id du composant
+ * @param string $label
+ * 
+ * @return string le code HTML demandé.
+ */
+function ViewHelper_Form_ribLabelBr($name, $label)
+{
+	return ViewHelper_Form_ribLabel($name, $label) . "<br />\n";
+}
+
+
+
+/**
  * Génère un composant points et son label avec les arguments spécifiés.
  * 
  * @param string $name Nom / id du composant
