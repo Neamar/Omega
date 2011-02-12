@@ -51,6 +51,24 @@ color:#996600;
 	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
 	background-position:0px -18px;
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/* - - mini doc box - - */
+aside.doc-box a:hover { /*Ton 1*/
+color:#f16c05!important;
+text-decoration:none!important;
+}
+	aside.doc-box:hover {
+	background:#f1f1ef url('/public/css/images/doc-box-h.png') center left scroll no-repeat;
+	}
 	
-	
+span.doc-input a:hover {  /*Ton 2*/
+color:#c57309!important;
+text-decoration:none!important;
+}
+
+input:hover, input:focus {
+border: 2px solid #e96600;
+}
 	
