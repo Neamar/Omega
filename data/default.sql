@@ -1,6 +1,6 @@
--- phpMyAdmin SQL Dump
+-- phpMyAdministrateur SQL Dump
 -- version 3.2.4
--- http://www.phpmyadmin.net
+-- http://www.phpmyAdministrateur.net
 --
 -- Serveur: localhost
 -- Généré le : Jeu 23 Décembre 2010 à 12:39
@@ -16,16 +16,16 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Admins`
+-- Structure de la table `Administrateuristrateurs`
 --
 
-CREATE TABLE IF NOT EXISTS `Admins` (
+CREATE TABLE IF NOT EXISTS `Administrateurs` (
   `ID` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `Admins`
+-- Contenu de la table `Administrateurs`
 --
 
 
@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `Logs` (
 
 CREATE TABLE IF NOT EXISTS `Mails` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Type` enum('ELEVE','CORRECTEUR','ADMIN') DEFAULT 'ELEVE',
+  `Type` enum('ELEVE','CORRECTEUR','Administrateur') DEFAULT 'ELEVE',
   `Description` varchar(255) NOT NULL,
   `Defaut` binary(1) NOT NULL,
   PRIMARY KEY (`ID`)
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `Membres` (
   `Creation` datetime NOT NULL,
   `Connexion` datetime NOT NULL,
   `Statut` enum('EN_ATTENTE','OK','BLOQUE','DESINSCRIT') NOT NULL DEFAULT 'EN_ATTENTE',
-  `Type` enum('ELEVE','CORRECTEUR','ADMIN') NOT NULL,
+  `Type` enum('ELEVE','CORRECTEUR','Administrateur') NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Mail` (`Mail`,`Type`),
   KEY `Mail_2` (`Mail`,`Pass`)
@@ -481,7 +481,7 @@ INSERT INTO `Statuts` (`Statut`, `DetailsStatut`) VALUES
 ('ATTENTE_ELEVE', 'En attente d''une réponse de l''élève'),
 ('ENVOYE', 'Rendu envoyé à l''élève, en attente de sa réaction'),
 ('EN_COURS', 'Un correcteur travaille actuellement sur le sujet.'),
-('REFUSE', 'Un administrateur examine actuellement le litige.'),
+('REFUSE', 'Un Administrateuristrateur examine actuellement le litige.'),
 ('REMBOURSE', 'L''exercice a été remboursé à l''élève.'),
 ('TERMINE', 'L''exercice est clos.'),
 ('VIERGE', 'En attente des fichiers élèves.');
@@ -542,10 +542,10 @@ CREATE TABLE IF NOT EXISTS `Virements` (
 --
 
 --
--- Contraintes pour la table `Admins`
+-- Contraintes pour la table `Administrateurs`
 --
-ALTER TABLE `Admins`
-  ADD CONSTRAINT `Admins_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `Membres` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Administrateurs`
+  ADD CONSTRAINT `Administrateurs_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `Membres` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Alertes`
@@ -650,11 +650,13 @@ ALTER TABLE `Virements`
 --
 
 INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`) VALUES
-(1, 'Banque', NULL, 0, '2011-01-22 12:00:00', '2011-01-22 12:00:00', 'OK', 'ADMIN'),
+(1, 'Banque', NULL, 0, '2011-01-22 12:00:00', '2011-01-22 12:00:00', 'OK', 'Administrateur'),
 (2, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE'),
-(3, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR');
+(3, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR'),
+(4, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'ADMINISTRATEUR');
 INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
 (2, 2, 'ES');
 INSERT INTO `Correcteurs` (`ID`, `Prenom`, `Nom`, `Telephone`, `Siret`, `SiretOK`) VALUES
 (3, 'Matthieu', 'Bacconnier', '0669347015', NULL, '0');
+INSERT INTO `Administrateurs` (`ID`) VALUES (4);
 

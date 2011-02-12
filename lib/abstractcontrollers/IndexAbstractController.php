@@ -262,7 +262,7 @@ abstract class IndexAbstractController extends AbstractController
 		$_SESSION[$Type] = $Membre;
 		if(!is_null($Membre))
 		{
-			$Membre->setAndSave(array('Connexion'=>SQL::getDate()));
+			$Membre->setAndSave(array('Connexion' => SQL::getDate()));
 			$_SESSION['Membre']['Mail'] = $Membre->Mail;
 		}
 		

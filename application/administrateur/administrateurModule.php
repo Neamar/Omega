@@ -20,7 +20,7 @@
 if(isset($_SESSION['Administrateur']))
 {
 	//Mettre à jour l'objet :
-	$_SESSION['Administrateur'] = Correcteur::load($_SESSION['Administrateur']->ID);
+	$_SESSION['Administrateur'] = Administrateur::load($_SESSION['Administrateur']->ID);
 	return true;
 }
 else 

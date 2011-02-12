@@ -27,7 +27,7 @@
  */
 class Administrateur extends Membre
 {
-	const TABLE_NAME = 'Admins';
+	const TABLE_NAME = 'Administrateurs';
 	const SQL_QUERY = 'SELECT * FROM %TABLE%
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
