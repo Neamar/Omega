@@ -88,7 +88,7 @@ $(function()
 $(function()
 {
 	//TODO : réparer ça !
-	if(0 && $('.texable').length > 0)
+	if($('.texable').length > 0)
 	{
 		var script = document.createElement("script");
 		script.type = "text/javascript";

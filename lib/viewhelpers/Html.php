@@ -193,7 +193,7 @@ function ViewHelper_Html_eDevoir($markup='strong')
 function initTypo()
 {
 	include PATH . '/lib/typo/Typo.php';
-	Typo::addOption(PARSE_MATH);
+	//Typo::addOption(PARSE_MATH);
 
 	//Gestion de la documentation
 	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
@@ -201,12 +201,28 @@ function initTypo()
 	Typo::addBalise('#\\\\eDevoir#', ViewHelper_Html_eDevoir());
 
 	//Empêcher de mettre en forme le texte dans les ref.
-	Typo::$Escape_And_Prepare['#\\\\doc\[.+(oe).+\]{(.+)}#isU']=array
-	(
+	Typo::$Escape_And_Prepare['#\\\\doc\[.+(oe).+\]{(.+)}#isU']=array(
 		'Protect' => 'DOC-REF',
 		'RegexpCode'=>1,
  	);
-
+ 	
+ 	unset(Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU']);
+	
+ 	Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$\$([^ù\n\$]+)\$\$)#iU']=array(
+		'NoBrace'=>true,
+		'RegexpCode'=>2,
+		'Protect' => 'MATHù',
+		'Replace' => '\[%n\]',
+		'Modifications'=>array('$' => '','&amp;' => '&'),
+	);
+	
+ 	Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU']=array(
+		'NoBrace'=>true,
+		'RegexpCode'=>2,
+		'Protect' => 'MATHù',
+		'Replace' => '\(%n\)',
+		'Modifications'=>array('$' => '','&amp;' => '&'),
+	);
 }
 
 /**
