@@ -62,7 +62,7 @@ padding:0 8px;
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* - - message important - - */
-.important, aside.doc-box {
+.important, aside.doc-box  {
 display: inline-block;
 outline: 1px solid #FFFFFF;
 outline-offset: -2px;
@@ -89,30 +89,32 @@ color:#676767;
 font-weight:bold;
 text-align:left;
 }
-aside.doc-box:hover {
-background:#f1f1ef url('/public/css/images/doc-box-h.png') center left scroll no-repeat;
-}
 	aside.doc-box a{
 	font-weight:normal;
-	}
-	aside.doc-box a:hover {
-	color:#f16c05!important;
-	text-decoration:none!important;
 	}
 	
 /* - - Doc-box sur Span - - */	
 span.doc-input {
+text-align: center;
+background: #ededed;
+color:#c13f27;
+border:1px solid #cecece;
+margin:10px; 10px;
+	/*-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);*/
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 2. Contact -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-form {	
+form {
+	margin-top:10px;
 padding: 0 0 15px 0;
 }
 	form label {
 	font-family: Georgia, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	color: #29241c;
 	text-align: right;
 	text-transform: uppercase;
@@ -121,15 +123,22 @@ padding: 0 0 15px 0;
 	padding:0 10px 0 0;
 	float: left;
 	}
-/*input {
-font-family: Georgia, sans-serif;
-color: #042d2e;
-font-size: 18px;
-width: 150px;
-height: 28px;
-margin: 0 0 14px 0; padding: 5px 0 0 20px;
-background: url(../imgs/input-bg.png) no-repeat;
-border: 4px solid #32a3ad;
-float: left;
-}*/
+	input {
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+	color: #042d2e;
+	font-size: 14px;
+	margin: 0 0 5px 0; 
+	padding: 2px 0 2px 5px;
+	border: 2px solid #737373;
+	}
+	input[type=submit] {
+		padding:5px;
+		cursor: pointer;
+		display: block;
+		line-height: 0px;
+	}
+		
+		
 
