@@ -196,8 +196,11 @@ function initTypo()
 	//Typo::addOption(PARSE_MATH);
 
 	//Gestion de la documentation
-	Typo::addBalise('#\\\\doc\[([a-z_-]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
-	Typo::addBalise('#\\\\doc\[([a-z]+/[a-z_-]+)\]{(.+)}#isU', '<a href="/documentation/$1">$2</a>');
+	//Liens vers /documentation/index transformés en .htm
+	Typo::addBalise('#\\\\doc\[([^/]+)\]{(.+)}#isU', '<a href="/$1.htm">$2</a>');
+	//Autres liens de documentation
+	Typo::addBalise('#\\\\doc\[(.+)\]{(.+)}#isU', '<a href="/documentation/$1">$2</a>');
+	
 	Typo::addBalise('#\\\\eDevoir#', ViewHelper_Html_eDevoir());
 
 	//Empêcher de mettre en forme le texte dans les ref.
@@ -205,6 +208,14 @@ function initTypo()
 		'Protect' => 'DOC-REF',
 		'RegexpCode'=>1,
  	);
+ 	
+ 	Typo::$Escape_And_Prepare['#(^|[^\\\\])(\$([^ù\n\$]+)\$)#iU']=array	(
+		'NoBrace'=>true,
+		'RegexpCode'=>2,
+		'Protect' => 'MATHù',
+		'Replace' => '<span class="texable">\(%n\)</span>',
+		'Modifications'=>array('$' => '','&amp;' => '&'),
+	);
 }
 
 /**

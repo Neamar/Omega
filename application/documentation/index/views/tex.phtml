@@ -15,6 +15,7 @@ $Constructions = array(
 	'Ensemble' => '\mathbb{R}',
 	'Indice' => 'x_{y}',
 	'Exposant' => 'x^{y}',
+	'Limite' => '\lim_{x \to \infty} f(x)',
 );
 
 $Symboles = array(
@@ -102,4 +103,13 @@ echo makeTable('Courte liste de symbole', $Symboles);
 <h2>Environnements</h2>
 <?php 
 echo makeTable('Environnements plus complexes', $Env);
+?>
+
+<h2>Pour aller plus loins...</h2>
+<?php 
+$Liens = array(
+	'http://en.wikibooks.org/wiki/LaTeX/Mathematics' => 'Un manuel Wikibooks'
+);
+
+echo $this->Html_listAnchor($Liens);
 ?>
