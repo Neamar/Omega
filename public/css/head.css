@@ -35,7 +35,7 @@ background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll re
 
 html {font-size: 16px;height: 100%;}
 
-ul, p {margin:0; padding:0; list-style-type:none;}
+ul {margin:0; padding:0; list-style-type:none;}
 a { text-decoration: none; color: #666;}
 a:visited {} 
 a:hover, a:focus, a:active { text-decoration: none;} 
@@ -201,8 +201,9 @@ height:40px;
 #content-title {
 background:#f1f1ef url('/public/css/images/title-r.jpg') top left scroll repeat-x; /*image r*/
 height:auto;
-}
 
+}
+#content-title p {margin:0; padding:0;}
 #title {
 clear:both;
 background-color: #CCCCCC;
@@ -248,6 +249,8 @@ height:auto;
 	height:13px;
 	background:url('/public/css/images/bottom-message-r.png') bottom scroll repeat-x;
 	}
+
+	#main-message p {margin:0; padding:0;}
 	
 #main-message aside p:first-child {
 line-height:26px;
