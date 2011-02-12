@@ -35,6 +35,10 @@ class Administrateur_IndexController extends IndexAbstractController
 			'Accueil administrateur',
 			'Cette page regroupe les différentes actions qui vous sont disponibles en tant qu\'administrateur.'
 		);
+		
+		$this->View->Virements = $this->virementsCount();
+		$this->View->Alertes = $this->alertesCount();
+		$this->View->Reclamations = $this->reclamationsCount();
 	}
 	
 	/**
@@ -96,13 +100,82 @@ class Administrateur_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Gère l'enregistrement dans la table Correcteur en particulier.
+	 * Liste des virements à réaliser
+	 */
+	public function virementsAction()
+	{
+		
+	}
+	
+	/**
+	 * Liste des alertes à traiter
+	 */
+	public function alertesAction()
+	{
+		
+	}
+	
+	/**
+	 * Liste des réclamations à traiters
+	 */
+	public function reclamationsAction()
+	{
+		
+	}
+	
+	/**
+	 * Renvoie le nombre de virements en attente d'être effectués.
+	 * 
+	 * @return int
+	 */
+	protected function virementsCount()
+	{
+		return Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Virements
+			WHERE Statut = "INDETERMINE"',
+			'S'
+		);
+	}
+	
+	/**
+	 * Renvoie le nombre d'alertes en attente d'être traitées
+	 * 
+	 * @return int
+	 */
+	protected function alertesCount()
+	{
+		return Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Alertes
+			WHERE Statut = "ATTENTE"',
+			'S'
+		);
+	}
+	
+	
+	/**
+	 * Renvoie le nombre d'exercices pour lesquels une réclamation a été déposée
+	 * 
+	 * @return int
+	 */
+	protected function reclamationsCount()
+	{
+		return Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Exercices
+			WHERE Statut = "REFUSE"',
+			'S'
+		);
+	}
+
+	
+	/**
+	 * Bloque l'inscription d'un administrateur.
 	 * 
 	 * @see IndexAbstractController::createAccountSpecial()
 	 * 
-	 * @param array $Datas les données envoyées
-	 * 
-	 * @return bool true sur un succès.
+	 * @param array $Datas les données envoyées lors de la tentative d'inscription.
 	 */
 	protected function createAccountSpecial(array $Datas)
 	{

@@ -24,8 +24,8 @@ if(!isset($_SESSION['Eleve']))
 	$Retour['right'] = '<a href="/eleve/connexion">Connexion</a>';
 	$Retour['links'] = array(
 		'/' => 'Accueil',
-		'/eleve/inscription' => 'Inscription correcteur',
-		'/eleve/connexion' => 'Connexion correcteur'
+		'/eleve/inscription' => 'Inscription élève',
+		'/eleve/connexion' => 'Connexion élève'
 	);
 }
 else
