@@ -7,6 +7,7 @@ En production :
 - ajouter captcha à l'inscription correcteur
 - ajouter captcha à la récupération mdp
 - ajouter captcha à la désinscription
+- ajouter captcha à la connexion administrateur ?
 - virer le dump de la requête dans Sql::query
 - véritables mails
 - supprimer les tuples SQL par défaut

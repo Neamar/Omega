@@ -1,0 +1,33 @@
+<form id="form_connexion-administrateur" method="post" action="">
+
+<?php
+echo $this->Form_inputLabelBr(
+	'email',
+	'Votre adresse mail',
+	array(
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr',
+		'required' => 'required',
+	)
+);
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe',
+	array(
+		'type' => 'password',
+		'required' => 'required',
+	)
+);
+
+echo $this->Form_inputLabelBr(
+	'token',
+	'<em>Token</em> du ' . date('d/m/Y'),
+	array(
+		'type' => 'password',
+		'required' => 'required',
+	)
+);
+
+echo $this->Form_submit('connexion-administrateur', "Connexion");
+?>
+</form>

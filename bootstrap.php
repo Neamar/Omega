@@ -52,7 +52,7 @@ session_start();
  */
 function __autoload($ClassName)
 {
-	$Models = array('DbObject','Exercice','Membre','Correcteur','Eleve',);
+	$Models = array('DbObject', 'Exercice', 'Membre', 'Correcteur', 'Eleve', 'Administrateur');
 
 	$FileName = $ClassName . '.php';
 	if(substr($ClassName, -18)=='AbstractController')

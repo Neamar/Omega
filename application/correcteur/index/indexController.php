@@ -27,7 +27,7 @@
 class Correcteur_IndexController extends IndexAbstractController
 {
 	/**
-	 * Page d'accueil du module ; connecter le membre si nécessaire, puis afficher les infos du compte et les liens utiles. 
+	 * Page d'accueil du module ; afficher les infos du compte et les liens utiles. 
 	 * 
 	 */
 	public function indexAction()
@@ -58,6 +58,8 @@ class Correcteur_IndexController extends IndexAbstractController
 		if(isset($_SESSION['Correcteur']))
 		{
 			unset($_SESSION['Correcteur']);
+			
+			//Afficher un message avec de l'aide élève (les procédures de déconnexion sont les mêmes)
 			$this->View->setMessage('info', "Vous vous êtes déconnecté.", 'eleve/deconnexion');
 		}
 		
