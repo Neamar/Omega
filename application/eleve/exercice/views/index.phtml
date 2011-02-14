@@ -1,4 +1,4 @@
-<h2>Créer un nouvel exercice</h2>
+<h2 class="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
 <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>
 
 <?php 
@@ -13,13 +13,13 @@ if(count($this->ExercicesActifs) > 0)
 		);
 	}
 	?>
-	<h2>Mes exercices actifs</h2>
+	<h2 class="membre-exercice-index-actif">Mes exercices actifs</h2>
 	<?php 
 	echo $this->Html_listAction($ExercicesActifs, '/eleve/exercice/index/__URL__', 'eleve');
 }
 ?>
 
-<h2>Actions sur vos exercices</h2>
+<h2 class="h2_actions">Actions sur vos exercices</h2>
 <?php 
 echo $this->Html_ajaxTable('/eleve/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
 ?>

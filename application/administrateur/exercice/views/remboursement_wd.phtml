@@ -23,6 +23,7 @@ else
 			'min' => 0,
 			'max' => 200,
 			'step' => 5,
+			'required' => 'required'
 		)
 	) . '%<br />' . PHP_EOL;
 }
@@ -31,7 +32,7 @@ else
 
 echo $this->Form_checkbox('bloquer', 'Bloquer le correcteur');
 
-echo $this->Form_submit('remboursement_exercice', 'Entériner ma décision');
+echo $this->Form_submit('remboursement-exercice', 'Entériner ma décision');
 ?>
 </form>
 

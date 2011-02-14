@@ -44,7 +44,9 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 1)
 	
 	//Le contenu.
 	$ViewObject->renderContent();
+	$C = $ViewObject->getController();
 	
+	$Page = $C->getModule() . '-' . $C->getController() . '-' . $C->getAction();
 	$R = ob_get_clean();
 	
 	if($DeltaH != 0)
@@ -58,5 +60,9 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 1)
 			$R
 		);
 	}
+	
+	//Ajouter une classe au h2
+	$R = preg_replace('`<h([1-6])>`', '<h$1 class="' . $Page . '">', $R);
+	
 	return $R;
 }

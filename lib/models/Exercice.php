@@ -305,7 +305,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function priceAsked()
 	{
-		return $this->Enchere;
+		return (int) $this->Enchere;
 	}
 	
 	/**
@@ -315,7 +315,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function pricePaid()
 	{
-		return $this->priceAsked() * MARGE;
+		return (int) ($this->priceAsked() * MARGE);
 	}
 	
 	/**
