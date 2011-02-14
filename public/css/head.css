@@ -233,6 +233,7 @@ position:relative;
 padding-top:5px;
 width:1000px;
 margin:auto;
+padding-left:70px;
 }
 	.message p {
 	padding:0 35px;
@@ -320,7 +321,7 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 .message .doc-box-link a{
 position:absolute;
 bottom:-15px;
-right:20px;
+right:70px;
 display: inline-block;
 outline: none;
 cursor: pointer;
