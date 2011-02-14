@@ -57,7 +57,7 @@ color:#5e5e5e;
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* - - message important, dox-box - Classe globale - - */
-.important, aside.doc-box  {
+.important, .infos, aside.doc-box  {
 display: inline-block;
 outline: 1px solid #FFFFFF;
 outline-offset: -2px;
@@ -68,19 +68,39 @@ text-shadow:1px 1px 0px #fff;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:0 15px;
+margin:5px 15px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 background:#f1f1ef url('/public/css/images/important.png') center left scroll no-repeat;
 }
-	.important {
+	.important, .infos  {
 	font-size:16px;
+	}
+/* - - La classe .important _ rouge - - */
+	.important:hover {
+	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
+	color:#931414;
+	background-color:#f0e8e8;
+	}
+/* - - La classe .info _ Bleu - - */
+	.infos {
+	color:#187ab3;
+	}
+	.infos:hover {
+	background:url('/public/css/images/important-info.png') center left scroll no-repeat;
+	color:#1180a9;
+	background-color:#e6edf0;
 	}
 	
 
 /* - - mini doc box bloc - - */
 aside.doc-box {
+	/*expérimental*/
+	position:relative;
+	left:50%;
+	margin-left:-180px;
+
 padding-left:44px;
 margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
@@ -144,7 +164,7 @@ padding: 0 0 15px 0;
 		-moz-border-radius: .4em;
 		border-radius: .4em;
 	color: #042d2e;
-	border: 2px solid #737373;
+	border: 2px solid #848484;
 	padding:4px 4px;
 	width:350px;
 	margin-bottom:15px;
@@ -190,4 +210,22 @@ width:auto;
 text-align:right;
 }
 		
+.list-actions {
+background-color:#CCC;
+}
 
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+table {
+margin:auto;
+font-size:0.95em;
+text-align:center;
+}
+	td {
+	border:1px dotted grey;
+	padding:2px;
+	}
+		td a{
+		display:block;
+		}
