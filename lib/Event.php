@@ -36,6 +36,7 @@ class Event
 	const ELEVE_EXERCICE_REFUS_AUTOMATIQUE = 'eleve/exercice/refus';
 	const ELEVE_EXERCICE_TERMINE = 'eleve/exercice/termine';
 	const ELEVE_EXERCICE_RECLAMATION = 'eleve/exercice/reclamation';
+
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';
@@ -44,6 +45,9 @@ class Event
 	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
 	const MEMBRE_FAQ_QUESTION = 'membre/faq/question';
 	const MEMBRE_FAQ_REPONSE = 'membre/faq/reponse';
+	const MEMBRE_EXERCICE_COMPENSATION = 'membre/exercice/compensation';
+	const MEMBRE_EXERCICE_REMBOURSEMENT = 'membre/exercice/remboursement';
+	const MEMBRE_EXERCICE_DEDOMMAGEMENT = 'membre/exercice/dedommagement';
 	
 	const CRON = 'cron';
 	
