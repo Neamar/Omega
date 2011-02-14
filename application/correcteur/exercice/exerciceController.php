@@ -63,6 +63,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'ENVOYE' => "Vous avez envoyé votre corrigé. L'élève n'a pas encore fait de remarques.",
 			'TERMINE' => "L'exercice est terminé. Vous avez été payé.",
 			'REFUSE' => "L'élève a émis une réclamation. Une équipe vérifie actuellement la justesse de cette accusation...",
+			'REMBOURSE' => "L'élève a été remboursé et dédommagé à hauteur de <strong>" . $this->Exercice->Remboursement . '%</strong>.',
 		);
 
 		$this->View->setTitle(
