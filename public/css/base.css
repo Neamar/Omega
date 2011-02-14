@@ -141,6 +141,10 @@ padding: 0 0 15px 0;
 	margin-bottom:15px;
 	}
 	
+	.input_default {
+	width:auto!important;
+	}
+	
 	input[type=submit] {
 	padding:5px;
 	cursor: pointer;
