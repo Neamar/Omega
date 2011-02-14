@@ -56,7 +56,7 @@ color:#5e5e5e;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/* - - message important - - */
+/* - - message important, dox-box - Classe globale - - */
 .important, aside.doc-box  {
 display: inline-block;
 outline: 1px solid #FFFFFF;
@@ -69,11 +69,15 @@ background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
 margin:0 15px;
-		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
-		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 background:#f1f1ef url('/public/css/images/important.png') center left scroll no-repeat;
 }
+	.important {
+	font-size:16px;
+	}
+	
 
 /* - - mini doc box bloc - - */
 aside.doc-box {
@@ -91,6 +95,7 @@ text-align:left;
 aside.doc-box p{margin:0;}
 
 	aside.doc-box:hover {
+	border:1px solid #caaf9a;
 	background-color:#ececea!important;
 	}
 	aside.doc-box a{
@@ -104,9 +109,9 @@ background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
 margin:10px; 10px;
--webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 -webkit-border-radius: .25em;
 -moz-border-radius: .25em;
 border-radius: .25em;
@@ -121,36 +126,68 @@ outline-offset: -2px;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 2. Contact - Les formulaires -------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-form {
+form { /* classe globale pour les forms*/
 margin-top:10px;
 padding: 0 0 15px 0;
 }
-	form label {
+	form label { /* saut de ligne des labels*/
 	color: #29241c;
 	display:block;
+	text-shadow:1px 1px 0px #fff;
+	}
+	form input[type=radio] + label, form input[type=checkbox] + label { /* annulation des sauts de lignes sur les radio et checkbox*/
+	display:inline!important;
 	}
 	
-	form input[type=text], form textarea {
-		-webkit-border-radius: .5em;
-		-moz-border-radius: .5em;
-		border-radius: .5em;
+	form input[type=text], form textarea, form input[type=email], form input[type=password], select { /*propriété des input:text & textarea*/
+		-webkit-border-radius: .4em;
+		-moz-border-radius: .4em;
+		border-radius: .4em;
 	color: #042d2e;
 	border: 2px solid #737373;
 	padding:4px 4px;
 	width:350px;
 	margin-bottom:15px;
+	outline: 2px solid #e1e1e1;
+	outline-offset: -4px;
+		-webkit-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
+		-moz-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
+		box-shadow: 3px 3px 2px rgba(0,0,0,.1);
+	font:normal 16px "Arial", serif;
+	color:#000;
 	}
-	
-	.input_default {
+		form input:hover, form textarea:hover, select:hover {
+		border: 2px solid #ff7000;
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
+		}
+		form input:focus, form textarea:focus, select:focus {
+		border: 2px solid #c13f27;
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
+		}
+		
+	.input_default { /* supression des propriétés sur default*/
 	width:auto!important;
 	}
-	
-	input[type=submit] {
-	padding:5px;
-	cursor: pointer;
-	display: block;
-	line-height: 0px;
-	}
-		
+
+/* le bouton d'envoie*/
+input[type=submit] {
+padding:5px;
+cursor: pointer;
+display: block;
+line-height: 0px;
+}
+
+/* - - Les types Particuliers - - */
+select {
+width:auto;
+}
+
+#content p.see-link {
+text-align:right;
+}
 		
 
