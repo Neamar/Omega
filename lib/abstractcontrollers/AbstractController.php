@@ -254,6 +254,7 @@ abstract class AbstractController
 			}
 			
 			header('Location:' . URL . $URL);
+			exit();
 		}
 		else
 		{

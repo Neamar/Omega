@@ -80,7 +80,7 @@ define('HASH_LENGTH', 6);
  * Pourcentage de multiplication de la somme correcteur (dont TVA)
  * @var float
  */
-define('MARGE', 150);
+define('MARGE', 1.5);
 
 /**
  * Borne supérieure maximale (en pourcentage) pour un remboursement
