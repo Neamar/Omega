@@ -110,7 +110,7 @@ box-shadow: 0 1px 2px rgba(0,0,0,.2);
 -webkit-border-radius: .25em;
 -moz-border-radius: .25em;
 border-radius: .25em;
-padding:5px;
+padding:3px;
 outline: 1px solid #FFFFFF;
 outline-offset: -2px;
 }
@@ -126,26 +126,19 @@ margin-top:10px;
 padding: 0 0 15px 0;
 }
 	form label {
-	font-family: Georgia, sans-serif;
-	font-size: 13px;
 	color: #29241c;
-	text-transform: uppercase;
-
-
-float: left;    
-width: 250px;    
-margin-right: 1em;
-text-align: right;   
+	display:block;
 	}
 	
-	input {
-	-webkit-border-radius: .5em;
-	-moz-border-radius: .5em;
-	border-radius: .5em;
+	form input[type=text], form textarea {
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
 	color: #042d2e;
 	border: 2px solid #737373;
-	margin:5px 0;
 	padding:4px 4px;
+	width:350px;
+	margin-bottom:15px;
 	}
 	
 	input[type=submit] {
