@@ -24,7 +24,7 @@ echo $this->Html_tableHead('Réclamations en attente', $Head)
 	<?php 
 	foreach($this->Reclamations as $Hash => $Tuple)
 	{
-		$Tuple[] = $Hash;
+		$Tuple[] = '<a href="/administrateur/exercice/remboursement/' . $Hash . '">Traiter</a>';
 		echo $this->Html_tableRow(formatTuple($Tuple));
 	}
 	?>
