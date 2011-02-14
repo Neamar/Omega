@@ -70,14 +70,19 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 				{
 					//Rejet de la demande de renseignement
 					$this->Exercice->closeExercice('Rejet de la réclamation', $this->getMembre(), $ToUpdate);
-					//TODO: dispatch
+					//TODO: dispatch Event terminé
 					
 					$this->View->setMessage('ok', "Décision correctement enregistrée. Dommage pour l'élève !");
 					$this->redirect('/administrateur/reclamations');
 				}
 				else
 				{
-					//Événements à dispatcher (Nom évènement => données)
+					/**
+					 * Événements à dispatcher (Nom évènement => données)
+					 * Le nom évènement correspond à l'une des constantes statiques de la classe Event
+					 * Les données sont un tableau auquel les clés Exercice, Pourcentage, PaiementCorrecteur, PaiementEleve, Eleve et Correcteur seront automatiquement rajoutées.
+					 * @var array
+					 */
 					$ToDispatch = array();
 					
 					if($Pourcentage > 0 && $Pourcentage < 1)
@@ -91,6 +96,7 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 						$MessageEleve = 'Remboursement partiel (' . $PourcentageAffichable . '%)';
 						$MessageExercice = 'Remboursement partiel de l\'élève et paiement du correcteur';
 						$MessageAdministrateur = 'Les échanges de monnaie ont été effectués.';
+						$ToDispatch[Event::MEMBRE_EXERCICE_COMPENSATION] = array();
 					}
 					elseif($Pourcentage == 1)
 					{
@@ -100,6 +106,7 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 						$MessageEleve = 'Remboursement total';
 						$MessageExercice = 'Remboursement de l\'exercice à l\'élève.';
 						$MessageAdministrateur = 'Le remboursement a été effectué dans son intégralité.';
+						$ToDispatch[Event::MEMBRE_EXERCICE_REMBOURSEMENT] = array();
 					}
 					elseif($Pourcentage > 1 && $Pourcentage <= MAX_REMBOURSEMENT / 100)
 					{
@@ -109,6 +116,7 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 						$MessageEleve = 'Remboursement et dédommagement (' . $PourcentageAffichable . '%)';
 						$MessageExercice = 'Dédommagement de l\'élève.';
 						$MessageAdministrateur = 'Le dédommagement a été effectué. Dommage pour nous :(';
+						$ToDispatch[Event::MEMBRE_EXERCICE_DEDOMMAGEMENT] = array();
 					}
 					else
 					{
@@ -137,6 +145,19 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 					
 					$this->Exercice->setStatus('REMBOURSE', $this->getMembre(), $MessageExercice, $ToUpdate);
 					Sql::commit();
+					
+					//Envoyer les évènements
+					foreach($ToDispatch as $Event => $Params)
+					{
+						$Params['Exercice'] = $this->Exercice;
+						$Params['Eleve'] = $Eleve;
+						$Params['Correcteur'] = $Correcteur;
+						$Params['Pourcentage'] = $PourcentageAffichable;
+						$Params['PaiementEleve'] = $PaiementEleve;
+						$Params['PaiementCorrecteur'] = $PaiementCorrecteur;
+						
+						Event::dispatch($Event, $Params);
+					}
 					
 					$this->View->setMessage('ok', $MessageAdministrateur);
 					$this->redirect('/administrateur/reclamations');
