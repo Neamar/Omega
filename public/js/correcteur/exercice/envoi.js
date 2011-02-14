@@ -154,7 +154,7 @@ $(function()
 						Tabs.tabs('select', 'envoi-log')
 							.tabs('disable', 'envoi-apercu');
 						$('a[href=#envoi-log]').css('color', 'red');
-						Modal.html('<p>Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet « Console » qui vient de s\'afficher (lignes en rouge).</p>');
+						Modal.html('<p>Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet «&nbsp;Console&nbsp;» qui vient de s\'afficher (lignes en rouge).</p>');
 					}
 					else
 					{
@@ -178,10 +178,11 @@ $(function()
 						
 						//Mettre à jour l'onglet aperçu
 						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
-						$('#envoi-apercu .pager a').click(function()
+						$('#envoi-apercu .pager a').click(function(e)
 						{
 							$('#pdf-image').html(pageImg($(this).data('page')));
-							return false;
+							e.preventDefault();
+							console.log('fu');
 						});
 						
 						//Mettre à jour l'onglet historique

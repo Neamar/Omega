@@ -10,7 +10,7 @@ if($this->EstRemboursable == true)
 else
 {
 	?>
-	<p class="important">Vous allez émettre une contestation « tardive ». L'exercice est normalment terminé, et le correcteur a déjà été payé.<br />
+	<p class="important">Vous allez émettre une contestation «&nbsp;tardive&nbsp;». L'exercice est normalment terminé, et le correcteur a déjà été payé.<br />
 	Vous ne pourrez donc pas être remboursé.<br />
 	En revanche, en constestant, vous nous permettez de vérifier la qualité du travail. Si celui-ci est effectivement mauvais, nous pourrons dès lors bloquer le correcteur pour éviter qu'il ne commette d'autres erreurs.</p>
 	<?php
@@ -32,7 +32,8 @@ echo $this->Form_textareaLabelBr('message', 'Justifiez votre demande');
 ?>
 <p>Merci d'être précis et complet dans ce message. Plus vos griefs seront clairs, plus il sera facile de les juger.</p>
 
-<p>Vous pouvez aussi envoyer des fichiers (scan d'un corrigé fait en classe, remarques du professeur...)</p>
+<p>Vous pouvez aussi envoyer des fichiers (scan d'un corrigé fait en classe, remarques du professeur...)<br />
+Sélectionnez le premier fichier, puis sélectionnez le second fichier.</p>
 <?php
 echo $this->Doc_box(
 	'eleve',

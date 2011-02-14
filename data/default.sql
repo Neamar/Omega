@@ -325,6 +325,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Corriges` (
   `Exercice` int(2) NOT NULL,
   `Date` datetime NOT NULL,
   `Contenu` text NOT NULL,
+  `Longueur` int(5) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Date` (`Date`),
   KEY `Exercice` (`Exercice`)

@@ -272,7 +272,7 @@ WHERE Hash="%ID%"';
 		
 		//Démarrer une transaction pour assurer la cohérence des données
 		Sql::start();
-		$Correcteur->credit($this->Enchere, 'Paiement pour l\'exercice « ' . $this->Titre . ' »', $this);
+		$Correcteur->credit($this->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Titre . '&nbsp;»', $this);
 		Membre::getBanque()->debit($this->Enchere, 'Paiement exercice.', $this);
 		$this->setStatus('TERMINE', $ChangeAuthor, $Message . " et paiement du correcteur.", $Changes);
 		Sql::commit();

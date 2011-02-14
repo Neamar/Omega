@@ -13,7 +13,7 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
 	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
 	
-	$Infos = '<p>Exercice « <strong>' . $ExerciceDatas['Titre'] . '</strong> »';
+	$Infos = '<p>Exercice «&nbsp;<strong>' . $ExerciceDatas['Titre'] . '</strong>&nbsp;»';
 	$Infos .= ', <strong>' . $ExerciceDatas['Matiere'] . '</strong>';
 	if($ExerciceDatas['Section'] != '')
 	{

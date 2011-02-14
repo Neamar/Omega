@@ -1,10 +1,10 @@
 em em
-{/*Deux mises en emphase ramènenent à l'état standard*/
+{/*Deux mises en emphase ramÃ¨nenent Ã  l'Ã©tat standard*/
 	font-style:normal;
 }
 
 em em em, em.italique
-{/*Trois mises en emphase : retour à l'italique ou forçage de l'italique.*/
+{/*Trois mises en emphase : retour Ã  l'italique ou forÃ§age de l'italique.*/
 	font-style:italic;
 }
 
@@ -28,91 +28,11 @@ sup a
 	color:black;
 }
 
-table
-{
-	margin:auto;
-}
-
-li
-{
-	clear:left;
-}
-
 
 
 /*/////////////////////////////////////
 //ENVIRONNEMENTS
 /////////////////////////////////////*/
-.abstract
-{
-	margin:10px;
-	padding:20px;
-	font-size:.9em;
-	border-left:1px solid gray;
-	border-right:1px solid gray;
-	font-style:italic;
-}
-
-.abstract:before
-{
-	display:block;
-	content:"RÉSUMÉ";
-	text-align:center;
-}
-
-table.quizz
-{
-	cursor:help;
-}
-
-table.quizz caption
-{
-	border:none;
-}
-
-table.quizz tr .answer
-{
-	visibility:hidden;
-}
-
-table.quizz tr:hover .answer
-{
-	visibility:visible;
-}
-
-form.qcm h5
-{
-	text-align:center;
-}
-
-form.qcm .qcm_wrapper
-{
-	margin:auto;
-	-webkit-column-count:2;
-	-moz-column-count:2;
-	-moz-column-gap: 1em;
-	-moz-column-rule:1px solid gray;
-	column-count: 2;
-	column-gap: 1em;
-	column-rule:1px solid gray;
-}
-
-form.qcm fieldset
-{
-	border:1px dashed green;
-}
-
-form.qcm fieldset legend
-{
-	font-size:.8em;
-}
-
-form.qcm div.qcm_answer
-{
-	padding-left:10px;
-	margin-left:10px;
-	border-left:1px solid gray;
-}
 
 .verse p
 {
@@ -122,26 +42,10 @@ form.qcm div.qcm_answer
 }
 
 
-
-
-/* Classes sur quelques éléments. */
-span.quickref
-{
-	border:1px dotted green;
-	background-color:#abffab;
-	font-family:Courrier;
-	margin:4px;
-}
-
 span.roman
 {
 	text-transform:lowercase;
 	font-variant:small-caps;
-}
-
-p.displaymath
-{
-	text-align:center;
 }
 
 hr.court
@@ -150,29 +54,22 @@ hr.court
 }
 
 hr.footnote
-{/*La barre de séparation des notes de bas de page.*/
+{/*La barre de sÃ©paration des notes de bas de page.*/
 	margin-left:0;
 	margin-bottom:0;
 }
 
 hr.footnote + ol
-{/*Le contenu des notes est légérement plus petit que le reste du texte.*/
+{/*Le contenu des notes est lÃ©gÃ©rement plus petit que le reste du texte.*/
 	font-size:85%;
 	margin-top:1px;
 	list-style-type: none;
 }
 
 hr.footnote + ol li
-{/*Le contenu des notes est légérement plus petit que le reste du texte.*/
+{/*Le contenu des notes est lÃ©gÃ©rement plus petit que le reste du texte.*/
 	line-height:1em;
 }
-
-
-
-
-
-
-
 
 
 /* Et enfin, des classes abstraites qui peuvent s'appliquer partout. */
@@ -182,7 +79,7 @@ hr.footnote + ol li
 }
 
 .ms
-{/*Fonte monospace (espacement constant). Obsolet (remplacé par <tt>) mais gardé pour compatibilité*/
+{/*Fonte monospace (espacement constant). Obsolet (remplacÃ© par <tt>) mais gardÃ© pour compatibilitÃ©*/
 	font-family:monospace;
 }
 

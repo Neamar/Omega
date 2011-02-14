@@ -7,6 +7,7 @@ ou sur plusieurs lignes, ce qui devrait être distinguable.</p>
 <!-- .important -->
 <p class="important">Un message important (qui peut aussi s'étendre sur plusieurs lignes, mais là j'ai un peu la flemme).</p>
 
+<p class="infos">Des informations qui peuvent être intéressantes à noter, sans pour autant nécessiter d'être importantes.</p>
 <!-- eDevoir -->
 <p>Encore du blabla... et <?php echo $this->Html_eDevoir() ?> (avec une classe pour pencher le e)</p>
 
@@ -23,6 +24,8 @@ echo $this->Form_inputLabelBr('form', 'Un élément de formulaire');
 echo $this->Form_inputLabel('form2', 'Un élément de formulaire suivi d\'aide') . $this->Doc_inputBr('eleve', 'ajout');
 echo $this->Form_textareaLabelBr('form3', 'Un élément textarea');
 
+echo $this->Form_radio('form4', array('Des éléments radio', 'En cascade', 'Et encore !'), 2);
+echo $this->Form_ribLabelBr('form5', 'Un élément pour spécifier une clé RIB');
 echo $this->Form_submit('envoi', 'Et le bouton d\'envoi.');
 ?>
 </form>
@@ -64,12 +67,31 @@ echo $this->View_render($this->SousPage);
 <?php 
 $Liste = array(
 	"Un composant exercice : il suffit de se connecter en tant qu\'élève (compte ok@neamar.fr, mdp: 123 déjà créé) puis de créer un nouvel exercice, d'ajouter des fichiers et d'envoyer aux correcteurs. La page qui s'affichera alors montrera le composant exercice dans toute sa splendeur",
-	"Cela dit, n'allez pas trop vite : lors de la création de l'exercice, vous pourrez admirer le composant de sélection de date qui apparaît en cliquant sur le champ « date de rendu ».",
+	"Cela dit, n'allez pas trop vite : lors de la création de l'exercice, vous pourrez admirer le composant de sélection de date qui apparaît en cliquant sur le champ «&nbsp;date de rendu&nbsp;».",
 	"Sur la page qui suit la création, pour l'envoi de fichiers, on peut aussi voir un joli élément à onglets.",
-	"Ajoutons aussi les « tableaux Ajax dynamiques », dont on trouvera un exemple sur la page résumant les propriétés d'un exercice (toujours après avoir uploadé les fichiers et validé l'envoi aux correcteurs, sous le composant exercice)",
-	"N'oublions pas les « fieldset déroulants », dont l'exemple le plus simple à trouver est dans la page de création, sur le composant pour afficher les options avancées. Je précise d'ailleurs que tous les exemples donnés sont sur la création d'exercice, mais que les composants cités sont génériques et utilisés à différents endroits."
+	"Ajoutons aussi les «&nbsp;tableaux Ajax dynamiques&nbsp;», dont on trouvera un exemple sur la page résumant les propriétés d'un exercice (toujours après avoir uploadé les fichiers et validé l'envoi aux correcteurs, sous le composant exercice)",
+	"N'oublions pas les «&nbsp;fieldset déroulants&nbsp;», dont l'exemple le plus simple à trouver est dans la page de création, sur le composant pour afficher les options avancées. Je précise d'ailleurs que tous les exemples donnés sont sur la création d'exercice, mais que les composants cités sont génériques et utilisés à différents endroits."
 );
 
 echo $this->Html_list($Liste);
 ?>
-	
+
+<h2>Exemple de tableau</h2>
+<p>Ce tableau est un fake (non dynamique). Mais la structure HTML est la bonne :</p>
+
+<table data-callback="" data-source="/eleve/exercice/_actions/971240" class="ajax-table">
+	<caption>Actions sur l'exercice</caption>
+<thead>
+<tr>
+	<th>Date</th>
+	<th>Action</th>
+</tr>
+</thead>
+<tbody><tr><td>14/2/11 à 15h</td><td>Contestation sur l'exercice</td></tr>
+<tr><td>12/2/11 à 20h</td><td>Envoi du fichier corrigé</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Acceptation de l'offre.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Proposition correcteur pour 20 points.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Envoi de l'exercice aux correcteurs.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Création de l'exercice.</td></tr>
+</tbody>
+</table>

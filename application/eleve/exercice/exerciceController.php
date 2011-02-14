@@ -64,7 +64,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$ListeMessage = $this->statusString();
 
 		$this->View->setTitle(
-			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
+			'Accueil de l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			$ListeMessage[$this->Exercice->Statut]
 		);
 	}
@@ -409,7 +409,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('VIERGE', 'ATTENTE_CORRECTEUR','ATTENTE_ELEVE'), 'Vous ne pouvez plus annuler cet exercice pour l\'instant. Si nécessaire, vous pouvez <a href="/contact.htm">nous contacter</a>.');
 		
 		$this->View->setTitle(
-			'Annulation de « ' . $this->Exercice->Titre . ' »',
+			'Annulation de «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet l'annulation de l'exercice. Cette action n'a aucun coût."
 		);
 		
@@ -431,7 +431,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('ATTENTE_ELEVE'), 'Ce n\'est pas le moment de consulter les offres !');
 		
 		$this->View->setTitle(
-			'Consultation offre pour « ' . $this->Exercice->Titre . ' »',
+			'Consultation offre pour «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet la consultation de l'offre qui vous a été faite. Vous pouvez l'accepter, la refuser ou annuler l'exercice."
 		);
 		
@@ -485,7 +485,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			{
 				$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
 				Sql::start();
-				if(!$_SESSION['Eleve']->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+				if(!$_SESSION['Eleve']->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
 				{
 					Sql::rollback();
 					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
@@ -526,7 +526,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('ENVOYE'));
 		
 		$this->View->setTitle(
-			'Noter la correction de « ' . $this->Exercice->Titre . ' »',
+			'Noter la correction de «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet de noter le travail du correcteur."
 		);
 		$this->View->setSeelink('/eleve/exercice/reclamation/' . $this->Exercice->Hash, "Émettre une réclamation");

@@ -141,8 +141,9 @@ class Debug_IndexController extends AbstractController
 	public function alldocAction()
 	{
 		$this->View->setTitle('Documentation eDevoir');
+
 		include OO2FS::controllerPath('index', 'documentation');
-		
+
 		$Files = array();
 		foreach(Documentation_IndexController::$Pages as $Section => $Pages)
 		{
