@@ -142,7 +142,23 @@ class Administrateur_IndexController extends IndexAbstractController
 	 */
 	public function reclamationsAction()
 	{
+		$this->View->setTitle(
+			'Liste des réclamations',
+			'Cette page permet de traiter les différentes réclamations.'
+		);
 		
+		$this->View->NbReclamations = $this->reclamationsCount();
+		
+		$this->View->Reclamations = Sql::queryAssoc(
+			'SELECT Exercices.Hash, Exercices_Logs.Date, Exercices.Titre, Eleves.Mail AS EMail, Correcteurs.Mail AS CMail
+			FROM Exercices_Logs
+			JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
+			JOIN Membres Eleves ON(Eleves.ID = Exercices.Createur)
+			JOIN Membres Correcteurs ON(Correcteurs.ID = Exercices.Correcteur)
+			WHERE Exercices.Statut = "REFUSE"
+			AND Exercices_Logs.NouveauStatut = "REFUSE"',
+			'Hash'
+		);
 	}
 	
 	/**

@@ -1,0 +1,32 @@
+<?php
+/**
+ * Crée un tableau affichable à partir d'un équivalent tuple SQL
+ * 
+ * @param array $Tuple
+ * 
+ * @return array un tableau colonne utilisable
+ */
+function formatTuple(array $Tuple)
+{
+	$Tuple['Date'] = date('d/m/Y à H\h', strtotime($Tuple['Date']));
+	return $Tuple;
+}
+
+$Head = array('Date', 'Titre', 'Élève', 'Correcteur');
+?>
+
+<p>En attente : <?php echo $this->NbReclamations; ?></p>
+
+<?php 
+echo $this->Html_tableHead('Réclamations en attente', $Head)
+?>
+	<tbody>
+	<?php 
+	foreach($this->Reclamations as $Hash => $Tuple)
+	{
+		$Tuple[] = $Hash;
+		echo $this->Html_tableRow(formatTuple($Tuple));
+	}
+	?>
+	</tbody>
+</table>
