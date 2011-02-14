@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Logs` (
   `Date` datetime NOT NULL,
   `Exercice` int(11) NOT NULL,
   `Membre` int(11) DEFAULT NULL,
-  `Action` varchar(50) NOT NULL,
+  `Action` varchar(70) NOT NULL,
   `AncienStatut` varchar(20) DEFAULT NULL,
   `NouveauStatut` varchar(20) NOT NULL,
   PRIMARY KEY (`ID`),

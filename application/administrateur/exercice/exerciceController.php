@@ -62,69 +62,87 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 				$Eleve = $this->Exercice->getEleve();
 				$Banque = Membre::getBanque();
 				
+				//Propriétés à mettre à jour sur l'exercice
 				$ToUpdate = array(
 					'Remboursement' => $PourcentageAffichable
-				);
-				
+				);		
 				if($Pourcentage == 0)
 				{
 					//Rejet de la demande de renseignement
 					$this->Exercice->closeExercice('Rejet de la réclamation', $this->getMembre(), $ToUpdate);
+					//TODO: dispatch
 					
 					$this->View->setMessage('ok', "Décision correctement enregistrée. Dommage pour l'élève !");
 					$this->redirect('/administrateur/reclamations');
 				}
-				elseif($Pourcentage > 0 && $Pourcentage < 1)
+				else
 				{
-					//Remboursement de l'élève au détriment du correcteur.
-					$InversePourcentage = 1 - $Pourcentage;
+					//Événements à dispatcher (Nom évènement => données)
+					$ToDispatch = array();
 					
-					$PaiementCorrecteur = (int) round($this->Exercice->priceAsked() * $InversePourcentage);
-					$PaiementEleve = (int) round($this->Exercice->pricePaid() * $Pourcentage);
-
+					if($Pourcentage > 0 && $Pourcentage < 1)
+					{
+						//Remboursement de l'élève au détriment du correcteur.
+						$InversePourcentage = 1 - $Pourcentage;
+						
+						$PaiementCorrecteur = (int) round($this->Exercice->priceAsked() * $InversePourcentage);
+						$PaiementEleve = (int) round($this->Exercice->pricePaid() * $Pourcentage);
+						$MessageCorrecteur = 'Paiement partiel (' . ($InversePourcentage*100) . '%)';
+						$MessageEleve = 'Remboursement partiel (' . $PourcentageAffichable . '%)';
+						$MessageExercice = 'Remboursement partiel de l\'élève et paiement du correcteur';
+						$MessageAdministrateur = 'Les échanges de monnaie ont été effectués.';
+					}
+					elseif($Pourcentage == 1)
+					{
+						//Remboursement total de l'élève
+						$PaiementEleve = $this->Exercice->pricePaid();
+						$PaiementCorrecteur = 0;
+						$MessageEleve = 'Remboursement total';
+						$MessageExercice = 'Remboursement de l\'exercice à l\'élève.';
+						$MessageAdministrateur = 'Le remboursement a été effectué dans son intégralité.';
+					}
+					elseif($Pourcentage > 1 && $Pourcentage <= MAX_REMBOURSEMENT / 100)
+					{
+						//Remboursement + dédommagement
+						$PaiementEleve = (int) round($this->Exercice->pricePaid() * $Pourcentage);
+						$PaiementCorrecteur = 0;
+						$MessageEleve = 'Remboursement et dédommagement (' . $PourcentageAffichable . '%)';
+						$MessageExercice = 'Dédommagement de l\'élève.';
+						$MessageAdministrateur = 'Le dédommagement a été effectué. Dommage pour nous :(';
+					}
+					else
+					{
+						throw new Exception('Valeur de remboursement non autorisée.');
+						exit();
+					}
+					
 					Sql::start();
-					$Correcteur->credit($PaiementCorrecteur, 'Paiement partiel (' . ($InversePourcentage*100) . '%) pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
-					$Banque->debit($PaiementCorrecteur, 'Paiement partiel exercice.', $this->Exercice);
+					$OK = true;
 					
-					$Eleve->credit($PaiementEleve, 'Remboursement partiel (' . $PourcentageAffichable . '%) pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
-					$Banque->debit($PaiementEleve, 'Remboursement partiel exercice.', $this->Exercice);
+					if($PaiementCorrecteur > 0)
+					{
+						$OK = $OK && $Correcteur->credit($PaiementCorrecteur, $MessageCorrecteur . 'pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
+						$OK = $OK && $Banque->debit($PaiementCorrecteur, $MessageCorrecteur, $this->Exercice);
+					}
 					
-					$this->Exercice->setStatus('REMBOURSE', $this->getMembre(), "Remboursement partiel et paiement du correcteur.", $ToUpdate);
+					$OK = $OK && $Eleve->credit($PaiementEleve, $MessageEleve . ' pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
+					$OK = $OK && $Banque->debit($PaiementEleve, $MessageEleve, $this->Exercice);
+					
+					if(!$OK)
+					{
+						Sql::rollback();
+						throw new Exception('Erreur critique à la résolution des contraintes de remboursement.');
+						exit();
+					}
+					
+					$this->Exercice->setStatus('REMBOURSE', $this->getMembre(), $MessageExercice, $ToUpdate);
 					Sql::commit();
 					
-					$this->View->setMessage('ok', "Les échanges de monnaie ont été effectués.");
+					$this->View->setMessage('ok', $MessageAdministrateur);
 					$this->redirect('/administrateur/reclamations');
-				}
-				elseif($Pourcentage == 1)
-				{
-					//Remboursement total de l'élève
-					Sql::start();
-					$PaiementEleve = $this->Exercice->pricePaid();
-					$Eleve->credit($PaiementEleve, 'Remboursement total pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
-					$Banque->debit($PaiementEleve, 'Remboursement total exercice.', $this->Exercice);
-					
-					$this->Exercice->setStatus('REMBOURSE', $this->getMembre(), "Remboursement total", $ToUpdate);
-					Sql::commit();
-					
-					$this->View->setMessage('ok', "Le remboursement a été effectué.");
-					$this->redirect('/administrateur/reclamations');
-				}
-				elseif($Pourcentage > 1 && $Pourcentage <= MAX_REMBOURSEMENT / 100)
-				{
-					//Remboursement + dédommagement
-					Sql::start();
-					$PaiementEleve = (int) round($this->Exercice->pricePaid() * $Pourcentage);
-					$Eleve->credit($PaiementEleve, 'Remboursement et dédommagement (' . $PourcentageAffichable . '%) pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice);
-					$Banque->debit($PaiementEleve, 'Remboursement et dédommagement exercice.', $this->Exercice);
-					
-					$this->Exercice->setStatus('REMBOURSE', $this->getMembre(), "Remboursement et dédommagement (' . $Pourcentage . '%)", $ToUpdate);
-					Sql::commit();
-					
-					$this->View->setMessage('ok', "Le dédommagement a été effectué. Dommage pour nous :'(");
-					$this->redirect('/administrateur/reclamations');
-				}
-			}
-		}
+				}//Fin pourcentage == 0
+			}//Fin isset($_POST['remboursement'][0]) && $this->View->EstRemboursable
+		}//isset($_POST['remboursement-exercice'])
 		
 		$this->View->Sujet = $this->concat('/administrateur/exercice/sujet/' . $this->Exercice->Hash);
 		$this->View->Corrige = $this->concat('/administrateur/exercice/corrige/' . $this->Exercice->Hash);
