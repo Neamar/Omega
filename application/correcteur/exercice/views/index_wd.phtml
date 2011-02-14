@@ -25,7 +25,7 @@ $ListeActions = array(
 );
 ?>
 
-<h2>Options de l'exercice</h2>
+<h2 class="membre-exercice-options">Options de l'exercice</h2>
 
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
@@ -40,12 +40,12 @@ else
 }
 ?>
 
-<h2>Affichage de l'exercice</h2>
+<h2 class="h2_exercice">Affichage de l'exercice</h2>
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>
 
-<h2>Actions sur l'exercice</h2>
+<h2 class="h2_actions">Actions sur l'exercice</h2>
 <?php 
 echo $this->Html_ajaxTable('/correcteur/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
 ?>
