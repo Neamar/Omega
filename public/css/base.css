@@ -17,6 +17,16 @@ Version : Pour la deuxième partie - ext
 #content a { text-decoration: none; color: #424242;}
 #content a:hover { text-decoration: underline; color:#666;} 
 h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
+
+ul {
+padding-left:15px;
+}
+	ul ul{
+	list-style-type: square!important;
+	}
+		li {
+		margin-left:15px;
+		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -85,8 +95,8 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 }
 	p.important, .infos  {
 	font-size:16px;
-	display:block;
 	}
+
 
 /* - - La classe .important _ rouge - - */
 	.important:hover {
