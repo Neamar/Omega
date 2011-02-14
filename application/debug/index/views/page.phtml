@@ -7,6 +7,7 @@ ou sur plusieurs lignes, ce qui devrait être distinguable.</p>
 <!-- .important -->
 <p class="important">Un message important (qui peut aussi s'étendre sur plusieurs lignes, mais là j'ai un peu la flemme).</p>
 
+<p class="infos">Des informations qui peuvent être intéressantes à noter, sans pour autant nécessiter d'être importantes.</p>
 <!-- eDevoir -->
 <p>Encore du blabla... et <?php echo $this->Html_eDevoir() ?> (avec une classe pour pencher le e)</p>
 
@@ -74,4 +75,23 @@ $Liste = array(
 
 echo $this->Html_list($Liste);
 ?>
-	
+
+<h2>Exemple de tableau</h2>
+<p>Ce tableau est un fake (non dynamique). Mais la structure HTML est la bonne :</p>
+
+<table data-callback="" data-source="/eleve/exercice/_actions/971240" class="ajax-table">
+	<caption>Actions sur l'exercice</caption>
+<thead>
+<tr>
+	<th>Date</th>
+	<th>Action</th>
+</tr>
+</thead>
+<tbody><tr><td>14/2/11 à 15h</td><td>Contestation sur l'exercice</td></tr>
+<tr><td>12/2/11 à 20h</td><td>Envoi du fichier corrigé</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Acceptation de l'offre.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Proposition correcteur pour 20 points.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Envoi de l'exercice aux correcteurs.</td></tr>
+<tr><td>12/2/11 à 19h</td><td>Création de l'exercice.</td></tr>
+</tbody>
+</table>

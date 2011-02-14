@@ -155,7 +155,8 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
 <table class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '">
 	<caption>' . $Titre . '</caption>
 <thead>
-<tr>';
+<tr>
+';
 	foreach($Colonnes as $Colonne)
 	{
 		$R .= '	<th>' . $Colonne . "</th>\n";
