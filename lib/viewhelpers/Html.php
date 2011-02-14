@@ -151,19 +151,7 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
  */
 function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = null)
 {
-	$R = '
-<table class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '">
-	<caption>' . $Titre . '</caption>
-<thead>
-<tr>
-';
-	foreach($Colonnes as $Colonne)
-	{
-		$R .= '	<th>' . $Colonne . "</th>\n";
-	}
-
-	$R .= '</tr>
-</thead>
+	$R = ViewHelper_Html_tableHead($Titre, $Colonnes, 'class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '"') . '
 <tbody>
 <tr>
 	<td colspan="' . count($Colonnes) . '" style="text-align:center;">
@@ -173,6 +161,48 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
 </tbody>
 </table>';
 
+	return $R;
+}
+
+/**
+ * Crée la tête d'un tableau HTML.
+ * Inclut le début de la balise <table>, <caption>, tout <thead> et aucun élément de <tbody>
+ * 
+ * @param string $Caption le titre du tableau
+ * @param array $Row la ligne d'en-tête
+ * @param string $Attrs les attributs à placer sur <table>
+ * 
+ * @return string l'en-tête correspondant.
+ */
+function ViewHelper_Html_tableHead($Caption, array $Row, $Attrs = '')
+{
+	$R='
+<table ' . $Attrs . '>
+	<caption>' . $Caption . '</caption>
+	<thead>
+		' . ViewHelper_Html_tableRow($Row, 'th') . '
+	</thead>';
+	
+	return $R;
+}
+
+/**
+ * Crée une ligne de tableau HTML
+ * 
+ * @param array $Row la ligne
+ * @param string $Type le type des colonnes
+ * 
+ * @return string la colonne correspondante
+ */
+function ViewHelper_Html_tableRow(array $Row, $Type = 'td')
+{
+	$R = '<tr>';
+	foreach($Row as $Col)
+	{
+		$R .= '<' . $Type . '>' . $Col . '</' . $Type . '>';
+	}
+	$R .= '</tr>' . PHP_EOL;
+	
 	return $R;
 }
 

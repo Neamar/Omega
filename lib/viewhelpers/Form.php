@@ -132,6 +132,7 @@ function ViewHelper_Form_rib($name)
 			'maxlength' => 5,
 			'size' => 5,
 			//'type' => 'numeric',
+			'class' => 'input_default',
 			'min' => '11111'
 		)
 	);
@@ -142,6 +143,7 @@ function ViewHelper_Form_rib($name)
 			'placeholder' => 'GGGGG',
 			'maxlength' => 5,
 			'size' => 5,
+			'class' => 'input_default',
 			//'type' => 'numeric'
 		)
 	);
@@ -151,7 +153,8 @@ function ViewHelper_Form_rib($name)
 		array(
 			'placeholder' => 'CCCCCCCCCCC',
 			'maxlength' => 11,
-			'size' => 11
+			'size' => 11,
+			'class' => 'input_default',
 		)
 	);
 	
@@ -161,6 +164,7 @@ function ViewHelper_Form_rib($name)
 			'placeholder' => 'RR',
 			'maxlength' => 2,
 			'size' => 2,
+			'class' => 'input_default',
 			//'type' => 'numeric',
 		)
 	);
@@ -379,7 +383,7 @@ function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $arg
  */
 function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
 {
-	return ViewHelper_Form_label($name, $label) . "<br />\n" . ViewHelper_Form_textarea($name, $args);
+	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_textarea($name, $args);
 }
 
 /**

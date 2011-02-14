@@ -482,7 +482,7 @@ INSERT INTO `Statuts` (`Statut`, `DetailsStatut`) VALUES
 ('ATTENTE_ELEVE', 'En attente d''une réponse de l''élève'),
 ('ENVOYE', 'Rendu envoyé à l''élève, en attente de sa réaction'),
 ('EN_COURS', 'Un correcteur travaille actuellement sur le sujet.'),
-('REFUSE', 'Un Administrateuristrateur examine actuellement le litige.'),
+('REFUSE', 'Un Administrateur examine actuellement le litige.'),
 ('REMBOURSE', 'L''exercice a été remboursé à l''élève.'),
 ('TERMINE', 'L''exercice est clos.'),
 ('VIERGE', 'En attente des fichiers élèves.');
