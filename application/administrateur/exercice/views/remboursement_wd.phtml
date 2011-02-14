@@ -1,0 +1,57 @@
+<p>Soyez impartial, le monde d'une personne au moins dépend de votre décision juste !</p>
+
+<?php 
+echo $this->Exercice_infos($this->Exercice, 'Reclamation');
+?>
+
+<form id="form_remboursement-exercice" method="post" action="">
+<?php
+if(!$this->EstRemboursable)
+{
+	?>
+	<p class="important">Le remboursement est désactivé pour cet exercice, la contestation ayant été émise trop tard.<br />
+	Il est cependant possible de bloquer le correcteur si nécessaire.</p>
+	<?php
+}
+else
+{
+	echo $this->Form_inputLabel(
+		'remboursement',
+		"Rembourser l'élève à hauteur de",
+		array(
+			'type' => 'number',
+			'min' => 0,
+			'max' => 200,
+			'step' => 5,
+		)
+	) . '%<br />' . PHP_EOL;
+}
+
+
+
+echo $this->Form_checkbox('bloquer', 'Bloquer le correcteur');
+
+echo $this->Form_submit('remboursement_exercice', 'Entériner ma décision');
+?>
+</form>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#total-exercice">Exercice</a></li>
+		<li><a href="#total-sujet">Sujet</a></li>
+		<li><a href="#total-corrige">Corrigé</a></li>
+		<li><a href="#total-reclamation">Réclamation</a></li>
+	</ul>
+	<div id="total-exercice">
+<?php echo $this->Exercice($this->Exercice); ?>
+	</div>
+	<div id="total-sujet">
+<?php echo $this->View_render($this->Sujet); ?>
+	</div>
+	<div id="total-corrige">
+<?php echo $this->View_render($this->Corrige); ?>
+	</div>
+	<div id="total-reclamation">
+<?php echo $this->View_render($this->Reclamation); ?>
+	</div>
+</div>

@@ -94,7 +94,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			' . ViewHelper_Html_list($Infos) . '
 			
 			' . $Remarques . '
-			<p><a href="/' . $_GET['module'] . '/exercice/zip/' . $Exercice->Hash . '">Télécharger dans un zip</a></p>
+			<p><a href="/' . $_GET['module'] . '/exercice/zip/' . $Exercice->Hash . '" class="zip-download">Télécharger dans un zip</a></p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
 			<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
