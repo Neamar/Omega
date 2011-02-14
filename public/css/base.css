@@ -21,9 +21,8 @@ h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 .content-base {
-/*min-height:100%;
-height:100%;*/
-
+	/*min-height:100%;
+	height:100%;*/
 padding-top:15px;
 width:1000px;
 margin:auto;
@@ -39,10 +38,20 @@ font:normal 17px/1.4em "Georgia", serif;
 color:#5e5e5e;
 }
 	#content h2 {
+		background:#f1f1ef url('/public/css/images/h2.png') top left scroll no-repeat;
 	font-size:28px;
 	color:#676767;
 	text-shadow:1px 1px 0px #fff;
 	margin-top:10px;
+	background-color:#f1f1f1;
+	padding:20px 35px;
+	border-top: 1px solid #d9d9d9;
+	border-bottom: 1px solid #d9d9d9;
+		outline: 1px solid #f6f6f4;
+		outline-offset: -2px;
+			-webkit-box-shadow: 0px 1px 1px #fff;
+			-moz-box-shadow: 0px 1px 1px #fff;
+			box-shadow: 0px 1px 1px #fff;
 	}
 		/*#content h3 {
 		font:bold  20px/1.22em "Verdana", "Geneva", sans-serif;
@@ -74,12 +83,11 @@ margin:5px 15px;
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 background:#f1f1ef url('/public/css/images/important.png') center left scroll no-repeat;
 }
-	.important, .infos  {
+	p.important, .infos  {
 	font-size:16px;
+	display:block;
 	}
-	
-	p.important {
-	}
+
 /* - - La classe .important _ rouge - - */
 	.important:hover {
 	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
