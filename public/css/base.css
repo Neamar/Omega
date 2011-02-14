@@ -202,6 +202,14 @@ line-height: 0px;
 }
 
 /* - - Les types Particuliers - - */
+form input[type=email] {
+background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
+padding-left:26px;
+width:324px;
+}
+form input[type=email]:hover, form input[type=email]:focus {
+background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
+}
 select {
 width:auto;
 }
