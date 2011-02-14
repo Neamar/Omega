@@ -66,7 +66,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		);
 
 		$this->View->setTitle(
-			'Accueil de l\'exercice « ' . $this->Exercice->Titre . ' »',
+			'Accueil de l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			$ListeMessage[$this->Exercice->Statut]
 		);
 	}
@@ -92,7 +92,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		}
 		
 		$this->View->setTitle(
-			'Réservation de « ' . $this->Exercice->Titre . ' »',
+			'Réservation de «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet de consulter un exercice avant de le réserver en indiquant votre prix."
 		);
 		
@@ -178,7 +178,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					{
 						//Auto-acceptation.
 						Sql::start();
-						if(!$Eleve->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice « ' . $this->Exercice->Titre . ' »', $this->Exercice))
+						if(!$Eleve->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
 						{
 							Event::log('CRITIQUE ! Fail sur autoaccept incohérent.', $Eleve);
 							Sql::rollback();
@@ -249,7 +249,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('EN_COURS'));
 			
 		$this->View->setTitle(
-			'Rédaction du corrigé de « ' . $this->Exercice->Titre . ' »',
+			'Rédaction du corrigé de «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet de rédiger le corrigé d'un exercice."
 		);
 		//Coloration syntaxique

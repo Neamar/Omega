@@ -154,7 +154,7 @@ $(function()
 						Tabs.tabs('select', 'envoi-log')
 							.tabs('disable', 'envoi-apercu');
 						$('a[href=#envoi-log]').css('color', 'red');
-						Modal.html('<p>Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet « Console » qui vient de s\'afficher (lignes en rouge).</p>');
+						Modal.html('<p>Des erreurs se sont produites à la compilation. Vous trouverez plus de détails dans l\'onglet «&nbsp;Console&nbsp;» qui vient de s\'afficher (lignes en rouge).</p>');
 					}
 					else
 					{

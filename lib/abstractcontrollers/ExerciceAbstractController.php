@@ -99,7 +99,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	public function sujetActionWd()
 	{
-		$this->View->setTitle("Affichage du sujet de l'exercice « " . $this->Exercice->Titre . ' »');
+		$this->View->setTitle("Affichage du sujet de l'exercice «&nbsp;" . $this->Exercice->Titre . '&nbsp;»');
 
 		$this->View->Type = 'Eleve';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
@@ -114,7 +114,7 @@ abstract class ExerciceAbstractController extends AbstractController
 	{
 		$this->canAccess(array('ENVOYE', 'TERMINE', 'REFUSE', 'REMBOURSE'), 'Le corrigé n\'est pas encore disponible.');
 		
-		$this->View->setTitle("Affichage du corrigé de l'exercice « " . $this->Exercice->Titre . ' »');
+		$this->View->setTitle("Affichage du corrigé de l'exercice «&nbsp;" . $this->Exercice->Titre . '&nbsp;»');
 
 		$this->View->Type = 'Correcteur';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
@@ -135,7 +135,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->redirectExercice();
 		}
 		
-		$this->View->setTitle("Affichage de la réclamation déposée sur l'exercice « " . $this->Exercice->Titre . ' »');
+		$this->View->setTitle("Affichage de la réclamation déposée sur l'exercice «&nbsp;" . $this->Exercice->Titre . '&nbsp;»');
 
 		$this->View->Type = 'Reclamation';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('RECLAMATION'));
