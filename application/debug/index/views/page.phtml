@@ -28,6 +28,11 @@ echo $this->Form_radio('form4', array('Des éléments radio', 'En cascade', 'Et 
 echo $this->Form_ribLabelBr('form5', 'Un élément pour spécifier une clé RIB');
 echo $this->Form_inputLabelBr('form6', 'Un élément numérique', array('type' => 'number'));
 echo $this->Form_pointsLabelBr('form7', 'Un élément contenant des points (monnaie virtuelle)');
+?>
+
+<p class="important">Du blabla important indiquant l'importance du contrôle en dessous</p>
+<?php
+echo $this->Form_checkbox('form8', 'Oui, je vends mon âme');
 echo $this->Form_submit('envoi', 'Et le bouton d\'envoi.');
 ?>
 </form>
