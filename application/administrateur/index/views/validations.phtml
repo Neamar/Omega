@@ -1,0 +1,33 @@
+<?php
+/**
+ * Crée un tableau affichable à partir d'un équivalent tuple SQL
+ * 
+ * @param array $Tuple
+ * 
+ * @return array un tableau colonne utilisable
+ */
+function formatTuple(array $Tuple)
+{
+	$Tuple['Creation'] = date('d/m/Y à H\h', strtotime($Tuple['Creation']));
+	$Tuple['CV'] = '<a href="/administrateur/membre/correcteur_cv/' . $Tuple['CV'] . '">PDF</a>';
+	return $Tuple;
+}
+
+$Head = array('Date', 'Identité', 'CV', 'Valider');
+?>
+
+<p>En attente : <?php echo $this->NbValidations; ?></p>
+
+<?php 
+echo $this->Html_tableHead('Validations en attente', $Head)
+?>
+	<tbody>
+	<?php 
+	foreach($this->Validations as $Mail => $Tuple)
+	{
+		$Tuple[] = '<a href="/administrateur/membre/statut/' . $Mail . '">Traiter</a>';
+		echo $this->Html_tableRow(formatTuple($Tuple));
+	}
+	?>
+	</tbody>
+</table>

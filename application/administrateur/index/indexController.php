@@ -163,6 +163,27 @@ class Administrateur_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Liste des validations à réaliser
+	 */
+	public function validationsAction()
+	{
+		$this->View->setTitle(
+			'Liste des validations',
+			'Cette page permet d\'effectuer les différentes valdiations demandées.'
+		);
+		
+		$this->View->NbValidations = $this->validationsCount();
+		
+		$this->View->Validations = Sql::queryAssoc(
+			'SELECT Membres.Mail, Membres.Creation, CONCAT(Prenom, " ", UPPER(Nom)) AS Identite, Membres.Mail AS CV
+			FROM Membres
+			JOIN Correcteurs ON(Correcteurs.ID = Membres.ID)
+			WHERE Membres.Statut = "EN_ATTENTE"',
+			'Mail'
+		);
+	}
+	
+	/**
 	 * Renvoie le nombre de virements en attente d'être effectués.
 	 * 
 	 * @return int
