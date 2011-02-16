@@ -1,0 +1,42 @@
+<?php 
+echo $this->View_render($this->Membre);
+?>
+
+<h2 class="administrateur-membre-correcteur">Informations correcteur</h2>
+<p class="intro">Cette section affiche les différentes informations de la personne demandée en tant que correcteur</p>
+
+<?php
+$Infos = array(
+	'Identité' => $this->Correcteur->Prenom . ' ' . strtoupper($this->Correcteur->Nom),
+	'SIRET' => $this->Correcteur->Siret . '(' . ($this->Correcteur->SiretOK?'<span style="color:green">valide</span>':'<span style="color:red;">non validé</span>') . ')',
+	'Exercices attitrés' => $this->NbExos,
+	'Note moyenne' => $this->Note,
+);
+
+$Liste = array();
+foreach($Infos as $Caption => $Info)
+{
+	$Liste[] = '<strong>' . $Caption . '</strong>&nbsp;: ' . $Info;
+}
+
+echo $this->Html_list($Liste);
+?>
+
+<h2 class="h2_actions">Actions disponibles</h2>
+<p class="intro">Cette section affiche les différentes actions possibles pour ce compte.</p>
+
+<?php
+$Actions = array(
+	'incarner' => array(
+		'Me faire passer pour ce correcteur',
+		'Simuler une connexion sur ce compte'
+	),
+	'statut' => array(
+		'Modifier le statut du compte',
+		'Bloquer ou désinscrire le compte'
+	),
+);
+
+echo $this->Html_listAction($Actions, '/administrateur/membre/__URL__/' . $this->Correcteur->Mail);
+	
+?>

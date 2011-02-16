@@ -2,13 +2,14 @@
 echo $this->View_render($this->Membre);
 ?>
 
-<h2 class="administrateur-membre-eleve-eleve">Informations élève</h2>
+<h2 class="administrateur-membre-eleve">Informations élève</h2>
 <p class="intro">Cette section affiche les différentes informations de la personne demandée en tant qu'élève</p>
 
 <?php
 $Infos = array(
 	'Classe' => $this->Eleve->DetailsClasse,
-	'Section' => $this->Eleve->Section,	
+	'Section' => $this->Eleve->Section,
+	'Exercices créés' => $this->NbExos
 );
 
 $Liste = array();
