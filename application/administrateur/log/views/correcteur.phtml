@@ -1,0 +1,9 @@
+<h2 class="h2_logs">Derniers correcteurs inscrits</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_correcteur', 'Derniers inscrits', array('Date', 'Mail', 'Statut', 'Lien'));
+?>
+
+<h2 class="h2_logs">Dernières actions correcteurs</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_correcteur_log', 'Dernières actions', array('Date', 'Mail', 'Action', '&Delta;', 'Lien'));
+?>

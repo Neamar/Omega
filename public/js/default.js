@@ -220,15 +220,21 @@ $(function()
 				Apercu.dialog({
 					modal: true,
 					autoOpen: false,
-					title: 'Prévisualisation du texte'
+					width: '60%',
+					title: 'Prévisualisation du texte',
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
 				});
 				NotLoaded = false;
 			}
 			
-			Apercu.html(jTextArea.val());
+			Apercu.html(jTextArea.val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2'));
 			if(jTextArea.val().indexOf('$') != -1)
 			{
-				MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+				MathJax.Hub.Queue(["Typeset", MathJax.Hub, Apercu[0]]);
 			}
 
 			Apercu.dialog('open');

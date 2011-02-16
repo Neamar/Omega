@@ -56,7 +56,8 @@ $HeureData = array(
 	'maxlength'=>2,
 	'placeholder' => 'HH',
 	'size'=>2,
-	'required' => 'required'
+	'required' => 'required',
+	'class' => 'input_default'
 );
 
 //Rendu
@@ -70,7 +71,7 @@ echo $this->Form_inputLabel(
 		'required' => 'required'
 	)
 );
-echo 'à ' . $this->Form_input('rendu_heure', $HeureData, array('class' => 'input_default')) . 'h ' . $this->Doc_input('eleve', 'champ_rendu');
+echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_input('eleve', 'champ_rendu');
 ?>
 </p>
 
@@ -88,7 +89,7 @@ echo $this->Form_inputLabel(
 		'pattern' => '[0-3][0-9]/[0-1][0-9]/201[1-9]'
 	)
 );
-echo 'à ' . $this->Form_input('annulation_heure', $HeureData, array('class' => 'input_default')) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
+echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
 ?>
 </p>
 

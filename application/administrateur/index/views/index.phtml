@@ -4,7 +4,7 @@
 echo $this->Html_ajaxTable('/administrateur/log/_global', 'Statistiques globales', array('Action', '24h', '48h', '7j'));
 ?>
 
-<h2 class="administrateur-index-index-attente">En attente</h2>
+<h2 class="h2_actions">En attente</h2>
 <?php 
 $Attentes = array();
 
@@ -53,3 +53,26 @@ else
 	<?php 
 	echo $this->Html_listAction($Attentes, '/administrateur/__URL__', '');
 }
+?>
+
+<h2 class="h2_actions">Liens</h2>
+<?php 
+$Actions = array(
+	'membre' => 'Rechercher un membre',
+	'log/' => 'Index des logs',
+	'log/eleve' => array(
+		'Logs élèves',
+		'Informations sur les élèves'
+	),
+	'log/correcteur' => array(
+		'Logs correcteurs',
+		'Informations sur les correcteurs',
+	),
+	'log/membre' => array(
+		'Log membres',
+		'Informations sur les membres en général',
+	)
+);
+
+echo $this->Html_listAction($Actions, '/administrateur/__URL__');
+?>

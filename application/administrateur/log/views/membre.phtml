@@ -1,0 +1,9 @@
+<h2 class="h2_logs">Derniers membres inscrits</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_membre', 'Derniers inscrits', array('Date', 'Mail', 'Statut', 'Type', 'Lien'));
+?>
+
+<h2 class="h2_logs">Dernières actions membres</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_membre_log', 'Dernières actions', array('Date', 'Mail', 'Action', 'Type', '&Delta;', 'Lien'));
+?>

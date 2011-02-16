@@ -78,7 +78,7 @@ function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
  *
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc)
+function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
 {
 	static $NbActions = 1;
 

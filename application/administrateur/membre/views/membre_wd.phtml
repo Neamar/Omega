@@ -1,0 +1,24 @@
+<?php
+$Statuts = array(
+	'OK' => 'en fonctionnement',
+	'EN_ATTENTE' => 'en attente de validation',
+	'BLOQUE' => 'bloqué',
+	'DESISNCRIT' => 'désinscrit'
+);
+
+$Infos = array(
+	'Mail' => $this->Membre->Mail,
+	'Points' => $this->Membre->getPoints() . '&nbsp;pts',
+	'Création du compte' => date('d/m/Y', strtotime($this->Membre->Creation)),
+	'Dernière connexion' => date('d/m/Y', strtotime($this->Membre->Connexion)),
+	'Statut du compte' => $Statuts[$this->Membre->Statut],	
+);
+
+$Liste = array();
+foreach($Infos as $Caption => $Info)
+{
+	$Liste[] = '<strong>' . $Caption . '</strong>&nbsp;: ' . $Info;
+}
+
+echo $this->Html_list($Liste);
+?>
