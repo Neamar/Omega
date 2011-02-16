@@ -32,6 +32,14 @@ if($this->Reclamations != 0)
 	);
 }
 
+if($this->Validations != 0)
+{
+	$Attentes['validations'] = array(
+		$this->Validations . ' validation' . ($this->Validations==1?'':'s') . ' en attente',
+		'Certains correcteurs nécessitent votre approbation avant de pouvoir commencer à travailler.'
+	);
+}
+
 if(empty($Attentes))
 {
 	?>
