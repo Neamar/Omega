@@ -1,0 +1,40 @@
+<?php 
+echo $this->View_render($this->Membre);
+?>
+
+<h2 class="administrateur-membre-eleve-eleve">Informations élève</h2>
+<p class="intro">Cette section affiche les différentes informations de la personne demandée en tant qu'élève</p>
+
+<?php
+$Infos = array(
+	'Classe' => $this->Eleve->DetailsClasse,
+	'Section' => $this->Eleve->Section,	
+);
+
+$Liste = array();
+foreach($Infos as $Caption => $Info)
+{
+	$Liste[] = '<strong>' . $Caption . '</strong>&nbsp;: ' . $Info;
+}
+
+echo $this->Html_list($Liste);
+?>
+
+<h2 class="h2_actions">Actions disponibles</h2>
+<p class="intro">Cette section affiche les différentes actions possibles pour ce compte.</p>
+
+<?php
+$Actions = array(
+	'incarner' => array(
+		'Me faire passer pour cet élève',
+		'Simuler une connexion sur ce compte'
+	),
+	'statut' => array(
+		'Modifier le statut du compte',
+		'Bloquer ou désinscrire le compte'
+	),
+);
+
+echo $this->Html_listAction($Actions, '/administrateur/membre/__URL__/' . $this->Eleve->Mail);
+	
+?>

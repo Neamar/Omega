@@ -30,11 +30,13 @@ class Eleve extends Membre
 	const TABLE_NAME = 'Eleves';
 	const SQL_QUERY = 'SELECT * FROM %TABLE%
 	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
+	LEFT JOIN Classes ON Classes.Classe = %TABLE%.Classe
 	WHERE %TABLE%.ID=%ID%';
 	
 	public static $Props;
 
 	public $Classe;
+	public $DetailsClasse;
 	public $Section;
 	
 	/**
