@@ -72,7 +72,7 @@ class Administrateur_MembreController extends AbstractController
 	 */
 	public function eleveActionWd()
 	{
-		$Eleve = Eleve::load('-1 OR Membres.Mail="' . Sql::escape($this->Data['data']) . '"', false);
+		$Eleve = $this->exists($this->Data['data'], 'Eleve');
 		if(is_null($Eleve))
 		{
 			$this->View->setMessage('warning', "Cet élève n'existe pas.");
@@ -101,12 +101,7 @@ class Administrateur_MembreController extends AbstractController
 	 */
 	public function correcteurActionWd()
 	{
-		$Correcteur = Correcteur::load('-1 OR Membres.Mail="' . Sql::escape($this->Data['data']) . '"', false);
-		if(is_null($Correcteur))
-		{
-			$this->View->setMessage('warning', "Ce correcteur n'existe pas.");
-			$this->redirect('/administrateur/membre/');
-		}
+		$Correcteur = $this->exists($this->Data['data'], 'Correcteur');
 		
 		$this->View->setTitle(
 			'Informations correcteur pour ' . $Correcteur->Mail,
@@ -133,6 +128,15 @@ class Administrateur_MembreController extends AbstractController
 		$this->View->Membre->Membre = $Correcteur;
 	}
 	
+	public function correcteur_cvActionWd()
+	{
+		$this->UseTemplate = false;
+		
+		$Correcteur = $this->exists($this->Data['data'], 'Correcteur');
+		
+		$this->View->File = DATA_PATH . '/CV/' . $Correcteur->getFilteredId() . '.pdf';
+	}
+	
 	/**
 	 * Fonction spéciale, qui n'est théoriquement jamais appelée directement.
 	 */
@@ -142,5 +146,25 @@ class Administrateur_MembreController extends AbstractController
 			'Informations membre',
 			'Cette page affiche les différentes informations de la personne demandée en tant que membre.'
 		);
+	}
+	
+	/**
+	 * Teste si un membre existe avec cet email.
+	 * 
+	 * @param string $Mail le mail
+	 * @param string $Type le type du membre (Eleve, Correcteur, Membre)
+	 * 
+	 * @return Membre le membre associé. Si non existant, une redirection a lieu.
+	 */
+	protected function exists($Mail, $Type = "Membre")
+	{
+		$Membre = $Type::load('-1 OR Membres.Mail="' . Sql::escape($Mail) . '"', false);
+		if(is_null($Membre))
+		{
+			$this->View->setMessage('warning', 'Ce ' . strtolower($Type) . "n'existe pas.");
+			$this->redirect('/administrateur/membre/');
+		}
+		
+		return $Membre;
 	}
 }

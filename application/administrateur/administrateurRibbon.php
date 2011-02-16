@@ -17,7 +17,7 @@
 $Retour = array();
 $Retour['center'] = 'Administration';
 
-if(!isset($_SESSION['Correcteur']))
+if(!isset($_SESSION['Administrateur']))
 {
 	$Retour['left'] = '';
 	$Retour['right'] = '<a href="/administrateur/connexion">Connexion</a>';
@@ -31,9 +31,9 @@ else
 	$Retour['right'] = '<a href="/administrateur/">Espace admin</a>';
 	$Retour['links'] = array(
 		'/administrateur/' => 'Admin',
-		'/administrateur/logs/' => 'Logs',
+		'/administrateur/log/' => 'Logs',
 		'/administrateur/exercice/' => 'Exercices',
-		'/administrateur/membres' => 'Membres',
+		'/administrateur/membres/' => 'Membres',
 	);
 }
 

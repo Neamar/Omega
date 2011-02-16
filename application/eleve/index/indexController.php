@@ -80,7 +80,7 @@ class Eleve_IndexController extends IndexAbstractController
 					}
 					else
 					{
-						$this->View->setMessage("infos", "Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
+						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints());
 						$this->redirect('/eleve/');
 					}
 				}

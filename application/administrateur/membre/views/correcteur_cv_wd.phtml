@@ -1,0 +1,10 @@
+<?php 
+header('Content-type: application/pdf');
+ 
+$fp = fopen($this->File, "r");
+while(!feof($fp))
+{
+	$file_buffer = fread($fp, 2048);
+	echo $file_buffer;
+}
+?>

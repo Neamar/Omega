@@ -206,6 +206,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						)
 					);
 					
+					$this->View->setMessage('info', 'Votre exercice a bien été ajouté');
+					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
 				else
