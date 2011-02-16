@@ -93,7 +93,7 @@ class Administrateur_IndexController extends IndexAbstractController
 				}
 				else
 				{
-					$this->View->setMessage("infos", "Bienvenue sur votre compte, despote aux pleins pouvoirs !");
+					$this->View->setMessage('info', "Bienvenue sur votre compte, despote aux pleins pouvoirs !");
 					$this->redirect('/administrateur/');
 				}
 			}

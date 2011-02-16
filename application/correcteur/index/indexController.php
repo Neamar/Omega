@@ -86,7 +86,7 @@ class Correcteur_IndexController extends IndexAbstractController
 					}
 					else
 					{
-						$this->View->setMessage("infos", "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
+						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
 						$this->redirect('/correcteur/');
 					}
 				}
