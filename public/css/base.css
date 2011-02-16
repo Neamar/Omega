@@ -31,23 +31,24 @@ padding-left:15px;
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 .content-base {
-	
-	min-height:100%;
-	height:100%;
 padding-top:15px;
 width:1000px;
 margin:auto;
 background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/
 padding-bottom:20px;
+
+	min-height:100%;
 }
 	section {
 	padding: 0 35px;
 	}
 	
 #content {
-	border:1px #F00 solid;
+	/*border:1px #F00 solid;*/
 font:normal 17px/1.4em "Georgia", serif;
 color:#5e5e5e;
+	
+	height:100%;	
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -58,9 +59,10 @@ color:#5e5e5e;
 	font-size:28px;
 	color:#676767;
 	text-shadow:1px 1px 0px #fff;
-	margin-top:10px;
 	background-color:#f1f1f1;
-	padding:20px 35px;
+		padding:18px 35px;
+		margin-top:20px;
+		margin-bottom:5px;
 	border-top: 1px solid #d9d9d9;
 	border-bottom: 1px solid #d9d9d9;
 		outline: 1px solid #f6f6f4;
@@ -212,6 +214,7 @@ padding: 0 0 15px 0;
 	color:#000;
 	}
 	form textarea {
+		max-width:900px;
 	width:600px;
 	}
 		form input:hover, form textarea:hover, select:hover {
