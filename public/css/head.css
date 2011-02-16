@@ -30,7 +30,7 @@ font-family: Arial, Helvetica, sans-serif;
 line-height: 1.4; 
 color:#2f2d29;
 background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll repeat-x; /*image r*/
-/*height:100%;*/
+height:58%;
 }
 
 html {font-size: 16px;height: 100%;}
@@ -235,7 +235,7 @@ width:1000px;
 margin:auto;
 }
 	.message p {
-	padding:0 35px;
+		padding:0 35px;
 	}
 	
 /* -- Classe Globale -- */
@@ -252,7 +252,6 @@ height:auto;
 	#main-message p {margin:0; }
 	
 #main-message aside p:first-child {
-line-height:26px;
 font-weight:bold;
 text-shadow:1px 1px 0px #fff;
 }
@@ -261,7 +260,6 @@ text-shadow:1px 1px 0px #fff;
 #main-message #content-message.error {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
-height:30px;
 }
 #main-message #bottom-message.error {
 height:13px;
@@ -275,7 +273,6 @@ background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
 #main-message #content-message.ok {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x; 
-height:30px;
 }
 #main-message #bottom-message.ok {
 height:13px;
@@ -289,7 +286,6 @@ background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
 #main-message #content-message.info {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x; 
-height:30px;
 }
 #main-message #bottom-message.info {
 height:13px;
@@ -304,7 +300,6 @@ background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
 #main-message #content-message.warning {
 padding:5px 0;
 background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x; 
-height:30px;
 }
 #main-message #bottom-message.warning {
 height:13px;
@@ -318,7 +313,7 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 /* --  Message droite / Classe Global  -- */	
 .message .doc-box-link a{
 position:absolute;
-bottom:-15px;
+bottom:-30px;
 right:10px;
 display: inline-block;
 outline: none;

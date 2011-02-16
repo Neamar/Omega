@@ -79,8 +79,11 @@ input:hover, input:focus {
 
 form input:hover, form textarea:hover, select:hover {
 border: 2px solid #1499cb;
+outline: 2px solid #e1e1e1;
+outline-offset: -4px;
 }
 form input:focus, form textarea:focus, select:focus {
-border: 2px solid #279fc1;
+border: 2px solid #276cc1;
+outline:none;
 }
 
