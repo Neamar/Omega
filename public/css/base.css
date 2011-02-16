@@ -47,6 +47,10 @@ padding-bottom:20px;
 font:normal 17px/1.4em "Georgia", serif;
 color:#5e5e5e;
 }
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------- 1. Titres et Paragraphes --------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 	#content h2 {
 		background:#f1f1ef url('/public/css/images/h2.png') top left scroll no-repeat;
 	font-size:28px;
@@ -63,12 +67,14 @@ color:#5e5e5e;
 			-moz-box-shadow: 0px 1px 1px #fff;
 			box-shadow: 0px 1px 1px #fff;
 	}
+	
 		/*#content h3 {
 		font:bold  20px/1.22em "Verdana", "Geneva", sans-serif;
 		color:#353232;
 		padding:12px 0 8px 0;
 		text-shadow:1px 1px 0px #fff;
 		}*/
+		
 	#content p {
 	text-shadow:1px 1px 0px #fff;
 	}
@@ -138,7 +144,6 @@ text-align:left;
 aside.doc-box p{margin:0;}
 
 	aside.doc-box:hover {
-	border:1px solid #caaf9a;
 	background-color:#ececea!important;
 	}
 	aside.doc-box a{
@@ -164,6 +169,11 @@ outline-offset: -2px;
 }
 	span.doc-input a {
 	color:#7a7a7a!important;
+	}
+	
+/* supression des propriétés sur default*/	
+	.input_default {
+	width:auto!important;
 	}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -191,8 +201,8 @@ padding: 0 0 15px 0;
 	padding:4px 4px;
 	width:350px;
 	margin-bottom:15px;
-	outline: 2px solid #e1e1e1;
-	outline-offset: -4px;
+	/*outline: 2px solid #e1e1e1;
+	outline-offset: -4px;*/
 		-webkit-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
 		-moz-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
 		box-shadow: 3px 3px 2px rgba(0,0,0,.1);
@@ -203,33 +213,23 @@ padding: 0 0 15px 0;
 	width:600px;
 	}
 		form input:hover, form textarea:hover, select:hover {
-		border: 2px solid #ff7000;
+		border: 2px solid #c2c2c2;
 		-webkit-box-shadow:none;
 		-moz-box-shadow:none;
 		box-shadow:none;
 		}
 		form input:focus, form textarea:focus, select:focus {
-		border: 2px solid #c13f27;
+		border: 2px solid #a6a6a6;
 		-webkit-box-shadow:none;
 		-moz-box-shadow:none;
 		box-shadow:none;
 		}
 		
-	.input_default { /* supression des propriétés sur default*/
-	width:auto!important;
-	}
-
 /* - - - le bouton d'envoi - - - - */
 input[type=submit] {
-	margin-top:10px;
-padding:5px;
-cursor: pointer;
-display: block;
-line-height: 0px;
 }
 	input[type=submit]:hover {
-	cursor: pointer;
-	line-height: 0px;
+		cursor:pointer;
 	}
 
 /* - - Les types Particuliers - - */
@@ -258,8 +258,6 @@ form input[type=number] {
 
 #content p.see-link {
 text-align:right;
-}
-.list-actions {
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

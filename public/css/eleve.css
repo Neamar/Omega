@@ -60,15 +60,22 @@ color:#f16c05!important;
 text-decoration:none!important;
 }
 	aside.doc-box:hover {
+	border:1px solid #caaf9a;
 	background:#f1f1ef url('/public/css/images/doc-box-h.png') center left scroll no-repeat;
 	}
-	
 span.doc-input a:hover {  /*Ton 2*/
 color:#c57309!important;
 text-decoration:none!important;
 }
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 input:hover, input:focus {
 border: 2px solid #e96600;
 }
-	
+form input:hover, form textarea:hover, select:hover {
+border: 2px solid #ff7000;
+}
+form input:focus, form textarea:focus, select:focus {
+border: 2px solid #c13f27;
+}
