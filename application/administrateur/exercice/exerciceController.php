@@ -27,27 +27,12 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 {
 	/**
 	 * Page d'accueil du module.
+	 * @see Administrateur_IndexController::reclamationsAction
+	 * 
 	 */
 	public function indexAction()
 	{
-		$this->View->setTitle(
-			"Exercices",
-			"Cette page permet de consulter en quasi temps réel ."
-		);
-	}
-	
-	/**
-	 * Dernières actions
-	 */
-	public function _indexAction()
-	{
-		$this->ajax('SELECT
-			DATE_FORMAT(Exercices_Logs.Date,"%d/%c/%y à %Hh"),
-			Exercices.Titre,
-			Exercices_Logs.Action, 
-			CONCAT("<a href=/administrateur/exercice/index/", Exercices.Hash,">Consulter</a>")
-		FROM Exercices_Logs
-		JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)');
+		$this->redirect('/administrateur/reclamations');
 	}
 	
 	public function indexActionWd()

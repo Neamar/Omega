@@ -52,6 +52,14 @@ class Administrateur_MembreController extends AbstractController
 		$this->json($Reponses);
 	}
 	
+	public function eleveAction()
+	{
+		$this->View->setTitle(
+			'Informations élève pour ' . $Eleve->Mail,
+			'Cette page affiche les différentes informations connues sur cet élève.'
+		);
+	}
+	
 	public function eleveActionWd()
 	{
 		$Eleve = Eleve::load('-1 OR Membres.Mail="' . Sql::escape($this->Data['data']) . '"', false);
@@ -73,7 +81,7 @@ class Administrateur_MembreController extends AbstractController
 	}
 	
 	/**
-	 * !Fonction spéciale, qui n'est théoriquement jamais appelée directement.
+	 * Fonction spéciale, qui n'est théoriquement jamais appelée directement.
 	 */
 	public function membreActionWd()
 	{
