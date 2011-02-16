@@ -1,3 +1,9 @@
+<h2 class="h2_exercice">Derniers exercices</h2>
 <?php 
-echo $this->Html_ajaxTable('/administrateur/log/_exercice', 'Dernières actions', array('Date', 'Exercice', 'Action', 'Lien'));
+echo $this->Html_ajaxTable('/administrateur/log/_exercice', 'Derniers exercices', array('Date', 'Exercice', 'Expiration', 'Lien'));
+?>
+
+<h2 class="h2_logs">Dernières actions</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_exercice_log', 'Dernières actions', array('Date', 'Exercice', 'Action', 'Lien'));
 ?>
