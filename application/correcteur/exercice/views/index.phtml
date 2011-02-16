@@ -14,7 +14,7 @@ if(count($this->ExercicesActifs) > 0)
 }
 ?>
 
-<h2 class="h2_actions">Dernières actions</h2>
+<h2 class="h2_logs">Dernières actions</h2>
 <?php 
 echo $this->Html_ajaxTable('/correcteur/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
 ?>

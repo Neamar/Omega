@@ -25,7 +25,7 @@ $ListeActions = array(
 );
 ?>
 
-<h2 class="membre-exercice-options">Options de l'exercice</h2>
+<h2 class="h2_actions">Options de l'exercice</h2>
 
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
@@ -36,7 +36,6 @@ if(!is_array($Actions))
 else
 {
 	echo $this->Html_listAction($Actions, '/correcteur/exercice/__URL__/' . $this->Exercice->Hash, 'correcteur');
-	//TODO : un select "quickjump" pour activer rapidement différentes options.	
 }
 ?>
 
@@ -45,7 +44,7 @@ else
 echo $this->Exercice($this->Exercice);
 ?>
 
-<h2 class="h2_actions">Actions sur l'exercice</h2>
+<h2 class="h2_logs">Actions sur l'exercice</h2>
 <?php 
 echo $this->Html_ajaxTable('/correcteur/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
 ?>
