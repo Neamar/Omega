@@ -71,6 +71,13 @@ text-decoration:none!important;
 	border:1px solid #9abbca;
 	background:#f1f1ef url('/public/css/images/doc-box-h-c.png') center left scroll no-repeat;
 	}
+.content-base p.intro {
+color:#56859f;
+}
+#ariane .see-link a:hover {
+color:#1a80bc;
+}
+	
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -83,7 +90,7 @@ outline: 2px solid #e1e1e1;
 outline-offset: -4px;
 }
 form input:focus, form textarea:focus, select:focus {
-border: 2px solid #276cc1;
+border: 2px solid #1961a3;
 outline:none;
 }
 

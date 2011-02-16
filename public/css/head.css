@@ -25,7 +25,7 @@ article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { dis
 body {
 margin: 0;
 padding: 0; 
-font-family: Arial, Helvetica, sans-serif; 
+font-family: "Helvetica", "Arial", sans-serif; 
 
 line-height: 1.4; 
 color:#2f2d29;
@@ -167,6 +167,9 @@ float:right;
 	display:block;
 	padding-left:22px;
 	margin-top:12px;
+	font-weight:bold;
+	color:#8d8d8d;
+	text-shadow:1px 1px 0px #f8f8f8;
 	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/	
 	#ariane .see-link a:hover {
 	color:#000000;
@@ -216,7 +219,7 @@ margin:auto;
 	}
 		#title h1 {
 		color:#f0eeee;
-		font:bold 36px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		font:bold 35px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
 		text-shadow:1px 1px 0px #292929;
 		}
 		#title p{
@@ -265,7 +268,7 @@ background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x;
 height:13px;
 background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
 }
-	aside.error p:first-child {
+	aside.error p:first-child, aside.error p:first-child a:hover {
 	color:#d43b3e;
 	}
 
@@ -278,10 +281,9 @@ background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x;
 height:13px;
 background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
 }
-	aside.ok p:first-child {
+	aside.ok p:first-child, aside.ok p:first-child a:hover {
 	color:#006600;
 	}
-
 /* -- Classe Information / .info -- */		
 #main-message #content-message.info {
 padding:5px 0;
@@ -291,7 +293,7 @@ background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x;
 height:13px;
 background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
 }
-	aside.info p:first-child {
+	aside.info p:first-child, aside.info p:first-child a:hover {
 	color:#006699;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
@@ -305,7 +307,7 @@ background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x;
 height:13px;
 background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 }
-	aside.warning p:first-child {
+	aside.warning p:first-child, aside.warning p:first-child a:hover {
 	color:#704508;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
