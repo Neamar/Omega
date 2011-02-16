@@ -76,6 +76,31 @@ $(function()
 	}
 });
 
+
+/**
+ * Charge la librairie mathjax sur la page actuelle et la configure
+ */
+function loadMathJax()
+{
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = "/public/js/MathJax/MathJax.js";
+
+	var config = 'MathJax.Hub.Config({ config: "MathJax.js" }); ' +
+				'MathJax.Hub.Startup.onload();';
+
+	if (window.opera)
+	{
+		script.innerHTML = config;
+	}
+	else
+	{
+		script.text = config;
+	}
+
+	document.getElementsByTagName("head")[0].appendChild(script);
+}
+
 /**
  * Gestion des mathématiques
  * 
@@ -90,23 +115,7 @@ $(function()
 	//TODO : réparer ça !
 	if($('.texable').length > 0)
 	{
-		var script = document.createElement("script");
-		script.type = "text/javascript";
-		script.src = "/public/js/MathJax/MathJax.js";
-
-		var config = 'MathJax.Hub.Config({ config: "MathJax.js" }); ' +
-					'MathJax.Hub.Startup.onload();';
-
-		if (window.opera)
-		{
-			script.innerHTML = config;
-		}
-		else
-		{
-			script.text = config;
-		}
-
-		document.getElementsByTagName("head")[0].appendChild(script);
+		loadMathJax();
 	}
 });
 
@@ -179,4 +188,54 @@ $(function()
 	$('input[type=numeric]').change(Numeric);
 	$('input[type=numeric]').keyup(Numeric);
 	$('input[type=numeric]').keydown(Numeric);
+});
+
+/**
+ * Gestion des textarea de type "tex-container"
+ * 
+ * Ajoute un bouton permettant de prévisualiser le rendu.
+ */
+$(function()
+{
+	var NotLoaded = true;
+	var Apercu;
+	var TeXContainers = $('textarea.tex-container');
+	
+	if(TeXContainers.length > 0 && !window.MathJax)
+	{
+		loadMathJax();
+	}
+	
+	TeXContainers.after(function()
+	{
+		var jTextArea = $(this);
+		var Item = $('<span class="tex-container-preview">Prévisualiser</span>').click(function()
+		{
+			if(NotLoaded)
+			{
+				//Initialiser la fenête d'aperçu
+				Apercu = $('<div class="texable"></div>');
+				$('body').append(Apercu);
+				Apercu.hide();
+				Apercu.dialog({
+					modal: true,
+					autoOpen: false,
+					title: 'Prévisualisation du texte'
+				});
+				NotLoaded = false;
+			}
+			
+			Apercu.html(jTextArea.val());
+			if(jTextArea.val().indexOf('$') != -1)
+			{
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+			}
+
+			Apercu.dialog('open');
+			
+			
+		});
+		
+		return Item;
+	});
 });
