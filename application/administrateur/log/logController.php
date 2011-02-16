@@ -75,4 +75,64 @@ class Administrateur_LogController extends AbstractController
 			'Cette page affiche les différentes informations des élèves.'
 		);
 	}
+	
+	/**
+	 * Derniers élèves inscrits
+	 */
+	public function _eleveAction()
+	{
+		$this->ajax('SELECT
+				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
+				Mail,
+				Statut,
+				DetailsClasse, 
+				CONCAT("<a href=/administrateur/membre/eleve/", Mail,">Consulter</a>")
+			FROM Membres
+			JOIN Eleves ON (Eleves.ID = Membres.ID)
+			JOIN Classes ON (Classes.Classe = Eleves.Classe)',
+			'Creation DESC'
+		);
+	}
+	
+	/**
+	 * Dernières actions des élèves
+	 */
+	public function _eleve_logAction()
+	{
+		$this->ajax('SELECT
+				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
+				Mail,
+				Action,
+				IF(Delta < 0, CONCAT("<span style=color:red>", Delta, "</span>"), CONCAT("<span style=color:green>", Delta, "</span>")),
+				CONCAT("<a href=/administrateur/membre/eleve/", Mail,">Consulter</a>")
+			FROM Logs
+			JOIN Membres ON (Membres.ID = Logs.Membre)
+			WHERE Membres.TYPE = "ELEVE"'
+		);
+	}
+	
+	/**
+	 * Infos globales affichées sur l'accueil de l'administration
+	 */
+	public function _globalAction()
+	{
+		$Data = array();
+		
+		$Data[] = array(
+			'Exercices crées',
+			1,
+			2,
+			7,
+		);
+	
+		
+		$Data[] = array(
+			'&Delta; points',
+			1,
+			2,
+			7,
+		);
+		
+		$this->json($Data);
+	}
 }
