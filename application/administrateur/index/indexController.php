@@ -39,6 +39,7 @@ class Administrateur_IndexController extends IndexAbstractController
 		$this->View->Virements = $this->virementsCount();
 		$this->View->Alertes = $this->alertesCount();
 		$this->View->Reclamations = $this->reclamationsCount();
+		$this->View->Validations = $this->validationsCount();
 	}
 	
 	/**
@@ -207,6 +208,20 @@ class Administrateur_IndexController extends IndexAbstractController
 		);
 	}
 
+	/**
+	 * Renvoie le nombre de correcteurs en attente de validation
+	 * 
+	 * @return int
+	 */
+	protected function validationsCount()
+	{
+		return Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Membres
+			WHERE Statut="EN_ATTENTE"',
+			'S'
+		);
+	}
 	
 	/**
 	 * Bloque l'inscription d'un administrateur.

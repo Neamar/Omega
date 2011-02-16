@@ -27,12 +27,51 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 {
 	/**
 	 * Page d'accueil du module.
-	 * @see Administrateur_IndexController::reclamationsAction
-	 * 
 	 */
 	public function indexAction()
 	{
-		$this->redirect('/administrateur/reclamations');
+		$this->View->setTitle(
+			"Exercices",
+			"Cette page permet de consulter en quasi temps réel ."
+		);
+	}
+	
+	/**
+	 * Dernières actions
+	 */
+	public function _indexAction()
+	{
+		$this->ajax('SELECT
+			DATE_FORMAT(Exercices_Logs.Date,"%d/%c/%y à %Hh"),
+			Exercices.Titre,
+			Exercices_Logs.Action, 
+			CONCAT("<a href=/administrateur/exercice/index/", Exercices.Hash,">Consulter</a>")
+		FROM Exercices_Logs
+		JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)');
+	}
+	
+	public function indexActionWd()
+	{
+		$this->View->setTitle(
+			'Exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
+			"Informations sur l'exercice."
+		);
+	}
+	
+	/**
+	 * Chat de l'exercice
+	 * @see ExerciceAbstractController::faqActionWd()
+	 */
+	public function faqActionWd()
+	{
+		//Lest tests d'accès sont effectués dans la méthode parente	
+		$this->View->setTitle(
+			"Chat de l'exercice",
+			"Ne s'exprimer sur cette page qu'au strict minimum. C'est le correcteur qui devrait se charger de répondre aux questions..."
+		);
+		
+		//Enregistrer et récupérer les données
+		parent::faqActionWd();
 	}
 	
 	/**

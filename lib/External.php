@@ -94,9 +94,9 @@ class External
 		$File = file_get_contents(DATA_PATH . '/mails' . str_replace('.', '', $template) . '.html');
 		
 		//Le parser
-		$File = preg_replace_callback("`\%([a-zA-Z0-9_]+)\%`", 'External::_templateReplace', $File);
+		$File = preg_replace_callback("`__([a-zA-Z0-9_]+)__`", 'External::_templateReplace', $File);
 		
-		//Réucpérer ses composantes
+		//Récupérer ses composantes
 		$Items = explode(PHP_EOL, $File, 2);
 		$subject = $Items[0];
 		$message = $Items[1];
