@@ -72,7 +72,7 @@ color:#5e5e5e;
 		text-shadow:1px 1px 0px #fff;
 		}*/
 
-/* - - TITRE H2 - - */
+/* - - TITRE H2 Correcteurs- - */
 .content-base h2 {
 background:url('/public/css/images/h2.png') top left scroll no-repeat;
 }
@@ -97,7 +97,13 @@ background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat
 h2.h2_exercice {
 background:url('/public/css/images/h2-h2_exercice.png') top left scroll no-repeat;
 }
-
+/* - - TITRE H2 Eleves - */
+h2.eleve-exercice-index {
+background:url('/public/css/images/h2-eleve-exercice-index.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-index-creation {
+background:url('/public/css/images/h2-eleve-exercice-index-creation.png') top left scroll no-repeat;
+}
 /* - - TITRE H3 - - */
 h3.eleve-points-index {
 	text-transform:uppercase;
@@ -110,6 +116,10 @@ margin-top:-17px!important;
 	li p {
 	margin-top:0;
 	}	
+h2.eleve-exercice-index-creation + a {
+padding-left:16px;
+background:url('/public/css/images/bullet.png') top left scroll no-repeat!important;
+}
 	
 	#content p {
 	text-shadow:1px 1px 0px #fff;
@@ -129,7 +139,7 @@ margin-top:-17px!important;
 	text-decoration:none!important;
 	}
 p.action-detail a {
-	color:#cb620e;
+color:#a6a6a6;
 background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
 padding-left:20px;
 }
@@ -229,6 +239,7 @@ outline-offset: -2px;
 border:1px dashed #ccc;
 outline: 1px solid #fff;
 outline-offset: -2px;
+margin-bottom:15px;
 }
 /*.list-actions:hover {
 background-color:#f1f1ef;
