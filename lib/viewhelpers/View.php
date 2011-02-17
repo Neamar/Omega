@@ -52,10 +52,10 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 1)
 	if($DeltaH != 0)
 	{
 		$R = preg_replace_callback(
-			'`<(/)?h([1-6])>`',
+			'`<(/)?h([1-6])(.*)>`U',
 			create_function(
 				'$H',
-				'return "<" . $H[1] . "h" . ($H[2] + ' . $DeltaH . ') . ">";'
+				'return "<" . $H[1] . "h" . ($H[2] + ' . $DeltaH . ') . $H[3] . ">";'
 			),
 			$R
 		);
