@@ -153,7 +153,8 @@ class Typo
 	//Changer la langue de rendu.
 	public static function switchLanguage($LNG)
 	{
-		$File=substr(__FILE__,0,strrpos(__FILE__,'/')) . '/Lng/' . $LNG . '.php';
+		$File = str_replace('\\', '/', __FILE__);
+		$File = substr($File,0,strrpos($File,'/')) . '/Lng/' . $LNG . '.php';
 		if(is_file($File))
 			include($File);
 		else
