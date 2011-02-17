@@ -242,7 +242,8 @@ function Typo_parseLines($texte)
 			if(substr($envContent,0,1)==PHP_EOL)
 				$envContent=substr($envContent,1);
 
-			$File= substr(__FILE__,0,strrpos(__FILE__,'/')) . '/Env/' . $Env[3] . '.php';
+			$File = str_replace('\\', '/', __FILE__);
+			$File= substr($File,0,strrpos($File,'/')) . '/Env/' . $Env[3] . '.php';
 			if(is_file($File))
 				include($File);
 			else
