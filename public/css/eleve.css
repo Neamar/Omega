@@ -11,7 +11,7 @@ Couleur Orange
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.content-base #content a { text-decoration: none; color: #996600;}
+.content-base #content a { text-decoration: none; color: #e06c0e;}
 .content-base #content a:hover { text-decoration: underline; color:#7e3e13;} 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------*/
@@ -63,6 +63,10 @@ text-decoration:none!important;
 	border:1px solid #caaf9a;
 	background:#f1f1ef url('/public/css/images/doc-box-h.png') center left scroll no-repeat;
 	}
+/* - - Titre sous H2 - - */	
+.content-base p.intro {
+color:#9f7356;
+}
 span.doc-input a:hover {  /*Ton 2*/
 color:#c57309!important;
 text-decoration:none!important;
@@ -72,6 +76,10 @@ background:#fff url('/public/css/images/email-e.png') center left scroll no-repe
 }
 form input[type=password]:hover, form input[type=password]:focus {
 background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+}
+p.action-detail a:hover{
+background:url('/public/css/images/doc-e.png') top left scroll no-repeat;
+padding-left:20px;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/

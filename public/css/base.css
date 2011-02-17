@@ -71,6 +71,8 @@ color:#5e5e5e;
 		padding:12px 0 8px 0;
 		text-shadow:1px 1px 0px #fff;
 		}*/
+
+/* - - TITRE H2 - - */
 .content-base h2 {
 background:url('/public/css/images/h2.png') top left scroll no-repeat;
 }
@@ -95,6 +97,12 @@ background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat
 h2.h2_exercice {
 background:url('/public/css/images/h2-h2_exercice.png') top left scroll no-repeat;
 }
+
+/* - - TITRE H3 - - */
+h3.eleve-points-index {
+	text-transform:uppercase;
+}
+
 /* Supression des marges dans les listes */
 p + ul {
 margin-top:-17px!important;
@@ -113,6 +121,16 @@ margin-top:-17px!important;
 	text-indent:15px;
 	text-shadow:1px 1px 0px #fff;
 }
+/* - - Différentitaion de la documentation - - */
+.list-actions ul li > a {
+	font-weight:bold;
+}
+p.action-detail a {
+	color:#cb620e;
+background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
+padding-left:20px;
+}
+
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -160,7 +178,6 @@ aside.doc-box {
 	/*position:relative;
 	left:50%;
 	margin-left:-160px;*/
-	
 padding-left:44px;
 margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
@@ -204,12 +221,27 @@ outline-offset: -2px;
 	color:#7a7a7a!important;
 	}
 	
+/* - - Classe sur la ListeAction - - */		
+.list-actions {
+border:1px dashed #ccc;
+outline: 1px solid #fff;
+outline-offset: -2px;
+}
+/*.list-actions:hover {
+background-color:#f1f1ef;
+}*/
+	.list-actions form{
+	width:260px;
+	display:block;
+	margin:auto;
+	}
+	
 /* supression des propriétés sur default*/	
 	.input_default {
 	width:auto!important;
 	}
 
-/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 2. Contact - Les formulaires -------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 form { /* classe globale pour les forms*/
@@ -313,20 +345,6 @@ text-transform:uppercase;
 color:#333;
 font-size:14px;
 }
-
-.list-actions {
-border:1px dashed #ccc;
-outline: 1px solid #fff;
-outline-offset: -2px;
-}
-.list-actions:hover {
-background-color:#f1f1ef;
-}
-	.list-actions form{
-	width:260px;
-	display:block;
-	margin:auto;
-	}
 
 /* - - Les types Particuliers - - */
 form input[type=email] {
