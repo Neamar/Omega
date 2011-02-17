@@ -207,10 +207,42 @@ class Documentation_IndexController extends AbstractController
 	public function contactAction()
 	{
 		$this->View->setTitle(self::$Pages[$this->Controller]['contact'], 'Formulaire de contact pour communiquer avec l\'équipe du site');
+		$this->View->Valeurs = array('Question', 'Éclaircissement', 'Problème technique', 'Réclamation', 'Justification', 'Autre');
 		
 		if(isset($_POST['contact']))
 		{
-			$this->View->setMessage('ok', 'Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.');
+			if(empty($_POST['mail']))
+			{
+				$this->View->setMessage('error', 'Merci de nous indiquer un mail auquel nous pourrons vous répondre');
+			}
+			elseif(!Validator::mail($_POST['mail']))
+			{
+				$this->View->setMessage('error', 'Adresse mail invalide');
+			}
+			elseif(empty($_POST['sujet']))
+			{
+				$this->View->setMessage('error', 'Merci de spécifier le sujet de votre message');
+			}
+			elseif(empty($_POST['message']))
+			{
+				$this->View->setMessage('error', 'Merci de compléter votre demande en entrant un message');
+			}
+			elseif(!in_array($_POST['categorie'], $this->View->Valeurs))
+			{
+				$this->View->setMessage('error', 'Merci de sélectionner la raison du contact.');
+			}
+			else
+			{
+				External::mail(
+					'contact@edevoir.com',
+					$_POST['categorie'] . '&nbsp;: ' . $_POST['sujet'],
+					$_POST['message'],
+					$_POST['mail']
+				);
+				
+				$this->View->setMessage('ok', 'Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.');
+			}
+			
 		}
 	}
 	

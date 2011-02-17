@@ -7,11 +7,12 @@ echo $this->Form_inputLabelBr(
 	'mail',
 	'Votre adresse mail',
 	array(
-		'type' => 'email'
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr'
 	)
 );
 
-$Valeurs = array('Question', 'Éclaircissement', 'Problème technique', 'Réclamation', 'Justification');
+$Valeurs = $this->Valeurs;
 echo $this->Form_selectLabelBr(
 	'categorie',
 	'Pourquoi souhaitez-vous nous contacter',
