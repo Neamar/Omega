@@ -204,6 +204,16 @@ class Documentation_IndexController extends AbstractController
 		$this->View->setTitle(self::$Pages[$this->Controller]['tex'], 'Petit aide mémoire à l\'intention de ceux qui souhaient utiliser LaTeX');
 	}
 	
+	public function contactAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['contact'], 'Formulaire de contact pour communiquer avec l\'équipe du site');
+		
+		if(isset($_POST['contact']))
+		{
+			$this->View->setMessage('ok', 'Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.');
+		}
+	}
+	
 	/**
 	 * Gère la documentation au format TeX
 	 * 
