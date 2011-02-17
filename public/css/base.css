@@ -165,14 +165,14 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 
 /* - - mini doc box bloc - - */
 aside.doc-box {
-	position:relative;
+	/*position:relative;
 	left:50%;
-	margin-left:-160px;
+	margin-left:-160px;*/
 	
 padding-left:44px;
 margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
-font: 16px/100% Georgia, Helvetica, sans-serif;
+font: 16px/1.2em Georgia, Helvetica, sans-serif;
 color:#676767;
 font-weight:bold;
 text-align:left;
@@ -186,6 +186,8 @@ aside.doc-box p{margin:0;}
 	background-color:#ececea!important;
 	}
 	aside.doc-box a{
+		display:inline-block;
+		padding-top:5px;
 	font-weight:normal;
 	}
 	
@@ -267,8 +269,46 @@ padding: 0 0 15px 0;
 		}
 		
 /* - - - le bouton d'envoi - - - - */
-input[type=submit] {
+form input[type=submit] {
+display: inline-block;
+outline: none;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+font: 14px/100% Arial, Helvetica, sans-serif;
+text-shadow: 0 1px 1px rgba(0,0,0,.3);
+
+-webkit-border-radius: .5em;
+-moz-border-radius: .5em;
+border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	
+background: #666666;
+color:#fff;
+
+	color: #fef4e9;
+	border: solid 1px #943c31;
+	background: #c5422e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#b43725)); /* clair > sombre*/
+	background: -moz-linear-gradient(top,  #d74d38,  #b43725);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#b43725');
+
 }
+
+form input[type=submit]:hover {
+
+	border: solid 1px #943c31;
+	outline:none;
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#90291b));
+	background: -moz-linear-gradient(top,  #d74d38,  #90291b);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#90291b');
+}
+
+
+
 	input[type=submit]:hover {
 	cursor:pointer;
 	}
@@ -303,7 +343,7 @@ padding-left:26px;
 width:324px;
 }
 form input[type=email]:hover, form input[type=email]:focus {
-background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
+background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
 }
 form input[type=password] {
 background:#fff url('/public/css/images/pass-d.png') center left scroll no-repeat;

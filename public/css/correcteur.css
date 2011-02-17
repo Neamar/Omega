@@ -77,7 +77,12 @@ color:#56859f;
 #ariane .see-link a:hover {
 color:#1a80bc;
 }
-	
+form input[type=email]:hover, form input[type=email]:focus {
+background:#fff url('/public/css/images/email-c.png') center left scroll no-repeat;
+}
+form input[type=password]:hover, form input[type=password]:focus {
+background:#fff url('/public/css/images/pass-c.png') center left scroll no-repeat;
+}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

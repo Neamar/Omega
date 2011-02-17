@@ -67,6 +67,12 @@ span.doc-input a:hover {  /*Ton 2*/
 color:#c57309!important;
 text-decoration:none!important;
 }
+form input[type=email]:hover, form input[type=email]:focus {
+background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
+}
+form input[type=password]:hover, form input[type=password]:focus {
+background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
