@@ -18,15 +18,9 @@ Version : Pour la deuxième partie - ext
 #content a:hover { text-decoration: underline; color:#666;} 
 h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
 
-ul {
-padding-left:15px;
-}
-	ul ul{
-	list-style-type: square!important;
-	}
-		#content li {
-		margin-left:15px;
-		}
+ul {padding-left:15px;}
+ul ul{list-style-type: square!important;}
+#content li {margin-left:15px;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -56,8 +50,6 @@ color:#5e5e5e;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 	#content h2 {
 		font:bold 28px/100% "Helvetica", "Arial", sans-serif;
-		
-
 	color:#676767;
 	text-shadow:1px 1px 0px #fff;
 	background-color:#f1f1f1;

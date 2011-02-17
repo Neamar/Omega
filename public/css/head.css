@@ -26,7 +26,6 @@ body {
 margin: 0;
 padding: 0; 
 font-family: "Helvetica", "Arial", sans-serif; 
-
 line-height: 1.4; 
 color:#2f2d29;
 background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll repeat-x; /*image r*/
@@ -51,7 +50,6 @@ strong { font-weight: bold; }
 width:1000px;
 margin:auto;
 }
-
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -144,9 +142,21 @@ height:103px; /*taille du bloc*/
 				text-shadow:1px 1px 0px #fff;
 				padding-left:15px;
 				}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+					#logo-liens ul li a:hover {
+					color:#fff;
+					text-shadow:1px 1px 0px #737373;
+					background:url('/public/css/images/menu_top-d-l.png') top left scroll no-repeat;
+					}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
+					
 				#logo-liens ul li a span {
 				padding-right:15px;
 				}
+					#logo-liens ul li a:hover span {
+					height:33px;
+					display:block;
+					background:url('/public/css/images/menu_top-d-r.png') top right scroll no-repeat;
+					cursor:pointer;
+					}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 3. Ariane / see-link -------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
