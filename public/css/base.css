@@ -125,6 +125,9 @@ margin-top:-17px!important;
 .list-actions ul li > a {
 	font-weight:bold;
 }
+	.list-actions ul li > a:hover {
+	text-decoration:none!important;
+	}
 p.action-detail a {
 	color:#cb620e;
 background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
