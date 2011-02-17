@@ -46,17 +46,27 @@ function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
  * @param array $Items la liste à créer. Les clés représentent l'url, les valeurs le texte du lien.
  * @param string $Type ul ou ol.
  * @param string $BaseURL l'URL de base à utiliser
+ * @param array $Attr une liste d'attributs à ajouter à la balise
  *
  * @return string le code HTML demandé.
  */
-function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '')
+function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '', array $Attributs = array())
 {
 	if(count($Items)==0)
 	{
 		return '';
 	}
+	
+	$Attr = '';
+	if(!empty($Attributs))
+	{
+		foreach($Attributs as $Attributs => $Valeur)
+		{
+			$Attr .= ' ' . $Attributs . '="' . $Valeur . '"';
+		}
+	}
 
-	$R = '<' . $Type . ">\n";
+	$R = '<' . $Type . $Attr . ">\n";
 	foreach($Items as $URL => $Item)
 	{
 		$R .= '	<li><a href="' . $BaseURL . $URL . '">' . $Item . "</a></li>\n";

@@ -59,11 +59,12 @@ class External
 	/**
 	* Envoie un mail à $to.
 	* L'envoi du mail se fait en fin de page, afin de ne pas ralentir l'affichage.
-	* @param To:String le destinataire du message
-	* @param Subject:String le sujet du mail
-	* @param Message:String le message au format HTML.
+	* @param string $To le destinataire du message
+	* @param string $subject le sujet du mail
+	* @param string $message le message au format HTML.
+	* @param string $from l'expéditeur (no-reply par défaut)
 	*/
-	public static function mail($to,$subject,$message,$from='no-reply@edevoir.com')
+	public static function mail($to, $subject, $message, $from = 'no-reply@edevoir.com')
 	{
 		// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
 		$headers  = 'MIME-Version: 1.0' . "\r\n";

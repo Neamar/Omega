@@ -1,11 +1,28 @@
-﻿Message : Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.
+<p>Vous souhaitez nous contacter ? Pas de problème.<br />
+Merci d'entrer votre mail suivi de votre message dans ce formulaire.</p>
 
-Vous souhaitez nous contacter ? Pas de problème. Merci d'entrer votre mail suivi de votre message dans ce formulaire :
-Formulaire de contact #contact :
+<form id="form_contact" method="post" action="">
+<?php
+echo $this->Form_inputLabelBr(
+	'mail',
+	'Votre adresse mail',
+	array(
+		'type' => 'email',
+		'placeholder' => 'nom@fai.fr'
+	)
+);
 
-   1. input mail
-   2. select catégorie (Question, Éclaircissement, Problème technique, Réclamation, Justification)
-   3. input sujet
-   4. textarea message
-   5. captcha
-   6. button Envoyer
+$Valeurs = $this->Valeurs;
+echo $this->Form_selectLabelBr(
+	'categorie',
+	'Pourquoi souhaitez-vous nous contacter',
+	array_combine($Valeurs, $Valeurs)
+);
+
+echo $this->Form_inputLabelBr('sujet', 'Sujet');
+
+echo $this->Form_textareaLabelBr('message', 'Votre message (texte brut)');
+
+//TODO : captcha
+echo $this->Form_submit('contact','Envoyer mon message');
+?>
