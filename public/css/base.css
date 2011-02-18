@@ -11,7 +11,7 @@ Version : Pour la deuxième partie - ext
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.edevoir span {	-webkit-transform: rotate(90deg);-moz-transform: rotate(90deg);-o-transform: rotate(90deg);/*writing-mode: tb-rl;*/text-transform:lowercase!important;}
+.edevoir span {	-webkit-transform: rotate(-15deg);-moz-transform: rotate(-15deg);-o-transform: rotate(-15deg);/*writing-mode: tb-rl;*/text-transform:lowercase!important;}
 
 #content ul {margin:0; padding:0; list-style-type: circle; list-style-position:inside;}
 #content a { text-decoration: none; color: #424242;}
@@ -226,7 +226,7 @@ text-align: center;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:10px; 10px;
+margin:10px;
 -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -314,7 +314,7 @@ padding: 0 0 15px 0;
 		}
 		
 /* - - - le bouton d'envoi - - - - */
-form input[type=submit] {
+form input[type=submit], form input[type=button] {
 display: inline-block;
 outline: none;
 cursor: pointer;
@@ -342,7 +342,7 @@ color:#fff;
 
 }
 
-form input[type=submit]:hover {s
+form input[type=submit]:hover, form input[type=button]:hover {
 	border: solid 1px #943c31;
 	outline:none;
 	background: #f47c20;
@@ -380,10 +380,12 @@ background:#fff url('/public/css/images/pass-d.png') center left scroll no-repea
 padding-left:26px;
 width:324px;
 }
-form input[type=password]:hover, form input[type=password]:focus {
-background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+	form input[type=password]:hover, form input[type=password]:focus {
+	background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+	}
+	
+form input[type=button] {
 }
-
 form input[type=number] {
 }
 	select {
@@ -393,6 +395,9 @@ form input[type=number] {
 #content p.see-link {
 text-align:right;
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------- 1 jQuerry -------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
