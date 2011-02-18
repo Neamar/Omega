@@ -61,7 +61,8 @@ class Correcteur extends Membre
 			'SELECT COUNT(*) AS Nb
 			FROM Exercices
 			WHERE Correcteur=' . $this->getFilteredId() . '
-			AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")', $Nb
+			AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")',
+			'Nb'
 		);	
 	}
 }

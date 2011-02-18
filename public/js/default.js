@@ -32,6 +32,13 @@ function dynamicDate()
 $(dynamicDate);
 
 /**
+ * Délai (ms) entre deux mise à jour de tableaux dynamiques
+ * 
+ * @var int
+ */
+var DELAY = 60000;
+
+/**
  * Gestion des tableaux Ajax
  * 
  * Ces tableaux récupèrent leur contenu régulièrement du site pour être
@@ -77,6 +84,8 @@ $(function()
 			
 			update();
 			setInterval(update, 60000);
+			
+			Table.data('timer', update);
 		});
 	}
 });
