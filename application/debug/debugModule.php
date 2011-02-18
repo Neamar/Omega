@@ -14,6 +14,5 @@
  * @link      http://edevoir.com
  */
 
-//TODO: Tester la possibilité d'accéder au module.
-return true;
+return isset($_SESSION['Administrateur']);
 ?>

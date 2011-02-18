@@ -3,12 +3,17 @@ echo $this->Doc_box('correcteur', 'marche', 'Besoin d\'aide ?');
 ?>
 
 <?php 
-//TODO: Prochaine mise à jour automatique : 30 secondes (lien actualiser maintenant)
-//TODO: Attention : vous vous êtes déjà engagés à répondre à trois exercices (dont un potentiel). N'ayez pas les yeux plus gros que le ventre :)
 //TODO: Formulaire de filtre
+if($this->NbReserves > 0)
+{
+	$Chiffres = array('un', 'deux', 'trois', 'quatre', 'cinq');
+	echo '<p class="important">Attention : vous vous êtes déjà engagés à répondre à ' . $Chiffres[$this->NbReserves] . ' exercice' . ($this->NbReserves>1?'s':'') . '. N\'ayez pas les yeux plus gros que le ventre :)</p>';
+}
 ?>
 
 <h2 class="correcteur-index-liste-foire">Exercices correspondant à vos critères</h2>
+<p class="infos">Prochaine mise à jour automatique de ces données : <span id="prochaine-maj"></span>s. <a href="#" id="maj-now">Mettre à jour maintenant</a>.</p>
+
 <?php 
 echo $this->Html_ajaxTable('/correcteur/_liste', 'Exercices disponibles', array('Date', 'Exercice'), 'updateTex');
 ?>
