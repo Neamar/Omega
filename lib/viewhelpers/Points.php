@@ -18,8 +18,41 @@
  * Convertit une valeur en points en euros
  * 
  * @param int $Points les points à transformer
+ * 
+ * @return float le nombre d'euros correspondants arrondis à la deuxième décimale
  */
 function ViewHelper_Points_euros($Points)
 {
 	return number_format($Points / EQUIVALENCE_POINT, 2, ',', ' ') . '&nbsp;€';
+}
+
+/**
+ * Affiche un message important si la création d'un exercice entraîne un surcout
+ * 
+ * @param Eleve $Eleve l'élève à tester
+ * 
+ * @return string
+ */
+function ViewHelper_Points_raiseWarning(Eleve $Eleve)
+{
+	$Raise = $Eleve->getRaise();
+	$Nombres = array('', 'un', 'deux', 'trois', 'quatre', 'plus de quatre');
+	$Nombre = ($Raise - 100) / 10;
+	
+	if($Raise > 100)
+	{
+		if(!function_exists('ViewHelper_Doc_link'))
+		{
+			include OO2FS::viewHelperPath('Doc');
+		}
+		
+		return '<p class="important">Attention ! Vous avez déjà soumis ' . $Nombres[$Nombre] . ' exercice' . ($Nombre > 1?'s':'') . ' dans les sept derniers jours.<br />
+N\'oubliez pas que nous sommes là pour aider ponctuellement, pas pour valider la ' . strtolower($Eleve->DetailsClasse) . ' à votre place ! En conséquence, une majoration de ' . ($Raise - 100) . '% s\'applique.<br />
+	' . ViewHelper_Doc_anchor('eleve', 'supplement') . '
+		</p>';	
+	}
+	else
+	{
+		return '';
+	}
 }

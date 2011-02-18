@@ -117,7 +117,10 @@ echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 </fieldset>
 
 <h3>Envoi du formulaire</h3>
-<p>Tout est prêt ? Cliquez sur le bouton ci-dessous pour envoyer les fichiers constituant l'exercice.</p>
+<?php 
+echo $this->Points_raiseWarning($this->getController()->getMembre());
+?>
+<p>Tout est prêt ? Cliquez sur le bouton ci-dessous pour passer à l'étape suivante et envoyer les fichiers constituant l'exercice.</p>
 <?php
 echo $this->Form_submit('creation-exercice', "Créer l'exercice");
 ?>

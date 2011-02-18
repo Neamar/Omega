@@ -1,7 +1,19 @@
-<h2 class="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
-<a href="/eleve/exercice/creation">Créer un nouvel exercice</a>
-
-<?php 
+<?php
+//Ne pas afficher le lien de création si la variable NoCreate existe.
+//Cette variable est définie lors de l'inclusion de la vue dans une autre vue, par exemple sur /eleve/
+//@see Eleve_IndexController::indexAction()
+if(!isset($this->NoCreate))
+{
+	?>
+	<h2 class="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
+	<?php 
+	echo $this->Points_raiseWarning($this->getController()->getMembre());
+	?>
+	<a href="/eleve/exercice/creation">Créer un nouvel exercice</a>
+	
+	<?php
+}
+ 
 if(count($this->ExercicesActifs) > 0)
 {
 	$ExercicesActifs = array();

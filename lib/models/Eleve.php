@@ -46,7 +46,7 @@ class Eleve extends Membre
 	 */
 	public function getRaise()
 	{
-		return 100;
+		return 110;
 		//TODO Implémenter la formule
 		/*
 		$Raise = SQL::singleColumn('SELECT COUNT(DISTINCT(DATE(Creation))) AS Nb

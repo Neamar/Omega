@@ -38,6 +38,7 @@ class Eleve_IndexController extends IndexAbstractController
 		);
 		
 		$this->View->Exo = $this->concat('/eleve/exercice/');
+		$this->View->Exo->NoCreate = true; //Ne pas afficher le lien de création que l'on va déjà mettre nous-mêmes.
 		$this->View->Points = $this->concat('/eleve/points/');
 
 	}
