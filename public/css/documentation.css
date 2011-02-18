@@ -1,0 +1,66 @@
+/*********************************************************************************************
+
+Version : partie documentation (couleurs)
+Couleur Grise
+
+/***********************************************************************************************
+
+0. -------------------------------- 
+
+**********************************************************************************************/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.content-base #content a { text-decoration: none; border-bottom:1px solid #999; text-shadow:1px 1px 0px #fff;}
+.content-base #content a:hover { text-decoration: underline; color:#858585; border-bottom:1px dashed #999; text-decoration:none; text-shadow:1px 1px 0px #fff; } 
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------- 1. Doc --------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*globale*/
+li.documentation-module-index ul li:last-child, li.documentation-module-eleve ul li:last-child, li.documentation-module-correcteur ul li:last-child{
+padding-bottom:25px;
+}
+li.documentation-module-eleve ul li:hover, li.documentation-module-correcteur ul li:hover, li.documentation-module-index ul li:hover, ul.documentation-module-eleve li:hover, ul.documentation-module-correcteur li:hover  {
+padding-left:7px;
+}
+
+li.documentation-module-index ul li:first-child a, li.documentation-module-eleve ul li:first-child a, li.documentation-module-correcteur ul li:first-child a{
+font-weight:bold;
+}
+ul.documentation-module-correcteur li:first-child a, ul.documentation-module-eleve li:first-child a {
+font-weight:bold;
+text-transform:uppercase;
+margin-top:15px;
+display:inline-block;
+}
+
+/*specifique*/
+li.documentation-module-index, li.documentation-module-eleve, li.documentation-module-correcteur {
+margin-top:20px;
+background:url('/public/css/images/separateur.jpg') bottom scroll no-repeat;
+font:bold 20px/1.2em "Helvetica", "Arial", sans-serif;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+	li.documentation-module-index a, li.documentation-module-eleve a, li.documentation-module-correcteur a, ul.documentation-module-eleve li a, ul.documentation-module-correcteur li a {
+	font:normal 18px/1.55em "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+	text-transform:none;
+	letter-spacing:0.5px;
+	}
+/* couleur */
+li.documentation-module-eleve, ul.documentation-module-eleve {
+color:#e06c0e;
+}
+li.documentation-module-eleve ul li a:hover, ul.documentation-module-eleve li a:hover{
+color:#e06c0e!important;
+border-bottom:1px dashed #e06c0e!important;
+}
+
+	li.documentation-module-correcteur, ul.documentation-module-correcteur {
+	color:#006699;
+	}
+	li.documentation-module-correcteur ul li a:hover, ul.documentation-module-correcteur li a:hover {
+	color:#006699!important;
+	border-bottom:1px dashed #006699!important;
+	}

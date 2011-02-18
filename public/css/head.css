@@ -178,7 +178,7 @@ float:right;
 	padding-left:22px;
 	margin-top:12px;
 	font-weight:bold;
-	color:#8d8d8d;
+	color:#5c5c5c;
 	text-shadow:1px 1px 0px #f8f8f8;
 	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/	
 	#ariane .see-link a:hover {
@@ -229,7 +229,7 @@ margin:auto;
 	}
 		#title h1 {
 		color:#f0eeee;
-		font:bold 35px/1.4em Georgia, Palatino, "Palatino Linotype", Times, serif;
+		font:bold 35px/1.3em Georgia, Palatino, "Palatino Linotype", Times, serif;
 		text-shadow:1px 1px 0px #292929;
 		}
 		#title p{
