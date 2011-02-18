@@ -4,14 +4,14 @@ Vous trouverez dans ces pages toute les informations nécessaires à l'utilisati
 $Liste = array();
 foreach($this->Pages as $Module=>$Pages)
 {
-	$Liste[] = $Pages['index'] . $this->Html_listAnchor(
+	$Liste[] = '<li class="documentation-module-' . $Module . '">' . $Pages['index'] . $this->Html_listAnchor(
 		$Pages,
 		'ul',
-		'/documentation/' . $Module . '/',
-		array(
-			'class' => 'documentation-liste documentation-' . $Module
-		)
-	);
+		'/documentation/' . $Module . '/'
+	) . '</li>';
 }
-echo $this->Html_list($Liste);
+
+echo '<ul class="documentation-module">';
+echo implode("\n	", $Liste);
+echo '</ul>';
 ?>

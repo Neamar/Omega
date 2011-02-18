@@ -149,6 +149,43 @@ class Administrateur_MembreController extends AbstractController
 	}
 	
 	/**
+	 * S'incarner dans le compte d'un membre.
+	 * Fonctionne pour les élèves et les correcteurs.
+	 * Le statut du membre doit etre OK ou BLOQUE, il n'est pas possible de s'incarner dans un membre DESINSCRIT ou EN_ATTENTE.
+	 * 
+	 * À noter : l'incarnation ne permet pas de faire tout et n'importe quoi.
+	 * En particulier, le mot de passe n'est jamais communiqué à l'administrateur, et il lui est donc ompossible d'effectuer un retrait ou de fermer le compte.
+	 * 
+	 */
+	public function incarnerActionWd()
+	{
+		$Membre = $this->exists($this->Data['data'], 'Membre');
+
+		if($Membre->Statut != 'OK' && $Membre->Statut != 'BLOQUE')
+		{
+			$this->View->setMessage('warning', 'Le statut associé à ce compte (' . $Membre->Statut . ') n\'est pas incarnable.');
+			$this->redirect('/administrateur/membre/');
+		}
+		else if($Membre->Type == 'ELEVE')
+		{
+			$_SESSION['Eleve'] = $this->exists($this->Data['data'], 'Eleve');
+			$this->View->setMessage('info', 'Vous êtes maintenant connecté sur le compte de ' . $_SESSION['Eleve']->Mail);
+			$this->redirect('/eleve/');
+		}
+		else if($Membre->Type == 'CORRECTEUR')
+		{
+			$_SESSION['Correcteur'] = $this->exists($this->Data['data'], 'Correcteur');
+			$this->View->setMessage('info', 'Vous êtes maintenant connecté sur le compte de ' . $_SESSION['Eleve']->Mail);
+			$this->redirect('/correcteur/');
+		}
+		else
+		{
+			$this->View->setMessage('warning', 'Impossible d\'incarner ce compte.');
+			$this->redirect('/administrateur/membre/');
+		}
+	}
+	
+	/**
 	 * Teste si un membre existe avec cet email.
 	 * 
 	 * @param string $Mail le mail
@@ -161,7 +198,7 @@ class Administrateur_MembreController extends AbstractController
 		$Membre = $Type::load('-1 OR Membres.Mail="' . Sql::escape($Mail) . '"', false);
 		if(is_null($Membre))
 		{
-			$this->View->setMessage('warning', 'Ce ' . strtolower($Type) . "n'existe pas.");
+			$this->View->setMessage('warning', 'Ce ' . strtolower($Type) . " n'existe pas.");
 			$this->redirect('/administrateur/membre/');
 		}
 		

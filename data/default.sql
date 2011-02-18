@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `Exercices_Correcteurs` (
   `Exercice` int(11) NOT NULL,
   `Correcteur` int(11) NOT NULL,
   `Action` enum('ENCHERE','SIGNALEMENT') NOT NULL,
-  `Longueur` int(11) NOT NULL,
+  `Offre` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Correcteur` (`Correcteur`),
   KEY `Exercice` (`Exercice`)
@@ -432,8 +432,8 @@ CREATE TABLE IF NOT EXISTS `Membres` (
   `Statut` enum('EN_ATTENTE','OK','BLOQUE','DESINSCRIT') NOT NULL DEFAULT 'EN_ATTENTE',
   `Type` enum('ELEVE','CORRECTEUR','ADMINISTRATEUR') NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `Mail` (`Mail`,`Type`),
-  KEY `Mail_2` (`Mail`,`Pass`)
+  UNIQUE KEY `Mail` (`Mail`),
+  KEY `Login` (`Mail`,`Pass`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -652,9 +652,9 @@ ALTER TABLE `Virements`
 
 INSERT INTO `Membres` (`ID`, `Mail`, `Pass`, `Points`, `Creation`, `Connexion`, `Statut`, `Type`) VALUES
 (1, 'Banque', NULL, 0, '2011-01-22 12:00:00', '2011-01-22 12:00:00', 'OK', 'Administrateur'),
-(2, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE'),
-(3, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR'),
-(4, 'ok@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'ADMINISTRATEUR');
+(2, 'eleve@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:44:26', '2011-01-18 13:44:53', 'OK', 'ELEVE'),
+(3, 'correcteur@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'CORRECTEUR'),
+(4, 'admin@neamar.fr', 'b3bbd55564e350cedca6f153c3e817ca5f2e25e1', 0, '2011-01-18 13:45:51', '2011-01-18 13:49:24', 'OK', 'ADMINISTRATEUR');
 INSERT INTO `Eleves` (`ID`, `Classe`, `Section`) VALUES
 (2, 2, 'ES');
 INSERT INTO `Correcteurs` (`ID`, `Prenom`, `Nom`, `Telephone`, `Siret`, `SiretOK`) VALUES
