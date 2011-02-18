@@ -152,7 +152,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					array(
 						'Exercice' => $this->Exercice->ID,
 						'Correcteur' => $_SESSION['Correcteur']->ID,
-						'Action' => 'ENCHERE'
+						'Action' => 'ENCHERE',
+						'Offre' => $_POST['prix'],
 					)
 				);
 				

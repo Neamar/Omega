@@ -131,12 +131,12 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
 	}
 
 	$Quickjump = ViewHelper_Form_selectLabelBr(
-		'quickjump',
+		'quickjump-' . $NbActions++,
 		'Liens rapides',
 		$Quickjump,
 		null,
 		array(
-			'id' => 'quickjump-' . $NbActions++,
+			'id' => 'quickjump-' . $NbActions,
 			'class' => 'quickjump'
 		)
 	);
