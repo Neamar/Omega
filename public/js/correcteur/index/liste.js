@@ -10,8 +10,15 @@ function updateTex()
 	{
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this]);
 	}
+	
+	Temps = DELAY / 1000;
 }
 
+var Temps;
+/**
+ * Chargement de MathJax
+ * et initialisation du décompte indiquant le temps restant avant la prochaine màj.
+ */
 $(function()
 {
 	//Forcer le chargement de MathJax dont on aura besoin
@@ -19,4 +26,14 @@ $(function()
 	{
 		loadMathJax();
 	}
+	
+	Delai = $('#prochaine-maj');
+	Temps = DELAY / 1000;
+	setInterval(function(){Delai.text(Temps--);}, 1000);
+	
+	$('#maj-now').click(function(e)
+	{
+		$('table.ajax-table').data('timer').call();
+		e.preventDefault();
+	});
 });

@@ -105,6 +105,8 @@ class Correcteur_IndexController extends IndexAbstractController
 		);
 		$this->View->setSeelink('/correcteur/options/matieres', 'Modifier mes compétences');
 		$this->View->addScript();
+		
+		$this->View->NbReserves = $this->getMembre()->getBooked();
 	}
 	
 	/**
@@ -151,7 +153,6 @@ ORDER BY Exercices.TimeoutEleve
 			',
 			'Hash'
 		);
-		//TODO: problème pour les exercices sans images
 	}
 	
 	

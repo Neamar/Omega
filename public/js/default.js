@@ -126,7 +126,6 @@ function loadMathJax()
  */
 $(function()
 {
-	//TODO : réparer ça !
 	if($('.texable').length > 0)
 	{
 		loadMathJax();
