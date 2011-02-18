@@ -100,18 +100,25 @@ outline:none;
 }
 
 /* - - le bouton Submit - - */
-form input[type=submit]:hover, form input[type=button]:hover {
-border: solid 1px #f47c20;
-outline:none;
-background: #f47c20;
-background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
-background: -moz-linear-gradient(top,  #f88e11,  #f06015);
-filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+form input[type=submit], form input[type=button] {
+color: #fef4e9;
+border: solid 1px #da7c0c;
+background: #f78d1d;
+background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 }
-
-	form input[type=submit]:active, form input[type=submit]:focus, form input[type=button]:active, form input[type=button]:focus {
+	form input[type=submit]:hover, form input[type=button]:hover {
 	border: solid 1px #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
-	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+	outline:none;
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
+	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
 	}
+		form input[type=submit]:active, form input[type=submit]:focus, form input[type=button]:active, form input[type=button]:focus {
+		border: solid 1px #f47c20;
+		background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+		background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+		}

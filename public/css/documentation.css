@@ -64,3 +64,8 @@ border-bottom:1px dashed #e06c0e!important;
 	color:#006699!important;
 	border-bottom:1px dashed #006699!important;
 	}
+	
+/* Titre */
+h3 {
+margin-top:20px;
+}

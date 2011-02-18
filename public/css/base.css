@@ -115,8 +115,11 @@ background:url('/public/css/images/bullet.png') top left scroll no-repeat!import
 }
 
 /* - - TITRE H3 - - */
-h3.eleve-points-index {
+h3 {
 text-transform:uppercase;
+font-size:18px;
+background:url('/public/css/images/bullet3.png') left scroll no-repeat!important;
+padding-left:30px;
 }
 
 /* Supression des marges dans les listes */
@@ -143,6 +146,7 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 
 /* - - Différentitaion de la documentation - - */
 .list-actions ul li > a {
+	font:bold 18px/100% "Helvetica", "Arial", sans-serif;
 	font-weight:bold;
 }
 	.list-actions ul li > a:hover {
@@ -153,7 +157,9 @@ color:#a6a6a6;
 background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
 padding-left:20px;
 }
-
+/*p.action-detail {
+	font-style:italic;
+}*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -162,14 +168,13 @@ padding-left:20px;
 	display:inline-block;
 outline: 1px solid #FFFFFF;
 outline-offset: -2px;
-text-align: center;
-font: 14px/100% Arial, Helvetica, sans-serif;
+font:bold 14px/1.3em Arial, Helvetica, sans-serif;
 padding: .55em 1em .55em 1.3em;
 text-shadow:1px 1px 0px #fff;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:5px 15px;
+margin:15px 15px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -177,6 +182,12 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 }
 	p.important, .infos  {
 	font-size:16px;
+	}
+	p.important a.doc-link {
+	display:block;
+	text-align:right;
+	padding-right:16px;
+	background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
 	}
 
 
@@ -334,12 +345,6 @@ background: #666666;
 color:#fff;
 padding:10px;
 margin-top:10px;
-	color: #fef4e9;
-	border: solid 1px #da7c0c;
-	background: #f78d1d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 }
 
 
