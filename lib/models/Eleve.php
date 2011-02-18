@@ -46,16 +46,25 @@ class Eleve extends Membre
 	 */
 	public function getRaise()
 	{
-		return 110;
-		//TODO Implémenter la formule
-		/*
-		$Raise = SQL::singleColumn('SELECT COUNT(DISTINCT(DATE(Creation))) AS Nb
-		FROM Exercices
-		WHERE Createur=' . $this->getFilteredId() . '
-		AND Creation > "' . SQL::getDate(time()-CALCUL_CUMUL*3600*24) . '"', 'Nb');
+		static $Raise = 0;
 		
-		$Raise = min(POURCENTAGE_MAX_SURACTIVITE, 100 + $Raise * POURCENTAGE_SURACTIVITE);
-		return $Raise;*/
+		if($Raise == 0)
+		{
+			$Raise = SQL::singleColumn(
+				'SELECT COUNT(DISTINCT(DATE(Creation))) AS Nb
+				FROM Exercices
+				WHERE Createur=' . $this->getFilteredId() . '
+				AND Creation BETWEEN
+					"' . SQL::getDate(time()-CALCUL_CUMUL*3600*24) . '"
+					AND
+					CURDATE()
+				',
+				'Nb'
+			);
+			
+			$Raise = min(POURCENTAGE_MAX_SURACTIVITE, 100 + $Raise * POURCENTAGE_SURACTIVITE);
+		}
+		return $Raise;
 	}
 	
 	/**

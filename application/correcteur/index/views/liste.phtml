@@ -10,5 +10,5 @@ echo $this->Doc_box('correcteur', 'marche', 'Besoin d\'aide ?');
 
 <h2 class="correcteur-index-liste-foire">Exercices correspondant à vos critères</h2>
 <?php 
-echo $this->Html_ajaxTable('/correcteur/_liste', 'Exercices disponibles', array('Date', 'Exercice'));
+echo $this->Html_ajaxTable('/correcteur/_liste', 'Exercices disponibles', array('Date', 'Exercice'), 'updateTex');
 ?>

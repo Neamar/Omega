@@ -104,6 +104,7 @@ class Correcteur_IndexController extends IndexAbstractController
 			"Cette page liste les articles en attente de correcteur... pourquoi pas vous ?"
 		);
 		$this->View->setSeelink('/correcteur/options/matieres', 'Modifier mes compétences');
+		$this->View->addScript();
 	}
 	
 	/**

@@ -314,7 +314,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function pricePaid()
 	{
-		return (int) ($this->priceAsked() * MARGE);
+		return (int) ($this->priceAsked() * MARGE * ($this->Modificateur/100));
 	}
 	
 	/**
