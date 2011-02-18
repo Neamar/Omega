@@ -65,7 +65,6 @@ color:#057cff;
 /* - - mini doc box - - */
 aside.doc-box a:hover {
 color:#2462a5!important;
-text-decoration:none!important;
 }
 	aside.doc-box:hover {
 	border:1px solid #9abbca;

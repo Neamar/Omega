@@ -75,6 +75,7 @@ text-shadow:1px 1px 0px #fff;
 		text-shadow:1px 1px 0px #fff;
 		}*/
 
+
 /* - - TITRE H2 Correcteurs- - */
 .content-base h2 {
 background:url('/public/css/images/h2.png') top left scroll no-repeat;
@@ -107,9 +108,15 @@ background:url('/public/css/images/h2-eleve-exercice-index.png') top left scroll
 h2.eleve-exercice-index-creation {
 background:url('/public/css/images/h2-eleve-exercice-index-creation.png') top left scroll no-repeat;
 }
+
+h2.eleve-exercice-index-creation + a {
+padding-left:16px;
+background:url('/public/css/images/bullet.png') top left scroll no-repeat!important;
+}
+
 /* - - TITRE H3 - - */
 h3.eleve-points-index {
-	text-transform:uppercase;
+text-transform:uppercase;
 }
 
 /* Supression des marges dans les listes */
@@ -118,11 +125,7 @@ margin-top:-17px!important;
 }
 	li p {
 	margin-top:0;
-	}	
-h2.eleve-exercice-index-creation + a {
-padding-left:16px;
-background:url('/public/css/images/bullet.png') top left scroll no-repeat!important;
-}
+	}
 
 /* - - La classe .intro - - */
 .content-base p.intro {
@@ -135,7 +138,7 @@ background:url('/public/css/images/bullet.png') top left scroll no-repeat!import
 h2 + p.intro {
 padding-bottom:10px;
 margin-top:10px;
-background:url('/public/css/images/separateur.jpg') bottom scroll no-repeat;
+background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 }
 
 /* - - Différentitaion de la documentation - - */
@@ -211,12 +214,12 @@ text-align:left;
 }
 aside.doc-box p{margin:0;}
 
-	aside.doc-box:hover {
+	/*aside.doc-box:hover {
 	background-color:#ececea!important;
-	}
+	}*/
 	aside.doc-box a{
-		display:inline-block;
-		padding-top:5px;
+	display:inline-block;
+	padding-top:5px;
 	font-weight:normal;
 	}
 	
@@ -316,41 +319,28 @@ padding: 0 0 15px 0;
 /* - - - le bouton d'envoi - - - - */
 form input[type=submit], form input[type=button] {
 display: inline-block;
-outline: none;
 cursor: pointer;
 text-align: center;
 text-decoration: none;
-font: 14px/100% Arial, Helvetica, sans-serif;
-text-shadow: 0 1px 1px rgba(0,0,0,.3);
-
--webkit-border-radius: .5em;
--moz-border-radius: .5em;
-border-radius: .5em;
+font:bold 16px/100% Arial, Helvetica, sans-serif;
+text-shadow: 0 1px 1px rgba(0,0,0,.5);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	
 background: #666666;
 color:#fff;
-
+padding:10px;
+margin-top:10px;
 	color: #fef4e9;
-	border: solid 1px #943c31;
-	background: #c5422e;
-	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#b43725)); /* clair > sombre*/
-	background: -moz-linear-gradient(top,  #d74d38,  #b43725);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#b43725');
-
+	border: solid 1px #da7c0c;
+	background: #f78d1d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 }
-
-form input[type=submit]:hover, form input[type=button]:hover {
-	border: solid 1px #943c31;
-	outline:none;
-	background: #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#d74d38), to(#90291b));
-	background: -moz-linear-gradient(top,  #d74d38,  #90291b);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#d74d38', endColorstr='#90291b');
-}
-
 
 
 	input[type=submit]:hover {
