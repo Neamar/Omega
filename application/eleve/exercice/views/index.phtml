@@ -21,7 +21,7 @@ if(count($this->ExercicesActifs) > 0)
 	{
 		$ExercicesActifs[$Hash] = array(
 			$Datas['Titre'],
-			$this->Messages[$Datas['Statut']]
+			'<em>' . $this->Messages[$Datas['Statut']] . '</em>'
 		);
 	}
 	?>

@@ -34,6 +34,11 @@ class Administrateur_MembreController extends AbstractController
 			'Cette page permet de rechercher un membre, qu\'il soit élève ou correcteur.'
 		);
 		$this->View->addScript();
+		
+		if(isset($_POST['recherche-membre']))
+		{
+			$this->redirect('/administrateur/membre/recherche/' . $_POST['recherche']);
+		}
 	}
 	
 	/**
@@ -146,6 +151,15 @@ class Administrateur_MembreController extends AbstractController
 			'Informations membre',
 			'Cette page affiche les différentes informations de la personne demandée en tant que membre.'
 		);
+	}
+	
+	/**
+	 * Recherche un membre et renvoie sur la page associée
+	 */
+	public function rechercheActionWd()
+	{
+		$Membre = $this->exists($this->Data['data'], 'Membre');
+		$this->redirect('/administrateur/membre/' . strtolower($Membre->Type) . '/' . $Membre->Mail);
 	}
 	
 	/**
