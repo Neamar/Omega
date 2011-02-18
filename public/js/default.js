@@ -66,6 +66,11 @@ $(function()
 						}
 						
 						Table.find('tbody').html(Lignes);
+						
+						if(Table.data('callback'))
+						{
+							eval(Table.data('callback') + '.call(Table[0])');
+						}
 					}
 				});
 			}
