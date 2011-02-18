@@ -3,13 +3,6 @@ $Datas = array();
 		
 foreach($this->RawDatas as $Hash => $ExerciceDatas)
 {
-	//GROUP_CONCAT fait remonter un tuple null si aucun exercice n'est disponible.
-	//TODO : à tester et à supprimer
-	/*if(empty($Hash))
-	{
-		continue;
-	}*/
-	
 	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
 	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
 	
@@ -23,12 +16,13 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	
 	$Infos .= '<br />Demande : ' . $ExerciceDatas['DetailsDemande'];
 	
-	if($ExerciceDatas['InfosEleve'] != '')
-	{
-		$Infos .= '</p>
-		<p>Remarque :</p>
-		<p class="infos-eleve">' . $ExerciceDatas['InfosEleve'];
-	}
+	//Créer un objet Exercice pour afficher la remarque de l'élève (le VH prend un exercice en paramètre, et pas un tableau)
+	//MOCHE
+	//TODO : gérer les mathématiques présentes dans la remarque (via MathJax.Hub.Queue(["Typeset", MathJax.Hub);)
+	$Cast = new Exercice();
+	$Cast->InfosEleve = $ExerciceDatas['InfosEleve'];
+	$Infos .= $this->Exercice_infos($Cast, 'Eleve');
+	unset($Cast);
 	
 	$Infos .= '</p><p class="image-preview">';
 	if(!is_null($ExerciceDatas['Sujets']))

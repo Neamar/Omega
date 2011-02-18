@@ -268,12 +268,11 @@ WHERE Hash="%ID%"';
 		}
 		
 		$Correcteur = $this->getCorrecteur();
-		$this->Enchere = (int) $this->Enchere;
 		
 		//Démarrer une transaction pour assurer la cohérence des données
 		Sql::start();
-		$Correcteur->credit($this->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Titre . '&nbsp;»', $this);
-		Membre::getBanque()->debit($this->Enchere, 'Paiement exercice.', $this);
+		$Correcteur->credit($this->priceAsked(), 'Paiement pour l\'exercice «&nbsp;' . $this->Titre . '&nbsp;»', $this);
+		Membre::getBanque()->debit($this->priceAsked(), 'Paiement exercice.', $this);
 		$this->setStatus('TERMINE', $ChangeAuthor, $Message . " et paiement du correcteur.", $Changes);
 		Sql::commit();
 	}

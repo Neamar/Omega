@@ -4,7 +4,7 @@ echo $this->Doc_box('eleve', 'offre', 'Besoin d\'aide pour compléter ce formula
 
 <form id="form_consultation-offre" method="post" action="">
 <p>Un correcteur vous propose de réaliser cet exercice.<br />
-En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->Enchere; ?> points</strong>.</p>
+En contrepartie, il demande <strong class="pts"><?php echo $this->Exercice->pricePaid() ?> points</strong>.</p>
 <?php 
 if(!empty($this->Exercice->InfosCorrecteur))
 {
@@ -17,13 +17,13 @@ if(!empty($this->Exercice->InfosCorrecteur))
 
 <?php 
 $Oui = "Accepter l'offre<br />";
-if($_SESSION['Eleve']->getPoints() >= $this->Exercice->Enchere)
+if($_SESSION['Eleve']->getPoints() >= $this->Exercice->pricePaid())
 {
 	$Oui .= 'Vous serez débité de la somme indiquée.';
 }
 else
 {
-	$Oui .= '<span class="problem">Il vous manque <strong class="pts">' . ($this->Exercice->Enchere - $_SESSION['Eleve']->getPoints()) . '</strong> points ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
+	$Oui .= '<span class="problem">Il vous manque <strong class="pts">' . ($this->Exercice->pricePaid() - $_SESSION['Eleve']->getPoints()) . '</strong> points ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
 }
 
 $Non = "Refuser l'offre<br />";

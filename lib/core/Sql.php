@@ -287,7 +287,7 @@ class Sql
 	 * //Petit "hack" pour mettre à jour un tuple dont on ne connaît pas l'ID :
 	 * SQL::update('Propositions',-1,array('Titre' => 'Lol'),'OR ID=(SELECT MAX(ID) FROM Propositions)'
 	 */
-	public static function update($Table,$ID, array $Valeurs,$And='',$Limit=1)
+	public static function update($Table, $ID, array $Valeurs, $And='', $Limit=1)
 	{
 		$Set=array();
 		foreach($Valeurs as $K=>$V)
@@ -298,7 +298,7 @@ class Sql
 			}
 			else
 			{
-				$Set[] = $K . '="' . $V . '"';
+				$Set[] = $K . '="' . self::escape($V) . '"';
 			}
 		}
 

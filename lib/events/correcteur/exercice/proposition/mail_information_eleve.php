@@ -7,6 +7,6 @@ $Datas = array(
 	'mail' => $Params['Eleve']->Mail,
 	'titre' => $Params['Exercice']->Titre,
 	'hash' => $Params['Exercice']->Hash,
-	'prix' => $Params['Exercice']->Enchere,
+	'prix' => $Params['Exercice']->pricePaid(),
 );
 External::templateMail($Params['Eleve']->Mail, '/eleve/proposition', $Datas);

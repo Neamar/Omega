@@ -144,7 +144,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				
 				Sql::start();
 				
-				$this->Exercice->setStatus('ATTENTE_ELEVE', $_SESSION['Correcteur'], 'Proposition correcteur pour ' . $_POST['prix'] . ' points.', $ToUpdate);
+				$this->Exercice->setStatus('ATTENTE_ELEVE', $_SESSION['Correcteur'], 'Proposition correcteur', $ToUpdate);
 
 				//Logger l'offre.
 				Sql::insert(
@@ -172,15 +172,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				if(!empty($this->Exercice->AutoAccept))
 				{
 					$Eleve = $this->Exercice->getEleve();
-					$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
+					$Prix = $this->Exercice->pricePaid();
 					
 					//prendre le minimum entre le solde et la valeur indiquée.
 					$AutoAccept = min($Eleve->getPoints(), $this->Exercice->AutoAccept);
-					if($this->Exercice->Enchere <= $AutoAccept)
+					if($Prix <= $AutoAccept)
 					{
 						//Auto-acceptation.
 						Sql::start();
-						if(!$Eleve->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
+						if(!$Eleve->debit($Prix, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
 						{
 							Event::log('CRITIQUE ! Fail sur autoaccept incohérent.', $Eleve);
 							Sql::rollback();
@@ -189,7 +189,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 						else
 						{
 							//Créditer la banque pour valider les contraintes
-							Membre::getBanque()->credit($this->Exercice->Enchere, 'Stockage exercice', $this->Exercice);
+							Membre::getBanque()->credit($Prix, 'Stockage exercice', $this->Exercice);
 							
 							//Logger la bonne nouvelle
 							$this->Exercice->setStatus('EN_COURS', $Eleve, "Acceptation automatique de l'offre.");

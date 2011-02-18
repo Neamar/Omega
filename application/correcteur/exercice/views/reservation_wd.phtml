@@ -33,6 +33,7 @@ $HeureData = array(
 	'placeholder' => 'HH',
 	'size' => 2,
 	'required' => 'required',
+	'class' => 'input_default',
 );
 
 //Rendu
@@ -56,7 +57,8 @@ echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à h\h', 
 <h2 class="h2_infos">Informations complémentaires</h2>
 <p>Si nécessaire, vous pouvez ajouter des informations complémentaires.
 <?php
-echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires (facultatif)');
+//TODO : vérifier que le contenu est correctement échappé (par exemple avec une expression latex)
+echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires (facultatif)', array('class' => 'tex-container'));
 echo $this->Doc_inputBr('correcteur', 'champ_info');
 
 echo $this->Form_submit('reservation-exercice', "Réserver l'exercice");

@@ -31,7 +31,7 @@ if(!isset($_SESSION['Eleve']))
 else
 {
 	$Retour['left'] = '<a href="/eleve/connexion" class="deconnexion">Déconnexion</a> <a href="/eleve/">' . $_SESSION['Eleve']->Mail . '</a>';
-	$Retour['right'] = $_SESSION['Eleve']->getPoints() . ' pts. <a href="/eleve/points/ajout">Ajouter des points</a>';
+	$Retour['right'] = '<strong class="pts">' . $_SESSION['Eleve']->getPoints() . ' pts</strong>. <a href="/eleve/points/ajout">Ajouter des points</a>';
 	$Retour['links'] = array(
 		'/eleve/' => 'Accueil',
 		'/eleve/exercice/' => 'Mes exercices',

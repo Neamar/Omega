@@ -25,7 +25,6 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 {
 	//Récupérer le correcteur actuel.
 	$Correcteur = $Exercice->getCorrecteur();
-	$Exercice->Enchere = (int) $Exercice->Enchere;
 	
 	//Commencer une transaction pour l'échange
 	$Exercice->closeExercice('Cloture automatique (expiration du délai)', $Banque);

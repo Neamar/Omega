@@ -443,7 +443,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', 'Sélectionnez une option !');
 			}
-			elseif($_POST['choix'] == 'oui' && $this->Exercice->Enchere > $_SESSION['Eleve']->getPoints())
+			elseif($_POST['choix'] == 'oui' && $this->Exercice->pricePaid() > $_SESSION['Eleve']->getPoints())
 			{
 				$this->View->setMessage('error', "Vous n'avez pas assez de points pour accepter l'offre.", 'eleve/depot');
 			}
@@ -485,9 +485,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			}
 			elseif($_POST['choix'] == 'oui')
 			{
-				$this->Exercice->Enchere = (int) $this->Exercice->Enchere;
+				$Prix = $this->Exercice->pricePaid();
 				Sql::start();
-				if(!$_SESSION['Eleve']->debit($this->Exercice->Enchere, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
+				if(!$_SESSION['Eleve']->debit($Prix, 'Paiement pour l\'exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»', $this->Exercice))
 				{
 					Sql::rollback();
 					$this->View->setMessage('error', "Impossible d'effectuer le débit ; merci de réessayer ultérieurement.");
@@ -495,7 +495,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				else
 				{
 					//Créditer la banque pour valider les contraintes
-					Membre::getBanque()->credit($this->Exercice->Enchere, 'Stockage exercice', $this->Exercice);
+					Membre::getBanque()->credit($Prix, 'Stockage exercice', $this->Exercice);
 					
 					//Logger la bonne nouvelle
 					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
