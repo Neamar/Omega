@@ -1,5 +1,12 @@
 Vous trouverez dans ces pages toute les informations nécessaires à l'utilisation d'<?php echo $this->Html_eDevoir(); ?> en tant que correcteur.
 
 <?php
-echo $this->Html_listAnchor($this->Pages, 'ul', '/documentation/correcteur/');
+echo $this->Html_listAnchor(
+	$this->Pages,
+	'ul',
+	'/documentation/correcteur/',
+	array(
+		'class' => 'documentation-module-correcteur'
+	)
+);
 ?>
