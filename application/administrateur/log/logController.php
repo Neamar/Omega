@@ -43,7 +43,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _exerciceAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Exercices.Creation,"%d/%c/%y à %Hh"),
 				Exercices.Titre,
 				DATE_FORMAT(Exercices.Expiration,"%d/%c/%y à %Hh"),
@@ -58,7 +59,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _exercice_logAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Exercices_Logs.Date,"%d/%c/%y à %Hh"),
 				Exercices.Titre,
 				Exercices_Logs.Action, 
@@ -81,7 +83,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _eleveAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
 				Mail,
 				Statut,
@@ -99,7 +102,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _eleve_logAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
 				Mail,
 				Action,
@@ -124,7 +128,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _correcteurAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
 				Mail,
 				Statut,
@@ -140,7 +145,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _correcteur_logAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
 				Mail,
 				Action,
@@ -165,7 +171,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _membreAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
 				Mail,
 				Statut,
@@ -181,7 +188,8 @@ class Administrateur_LogController extends AbstractController
 	 */
 	public function _membre_logAction()
 	{
-		$this->ajax('SELECT
+		$this->ajax(
+			'SELECT
 				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
 				Mail,
 				Action,

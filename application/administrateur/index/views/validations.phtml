@@ -1,4 +1,5 @@
 <?php
+//Liste des validations de correcteur à effectuer
 /**
  * Crée un tableau affichable à partir d'un équivalent tuple SQL
  * 
@@ -21,13 +22,13 @@ $Head = array('Date', 'Identité', 'CV', 'Valider');
 <?php 
 echo $this->Html_tableHead('Validations en attente', $Head)
 ?>
-	<tbody>
-	<?php 
-	foreach($this->Validations as $Mail => $Tuple)
-	{
-		$Tuple[] = '<a href="/administrateur/membre/statut/' . $Mail . '">Traiter</a>';
-		echo $this->Html_tableRow(formatTuple($Tuple));
-	}
-	?>
-	</tbody>
+<tbody>
+<?php 
+foreach($this->Validations as $Mail => $Tuple)
+{
+	$Tuple[] = '<a href="/administrateur/membre/statut/' . $Mail . '">Traiter</a>';
+	echo $this->Html_tableRow(formatTuple($Tuple));
+}
+?>
+</tbody>
 </table>

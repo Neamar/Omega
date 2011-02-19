@@ -110,7 +110,8 @@ class Debug_IndexController extends AbstractController
 		
 		$this->View->setTitle(
 			'Dernier mail envoyé',
-			'To: ' . $Contenu[0]);
+			'To: ' . $Contenu[0]
+		);
 		
 		$this->View->Titre = $Contenu[1];
 		$this->View->Mail = $Contenu[2];
