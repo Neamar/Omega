@@ -1,4 +1,5 @@
-<?php 
+<?php
+//Liste des virements à effectuer
 /**
  * Crée un tableau affichable à partir d'un équivalent tuple SQL
  * 
@@ -22,26 +23,26 @@ $Head = array('Date', 'Membre', 'Montant', 'Bénéficiaire', 'Action');
 <?php 
 echo $this->Html_tableHead('Virements RIB', $Head)
 ?>
-	<tbody>
-	<?php 
-	foreach($this->VirementsRib as $Tuple)
-	{
-		echo $this->Html_tableRow(formatTuple($Tuple));
-	}
-	?>
-	</tbody>
+<tbody>
+<?php 
+foreach($this->VirementsRib as $Tuple)
+{
+	echo $this->Html_tableRow(formatTuple($Tuple));
+}
+?>
+</tbody>
 </table>
 
 <h2 class="administrateur-index-virements-paypal">Virements par Paypal</h2>
 <?php 
 echo $this->Html_tableHead('Virements Paypal', $Head)
 ?>
-	<tbody>
-	<?php 
-	foreach($this->VirementsPaypal as $Tuple)
-	{
-		echo $this->Html_tableRow(formatTuple($Tuple));
-	}
-	?>
-	</tbody>
+<tbody>
+<?php 
+foreach($this->VirementsPaypal as $Tuple)
+{
+	echo $this->Html_tableRow(formatTuple($Tuple));
+}
+?>
+</tbody>
 </table>

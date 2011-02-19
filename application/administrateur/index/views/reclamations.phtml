@@ -1,4 +1,5 @@
 <?php
+//Liste des réclamations à traiter
 /**
  * Crée un tableau affichable à partir d'un équivalent tuple SQL
  * 
@@ -20,13 +21,13 @@ $Head = array('Date', 'Titre', 'Élève', 'Correcteur');
 <?php 
 echo $this->Html_tableHead('Réclamations en attente', $Head)
 ?>
-	<tbody>
-	<?php 
-	foreach($this->Reclamations as $Hash => $Tuple)
-	{
-		$Tuple[] = '<a href="/administrateur/exercice/remboursement/' . $Hash . '">Traiter</a>';
-		echo $this->Html_tableRow(formatTuple($Tuple));
-	}
-	?>
-	</tbody>
+<tbody>
+<?php 
+foreach($this->Reclamations as $Hash => $Tuple)
+{
+	$Tuple[] = '<a href="/administrateur/exercice/remboursement/' . $Hash . '">Traiter</a>';
+	echo $this->Html_tableRow(formatTuple($Tuple));
+}
+?>
+</tbody>
 </table>

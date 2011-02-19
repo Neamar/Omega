@@ -1,0 +1,17 @@
+<p class="infos">Statut actuel du membre&nbsp;: <?php echo $this->Default?></p>
+
+<form id="form_changement-statut" method="post" action="">
+
+<?php 
+echo $this->Form_selectLabelBr(
+	'statut',
+	'Définir le nouveau statut',
+	array_combine($this->Status, $this->Status),
+	$this->Default
+);
+
+echo $this->Form_submit(
+	'changement-statut',
+	'Mettre à jour le statut'
+);
+?>
