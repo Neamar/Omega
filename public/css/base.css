@@ -34,7 +34,7 @@ padding-bottom:20px;
 	min-height:100%;
 }
 	section {
-	padding: 0 35px;
+	padding: 0 45px;
 	}
 /* Gestion de l'affichage global */	
 #content {
@@ -54,7 +54,7 @@ text-shadow:1px 1px 0px #fff;
 #content h2:before {
 	position:absolute;
 	top:-20px;
-	left:-35px;
+	left:-45px;
 	content: "";
 	height:24px;
 	width:1000px;
@@ -204,14 +204,12 @@ margin:15px 15px;
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 background:#f1f1ef url('/public/css/images/important.png') center left scroll no-repeat;
 }
+
 	p.important, .infos  {
 	font-size:16px;
 	}
-	p.important a.doc-link {
-	display:block;
-	text-align:right;
-	padding-right:16px;
-	background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
+	p.important a, .infos a {
+	text-decoration:underline!important;
 	}
 
 
@@ -220,6 +218,12 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
 	color:#931414;
 	background-color:#f0e8e8;
+	}
+	p.important a.doc-link {
+	display:block;
+	text-align:right;
+	padding-right:16px;
+	background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
 	}
 /* - - La classe .info _ Bleu - - */
 	.infos {
