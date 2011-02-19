@@ -51,7 +51,21 @@ color:#5e5e5e;
 #content p {
 text-shadow:1px 1px 0px #fff;
 }
+#content h2:before {
+	position:absolute;
+	top:-20px;
+	left:-35px;
+	content: "";
+	height:24px;
+	width:1000px;
+	background: url('/public/css/images/separateur-h2.jpg') top no-repeat;
+}
+#content h2:first-child:before {
+background-image:none!important;
+}
+	
 	#content h2 {
+		position:relative;
 		font:bold 28px/100% "Helvetica", "Arial", sans-serif;
 	color:#676767;
 	text-shadow:1px 1px 0px #fff;
@@ -326,7 +340,7 @@ padding: 0 0 15px 0;
 		-webkit-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
 		-moz-box-shadow: 3px 3px 2px rgba(0,0,0,.1);
 		box-shadow: 3px 3px 2px rgba(0,0,0,.1);
-	font:normal 16px "Arial", serif;
+	font:normal 16px "Arial", sans-serif;
 	color:#000;
 	}
 	form textarea {
@@ -414,12 +428,4 @@ text-align:right;
 /*--------------------------------------------------------- 1 jQuerry -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 
-/*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------------------------------------------------------------------------*/
-table {
-}
-	td {
-	}
-		td a{
-		}
+
