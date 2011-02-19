@@ -205,6 +205,32 @@ class Administrateur_MembreController extends AbstractController
 		}
 	}
 	
+	public function statutActionWd()
+	{
+		$Membre = $this->exists($this->Data['data'], 'Membre');
+		$this->View->Status = array('OK', 'BLOQUE', 'DESINSCRIT');
+		$this->View->Default = $Membre->Statut;
+		
+		$this->View->setTitle(
+			'Modifier le statut de ' . $Membre->Mail,
+			'Cette page permet de modifier le statut d\'un membre, par exemple pour le bloquer.'
+		);
+		
+		if(isset($_POST['changement-statut']))
+		{
+			if(!in_array($_POST['statut'], $this->View->Status))
+			{
+				$this->View->setMessage('error', 'Statut inconnu');
+			}
+			else 
+			{
+				$Membre->setAndSave(array('Statut' => $_POST['statut']));
+				$this->View->setMessage('ok', 'Modifications enregistrées');
+				$this->redirect('/administrateur/membre/' . strtolower($Membre->Type) . '/' . $Membre->Mail);
+			}
+		}
+	}
+	
 	/**
 	 * Teste si un membre existe avec cet email.
 	 * 
