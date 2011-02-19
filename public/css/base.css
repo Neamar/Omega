@@ -158,7 +158,7 @@ background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
 padding-left:20px;
 }
 /*p.action-detail {
-	font-style:italic;
+	text-indent:7px;
 }*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 1.1 Petites Classes -------------------------------------------------------------------------*/
@@ -265,10 +265,20 @@ margin-bottom:15px;
 /*.list-actions:hover {
 background-color:#f1f1ef;
 }*/
-	.list-actions form{
-	width:260px;
+	.list-actions form{ /*centrage de l'élément*/
+	width:300px;
 	display:block;
 	margin:auto;
+	opacity:0.55;
+	}
+	.list-actions form:hover, .list-actions form:focus {
+	opacity:1;
+	}
+	.list-actions form label {
+	margin-top:5px;
+	}
+	.list-actions form select {
+		width:300px;
 	}
 	
 /* supression des propriétés sur default*/	
