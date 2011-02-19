@@ -8,7 +8,7 @@ $Statuts = array(
 
 $Infos = array(
 	'Mail' => $this->Membre->Mail,
-	'Points' => $this->Membre->getPoints() . '&nbsp;pts',
+	'Points' => $this->Points($this->Membre->getPoints()),
 	'Création du compte' => date('d/m/Y', strtotime($this->Membre->Creation)),
 	'Dernière connexion' => date('d/m/Y', strtotime($this->Membre->Connexion)),
 	'Statut du compte' => $Statuts[$this->Membre->Statut],	

@@ -40,7 +40,7 @@ foreach($this->Exos as $Hash => $Contenu)
 	
 	if(!empty($Contenu['Enchere']))
 	{
-		$Parts[] = 'Prix demandé : ' . $Contenu['Enchere'] . 'pts';
+		$Parts[] = 'Prix demandé : ' . $this->Points($Contenu['Enchere']);
 	}
 	
 	$Parts[] = 'Statut : ' . $Contenu['Statut'];
