@@ -315,7 +315,7 @@ background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x;
 }
 #main-message #bottom-message.warning {
 height:13px;
-background:#fecf8b url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
+background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 }
 	aside.warning p:first-child, aside.warning p:first-child a:hover {
 	color:#704508;
