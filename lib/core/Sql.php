@@ -205,7 +205,7 @@ class Sql
 	 *
 	 * @return array le résultat de la requête.
 	 */
-	public static function queryAssoc($Query,$KeyColumn,$ValueColumn=null)
+	public static function queryAssoc($Query, $KeyColumn, $ValueColumn = null)
 	{
 		$RSql = self::query($Query);
 		$R = array();

@@ -90,12 +90,15 @@ class Administrateur_MembreController extends AbstractController
 		);
 		
 		$this->View->Eleve = $Eleve;
-		$this->View->NbExos = Sql::singleColumn('
-			SELECT COUNT(*) AS S
+		
+		$this->View->Exos = Sql::queryAssoc(
+			'SELECT Hash, Titre, Enchere, Expiration, Statut
 			FROM Exercices
-			WHERE Createur = ' . $Eleve->getFilteredId(),
-			'S'
+			WHERE Createur = ' . $Eleve->getFilteredId() . '
+			ORDER BY ID DESC',
+			'Hash'
 		);
+		$this->View->NbExos = count($this->View->Exos);
 		
 		$this->View->Membre = $this->concat('/administrateur/membre/membre/' . $this->Data['data']);
 		$this->View->Membre->Membre = $Eleve;
@@ -114,12 +117,15 @@ class Administrateur_MembreController extends AbstractController
 		);
 		
 		$this->View->Correcteur = $Correcteur;
-		$this->View->NbExos = Sql::singleColumn('
-			SELECT COUNT(*) AS S
+		
+		$this->View->Exos = Sql::queryAssoc(
+			'SELECT Hash, Titre, Enchere, Expiration, Statut
 			FROM Exercices
-			WHERE Correcteur = ' . $Correcteur->getFilteredId(),
-			'S'
+			WHERE Correcteur = ' . $Correcteur->getFilteredId() . '
+			ORDER BY ID DESC',
+			'Hash'
 		);
+		$this->View->NbExos = count($this->View->Exos);
 		
 		$this->View->Note = Sql::singleColumn('
 			SELECT COALESCE(AVG(Notation),"&empty;") AS M

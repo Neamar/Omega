@@ -22,6 +22,39 @@ foreach($Infos as $Caption => $Info)
 echo $this->Html_list($Liste);
 ?>
 
+<h2 class="h2_exercice">Exercices réservés par ce correcteur</h2>
+<?php 
+$Liste = array();
+foreach($this->Exos as $Hash => $Contenu)
+{
+	$Contenu['Expiration'] = strtotime($Contenu['Expiration']);
+	$Parts = array();
+	
+	if($Contenu['Expiration'] > time())
+	{
+		$Parts[] = 'Expiration dans ' . $this->Date_countdown($Contenu['Expiration']);
+	}
+	else
+	{
+		$Parts[] = 'Expiré depuis le ' . date('d/m/Y', $Contenu['Expiration']) . '.';
+	}
+	
+	if(!empty($Contenu['Enchere']))
+	{
+		$Parts[] = 'Prix demandé : ' . $Contenu['Enchere'] . 'pts';
+	}
+	
+	$Parts[] = 'Statut : ' . $Contenu['Statut'];
+	
+	$Liste[$Hash] = array(
+		$Contenu['Titre'],
+		implode('<br />', $Parts)
+	);
+}
+
+echo $this->Html_listAction($Liste, '/administrateur/exercice/index/__URL__');
+?>
+
 <h2 class="h2_actions">Actions disponibles</h2>
 <p class="intro">Cette section affiche les différentes actions possibles pour ce compte.</p>
 
