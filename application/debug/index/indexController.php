@@ -101,6 +101,22 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Affiche le dernier mail envoyé
+	 */
+	public function mailAction()
+	{
+		$Contenu = explode("\n", file_get_contents(DATA_PATH . '/logs/last_mail'), 3);
+		
+		
+		$this->View->setTitle(
+			'Dernier mail envoyé',
+			'To: ' . $Contenu[0]);
+		
+		$this->View->Titre = $Contenu[1];
+		$this->View->Mail = $Contenu[2];
+	}
+	
+	/**
 	 * Page par défaut, pour les tests de CSS
 	 * 
 	 */
