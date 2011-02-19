@@ -69,3 +69,12 @@ border-bottom:1px dashed #e06c0e!important;
 h3 {
 margin-top:20px;
 }
+
+.content-base p {
+	line-height:1.6em;
+	background-color:#ececec;
+	padding:15px;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+}
