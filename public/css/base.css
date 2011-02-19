@@ -123,6 +123,7 @@ font-style:italic;
 	border-left:2px solid #006699;
 	}
 
+/* minis icones*/
 p.faq-reponse.faq-correcteur:before , p.faq-reponse.faq-eleve:before{
 position:absolute;
 top:50%;
@@ -139,10 +140,12 @@ width:15px;
 	background:url('/public/css/images/eleve2-min.png') left scroll no-repeat;
 	}
 
+/*Ajouter une réponse*/
 p.faq-ajout-reponse {
 padding-bottom:10px;
 background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 }
+
 
 
 /* - - TITRE H2 Correcteurs- - */
