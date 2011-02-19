@@ -248,7 +248,7 @@ width:1000px;
 margin:auto;
 }
 	.message p {
-		padding:0 35px;
+		padding:0 40px;
 	}
 	
 /* -- Classe Globale -- */
@@ -326,7 +326,7 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 .message .doc-box-link a{
 position:absolute;
 bottom:-30px;
-right:10px;
+right:40px;
 display: inline-block;
 outline: none;
 cursor: pointer;
