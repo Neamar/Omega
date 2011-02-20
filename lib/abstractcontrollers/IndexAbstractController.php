@@ -71,7 +71,7 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		
 		//Utiliser une vue générique.
-		$this->deflectView(LIB_PATH . '/View/membre/desinscription.phtml');
+		$this->deflectView(OO2FS::genericViewPath('membre/desinscription'));
 	}
 	
 	/**

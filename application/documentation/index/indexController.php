@@ -128,6 +128,12 @@ class Documentation_IndexController extends AbstractController
 		),
 	);
 	
+	public function __construct($Module, $Controller, $View)
+	{
+		parent::__construct($Module, $Controller, $View);
+		$this->View->addStyle('/public/css/documentation/Typo.css');
+	}
+	
 	/**
 	 * Récupère le titre d'une page.
 	 * 

@@ -561,7 +561,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	{
 		$this->canAccess(array('ENVOYE', 'TERMINE'), "Vous ne pouvez pas émettre de réclamation actuellement.");
 		
-		if($this->Exercice->Reclamation != 'NON')
+		if(!empty($this->Exercice->Reclamation))
 		{
 			$this->View->setMessage('warning', 'Vous avez déjà envoyé une réclamation.');
 			$this->redirectExercice();
