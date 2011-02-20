@@ -36,7 +36,7 @@ else
 		'/eleve/' => 'Accueil',
 		'/eleve/exercice/' => 'Mes exercices',
 		'/eleve/exercice/creation' => 'Créer un exercice',
-		'/eleve/exercice/option' => 'Options'
+		'/eleve/options/' => 'Options'
 	);
 }
 

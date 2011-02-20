@@ -6,6 +6,10 @@ $Possibilites = array(
 //Taille maximum.
 $SizeLimit = '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->SizeLimit . '" />'; 
 
+if(!empty($this->Exercice->InfosEleve))
+{
+	echo '<p class="infos">Si vous avez marqué votre exercice dans le champ « informations complémentaires » et ne souhaitez pas ajouter de fichier, vous pouvez <a href="/eleve/exercice/recapitulatif/' . $this->Exercice->Hash . '">passer directement à la dernière étape</a>.</p>';
+}
 echo $this->Doc_box('eleve', 'ajout', "Besoin d'aide pour compléter ce formulaire ?");
 ?>
 

@@ -35,7 +35,7 @@ else
 		'/correcteur/' => 'Accueil',
 		'/correcteur/liste' => 'Foire aux exercices',
 		'/correcteur/exercice/' => 'Mes exercices',
-		'/correcteur/options' => 'Options',
+		'/correcteur/options/' => 'Options',
 	);
 }
 

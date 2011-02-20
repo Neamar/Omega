@@ -24,6 +24,7 @@ echo $this->Form_selectLabelBr('matiere', 'Matière', $this->Matieres);
 ?>
 
 <h3>Demande</h3>
+<p>Donnez un nom clair à votre exercice. Vous devriez être capable de vous en souvenir rien qu'en lisant son titre !<br />
 <?php
 //Nom de l'exercice
 echo $this->Form_inputLabelBr(
@@ -35,7 +36,10 @@ echo $this->Form_inputLabelBr(
 		'required' => 'required'
 	)
 );
+?>
+</p>
 
+<?php
 //Type de l'exercice
 echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 
@@ -44,7 +48,7 @@ echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET')
 ?>
 
 <h3>Dates</h3>
-<p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu.<br />
+<p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu. Il s'agit de la date limite finale, si vous n'avez rien à ce moment là vous serez remboursé.<br />
 <?php
 $HeureData = array(
 	'type' => 'number',
@@ -73,7 +77,7 @@ echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_in
 ?>
 </p>
 
-<p>Ensuite, indiquez-nous à quel moment vous préférez abandonner automatiquement votre demande <strong>si aucune offre ne vous a conquis à cette date</strong>.<br />
+<p>Ensuite, indiquez-nous à quel moment vous préférez abandonner automatiquement votre demande <strong>si aucune offre ne vous a conquis à cette date</strong>. Bien évidemment, cette date doit précéder la date de rendu !<br />
 <?php
 //Annulation automatique
 $HeureData['value'] = 18;
