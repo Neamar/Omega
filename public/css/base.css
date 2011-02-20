@@ -60,7 +60,7 @@ text-shadow:1px 1px 0px #fff;
 	width:1000px;
 	background: url('/public/css/images/separateur-h2.jpg') top no-repeat;
 }
-#content h2:first-child:before {background-image:none!important;}
+#content h2:first-child:before, #tabs h2:before {background-image:none!important;}
 	
 	#content h2 {
 		position:relative;
@@ -80,16 +80,17 @@ text-shadow:1px 1px 0px #fff;
 			box-shadow: 0px 1px 1px #fff;
 	}
 	#content h2:first-child {margin-top:10px;}
-	
+
 	
 /* - - TITRE H3 - - */
-h3 {
+/*h3 {
 text-transform:uppercase;
 font-size:18px;
 background:url('/public/css/images/bullet3.png') left scroll no-repeat;
 padding-left:30px;
 margin-top:25px;
-}
+}*/
+
 
 /* les images (icones) */
 h3.faq-question.faq-eleve, 3.faq-question.faq-correcteur {
@@ -185,10 +186,6 @@ background:url('/public/css/images/h2-membre-exercice-index-actif.png') top left
 }
 h2.eleve-points-index {
 background:url('/public/css/images/h2-eleve-points-index.png') top left scroll no-repeat;
-}
-h2.eleve-exercice-index-creation + a {
-padding-left:16px;
-background:url('/public/css/images/bullet.png') top left scroll no-repeat!important;
 }
 
 

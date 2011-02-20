@@ -74,7 +74,7 @@ margin-top:20px;
 #content h2:before {
 	background: url('/public/css/images/separateur-h2-doc.png') top no-repeat;
 }
-.content-base p {
+.content-base #content {
 	line-height:1.6em;
 	background-color:#ececec;
 	padding:10px;
