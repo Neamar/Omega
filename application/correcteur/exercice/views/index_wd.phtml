@@ -25,7 +25,7 @@ $ListeActions = array(
 );
 ?>
 
-<p class="infos">Une fois cet exercice réalisé et validé, vous serez payé <span class="pts"><?php echo $this->Exercice->priceAsked() ?> points</span>.</p>
+<p class="infos">Une fois cet exercice réalisé et validé, vous serez payé <?php echo $this->Points($this->Exercice->priceAsked()) ?>.</p>
 <h2 class="h2_actions">Options de l'exercice</h2>
 
 <?php

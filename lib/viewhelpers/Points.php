@@ -14,6 +14,20 @@
  * @link      http://edevoir.com
  */
 
+
+/**
+ * Affiche un nombre de points sur le site
+ * 
+ * @param int $Points
+ * @param string $Unite l'unité à afficher après. Un "s" est automatiquement ajouté si nécessaire
+ * 
+ * @return une structure HTML
+ */
+function ViewHelper_Points($Points, $Unite = 'point')
+{
+	return '<span class="pts">' . $Points . '&nbsp;' . $Unite . ($Unite>1?'s':'') . '</span>';
+}
+
 /**
  * Convertit une valeur en points en euros
  * 
