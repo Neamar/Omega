@@ -673,6 +673,19 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Afficher le corrigé
+	 * @see ExerciceAbstractController::corrigeActionWd()
+	 */
+	public function corrigeActionWd()
+	{
+		$this->View->Infos = 'Vous allez consulter le corrigé. <br />
+		N\'oubliez pas de <a href="/eleve/exercice/note/' . $this->Exercice->Hash . '">noter le correcteur</a> pour son travail !
+		Vous pouvez aussi <a href="/eleve/exercice/contestation/' . $this->Exercice->Hash . '">émettre une réclamation</a> si nécessaire.';
+		
+		parent::corrigeActionWd();
+	}
+	
+	/**
 	 * Chat de l'exercice
 	 * @see ExerciceAbstractController::faqActionWd()
 	 */

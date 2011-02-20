@@ -23,3 +23,5 @@ L'arrivée d'un élève déconnecté sur une page profonde renvoie sur la page p
 La documentation s'ouvre sur une nouvelle page
 Une section /documentation/aide-memoire avec des formules de base
 Gestion des alertes
+Faire un mini-tuto vidéo à la première connexion
+Transformer les <h2 class=""> en <h2 id="">

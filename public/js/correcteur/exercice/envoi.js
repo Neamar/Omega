@@ -115,8 +115,9 @@ $(function()
 	 */
 	function pageImg(page)
 	{
+		Largeur = parseInt($('#envoi-apercu').width()) - 40;
 		CurrentPage = page;
-		return '<img src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', parseInt($('#envoi-apercu').width()) - 40) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" />';
+		return '<img id="apercu" src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', Largeur) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" style="width:' + Largeur + 'px; height:' + Math.round(Largeur * 1.4142) + 'px; background:url(/public/images/global/loader.gif) center center no-repeat;" onload="this.removeAttribute(\'style\');"/>';
 	}
 	
 	//Clic sur le bouton aperçu
@@ -169,12 +170,12 @@ $(function()
 						
 						//Récupérer le nombre de pages.
 						NbPages = data.match(/pdf \(([0-9]+) pages?,/)[1];
-						R = '<p class="pager">';
+						Pages = []
 						for(var i = 1; i <= NbPages; i++)
 						{
-							R += '<a href="#" data-page="' + i + '">' + i + '</a> ';
+							Pages[i - 1] = '<a href="#" data-page="' + i + '">' + i + '</a> ';
 						}
-						R += '</p>';
+						R = '<p class="pager">' + Pages.join(' &ndash; ') + '</p>';
 						
 						//Mettre à jour l'onglet aperçu
 						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
@@ -182,7 +183,6 @@ $(function()
 						{
 							$('#pdf-image').html(pageImg($(this).data('page')));
 							e.preventDefault();
-							console.log('fu');
 						});
 						
 						//Mettre à jour l'onglet historique
