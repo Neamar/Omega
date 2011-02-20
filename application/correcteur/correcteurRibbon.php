@@ -29,7 +29,7 @@ if(!isset($_SESSION['Correcteur']))
 }
 else
 {
-	$Retour['left'] = '<a href="/correcteur/connexion" class="deconnexion">Déconnexion</a> <a href="/correcteur/">' . $_SESSION['Correcteur']->Mail . '</a>';
+	$Retour['left'] = '<a href="/correcteur/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" /></a> <a href="/correcteur/">' . $_SESSION['Correcteur']->Mail . '</a>';
 	$Retour['right'] = '<strong class="pts">' . $_SESSION['Correcteur']->getPoints() . ' pts</strong>. <a href="/correcteur/points/retrait">Retirer des points</a>';
 	$Retour['links'] = array(
 		'/correcteur/' => 'Accueil',
