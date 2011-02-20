@@ -60,6 +60,7 @@ $(function()
 					url: Table.data('source'),
 					success: function(data){
 						data = jQuery.parseJSON(data);
+						
 						Lignes = '';
 						for(var i = 0 ; i < data.length ; i++)
 						{
@@ -70,6 +71,11 @@ $(function()
 								Lignes += '<td>' + data[i][j] + '</td>';
 							}
 							Lignes += "</tr>\n";
+						}
+						//Cas des tableaux vides
+						if(data.length == 0)
+						{
+							Lignes += '<tr><td colspan="' + Table.find('thead th').length + '">Aucune donnée n\'est disponible pour l\'instant.</tr></td>';
 						}
 						
 						Table.find('tbody').html(Lignes);

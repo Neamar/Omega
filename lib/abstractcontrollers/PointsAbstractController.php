@@ -1,11 +1,11 @@
 <?php
 /**
  * PointsAbstractController.php - 22 janv. 2011
- * 
+ *
  * Contrôleur abstrait pour la gestion des points d'un compte.
- * 
+ *
  * PHP Version 5
- * 
+ *
  * @category  Controller
  * @package   Root
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
@@ -13,7 +13,7 @@
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
  */
- 
+
 /**
  * Gestion des points
  *
@@ -27,14 +27,14 @@ abstract class PointsAbstractController extends AbstractController
 {
 	/**
 	 * Le membre ayant demandé le chargement de la page
-	 * 
+	 *
 	 * @var Membre
 	 */
 	protected $Membre;
-	
+
 	/**
 	 * Dévie automatiquement la vue vers une solution générique.
-	 * 
+	 *
 	 * @param string $Module
 	 * @param string $Controller
 	 * @param string $View
@@ -43,8 +43,8 @@ abstract class PointsAbstractController extends AbstractController
 	public function __construct($Module, $Controller, $View, $Data)
 	{
 		parent::__construct($Module, $Controller, $View, $Data);
-		
-		$this->deflectView(OO2FS::genericViewPath('membre/points/' . str_replace('.', '', $View)));
+
+		$this->deflectView(OO2FS::genericViewPath('points/' . str_replace('.', '', $View)));
 	}
 	/**
 	 * Index du contrôleur de points
@@ -56,7 +56,7 @@ abstract class PointsAbstractController extends AbstractController
 			'Cette page liste les différentes informations disponibles concernant vos points.'
 		);
 	}
-	
+
 	/**
 	 * Opération d'ajouts de points
 	 */
@@ -66,7 +66,7 @@ abstract class PointsAbstractController extends AbstractController
 			'Ajout de points',
 			'Sélectionnez la méthode avec laquelle vous souhaitez procéder à l\'ajout de points.'
 		);
-		
+
 		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
 		{
 			Sql::start();
@@ -84,10 +84,10 @@ abstract class PointsAbstractController extends AbstractController
 			'Retrait de points',
 			'Retirez ici des points vers un compte bancaire ou paypal.'
 		);
-		
+		$this->View->addScript('/public/js/membre/points/retrait.js');
 
 		$this->View->Membre = $this->getMembre();
-		
+
 		if($this->getMembre()->getPoints() == 0)
 		{
 			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
@@ -112,7 +112,7 @@ abstract class PointsAbstractController extends AbstractController
 			);
 			$this->redirect('/' . $this->getModule() . '/points/');
 		}
-		
+
 		if(isset($_POST['retrait-points']))
 		{
 			$_POST['retrait'] = intval($_POST['retrait']);
@@ -158,7 +158,7 @@ abstract class PointsAbstractController extends AbstractController
 				{
 					$Ordre = $_POST['rib-banque'] . '-' . $_POST['rib-guichet'] . '-' . $_POST['rib-compte'] . '-' . $_POST['rib-cle'];
 				}
-				
+
 				Sql::start();
 				if(!$this->getMembre()->debit($_POST['retrait'], 'Virement pour ' . $Ordre))
 				{
@@ -175,7 +175,7 @@ abstract class PointsAbstractController extends AbstractController
 						'Beneficiaire' => $Ordre,
 						'Statut' => 'INDETERMINE'
 					);
-					
+
 					if(!Sql::insert('Virements', $ToInsert))
 					{
 						Sql::rollback();
@@ -184,7 +184,7 @@ abstract class PointsAbstractController extends AbstractController
 					else
 					{
 						Sql::commit();
-						
+
 						Event::dispatch(
 							Event::MEMBRE_POINTS_RETRAIT,
 							array(
@@ -195,7 +195,7 @@ abstract class PointsAbstractController extends AbstractController
 								'ip' => $_SERVER['REMOTE_ADDR']
 							)
 						);
-						
+
 						$this->View->setMessage('info', "Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais (usuellement dans la semaine).");
 						$this->redirect('/' . $this->getModule() . '/points/');
 					}
@@ -214,11 +214,11 @@ abstract class PointsAbstractController extends AbstractController
 			FROM Logs
 			WHERE Membre = ' . $this->getMembre()->getFilteredID() . '
 			ORDER BY Logs.Date DESC';
-		 
+
 		$ResultatsSQL = Sql::query($Query);
 		$Resultats = array();
 		$Points = $this->getMembre()->getPoints();
-		
+
 		while($Resultat = mysql_fetch_row($ResultatsSQL))
 		{
 			$Delta = $Resultat[2];
@@ -232,10 +232,10 @@ abstract class PointsAbstractController extends AbstractController
 			}
 			$Resultat[2] = $Points . ' (' . $Resultat[2] . ')';
 			$Points -= $Delta; // Remonter dans le temps.
-			
+
 			$Resultats[] = $Resultat;
 		}
-		
+
 		$this->json($Resultats);
 	}
 }

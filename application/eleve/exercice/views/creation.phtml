@@ -4,7 +4,7 @@ echo $this->Doc_box('eleve', 'ajout', 'Besoin d\'aide pour compléter ce formula
 <form id="form_creation-exercice" method="post" action="">
 <p>Merci de remplir les champs suivants. L'envoi de fichiers se fera à la prochaine étape.</p>
 
-<h2>Classe et matières</h2>
+<h2 class="eleve-exercice-creation-classe">Classe et matières</h2>
 <?php
 //Classe
 echo $this->Form_selectLabelBr('classe', 'Niveau de l\'exercice', $this->Classes, $_SESSION['Eleve']->Classe);
@@ -23,7 +23,7 @@ echo $this->Form_inputLabelBr(
 echo $this->Form_selectLabelBr('matiere', 'Matière', $this->Matieres);
 ?>
 
-<h2>Demande</h2>
+<h2 class="eleve-exercice-creation-demande">Demande</h2>
 <p>Donnez un nom clair à votre exercice. Vous devriez être capable de vous en souvenir rien qu'en lisant son titre !<br />
 <?php
 //Nom de l'exercice
@@ -47,7 +47,7 @@ echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET');
 ?>
 
-<h2>Dates</h2>
+<h2 class="eleve-exercice-creation-date">Dates</h2>
 <p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu. Il s'agit de la date limite finale, si vous n'avez rien à ce moment là vous serez remboursé.<br />
 <?php
 $HeureData = array(
@@ -95,13 +95,13 @@ echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->D
 ?>
 </p>
 
-<h2>Informations complémentaires</h2>
+<h2 class="eleve-exercice-creation-info">Informations complémentaires</h2>
 <?php
 echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires', array('class' => 'tex-container'));
 echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 ?>
 
-<h2>Options avancées</h2>
+<h2 class="eleve-exercice-creation-options">Options avancées</h2>
 <fieldset>
 	<legend><input id="avance" type="checkbox" /><label for="avance">Afficher les options avancées</label></legend>
 
@@ -118,7 +118,7 @@ echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 	</div>
 </fieldset>
 
-<h2>Envoi du formulaire</h2>
+<h2 class="eleve-exercice-creation-envoi">Envoi du formulaire</h2>
 <?php 
 echo $this->Points_raiseWarning($this->getController()->getMembre());
 ?>
