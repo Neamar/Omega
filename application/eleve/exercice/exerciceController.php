@@ -805,7 +805,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
 			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
 			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
-			'REMBOURSE' => is_null($this->Exercice)?'WTF?':'Vous avez été remboursé à hauteur de <strong>' . $this->Exercice->Remboursement . '%. Avec toute nos excuses pour le préjudice subi !', 
+			'REMBOURSE' => is_null($this->Exercice)?'WTF?':'Vous avez été remboursé à hauteur de <strong>' . $this->Exercice->Remboursement . '%</strong>. Avec toute nos excuses pour le préjudice subi !', 
 		);
 	}
 }

@@ -48,11 +48,12 @@ WHERE Hash="%ID%"';
 		'VIERGE' 				=> array('ANNULE', 'ATTENTE_CORRECTEUR'),
 		'ATTENTE_CORRECTEUR'	=> array('ANNULE', 'ATTENTE_ELEVE'),
 		'ATTENTE_ELEVE'			=> array('ANNULE', 'ATTENTE_CORRECTEUR', 'EN_COURS'),
-		'EN_COURS'				=> array('ENVOYE', 'ANNULE'),
+		'EN_COURS'				=> array('ENVOYE', 'ANNULE', 'REMBOURSE'),
 		'ENVOYE'				=> array('TERMINE', 'REFUSE'),
 		'REFUSE'				=> array('TERMINE', 'REMBOURSE'),
 		'TERMINE'				=> array(),
 		'ANNULE'				=> array(),
+		'REMBOURSE'				=> array(),
 	);
 	
 	/**

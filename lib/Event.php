@@ -41,6 +41,7 @@ class Event
 	const CORRECTEUR_INSCRIPTION = 'correcteur/inscription';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';
 	const CORRECTEUR_EXERCICE_ENVOI = 'correcteur/exercice/envoi';
+	const CORRECTEUR_EXERCICE_RETARD = 'correcteur/exercice/retard';
 	
 	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
 	const MEMBRE_FAQ_QUESTION = 'membre/faq/question';
