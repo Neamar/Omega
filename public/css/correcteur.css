@@ -111,6 +111,9 @@ background:url('/public/css/images/h2-correcteur-exercice-envoi-rappel.png') top
 h2.correcteur-exercice-envoi-redaction {
 background:url('/public/css/images/h2-correcteur-exercice-envoi-redaction.png') top left scroll no-repeat;
 }
+h2.correcteur-options-matieres {
+background:url('/public/css/images/h2-correcteur-options-matieres.png') top left scroll no-repeat;
+}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 6. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

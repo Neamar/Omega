@@ -86,6 +86,10 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	float:right;
 	margin-top:-25px;
 	}
+	#ribbon-right .pts {
+	background:url('/public/css/images/pts.png') left scroll no-repeat;
+	padding-left:16px;
+	}
 		#ribbon, #ribbon a{
 		color:#acacac;
 		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
@@ -324,6 +328,7 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 	
 /* --  Message droite / Classe Global  -- */	
 .message .doc-box-link a{
+	z-index:20; /*pour contrer le before h2*/
 position:absolute;
 bottom:-30px;
 right:40px;

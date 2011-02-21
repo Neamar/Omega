@@ -64,6 +64,7 @@ text-shadow:1px 1px 0px #fff;
 	height:34px;
 	width:1000px;
 	background: url('/public/css/images/separateur-h2-2x.png') top no-repeat;
+	z-index:10;/*laisse passer le doc-box a */
 }
 #content h2:first-child:before, #tabs h2:before {background-image:none!important;}
 #content h2:first-child {margin-top:10px;}
@@ -104,6 +105,9 @@ background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat
 }
 h2.h2_exercice {
 background:url('/public/css/images/h2-h2_exercice.png') top left scroll no-repeat;
+}
+h2.correcteur-options-compte, h2.eleve-options-compte {
+background:url('/public/css/images/h2-eleve-options-compte.png') top left scroll no-repeat;
 }
 
 /* Supression des marges dans les listes */
@@ -152,7 +156,7 @@ padding-left:20px;
 	display:inline-block;
 outline: 1px solid #FFFFFF;
 outline-offset: -2px;
-font:normal 14px/1.3em Arial, Helvetica, sans-serif;
+font:normal 14px/1.3em "Arial", "Helvetica", sans-serif;
 padding: .55em 1em .55em 1.3em;
 text-shadow:1px 1px 0px #fff;
 background: #ededed;
@@ -218,7 +222,7 @@ aside.doc-box {
 padding-left:44px;
 margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
-font: 16px/1.2em Georgia, Helvetica, sans-serif;
+font: 16px/1.2em "Georgia", serif;
 color:#676767;
 font-weight:bold;
 text-align:left;
@@ -292,18 +296,19 @@ background-color:#f1f1ef;
 /*-------------------------------------------------- 4. Le module de chat ---------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* les images (icones) */
-h3.faq-question.faq-eleve, 3.faq-question.faq-correcteur {
-font-size:20px;
+h3.faq-question.faq-eleve, h3.faq-question.faq-correcteur {
+font:bold 21px "Palatino", "Palatino Linotype,", "Book Antiqua", serif;
 text-transform:none;
 text-shadow:1px 1px 0px #fff;
 }
 	h3.faq-question.faq-eleve {
-	color:#e06c0e;
+	color:#b5743e;
 	background:url('/public/css/images/eleve2.png') left scroll no-repeat;
 	padding-left:28px;
+	min-height:26px;
 	}
 	h3.faq-question.faq-correcteur {
-	color:#006699;
+	color:#2b6c8d;
 	background:url('/public/css/images/correct.png') left scroll no-repeat;
 	padding-left:28px;
 	}
@@ -314,7 +319,7 @@ h3.faq-question.faq-eleve:before, h3.faq-question.faq-correcteur:before {content
 p.faq-reponse.faq-correcteur, p.faq-reponse.faq-eleve {
 position:relative;
 text-transform:none;
-margin-left:40px;
+margin-left:50px;
 padding-left:5px;
 font-style:italic;
 }
@@ -350,8 +355,9 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 p.faq-ajout-reponse a {
 	display:inline-block;
 	margin-bottom:7px;
-	background:url('/public/css/images/more.png') left scroll no-repeat;
+	background:url('/public/css/images/more2.png') left scroll no-repeat;
 	padding-left:20px;
+	color:#248c1f!important;
 }
 p.faq-ajout-reponse:last-child {background-image:none;padding:0;}
 
@@ -407,12 +413,12 @@ padding: 0 0 15px 0;
 		}
 		
 /* - - - le bouton d'envoi - - - - */
-form input[type=submit], form input[type=button] {
+form input[type=submit], form input[type=button], .tex-container-preview, #content .see-link {
 display: inline-block;
 cursor: pointer;
 text-align: center;
 text-decoration: none;
-font:bold 16px/100% Arial, Helvetica, sans-serif;
+font:bold 16px/100% "Arial", "Helvetica", sans-serif;
 text-shadow: 0 1px 1px rgba(0,0,0,.5);
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
@@ -479,11 +485,11 @@ padding-right:20px;
 }
 	#content p.see-link a{
 	padding:5px;
-	border:1px solid #999;
-	-webkit-border-radius: .5em;
-	-moz-border-radius: .5em;
-	border-radius: .5em;
+	color:#999;
 	}
+		#content p.see-link a:hover{
+		text-decoration:none;
+		}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------- 6. Tabelau ------------------------------------------------------------------*/
@@ -531,12 +537,26 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------- 7 jQuerry -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-textarea.tex-container {
-	display:block;
+.ui-state-disabled:hover a {
+text-decoration: none!important;
 }
-span.tex-container-preview {
+	textarea.tex-container {
+		display:block;
+	}
+	/* - - Prévisualisation & le see-link : gris - - */
+	span.tex-container-preview, #content p.see-link {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+	text-shadow:1px 1px 0px #fff;
 	padding:5px;
-	margin-bottom:8px;
-	display:inline-block;
-	cursor: pointer ;
-}
+	}
+		span.tex-container-preview:hover, #content p.see-link:hover {
+		background: #ededed;
+		background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+		background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+		}
