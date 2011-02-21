@@ -218,6 +218,11 @@ abstract class PointsAbstractController extends AbstractController
 		$ResultatsSQL = Sql::query($Query);
 		$Resultats = array();
 		$Points = $this->getMembre()->getPoints();
+		
+		//Afficher plus d'enregistrements.
+		//Comme on ne passe pas par le helper ->ajax, on est obligé de faire le boulot à la main et de le simuler.
+		//FIXME : on peut optimiser la consommation mémoire en utilisant un SQL_CALC_FOUND_ROWS si nécessaire.
+		$Limit = isset($_POST['limit'])?intval($_POST['limit']):AJAX_LIMITE;
 
 		while($Resultat = mysql_fetch_row($ResultatsSQL))
 		{
@@ -234,6 +239,12 @@ abstract class PointsAbstractController extends AbstractController
 			$Points -= $Delta; // Remonter dans le temps.
 
 			$Resultats[] = $Resultat;
+			
+			if(count($Resultats) >= $Limit)
+			{
+				$Resultats[] = '+';
+				break;
+			}
 		}
 
 		$this->json($Resultats);

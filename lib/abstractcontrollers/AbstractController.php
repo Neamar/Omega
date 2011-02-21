@@ -208,17 +208,40 @@ abstract class AbstractController
 	 * 
 	 * @param string $Query la requête (brute) à effectuer
 	 * @param string $OrderBy l'ordre de tri, la date décroissante par défaut
+	 * @param int $Limit le nombre de tuples à renvoyer.
 	 * 
 	 * @return array un tableau de résultat contenant la requête.
 	 */
-	protected function ajax($Query, $OrderBy = 'Date DESC')
+	protected function ajax($Query, $OrderBy = 'Date DESC', $Limit = null)
 	{
-		$ResultatsSQL = Sql::query($Query . "\nORDER BY " . $OrderBy);
+		if(is_null($Limit))
+		{
+			$Limit = isset($_POST['limit'])?intval($_POST['limit']):AJAX_LIMITE;
+		}
+		
+		//Mise en forme automatique de la requête.
+		//Ajouter un SQL_CALC_FOUND_ROWS, l'order By et la limite.
+		$Query = str_replace('SELECT ', 'SELECT SQL_CALC_FOUND_ROWS ', $Query) . '
+		ORDER BY ' . $OrderBy . '
+		LIMIT ' . $Limit;
+		
+		$ResultatsSQL = Sql::query($Query);
 		$Resultats = array();
 		while($Resultat = mysql_fetch_row($ResultatsSQL))
 		{
 			$Resultats[] = $Resultat;
 		}
+		
+		$NbTuples = Sql::singleColumn(
+			'SELECT FOUND_ROWS() AS S',
+			'S'
+		);
+		
+		if($NbTuples > count($Resultats))
+		{
+			$Resultats[] = '+';
+		}
+			
 		
 		$this->json($Resultats);
 		return $Resultats;
