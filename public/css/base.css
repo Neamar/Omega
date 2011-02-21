@@ -179,6 +179,9 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 	padding-bottom:25px;
 	background-color:#f0e8e8;
 	}
+	.important:first-line {
+	font-weight:bold;
+	}
 	.important:hover {
 	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
 	color:#931414;
@@ -237,7 +240,7 @@ aside.doc-box p{margin:0;}
 /* - - Doc-box sur Span - - */	
 span.doc-input {
 text-align: center;
-background: #ededed;
+background: #e0eee0;
 color:#c13f27;
 border:1px solid #cecece;
 margin:10px;
@@ -462,7 +465,8 @@ width:324px;
 	
 form input[type=button] {
 }
-form input[type=number] {
+form input[type=number]:hover {
+outline:none;
 }
 	select {
 	width:auto;
@@ -527,3 +531,12 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------- 7 jQuerry -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
+textarea.tex-container {
+	display:block;
+}
+span.tex-container-preview {
+	padding:5px;
+	margin-bottom:8px;
+	display:inline-block;
+	cursor: pointer ;
+}
