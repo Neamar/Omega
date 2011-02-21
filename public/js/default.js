@@ -54,10 +54,14 @@ $(function()
 	{
 		Tables.each(function(){
 			var Table = $(this);
+			var NbColumn = Table.find('thead th').length;
+			Table.data('count-items', 1);
 			function update()
 			{
 				$.ajax({
 					url: Table.data('source'),
+					type: 'POST',
+					data: {limit: Table.data('count-items')},
 					success: function(data){
 						data = jQuery.parseJSON(data);
 						
@@ -66,16 +70,27 @@ $(function()
 						{
 							Lignes += '<tr>';
 							
-							for(var j = 0 ; j < data[i].length ; j++)
+							if(data[i] == '+')
 							{
-								Lignes += '<td>' + data[i][j] + '</td>';
+								//Il reste des enregistrements !
+								Lignes += '<td colspan="' + NbColumn + '" class="ajax-more"><a href="#">Afficher plus de ' + (data.length - 1) + ' enregistrements</a></td>';
+							}
+							else
+							{
+								//Enregistrement standard
+								for(var j = 0 ; j < data[i].length ; j++)
+								{
+									Lignes += '<td>' + data[i][j] + '</td>';
+								}
 							}
 							Lignes += "</tr>\n";
 						}
+						
+						
 						//Cas des tableaux vides
 						if(data.length == 0)
 						{
-							Lignes += '<tr><td colspan="' + Table.find('thead th').length + '">Aucune donnée n\'est disponible pour l\'instant.</tr></td>';
+							Lignes += '<tr><td colspan="' + NbColumn + '">Aucune donnée n\'est disponible pour l\'instant.</tr></td>';
 						}
 						
 						Table.find('tbody').html(Lignes);
@@ -94,6 +109,14 @@ $(function()
 			Table.data('timer', update);
 		});
 	}
+	
+	//Gérer les "Afficher plus de N enregistrements"
+	$('td.ajax-more a').live('click', function(e){
+		Table = $(this).closest('table.ajax-table');
+		Table.data('count-items', Table.data('count-items') * 2);
+		Table.data('timer')();
+		e.preventDefault();
+	});
 });
 
 

@@ -186,7 +186,7 @@ abstract class DbObject
 		
 		if(!is_null($Exercice))
 		{
-			$Values['Exercice'] = intval($Exercice->ID);
+			$Values['Exercice'] = self::filterID($Exercice->ID);
 		}
 		
 		return SQL::insert($Table, $Values);

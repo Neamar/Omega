@@ -12,6 +12,7 @@ En production :
 - véritables mails
 - supprimer les tuples SQL par défaut
 - mettre de l'argent sur la banque (un minimum en tout cas)
+- supprimer dataset
 
 Idées cool pour les après midi pluvieuses :
 Ajouter un graphique pour les deltas de points

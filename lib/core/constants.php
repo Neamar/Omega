@@ -192,3 +192,10 @@ define('DELAI_VIREMENT', 7);
  * @var int
  */
 define('BANQUE_ID', 1);
+
+/**
+ * Le nombre d'enregistrements de base contenus sur un tableau AJAX.
+ * 
+ * @var int
+ */
+define('AJAX_LIMITE', 10);

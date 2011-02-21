@@ -78,7 +78,7 @@ class Membre extends DbObject
 	 */
 	public function getPoints()
 	{
-		return $this->Points;
+		return (int) $this->Points;
 	}
 	
 	/**
