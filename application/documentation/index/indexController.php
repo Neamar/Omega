@@ -178,7 +178,7 @@ class Documentation_IndexController extends AbstractController
 	public function indexAction()
 	{
 		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
-		
+		$this->View->addScript('/public/js/documentation/index.js');
 		$this->View->Pages = self::$Pages;
 	}
 	

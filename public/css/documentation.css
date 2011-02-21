@@ -22,9 +22,6 @@ Couleur Grise
 li.documentation-module-index ul li:last-child, li.documentation-module-eleve ul li:last-child, li.documentation-module-correcteur ul li:last-child{
 padding-bottom:25px;
 }
-li.documentation-module-eleve ul li:hover, li.documentation-module-correcteur ul li:hover, li.documentation-module-index ul li:hover, ul.documentation-module-eleve li:hover, ul.documentation-module-correcteur li:hover  {
-padding-left:7px;
-}
 
 li.documentation-module-index ul li:first-child a, li.documentation-module-eleve ul li:first-child a, li.documentation-module-correcteur ul li:first-child a{
 font-weight:bold;
