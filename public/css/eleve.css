@@ -30,6 +30,7 @@ color:#d29d1e;
 	#ribbon #ribbon-center {
 	background:url('/public/css/images/top-c-eleve.png') top scroll no-repeat; /*neutre*/
 	}
+	#ribbon-right a:hover {border-bottom:1px dashed #7e3e13;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 2. Menu/logo -----------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -78,6 +79,12 @@ span.doc-input a:hover {  /*Ton 2*/
 color:#c57309!important;
 text-decoration:none!important;
 }
+
+	.a_creation-exercice {
+	padding-left:20px;
+	background:url('/public/css/images/more.png') center left scroll no-repeat;
+	}
+	
 
 	/* Les forms*/
 	form input[type=email]:hover, form input[type=email]:focus {
