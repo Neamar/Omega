@@ -707,7 +707,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function _actionsActionWd()
 	{
 		$this->ajax(
-			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
+			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), Action
 			FROM Exercices_Logs
 			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
 		);
@@ -719,7 +719,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function _actionsAction()
 	{
 		$this->ajax(
-			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()

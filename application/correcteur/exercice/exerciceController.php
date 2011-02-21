@@ -346,7 +346,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			'SELECT
 				ID,
 				CONCAT(
-					DATE_FORMAT(Date,"%d/%c/%y à %H:%m"),
+					DATE_FORMAT(Date,"%d/%m/%y à %H:%m"),
 					" (",
 					Longueur,
 					" caractères)"
@@ -552,7 +552,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	public function _actionsAction()
 	{
 		$this->ajax(
-			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), CONCAT(Matiere, \' : <a href="/correcteur/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
+			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), CONCAT(Matiere, \' : <a href="/correcteur/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
@@ -576,7 +576,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	public function _actionsActionWd()
 	{
 		$this->ajax(
-			'SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action
+			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE 

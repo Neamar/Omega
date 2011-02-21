@@ -210,7 +210,7 @@ abstract class PointsAbstractController extends AbstractController
 	public function _actionsAction()
 	{
 		$Query = '
-			SELECT DATE_FORMAT(Date,"%d/%c/%y à %Hh"), Action, Delta
+			SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), Action, Delta
 			FROM Logs
 			WHERE Membre = ' . $this->getMembre()->getFilteredID() . '
 			ORDER BY Logs.Date DESC';
@@ -235,7 +235,7 @@ abstract class PointsAbstractController extends AbstractController
 			{
 				$Resultat[2] = '<small style="color:red;">' . $Delta . '</small>';
 			}
-			$Resultat[2] = $Points . ' (' . $Resultat[2] . ')';
+			$Resultat[2] = $this->View->Points($Points) . ' (' . $Resultat[2] . ')';
 			$Points -= $Delta; // Remonter dans le temps.
 
 			$Resultats[] = $Resultat;

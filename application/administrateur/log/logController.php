@@ -45,9 +45,9 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Exercices.Creation,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Exercices.Creation,"%d/%m/%y à %Hh"),
 				Exercices.Titre,
-				DATE_FORMAT(Exercices.Expiration,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Exercices.Expiration,"%d/%m/%y à %Hh"),
 				CONCAT("<a href=/administrateur/exercice/index/", Exercices.Hash,">Consulter</a>")
 			FROM Exercices',
 			'Exercices.Creation DESC'
@@ -61,7 +61,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Exercices_Logs.Date,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Exercices_Logs.Date,"%d/%m/%y à %Hh"),
 				Exercices.Titre,
 				Exercices_Logs.Action, 
 				CONCAT("<a href=/administrateur/exercice/index/", Exercices.Hash,">Consulter</a>")
@@ -85,7 +85,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Creation,"%d/%m/%y à %Hh"),
 				Mail,
 				Statut,
 				DetailsClasse, 
@@ -104,7 +104,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Date,"%d/%m/%y à %Hh"),
 				Mail,
 				Action,
 				IF(Delta < 0, CONCAT("<span style=color:red>", Delta, "</span>"), CONCAT("<span style=color:green>", Delta, "</span>")),
@@ -130,7 +130,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Creation,"%d/%m/%y à %Hh"),
 				Mail,
 				Statut,
 				CONCAT("<a href=/administrateur/membre/correcteur/", Mail,">Consulter</a>")
@@ -147,7 +147,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Date,"%d/%m/%y à %Hh"),
 				Mail,
 				Action,
 				IF(Delta < 0, CONCAT("<span style=color:red>", Delta, "</span>"), CONCAT("<span style=color:green>", Delta, "</span>")),
@@ -173,7 +173,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Creation,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Creation,"%d/%m/%y à %Hh"),
 				Mail,
 				Statut,
 				LOWER(Type),
@@ -190,7 +190,7 @@ class Administrateur_LogController extends AbstractController
 	{
 		$this->ajax(
 			'SELECT
-				DATE_FORMAT(Date,"%d/%c/%y à %Hh"),
+				DATE_FORMAT(Date,"%d/%m/%y à %Hh"),
 				Mail,
 				Action,
 				LOWER(Type),
