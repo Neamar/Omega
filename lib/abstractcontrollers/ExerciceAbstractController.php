@@ -209,6 +209,8 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					$this->View->setMessage('ok', 'Message enregistré.');
 					unset($_POST['question']);
+					
+					$this->redirectExercice('/' . $this->getModule() . '/exercice/faq/');
 				}
 				else
 				{
