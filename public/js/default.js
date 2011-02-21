@@ -73,7 +73,7 @@ $(function()
 							if(data[i] == '+')
 							{
 								//Il reste des enregistrements !
-								Lignes += '<td colspan="' + NbColumn + '" class="ajax-more">Afficher plus de ' + (data.length - 1) + ' enregistrements</td>';
+								Lignes += '<td colspan="' + NbColumn + '" class="ajax-more"><a href="#">Afficher plus de ' + (data.length - 1) + ' enregistrements</a></td>';
 							}
 							else
 							{
@@ -111,10 +111,11 @@ $(function()
 	}
 	
 	//Gérer les "Afficher plus de N enregistrements"
-	$('td.ajax-more').live('click', function(){
+	$('td.ajax-more a').live('click', function(e){
 		Table = $(this).closest('table.ajax-table');
 		Table.data('count-items', Table.data('count-items') * 2);
 		Table.data('timer')();
+		e.preventDefault();
 	});
 });
 
