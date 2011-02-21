@@ -257,7 +257,7 @@ float:left;
 font:normal 13px "Georgia", Times, serif;
 position:absolute;
 bottom:18px;
-left:55px;
+left:53px;
 color:#5c5b5b;
 }
 	#eleve_form p a:hover, #correcteur_form p a:hover {
@@ -354,13 +354,11 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/i
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 footer {
-	position:relative;
 clear:both;
-margin-left:40px;
+margin-left:194px;
 }
 	footer ul {
 	padding-top:40px;
-	float:left;
 	}
 		footer ul li {
 		display:inline;
@@ -375,7 +373,10 @@ margin-left:40px;
 			color:#676767;
 			}
 #social-network {
-	position:absolute;
-	right:40px;
-	top:40px;
+	margin-top:25px;
+	margin-left:200px;
+	opacity:0.75;
+	display:inline-block;
 }
+#social-network:hover {opacity:1;}
+.twitter-share-button {margin-bottom:6px;}

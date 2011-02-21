@@ -90,6 +90,27 @@ p.action-detail a {
 color:#0e8fcb;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------- 5. Les H2 ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+h2.correcteur-index-index-foire {
+background:url('/public/css/images/h2-correcteur-index-index-foire.png') top left scroll no-repeat;
+}
+h2.correcteur-points-index {
+background:url('/public/css/images/h2-correcteur-points-index.png') top left scroll no-repeat;
+}
+h2.correcteur-exercice-index {
+background:url('/public/css/images/h2-correcteur-exercice-index.png') top left scroll no-repeat;
+}
+h2.correcteur-index-liste-foire {
+background:url('/public/css/images/h2-correcteur-index-liste-foire.png') top left scroll no-repeat;
+}
+h2.correcteur-exercice-envoi-rappel {
+background:url('/public/css/images/h2-correcteur-exercice-envoi-rappel.png') top left scroll no-repeat;
+}
+h2.correcteur-exercice-envoi-redaction {
+background:url('/public/css/images/h2-correcteur-exercice-envoi-redaction.png') top left scroll no-repeat;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 input:hover, input:focus {

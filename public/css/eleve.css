@@ -84,6 +84,45 @@ p.action-detail a {
 color:#cb620e;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------- 5. Les H2 ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+h2.eleve-exercice-index {
+background:url('/public/css/images/h2-eleve-exercice-index.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-index-creation {
+background:url('/public/css/images/h2-eleve-exercice-index-creation.png') top left scroll no-repeat;
+}
+h2.eleve-points-index {
+background:url('/public/css/images/h2-eleve-points-index.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-creation-classe {
+background:url('/public/css/images/h2-eleve-exercice-creation-classe.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-creation-envoi {
+background:url('/public/css/images/h2-eleve-exercice-creation-envoi.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-creation-date {
+background:url('/public/css/images/h2-eleve-exercice-creation-date.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-creation-demande {
+background:url('/public/css/images/h2-eleve-exercice-creation-demande.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-creation-info {
+background:url('/public/css/images/h2-eleve-exercice-creation-info.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-recapitulatif-envoi {
+background:url('/public/css/images/h2-eleve-exercice-recapitulatif-envoi.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-recapitulatif-infos {
+background:url('/public/css/images/h2-eleve-exercice-recapitulatif-infos.png') top left scroll no-repeat;
+}
+h2.eleve-exercice-recapitulatif-fichiers {
+background:url('/public/css/images/h2-eleve-exercice-recapitulatif-fichiers.png') top left scroll no-repeat;
+}
+h2.eleve-options-compte {
+background:url('/public/css/images/h2-eleve-options-compte.png') top left scroll no-repeat;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 input:hover, input:focus {

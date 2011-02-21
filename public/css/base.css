@@ -30,8 +30,7 @@ width:1000px;
 margin:auto;
 background:#f1f1ef url('/public/css/images/content-y-v3.jpg') top left scroll repeat-y; /*image y*/
 padding-bottom:20px;
-
-	min-height:100%;
+	min-height:100%; /*pour le bas de page*/
 }
 	section {
 	padding: 0 45px;
@@ -41,8 +40,7 @@ padding-bottom:20px;
 	/*border:1px #F00 solid;*/ /*debug*/
 font:normal 18px/1.4em "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
 color:#5e5e5e;
-	
-	height:100%;	
+	height:100%; /*pour le bas de page*/
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -53,12 +51,12 @@ text-shadow:1px 1px 0px #fff;
 }
 #content h2:before {
 	position:absolute;
-	top:-24px;
+	top:-34px;
 	left:-45px;
 	content: "";
-	height:24px;
+	height:34px;
 	width:1000px;
-	background: url('/public/css/images/separateur-h2.jpg') top no-repeat;
+	background: url('/public/css/images/separateur-h2-2x.png') top no-repeat;
 }
 #content h2:first-child:before, #tabs h2:before {background-image:none!important;}
 	
@@ -81,92 +79,19 @@ text-shadow:1px 1px 0px #fff;
 	}
 	#content h2:first-child {margin-top:10px;}
 
-	
-/* - - TITRE H3 - - */
-/*h3 {
-text-transform:uppercase;
-font-size:18px;
-background:url('/public/css/images/bullet3.png') left scroll no-repeat;
-padding-left:30px;
-margin-top:25px;
-}*/
 
-
-/* les images (icones) */
-h3.faq-question.faq-eleve, 3.faq-question.faq-correcteur {
-font-size:20px;
-text-transform:none;
-text-shadow:1px 1px 0px #fff;
-}
-	h3.faq-question.faq-eleve {
-	color:#e06c0e;
-	background:url('/public/css/images/eleve2.png') left scroll no-repeat;
-	}
-	h3.faq-question.faq-correcteur {
-	color:#006699;
-	background:url('/public/css/images/correct.png') left scroll no-repeat;
-	}
-h3.faq-question.faq-eleve:after, h3.faq-question.faq-correcteur:after {content: " »";}
-h3.faq-question.faq-eleve:before, h3.faq-question.faq-correcteur:before {content: "« ";}
-
-/* bordure */
-p.faq-reponse.faq-correcteur, p.faq-reponse.faq-eleve {
-position:relative;
-text-transform:none;
-margin-left:40px;
-padding-left:5px;
-font-style:italic;
-}
-	p.faq-reponse.faq-eleve {
-	border-left:2px solid #e06c0e;
-	}
-	p.faq-reponse.faq-correcteur {
-	border-left:2px solid #006699;
-	}
-
-/* minis icones*/
-p.faq-reponse.faq-correcteur:before , p.faq-reponse.faq-eleve:before{
-position:absolute;
-top:50%;
-margin-top:-10px;
-left:-25px;
-content: "";
-height:20px;
-width:15px;
-}
-	p.faq-reponse.faq-correcteur:before {
-	background:url('/public/css/images/correct-min.png') left scroll no-repeat;
-	}
-	p.faq-reponse.faq-eleve:before {
-	background:url('/public/css/images/eleve2-min.png') left scroll no-repeat;
-	}
-
-/*Ajouter une réponse*/
-p.faq-ajout-reponse {
-padding-bottom:10px;
-background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
-}
-
-
-
-/* - - TITRE H2 Correcteurs- - */
+/* - - TITRE H2 - - */
 .content-base h2 {
 background:url('/public/css/images/h2.png') top left scroll no-repeat;
 }
-h2.correcteur-index-index-foire {
-background:url('/public/css/images/h2-correcteur-index-index-foire.png') top left scroll no-repeat;
-}
-h2.correcteur-points-index {
-background:url('/public/css/images/h2-correcteur-points-index.png') top left scroll no-repeat;
+h2.h2_options {
+background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat;
 }
 h2.h2_logs {
 background:url('/public/css/images/h2-logs.png') top left scroll no-repeat;
 }
-h2.correcteur-exercice-index {
-background:url('/public/css/images/h2-correcteur-exercice-index.png') top left scroll no-repeat;
-}
-h2.correcteur-index-liste-foire {
-background:url('/public/css/images/h2-correcteur-index-liste-foire.png') top left scroll no-repeat;
+h2.membre-exercice-index-actif {
+background:url('/public/css/images/h2-membre-exercice-index-actif.png') top left scroll no-repeat;
 }
 h2.h2_actions {
 background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat;
@@ -174,21 +99,6 @@ background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat
 h2.h2_exercice {
 background:url('/public/css/images/h2-h2_exercice.png') top left scroll no-repeat;
 }
-/* - - TITRE H2 Eleves - */
-h2.eleve-exercice-index {
-background:url('/public/css/images/h2-eleve-exercice-index.png') top left scroll no-repeat;
-}
-h2.eleve-exercice-index-creation {
-background:url('/public/css/images/h2-eleve-exercice-index-creation.png') top left scroll no-repeat;
-}
-h2.membre-exercice-index-actif {
-background:url('/public/css/images/h2-membre-exercice-index-actif.png') top left scroll no-repeat;
-}
-h2.eleve-points-index {
-background:url('/public/css/images/h2-eleve-points-index.png') top left scroll no-repeat;
-}
-
-
 /* Supression des marges dans les listes */
 p + ul {
 margin-top:-17px!important;
@@ -356,8 +266,77 @@ background-color:#f1f1ef;
 	.input_default {
 	width:auto!important;
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- 2. Le module de chat ---------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.faq-question {
+	
+}
+/* les images (icones) */
+h3.faq-question.faq-eleve, 3.faq-question.faq-correcteur {
+font-size:20px;
+text-transform:none;
+text-shadow:1px 1px 0px #fff;
+}
+	h3.faq-question.faq-eleve {
+	color:#e06c0e;
+	background:url('/public/css/images/eleve2.png') left scroll no-repeat;
+	padding-left:28px;
+	}
+	h3.faq-question.faq-correcteur {
+	color:#006699;
+	background:url('/public/css/images/correct.png') left scroll no-repeat;
+	padding-left:28px;
+	}
+/*h3.faq-question.faq-eleve:after, h3.faq-question.faq-correcteur:after {content: " »";}
+h3.faq-question.faq-eleve:before, h3.faq-question.faq-correcteur:before {content: "« ";}*/
 
-/*--------------------------------------------------------------------------------------------------------------------------------------------*/
+/* bordure */
+p.faq-reponse.faq-correcteur, p.faq-reponse.faq-eleve {
+position:relative;
+text-transform:none;
+margin-left:40px;
+padding-left:5px;
+font-style:italic;
+}
+	p.faq-reponse.faq-eleve {
+	border-left:2px solid #e06c0e;
+	}
+	p.faq-reponse.faq-correcteur {
+	border-left:2px solid #006699;
+	}
+
+/* minis icones*/
+p.faq-reponse.faq-correcteur:before , p.faq-reponse.faq-eleve:before{
+position:absolute;
+top:50%;
+margin-top:-10px;
+left:-25px;
+content: "";
+height:20px;
+width:15px;
+}
+	p.faq-reponse.faq-correcteur:before {
+	background:url('/public/css/images/correct-min.png') left scroll no-repeat;
+	}
+	p.faq-reponse.faq-eleve:before {
+	background:url('/public/css/images/eleve2-min.png') left scroll no-repeat;
+	}
+
+/*Ajouter une réponse*/
+p.faq-ajout-reponse {
+padding-bottom:18px;
+background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
+}
+p.faq-ajout-reponse a {
+	display:inline-block;
+	margin-bottom:7px;
+	background:url('/public/css/images/more.png') left scroll no-repeat;
+	padding-left:20px;
+}
+p.faq-ajout-reponse:last-child {background-image:none;padding:0;}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 2. Contact - Les formulaires -------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 form { /* classe globale pour les forms*/
