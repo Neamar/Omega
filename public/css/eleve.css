@@ -5,7 +5,15 @@ Couleur Orange
 
 /***********************************************************************************************
 
-1. Ribbon --------------------------------  ruban haut
+0. Start
+1. Ribbon
+2. Menu/logo 
+3. Arianne 
+4. Classes sur content
+5. H2
+6. Formulaires avancés
+7. Tableau
+8. jQuery
 
 **********************************************************************************************/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -70,12 +78,16 @@ span.doc-input a:hover {  /*Ton 2*/
 color:#c57309!important;
 text-decoration:none!important;
 }
-form input[type=email]:hover, form input[type=email]:focus {
-background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
-}
-form input[type=password]:hover, form input[type=password]:focus {
-background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
-}
+
+	/* Les forms*/
+	form input[type=email]:hover, form input[type=email]:focus {
+	background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
+	}
+	form input[type=password]:hover, form input[type=password]:focus {
+	background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+	}
+	
+/*Paragraphes*/
 p.action-detail a:hover{
 background:url('/public/css/images/doc-e.png') top left scroll no-repeat;
 padding-left:20px;
@@ -123,7 +135,7 @@ h2.eleve-options-compte {
 background:url('/public/css/images/h2-eleve-options-compte.png') top left scroll no-repeat;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
+/*----------------------------------------------------- 6. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 input:hover, input:focus {
 border: 2px solid #e96600;
@@ -162,7 +174,7 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', end
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 7. Tabelau ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 th{
 background-color:#e8d7be;

@@ -5,7 +5,15 @@ Couleur Bleu
 
 /***********************************************************************************************
 
-0. Ribbon --------------------------------  ruban haut
+0. Start
+1. Ribbon
+2. Menu/logo 
+3. Arianne 
+4. Classes sur content
+5. H2
+6. Formulaires avancés
+7. Tableau
+8.jQuery
 
 **********************************************************************************************/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -28,21 +36,11 @@ color:#1eaed2;
 #logo #section_logo a#a_logo {
 	background:url('/public/css/images/logo-cor.png') top left scroll no-repeat; /*image*/
 }
-
 	#logo-liens ul li a:hover {
 	color:#fff;
 	text-shadow:1px 1px 0px #1389ff;
 	background:url('/public/css/images/menu_top-c-l.png') top left scroll no-repeat;
-	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
-	/*#logo-liens:before {
-	position:absolute;
-	content: "";
-	top:0;
-	height:14px;
-	width:25px;
-	background: url('/public/css/images/index/menu-top.png') top left scroll no-repeat;
-	}*/
-			
+	}			
 		#logo-liens ul li a:hover span {
 		height:33px;
 		display:block;
@@ -50,7 +48,7 @@ color:#1eaed2;
 		cursor:pointer;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*-------------------------------------------------------- 2. Ariane --------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 3. Ariane --------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #ariane .edevoir:hover {
 color:#057cff;
@@ -76,12 +74,14 @@ color:#56859f;
 #ariane .see-link a:hover {
 color:#1a80bc;
 }
-form input[type=email]:hover, form input[type=email]:focus {
-background:#fff url('/public/css/images/email-c.png') center left scroll no-repeat;
-}
-form input[type=password]:hover, form input[type=password]:focus {
-background:#fff url('/public/css/images/pass-c.png') center left scroll no-repeat;
-}
+	/*form*/
+	form input[type=email]:hover, form input[type=email]:focus {
+	background:#fff url('/public/css/images/email-c.png') center left scroll no-repeat;
+	}
+	form input[type=password]:hover, form input[type=password]:focus {
+	background:#fff url('/public/css/images/pass-c.png') center left scroll no-repeat;
+	}
+/*paragraphes*/
 p.action-detail a:hover{
 background:url('/public/css/images/doc-c.png') top left scroll no-repeat;
 padding-left:20px;
@@ -111,9 +111,10 @@ h2.correcteur-exercice-envoi-redaction {
 background:url('/public/css/images/h2-correcteur-exercice-envoi-redaction.png') top left scroll no-repeat;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*----------------------------------------------------- 5. Les Forumlaires --------------------------------------------------------------------*/
+/*----------------------------------------------------- 6. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 input:hover, input:focus {
+border: 2px solid #008fe9;
 }
 
 form input:hover, form textarea:hover, select:hover {
@@ -125,6 +126,8 @@ form input:focus, form textarea:focus, select:focus {
 border: 2px solid #1961a3;
 outline:none;
 }
+
+/* - - le bouton Submit - - */
 form input[type=submit], form input[type=button] {
 color: #d9eef7;
 border: solid 1px #0076a3;
@@ -145,19 +148,9 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', end
 	background: -moz-linear-gradient(top,  #0078a5,  #00adee);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
 	}
+	
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*---------------------------------------------- 1. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------------------------------------------------------------------------*/
-#envoi-apercu .pager
-{
-text-align:center;
-}
-#envoi-apercu .pdf-image
-{
-text-align:center;
-}
-/*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 7. Tabelau ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 th{
 background-color:#bee0e7;
@@ -170,3 +163,8 @@ text-shadow:1px 1px 0px #e0faff;
 	td:first-child {
 	border-left:3px solid #a8d3df;
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------- 8. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#envoi-apercu .pager{text-align:center;}
+#envoi-apercu .pdf-image{text-align:center;}
