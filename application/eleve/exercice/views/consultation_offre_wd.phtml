@@ -4,7 +4,7 @@ echo $this->Doc_box('eleve', 'offre', 'Besoin d\'aide pour compléter ce formula
 
 <form id="form_consultation-offre" method="post" action="">
 <p>Un correcteur vous propose de réaliser cet exercice.<br />
-En contrepartie, il demande <?php echo $this->Points($this->Exercice->pricePaid()) ?>.</p>
+En contrepartie, il demande <strong><?php echo $this->Points($this->Exercice->pricePaid()) . ($this->Exercice->Modificateur==100?'':' (cette offre prend en compte les ' . ($this->Exercice->Modificateur - 100) . '% de suractivité)') ?></strong>.</p>
 <?php 
 if(!empty($this->Exercice->InfosCorrecteur))
 {
