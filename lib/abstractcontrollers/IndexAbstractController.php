@@ -40,14 +40,15 @@ abstract class IndexAbstractController extends AbstractController
 		 * Le membre qui demande la désinscription.
 		 * @var Membre
 		 */
-		$this->View->Membre = $this->getMembre();
+		$Membre = $this->getMembre();
+		$this->View->Membre = $Membre;
 		
 		if(isset($_POST['desinscription-membre']))
 		{
 			//Au revoir :(
 			Sql::update(
 				'Membres',
-				$this->View->Membre->getFilteredId(),
+				$Membre->getFilteredId(),
 				array('Statut' =>  'DESINSCRIT'),
 				'AND Pass="' . Util::hashPass($_POST['password']) . '"
 				 AND Type = "' . strtoupper($this->getModule()) . '"'
@@ -60,6 +61,16 @@ abstract class IndexAbstractController extends AbstractController
 			else
 			{
 				unset($_SESSION[$this->getMembreIndex()]);
+				
+				//Récupérer sur la banque les points du compte
+				if($Membre->getPoints() > 0)
+				{
+					Sql::start();
+					$Points = $Membre->getPoints();
+					$Membre->debit($Points, 'Virement de désinscription');
+					Membre::getBanque()->credit($Points, 'Réception du virement de désinscription');
+					Sql::commit();
+				}
 				
 				$this->View->setMessage(
 					'ok',
