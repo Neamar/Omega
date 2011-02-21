@@ -71,6 +71,9 @@ h3 {
 margin-top:20px;
 }
 
+#content h2:before {
+	background: url('/public/css/images/separateur-h2-doc.png') top no-repeat;
+}
 .content-base p {
 	line-height:1.6em;
 	background-color:#ececec;

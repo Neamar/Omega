@@ -122,3 +122,17 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', end
 		background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 2. Tabelau ------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+th{
+background-color:#e8d7be;
+text-shadow:1px 1px 0px #ffefe0;
+}
+	td {
+	background-color:#f1e9e3;
+	border-left:1px solid #d8d1cc;
+	}
+	td:first-child {
+	border-left:3px solid #dfc8a8;
+	}

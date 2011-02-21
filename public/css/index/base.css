@@ -354,11 +354,13 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/i
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 footer {
+	position:relative;
 clear:both;
-margin-left:220px;
+margin-left:40px;
 }
 	footer ul {
 	padding-top:40px;
+	float:left;
 	}
 		footer ul li {
 		display:inline;
@@ -372,3 +374,8 @@ margin-left:220px;
 			footer ul li a:hover{
 			color:#676767;
 			}
+#social-network {
+	position:absolute;
+	right:40px;
+	top:40px;
+}
