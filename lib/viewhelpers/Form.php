@@ -188,6 +188,7 @@ function ViewHelper_Form_points($name, $max = MAX_SOMME, $args = array())
 	$args['value'] = 0;
 	$args['max'] = $max;
 	$args['step'] = 25;
+	$args['class'] = (isset($args['class'])?$args['class'] . ' ':'') . 'pts';
 	
 	return ViewHelper_Form_input($name, $args);
 }
