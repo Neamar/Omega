@@ -312,14 +312,32 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				}
 				else
 				{
-					//Modifier le statut vers ENVOYE
-					$this->Exercice->setStatus('ENVOYE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé');
+					if(!isset($_POST['gratuit']))
+					{
+						//Modifier le statut vers ENVOYE
+						$this->Exercice->setStatus('ENVOYE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé');
+						
+						Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI, array('Exercice' => $this->Exercice));
 					
-					Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI, array('Exercice' => $this->Exercice));
+						//Et rediriger
+						$this->View->setMessage('ok', 'Corrigé compilé avec succès.');
+						$this->redirect('/correcteur/exercice/');
+					}
+					else
+					{
+						//Modifier le statut vers ENVOYE
+						Sql::start();
+						$this->Exercice->setStatus('REMBOURSE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé sans frais', array('Reclamation' => 'NON_PAYE'));
+						$Prix = $this->Exercice->pricePaid();
+						$this->Exercice->getEleve()->credit($Prix, 'Remboursement à titre gracieux de l\'exercice.', $this->Exercice);
+						Membre::getBanque()->debit($Prix, 'Remboursement gracieux', $this->Exercice);
+						Sql::commit();
+						Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI_GRATUIT, array('Exercice' => $this->Exercice));
 					
-					//Et rediriger
-					$this->View->setMessage('ok', 'Corrigé compilé avec succès.');
-					$this->redirect('/correcteur/exercice/');					
+						//Et rediriger
+						$this->View->setMessage('ok', 'Corrigé compilé avec succès et envoyé gratuitement.');
+						$this->redirect('/correcteur/exercice/');						
+					}				
 				}
 			}
 		}
