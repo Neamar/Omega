@@ -9,7 +9,6 @@
 $Exercices = Sql::query(
 	'SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Exercices.Createur, Exercices.Correcteur, Exercices.NbRefus, Exercices.Enchere, Modificateur
 	FROM Exercices
-	LEFT JOIN Membres ON (Membres.ID = Exercices.Createur)
 	WHERE Exercices.Expiration < NOW()
 	AND Exercices.Statut = "EN_COURS"
 	',
@@ -25,7 +24,9 @@ $Banque = $Params['Membre'];
 while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 {
 	
-	$Eleve = $Exercice->getEleve();	
+	$Eleve = $Exercice->getEleve();
+	$Correcteur = $Exercice->getCorrecteur();
+	
 	$Remboursement = min(POURCENTAGE_RETARD/100 * $Exercice->pricePaid(), MAX_REMBOURSEMENT * EQUIVALENCE_POINT);
 
 	//Rembourser l'élève
@@ -38,7 +39,6 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 
 	Sql::commit();
 	
-	
 	$Datas = array(
 		'exercice' => $Exercice,
 		'eleve' => $Eleve,
@@ -46,4 +46,9 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	);
 	
 	Event::dispatch(Event::CORRECTEUR_EXERCICE_RETARD, $Datas);
+	
+	//Bloquer le correcteur
+	$Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
+	
+	Event::dispatch(Event::CORRECTEUR_BLOQUE, $Datas);
 }
