@@ -174,14 +174,26 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 
 
 /* - - La classe .important _ rouge - - */
+	.important {
+	position:relative;
+	padding-bottom:25px;
+	background-color:#f0e8e8;
+	}
 	.important:hover {
 	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
 	color:#931414;
 	background-color:#f0e8e8;
 	}
+		/*p.important a.doc-link {
+		display:block;
+		text-align:right;
+		padding-right:16px;
+		background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
+		}*/
 	p.important a.doc-link {
 	display:block;
-	text-align:right;
+	position:absolute;
+	right:10px;
 	padding-right:16px;
 	background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
 	}
@@ -508,7 +520,9 @@ text-shadow:1px 1px 0px #f8f8f8;
 		border-bottom-right-radius:10px;
 		border-top-right-radius:10px;
 		}
-			td a{
+			td.ajax-more a{
+				padding-left:20px;
+			background:url('/public/css/images/more2.png') center left scroll no-repeat;
 			}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------- 7 jQuerry -------------------------------------------------------------------------*/
