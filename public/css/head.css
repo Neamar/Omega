@@ -86,7 +86,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	float:right;
 	margin-top:-25px;
 	}
-	#ribbon-right .pts {
+	.pts {
 	background:url('/public/css/images/pts.png') left scroll no-repeat;
 	padding-left:16px;
 	}

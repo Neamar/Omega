@@ -73,11 +73,11 @@ margin-top:20px;
 	}
 
 /* Bulle sur p */
-/*#content {
+.documentation-content {
 	line-height:1.6em;
 	background-color:#ececec;
 	padding:10px;
 	-webkit-border-radius: 1em;
 	-moz-border-radius: 1em;
 	border-radius: 1em;
-}*/
+}

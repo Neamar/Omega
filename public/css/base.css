@@ -178,32 +178,31 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 
 
 /* - - La classe .important _ rouge - - */
-	.important {
-	position:relative;
-	padding-bottom:25px;
-	background-color:#f0e8e8;
-	}
+.important {
+background-color:#f0e8e8;
+}
 	.important:first-line {
 	font-weight:bold;
 	}
-	.important:hover {
-	background:url('/public/css/images/important-h.png') center left scroll no-repeat;
-	color:#931414;
-	background-color:#f0e8e8;
-	}
-		/*p.important a.doc-link {
+		.important:hover {
+		background:url('/public/css/images/important-h.png') center left scroll no-repeat;
+		color:#931414;
+		background-color:#f0e8e8;
+		}
+			
+		p.important a.doc-link {
 		display:block;
 		text-align:right;
 		padding-right:16px;
 		background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
-		}*/
-	p.important a.doc-link {
+		}
+	/*#content p.important a.doc-link > a {
 	display:block;
-	position:absolute;
-	right:10px;
+	position:absolute!important;
+	right:10px!important;
 	padding-right:16px;
 	background:url('/public/css/images/bullet2.png') bottom right scroll no-repeat!important;
-	}
+	}*/
 /* - - La classe .info _ Bleu - - */
 	.infos {
 	color:#187ab3;
@@ -243,6 +242,7 @@ aside.doc-box p{margin:0;}
 	
 /* - - Doc-box sur Span - - */	
 span.doc-input {
+	display:inline-block;
 text-align: center;
 background: #e0eee0;
 color:#c13f27;
@@ -377,7 +377,7 @@ padding: 0 0 15px 0;
 	display:inline!important;
 	}
 
-	form input[type=text], form textarea, form input[type=email], form input[type=number], form input[type=password], select { /*propriété des input:text & textarea*/
+	form input[type=text], form textarea, form input[type=email], form input[type=number], form input[type=password], select  { /*propriété des input:text & textarea*/
 		-webkit-border-radius: .4em;
 		-moz-border-radius: .4em;
 		border-radius: .4em;
@@ -449,6 +449,10 @@ form input[type=email] {
 background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
 padding-left:26px;
 width:324px;
+}
+form input[type=number].pts {
+background:#fff url('/public/css/images/pts-input.png') center left scroll no-repeat;
+padding-left:18px;
 }
 input[type=file]:hover {
 border:none;
@@ -539,9 +543,11 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 .ui-state-disabled:hover a {
 text-decoration: none!important;
+color:#e78f08!important;
 }
+
 	textarea.tex-container {
-		display:block;
+	display:block;
 	}
 	/* - - Prévisualisation & le see-link : gris - - */
 	span.tex-container-preview, #content p.see-link {

@@ -1,0 +1,60 @@
+/*********************************************************************************************
+
+Version : partie Admin (youhou)
+Couleur : La meilleure
+
+/***********************************************************************************************
+
+0. Start
+1. Admin
+
+**********************************************************************************************/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.content-base #content a { text-decoration: none; color: #f16c7c;}
+.content-base #content a:hover { text-decoration: underline; color:#bf404f;} 
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------- 1. admin --------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/* - - le bouton Submit - - */
+form input[type=submit], form input[type=button] {
+color: #fae7e9;
+border: solid 1px #b73948;
+background: #da5867;
+background: -webkit-gradient(linear, left top, left bottom, from(#f16c7c), to(#bf404f));
+background: -moz-linear-gradient(top,  #f16c7c,  #bf404f);
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f16c7c', endColorstr='#bf404f');
+}
+	form input[type=submit]:hover, form input[type=button]:hover {
+	outline:none;
+	border: solid 1px #b73948;
+	background: #ba4b58;
+	background: -webkit-gradient(linear, left top, left bottom, from(#cf5d6a), to(#a53845));
+	background: -moz-linear-gradient(top,  #cf5d6a,  #a53845);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#cf5d6a', endColorstr='#a53845');
+	}
+		form input[type=submit]:active, form input[type=submit]:focus, form input[type=button]:active, form input[type=button]:focus {
+		color: #dca4ab;
+		border: solid 1px #b73948;
+		background: -webkit-gradient(linear, left top, left bottom, from(#bf404f), to(#f16c7c));
+		background: -moz-linear-gradient(top,  #bf404f,  #f16c7c);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#bf404f', endColorstr='#f16c7c');
+		}
+		
+form input:hover, form textarea:hover, select:hover {
+border: 2px solid #f16c7c;
+outline: 2px solid #e1e1e1;
+outline-offset: -4px;
+}
+form input:focus, form textarea:focus, select:focus {
+border: 2px solid #bf404f;
+outline:none;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------- 2. Ribbon --------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+#ribbon a:hover {
+color:#f16c7c;
+}
