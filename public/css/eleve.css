@@ -82,6 +82,7 @@ text-decoration:none!important;
 
 	.a_creation-exercice {
 	padding-left:20px;
+	display:inline-block;
 	background:url('/public/css/images/more.png') center left scroll no-repeat;
 	}
 	
@@ -141,15 +142,12 @@ background:url('/public/css/images/h2-eleve-exercice-recapitulatif-fichiers.png'
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 6. Les Forumlaires --------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-input:hover, input:focus {
-border: 2px solid #e96600;
-}
-form input:hover, form textarea:hover, select:hover {
+form input[type=text]:hover, input[type=number]:hover, input[type=tel]:hover, input[type=password]:hover, input[type=email]:hover, form textarea:hover, select:hover {
 border: 2px solid #ff7000;
 outline: 2px solid #e1e1e1;
 outline-offset: -4px;
 }
-form input:focus, form textarea:focus, select:focus {
+form input[type=text]:focus, input[type=number]:focus, input[type=tel]:focus, input[type=password]:focus, input[type=email]:focus, form textarea:focus, select:focus {
 border: 2px solid #c13f27;
 outline:none;
 }

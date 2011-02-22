@@ -377,7 +377,7 @@ padding: 0 0 15px 0;
 	display:inline!important;
 	}
 
-	form input[type=text], form textarea, form input[type=email], form input[type=number], form input[type=password], select  { /*propriété des input:text & textarea*/
+	form input[type=text], form textarea, form input[type=email], form input[type=number], input[type=tel], form input[type=password], select  { /*propriété des input:text & textarea*/
 		-webkit-border-radius: .4em;
 		-moz-border-radius: .4em;
 		border-radius: .4em;
@@ -395,16 +395,18 @@ padding: 0 0 15px 0;
 	color:#000;
 	}
 	form textarea {
-		max-width:900px;
+	max-width:900px;
 	width:600px;
 	}
-		form input:hover, form textarea:hover, select:hover {
+	
+/* classe de base grise */
+		form input[type=text]:hover, input[type=number]:hover, input[type=password]:hover, input[type=tel]:hover, input[type=email]:hover, form textarea:hover, select:hover {
 		border: 2px solid #c2c2c2;
 		-webkit-box-shadow:none;
 		-moz-box-shadow:none;
 		box-shadow:none;
 		}
-		form input:focus, form textarea:focus, select:focus {
+		form input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=email]:focus, form textarea:focus, select:focus {
 		border: 2px solid #a6a6a6;
 		-webkit-box-shadow:none;
 		-moz-box-shadow:none;
@@ -454,13 +456,6 @@ form input[type=number].pts {
 background:#fff url('/public/css/images/pts-input.png') center left scroll no-repeat;
 padding-left:18px;
 }
-input[type=file]:hover {
-border:none;
-outline:none;
-}
-input[type=file] {
-width:820px!important;
-}
 form input[type=email]:hover, form input[type=email]:focus {
 background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
 }
@@ -472,7 +467,6 @@ width:324px;
 	form input[type=password]:hover, form input[type=password]:focus {
 	background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
 	}
-	
 form input[type=button] {
 }
 form input[type=number]:hover {
@@ -545,7 +539,10 @@ text-shadow:1px 1px 0px #f8f8f8;
 text-decoration: none!important;
 color:#e78f08!important;
 }
-
+#ui-datepicker-div {
+z-index:30!important;
+position:relative;
+}
 	textarea.tex-container {
 	display:block;
 	}

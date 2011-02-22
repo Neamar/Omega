@@ -216,7 +216,7 @@ height:40px;
 /*---------------------------------------------------------- 4. Title -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #content-title {
-background:#f1f1ef url('/public/css/images/title-r.jpg') top left scroll repeat-x; /*image r*/
+background:#494949 url('/public/css/images/title-r.jpg') top left scroll repeat-x; /*image r*/
 height:auto;
 
 }
