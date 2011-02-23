@@ -1,13 +1,4 @@
 <?php
-if(!isset($Code))
-{
-	$Code = 404;
-}
-if(!isset($Message))
-{
-	$Message = 'La page demandée est introuvable';
-}
-
 $Codes_EN = array(
 	404 => 'Not Found',
 	403 => 'Forbidden',
@@ -17,6 +8,41 @@ $Codes_FR = array(
 	404 => 'La page recherchée est introuvable',
 	403 => 'Vous n\'avez pas le droit d\'accéder à cettre ressource.'
 );
+
+if(!isset($Code))
+{
+	if(!isset($_GET['E']))
+	{
+		//Par défaut
+		$Code = 404;
+	}
+	else
+	{
+		//Récupérer le code par GET (ErrorDocument Apache)
+		$Code = $_GET['E'];
+	}
+}
+
+//Le code doit exister
+if(!in_array($Code, array_keys($Codes_EN)))
+{
+	$Code = 404;
+}
+
+//Gestion du message
+if(!isset($Message))
+{
+	$Message = $Codes_FR[$Code];
+}
+
+//Si on n'est pas chargé depuis le bootstrap, récupérer les composants de base.
+if(!class_exists('OO2FS'))
+{
+	$File = str_replace('\\', '/', __FILE__);
+	define('PATH', substr($File, 0, strrpos($File, '/')));
+	include PATH . '/lib/core/constants.php';
+	include PATH . '/lib/core/OO2FS.php';
+}
  
 header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 ?>
@@ -26,7 +52,9 @@ header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 	<meta charset=utf-8 /> 
 	<title>Erreur <?php echo $Code; ?></title> 
 	<link href="/public/css/head.css" rel="stylesheet" type="text/css" media="screen" /> 
-	<link href="/public/css/base.css" rel="stylesheet" type="text/css" media="screen" />  
+	<link href="/public/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/public/js/default.js"></script> 
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]--> 
@@ -114,7 +142,7 @@ include(OO2FS::viewHelperPath('Html'));
 $Actions = array(
 	'/' => array(
 		"Retourner à l'accueil du site",
-		'Je suis un grand garçon (ou une grande fille, pas de sexisme), je me débrouillerais seul(e) pour retrouver mon chemin'
+		'Je suis un grand garçon (ou une grande fille, pas de sexisme), je me débrouillerais seul(e) pour retrouver mon chemin.'
 	),
 	'/documentation/' => array(
 		"Aller chercher de l'aide dans la documentation",
