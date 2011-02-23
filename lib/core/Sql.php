@@ -317,6 +317,9 @@ class Sql
 	 */
 	public static function delete($Table,$ID,$And)
 	{
+		//La suppression de tuples n'est pas disponible pour ce projet.
+		//L'utilisateur de la base ne peut pas supprimer de tuples.
+		Debug::fail('Cf. Sql::delete pour détails.');
 		SQL::delete('DELETE FROM ' . $Table . ' WHERE ID=' . intval($ID) . ' ' . $And . ' LIMIT 1');
 	}
 	

@@ -152,15 +152,12 @@ class Thumbnail
 		$ThumbFilename = self::getThumbFileName($Filename);
 		
 		//Générer l'aperçu de la première page
-		if(1)
-		{
-			$ThumbFilename = str_replace('.png', '.gif', $ThumbFilename);
-			exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
-		}
-		else
-		{
-			exec('convert ' . escapeshellarg($Filename) . '[0] -thumbnail 150x212! ' . $ThumbFilename .  '>> /dev/null');
-		}
+		//exec('convert ' . escapeshellarg($Filename) . '[0] -thumbnail 150x212! ' . $ThumbFilename .  '>> /dev/null');
+		
+		//Générer un gif des premières pages :
+		$ThumbFilename = str_replace('.png', '.gif', $ThumbFilename);
+		exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
+
 	
 		return self::getRelativePath($ThumbFilename);
 	}

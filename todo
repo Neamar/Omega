@@ -26,3 +26,4 @@ Une section /documentation/aide-memoire avec des formules de base
 Gestion des alertes
 Faire un mini-tuto vidéo à la première connexion
 Transformer les <h2 class=""> en <h2 id="">
+Utiliser php5-imagick au lieu de convert
