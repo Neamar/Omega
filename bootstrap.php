@@ -39,8 +39,13 @@ define('PATH', substr($File, 0, strrpos($File, '/')));
 include PATH . '/lib/core/constants.php';
 include PATH . '/lib/core/OO2FS.php';
 include PATH . '/lib/core/Sql.php';
-
 session_start();
+
+//Sécuriser l'entrée des données
+function sanitize($Valeur) { return str_replace(array('.', '/'), '', $Valeur); }
+$_GET = array_map('sanitize', $_GET);
+
+
 
 
 /**
@@ -55,7 +60,7 @@ function __autoload($ClassName)
 	$Models = array('DbObject', 'Exercice', 'Membre', 'Correcteur', 'Eleve', 'Administrateur');
 
 	$FileName = $ClassName . '.php';
-	if(substr($ClassName, -18)=='AbstractController')
+	if(substr($ClassName, -18) == 'AbstractController')
 	{
 		return include LIB_PATH . '/abstractcontrollers/' . $FileName;
 	}
@@ -66,8 +71,22 @@ function __autoload($ClassName)
 
 	return include LIB_PATH . '/' . $FileName;
 }
+
+
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);
+
+/**
+ * Cette fonction permet de basculer sur une page d'erreur de type 404.
+ * On la définit tôt afin de pouvoir s'en servir dans toutes les situations.
+ * 
+ * @param string $Message
+ * @param int $Status le statut à renvoyer
+ */
+function go404($Message, $Status = 404)
+{
+	include(PATH . '/404.php');
+}
 
 
 /**
@@ -104,30 +123,38 @@ Sql::connect();
 //Paramètres fournis
 if(!isset($_GET['view'], $_GET['controller'], $_GET['module'], $_GET['data']))
 {
-	exit('Appel incorrect.');
+	go404('Cet appel est incorrect ; vous n\'utilisez probablement pas la méthode standard de consultation des pages.');
 }
 
 //Vérifier que le module existe et lui demander s'il accepte la demande.
 if(!is_file($ModulePath))
 {
-	exit("Le module n'existe pas !");
+	go404("Ce module n'existe pas !");
 }
 if(!include $ModulePath)
 {
-	exit('Le module refuse de s\'exécuter.');
+	go404('Ce module refuse de s\'exécuter pour vous. Inutile de lui faire du charme, il ne craquera pas.', 403);
 }
 
 //Vérifier l'existence du contrôleur.
 if(!is_file($ControllerPath))
 {
-	exit('Ce contrôleur n\'existe pas.');
+	go404("Ce contrôleur n'existe pas. Peut-être dans le futur... si vous avec une machine temporelle, n'hésitez pas à y aller (merci de me ramener le code source).");
 }
 
 //Charger le contrôleur :
 include $ControllerPath;
 if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName, '__call'))
 {
-	exit('Vue incorrecte : ' . $ViewName);
+	//Tester si un contrôleur existe avec ce nom
+	//Par exemple, /correcteur/points => /correcteur/points/
+	$ControleurPotentiel = OO2FS::controllerPath($_GET['view'], $_GET['module']);
+	if(is_file($ControleurPotentiel))
+	{
+		header('Location:' . URL . '/' . $_GET['module'] . '/' . $_GET['view'] . '/');
+	}
+	
+	go404('Impossible de charger cette page. Le module existe, le contrôleur existe... mais pas la page.');
 }
 
 

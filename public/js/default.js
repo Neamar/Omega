@@ -55,7 +55,7 @@ $(function()
 		Tables.each(function(){
 			var Table = $(this);
 			var NbColumn = Table.find('thead th').length;
-			Table.data('count-items', 1);
+			Table.data('count-items', 10);
 			function update()
 			{
 				$.ajax({
