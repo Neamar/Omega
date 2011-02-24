@@ -40,3 +40,6 @@ RewriteRule ^([^/]+)/([^/]+)/([^/]+)/(.+)$ bootstrap.php?module=$1&controller=$2
 # Protection des données
 #--------------------------------------------------
 RewriteRule ^data/.* - [L,F]
+
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php?E=403
