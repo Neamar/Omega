@@ -233,7 +233,7 @@ function ViewHelper_Html_eDevoir($markup='strong')
  */
 function initTypo()
 {
-	include PATH . '/lib/typo/Typo.php';
+	include PATH . '/lib/lib/typo/Typo.php';
 	//Typo::addOption(PARSE_MATH);
 
 	//Gestion de la documentation

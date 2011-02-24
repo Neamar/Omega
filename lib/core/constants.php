@@ -53,8 +53,17 @@ define('SALT', 'Omega_cy4:D#4|sa|P)\|BUjdxS~');
  */
 define('FAIL', -1);
 
-//-------------------------------------------
-//Constantes du site
+/**
+ * Clé publique pour l'utilisation de recaptcha
+ * @var string
+ */
+define('CAPTCHA_PUBLIC', '6LdI48ESAAAAAPyHPYB19hXs7mWxFUtnW4uTEHBp');
+
+/**
+ * Clé privée pour l'utilisation de recaptcha
+ * @var string
+ */
+define('CAPTCHA_PRIVATE', '6LdI48ESAAAAAPr31W2_tpx7J3ZTCm5rVwL-pRU3');
 
 /**
  * Nombre de points correspondant à 1€
