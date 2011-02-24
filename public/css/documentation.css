@@ -16,6 +16,9 @@ Couleur Grise
 .content-base #content a:hover { text-decoration: underline; color:#858585; border-bottom:1px dashed #999; text-decoration:none; text-shadow:1px 1px 0px #fff; } 
 
 .content-base {background:#f1f1ef url('/public/css/images/content-y.jpg') top left scroll repeat-y; /*image y*/}
+
+::selection{background:#999; color:#fff}
+::-moz-selection{background:#999; color:#fff}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------------- 1. Doc --------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
