@@ -5,7 +5,7 @@
 if(!isset($this->NoCreate))
 {
 	?>
-	<h2 class="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
+	<h2 id="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
 	<?php 
 	echo $this->Points_raiseWarning($this->getController()->getMembre());
 	?>
@@ -25,13 +25,13 @@ if(count($this->ExercicesActifs) > 0)
 		);
 	}
 	?>
-	<h2 class="membre-exercice-index-actif">Mes exercices actifs</h2>
+	<h2 id="membre-exercice-index-actif">Mes exercices actifs</h2>
 	<?php 
 	echo $this->Html_listAction($ExercicesActifs, '/eleve/exercice/index/__URL__', 'eleve');
 }
 ?>
 
-<h2 class="h2_logs">Actions sur vos exercices</h2>
+<h2 class="h2_logs" id="eleve-exercice-index-actions">Actions sur vos exercices</h2>
 <?php 
 echo $this->Html_ajaxTable('/eleve/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
 ?>

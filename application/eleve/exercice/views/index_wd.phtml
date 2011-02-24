@@ -61,7 +61,7 @@ $ListeActions = array(
 
 ?>
 
-<h2 class="h2_actions">Options de l'exercice</h2>
+<h2 class="h2_actions" id="eleve-exercice-index-options">Options de l'exercice</h2>
 
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
@@ -80,12 +80,12 @@ if($this->Exercice->isFaq())
 }
 ?>
 
-<h2 class="h2_exercice">Affichage de l'exercice</h2>
+<h2 class="h2_exercice" id="eleve-exercice-index-affichage">Affichage de l'exercice</h2>
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>
 
-<h2 class="h2_logs">Actions sur l'exercice</h2>
+<h2 class="h2_logs" id="eleve-exercice-index-actions">Actions sur l'exercice</h2>
 <?php 
 echo $this->Html_ajaxTable('/eleve/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
 ?>

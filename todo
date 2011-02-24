@@ -1,5 +1,4 @@
 Lorsqu'on consulte le corrigé d'un exercice non noté en tant qu'élève, mettre un lien vers la notation
-Transformer les <h2 class=""> en <h2 id="">
 
 En production :
 - ajouter captcha à l'inscription élève
