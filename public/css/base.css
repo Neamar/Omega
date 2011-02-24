@@ -500,6 +500,15 @@ caption {
 	font-size:1.1em;
 	word-spacing:2px;
 }
+.ui-datepicker-calendar thead tr th {
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
+border-radius: 0;
+padding:6px;
+font:bold 18px "Helvetica", "Arial", sans-serif;
+background: none;
+}
+
 th{
 background-color:#e6e6e6;
 padding:7px;
