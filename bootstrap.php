@@ -43,14 +43,16 @@ session_start();
 
 //Sécuriser l'entrée des données
 function sanitize($Valeur) { return str_replace(array('.', '/'), '', $Valeur); }
-$_GET = array_map('sanitize', $_GET);
-
+//$_GET = array_map('sanitize', $_GET) ne peut pas fonctionner car il échapperait aussi data.
+$_GET['view'] = sanitize($_GET['view']);
+$_GET['controller'] = sanitize($_GET['controller']);
+$_GET['module'] = sanitize($_GET['module']);
 
 
 
 /**
  * Définition de l'autoload
- *
+ *http://edevoir.com/correcteur/exercice/
  * @param string $ClassName la classe à charger dynamiquement.
  *
  * @return string le code retour de l'inclusion du fichier contenant la classe
