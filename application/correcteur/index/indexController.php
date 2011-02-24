@@ -48,6 +48,12 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function connexionAction()
 	{
+		//On ne s'inscrit pas si on est déjà connecté.
+		if(isset($_SESSION['Correcteur']))
+		{
+			$this->redirect('/correcteur/');
+		}
+		
 		$this->View->setTitle(
 			'Connexion correcteur',
 			'Connectez-vous pour accéder au site.'
@@ -68,6 +74,10 @@ class Correcteur_IndexController extends IndexAbstractController
 			if(!isset($_POST['email']) || !Validator::mail($_POST['email']))
 			{
 				$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
+			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
 			}
 			else
 			{

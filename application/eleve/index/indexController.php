@@ -104,6 +104,12 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function inscriptionAction()
 	{
+		//On ne s'inscrit pas si on est déjà connecté.
+		if(isset($_SESSION['Eleve']))
+		{
+			$this->redirect('/eleve/');
+		}
+		
 		$this->View->setTitle(
 			'Inscription élève',
 			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> est simple et rapide. Nous ne demandons qu'un minimum d'informations pour vous permettre de profiter rapidement des services offerts par le site."
@@ -125,6 +131,10 @@ class Eleve_IndexController extends IndexAbstractController
 			if(!isset($this->View->Classes[$_POST['classe']]))
 			{
 				$this->View->setMessage('error', "Sélectionnez une classe dans la liste déroulante.");
+			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
 			}
 			else
 			{

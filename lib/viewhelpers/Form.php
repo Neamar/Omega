@@ -463,6 +463,22 @@ function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected =
 }
 
 
+function ViewHelper_Form_captcha()
+{
+	if(!function_exists('recaptcha_get_html'))
+	{
+		include PATH . '/lib/lib/recaptcha/recaptchalib.php';
+	}
+	return '
+<script type="text/javascript">
+	var RecaptchaOptions = {
+		lang : "fr",
+		theme: "white"
+};
+</script>
+' . recaptcha_get_html(CAPTCHA_PUBLIC);
+}
+
 
 
 /**

@@ -39,6 +39,27 @@ class Validator
 	}
 	
 	/**
+	 * Valide le captcha fourni par l'utilisateur
+	 * 
+	 * @return bool
+	 */
+	public static function captcha()
+	{
+		if(!function_exists('recaptcha_get_html'))
+		{
+			include PATH . '/lib/lib/recaptcha/recaptchalib.php';
+		}
+		if(!isset($_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]))
+		{
+			return false;
+		}
+		else
+		{
+			return recaptcha_check_answer(CAPTCHA_PRIVATE, $_SERVER['REMOTE_ADDR'], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"])->is_valid;
+		}
+	}
+	
+	/**
 	 * Valide un compte paypal
 	 * 
 	 * @param $Compte le compte à tester
