@@ -610,7 +610,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	protected function compileTex($URL)
 	{
 		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
-		exec('/usr/bin/pdflatex -halt-on-error -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
+		exec('/usr/bin/pdflatex -halt-on-error -interaction=nonstopmode -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
 		
 		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
 		$Erreurs = array();
