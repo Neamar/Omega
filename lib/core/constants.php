@@ -39,7 +39,7 @@ define('DATA_PATH', PATH . '/data');
  * L'adresse sur laquelle le site est hébergé. Utile pour les redirections ou les liens qu'on doit placer en absolu.
  * @var string
  */
-define('URL', 'http://omega.localhost');
+define('URL', 'http://' . $_SERVER['SERVER_NAME']);
 
 /**
  * Le sel utilisé sur le site pour tous les hashages
