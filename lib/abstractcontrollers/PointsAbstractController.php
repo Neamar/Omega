@@ -93,6 +93,7 @@ abstract class PointsAbstractController extends AbstractController
 			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
 			$this->redirect('/' . $this->getModule() . '/points/');
 		}
+		
 		$DernierVirement = strtotime(
 			Sql::singleColumn(
 				'SELECT Date

@@ -237,6 +237,10 @@ class Documentation_IndexController extends AbstractController
 			{
 				$this->View->setMessage('error', 'Merci de sélectionner la raison du contact.');
 			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', 'Le captcha rentré est invalide ; merci de rééssayer.');
+			}
 			else
 			{
 				External::mail(
