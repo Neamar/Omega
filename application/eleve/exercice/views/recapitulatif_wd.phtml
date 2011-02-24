@@ -2,7 +2,7 @@
 Vérifiez la cohérence de vos données, puis cliquez sur le bouton «&nbsp;Envoyer aux correcteurs&nbsp;» disponible en bas de page.<br />
 En cas de souci, corrigez les problèmes avant d'envoyer.</p>
 
-<h2 class="eleve-exercice-recapitulatif-infos">Informations associées</h2>
+<h2 id="eleve-exercice-recapitulatif-infos">Informations associées</h2>
 <form method="post" action="" id="form_change-info">
 <?php 
 echo $this->Form_textareaLabelBr(
@@ -17,14 +17,14 @@ echo $this->Form_submit('change-info', 'Modifier ces informations, puis revenir 
 ?>
 </form>
 
-<h2 class="eleve-exercice-recapitulatif-fichiers">Ajout de fichiers</h2>
+<h2 id="eleve-exercice-recapitulatif-fichiers">Ajout de fichiers</h2>
 <p>Il manque des fichiers ?<br />
 <a href="/eleve/exercice/ajout/<?php echo $this->Exercice->Hash ?>">Retourner à l'ajout de fichiers.</a></p>
 
-<h2 class="h2_exercice">Exercice</h2>
+<h2 class="h2_exercice" id="eleve-exercice-recapitulatif-exercice">Exercice</h2>
 <?php echo $this->Exercice($this->Exercice); ?>
 
-<h2 class="eleve-exercice-recapitulatif-envoi">Envoyer aux correcteurs</h2>
+<h2 id="eleve-exercice-recapitulatif-envoi">Envoyer aux correcteurs</h2>
 <p>Vous avez tout vérifié ? Vous pouvez alors envoyer aux correcteurs. Notez cependant que vous ne <strong>pourrez plus</strong> changer les données une fois ce bouton cliqué !</p>
 <?php 
 echo $this->Form('recapitulatif-ok', 'resume', "Envoyer cet exercice aux correcteurs et attendre leurs offres.");

@@ -33,6 +33,8 @@ else
 	}
 	else
 	{
+		//Enregistre la page demandée pour rediriger dessus après.
+		$_SESSION['EleveComingFrom'] = $_SERVER['REQUEST_URI'];
 		Debug::redirect('/eleve/connexion', 302);
 	}
 }

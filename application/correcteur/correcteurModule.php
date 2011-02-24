@@ -33,6 +33,8 @@ else
 	}
 	else
 	{
+		//Enregistre la page demandée pour rediriger dessus après.
+		$_SESSION['CorrecteurComingFrom'] = $_SERVER['REQUEST_URI'];
 		Debug::redirect('/correcteur/connexion', 302);
 	}
 }

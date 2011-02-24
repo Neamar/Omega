@@ -91,22 +91,22 @@ function makeTable($Caption, array $Codes)
 }
 ?>
 
-<h2 class="documentation-index-tex-structures">Structures</h2>
+<h2 id="documentation-index-tex-structures">Structures</h2>
 <?php 
 echo makeTable('Constructions et structures usuelles', $Constructions);
 ?>
 
-<h2 class="documentation-index-tex-symboles">Symboles</h2>
+<h2 id="documentation-index-tex-symboles">Symboles</h2>
 <?php 
 echo makeTable('Courte liste de symbole', $Symboles);
 ?>
 
-<h2 class="documentation-index-tex-environnements">Environnements</h2>
+<h2 id="documentation-index-tex-environnements">Environnements</h2>
 <?php 
 echo makeTable('Environnements plus complexes', $Env);
 ?>
 
-<h2 class="documentation-index-tex-plus">Pour aller plus loin...</h2>
+<h2 id="documentation-index-tex-plus">Pour aller plus loin...</h2>
 <?php 
 $Liens = array(
 	'http://en.wikibooks.org/wiki/LaTeX/Mathematics' => 'Un manuel Wikibooks'

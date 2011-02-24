@@ -87,7 +87,11 @@ class Correcteur_IndexController extends IndexAbstractController
 					else
 					{
 						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
-						$this->redirect('/correcteur/');
+						
+						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion.
+						$URL = isset($_SESSION['CorrecteurComingFrom'])?$_SESSION['CorrecteurComingFrom']:'/correcteur/';
+						unset($_SESSION['CorrecteurComingFrom']);
+						$this->redirect($URL);
 					}
 				}
 			}

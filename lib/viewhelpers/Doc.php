@@ -53,7 +53,7 @@ function ViewHelper_Doc_anchor($section, $page, $caption = null)
 	{
 		$caption = $title;
 	}
-	return '<a href="' . ViewHelper_Doc_link($section, $page) . '" title="Accès à la documentation : ' . $title . '" class="doc-link">' . $caption . '</a>';
+	return '<a href="' . ViewHelper_Doc_link($section, $page) . '" title="Accès à la documentation : ' . $title . '" target="_blank" class="doc-link">' . $caption . '</a>';
 }
 
 /**

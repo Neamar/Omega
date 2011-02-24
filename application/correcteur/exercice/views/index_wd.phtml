@@ -26,7 +26,7 @@ $ListeActions = array(
 ?>
 
 <p class="infos">Une fois cet exercice réalisé et validé, vous serez payé <?php echo $this->Points($this->Exercice->priceAsked()) ?>.</p>
-<h2 class="h2_actions">Options de l'exercice</h2>
+<h2 class="h2_actions" id="correcteur-exercice-index-options">Options de l'exercice</h2>
 
 <?php
 $Actions = $ListeActions[$this->Exercice->Statut];
@@ -40,12 +40,12 @@ else
 }
 ?>
 
-<h2 class="h2_exercice">Affichage de l'exercice</h2>
+<h2 class="h2_exercice" id="correcteur-exercice-index-affichage">Affichage de l'exercice</h2>
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>
 
-<h2 class="h2_logs">Actions sur l'exercice</h2>
+<h2 class="h2_logs" id="correcteur-exercice-index-actions">Actions sur l'exercice</h2>
 <?php 
 echo $this->Html_ajaxTable('/correcteur/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Action'));
 ?>

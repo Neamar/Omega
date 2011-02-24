@@ -135,7 +135,7 @@ header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 <section id="content">
 
 
-<h2 class="h2_actions">Que faire maintenant ?</h2>
+<h2 class="h2_actions" id="index-404-actions">Que faire maintenant ?</h2>
 <?php 
 include(OO2FS::viewHelperPath('Html'));
 

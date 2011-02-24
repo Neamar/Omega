@@ -2,7 +2,7 @@
 echo $this->View_render($this->Membre);
 ?>
 
-<h2 class="administrateur-membre-eleve">Informations élève</h2>
+<h2 id="administrateur-membre-eleve">Informations élève</h2>
 <p class="intro">Cette section affiche les différentes informations de la personne demandée en tant qu'élève</p>
 
 <?php
@@ -21,7 +21,7 @@ foreach($Infos as $Caption => $Info)
 echo $this->Html_list($Liste);
 ?>
 
-<h2 class="h2_exercice">Exercices créés par l'élève</h2>
+<h2 class="h2_exercice" id="administrateur-membre-eleve-exercices">Exercices créés par l'élève</h2>
 <?php 
 $Liste = array();
 foreach($this->Exos as $Hash => $Contenu)
@@ -54,7 +54,7 @@ foreach($this->Exos as $Hash => $Contenu)
 echo $this->Html_listAction($Liste, '/administrateur/exercice/index/__URL__');
 ?>
 
-<h2 class="h2_actions">Actions disponibles</h2>
+<h2 class="h2_actions" id="administrateur-membre-eleve-actions">Actions disponibles</h2>
 <p class="intro">Cette section affiche les différentes actions possibles pour ce compte.</p>
 
 <?php

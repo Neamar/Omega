@@ -1,4 +1,4 @@
-<h2 class="correcteur-exercice-envoi-rappel">Rappels</h2>
+<h2 id="correcteur-exercice-envoi-rappel">Rappels</h2>
 <p>Avant de commencer à travailler, quelques rappels :</p>
 <?php 
 $Rappels = array();
@@ -14,13 +14,13 @@ echo $this->Html_list($Rappels);
 if(isset($this->Erreurs))
 {
 	?>
-	<h2 class="correcteur-exercice-envoi-erreurs"><span style="color:red";>Erreurs rencontrées</span></h2>
+	<h2 id="correcteur-exercice-envoi-erreurs"><span style="color:red";>Erreurs rencontrées</span></h2>
 	<p class="important">Des erreurs ont empêchées la création du document final. Vous trouverez plus d'infos en allant dans l'onglet console.</p>
 	<?php
 	echo $this->Html_list($this->Erreurs);
 }?>
 
-<h2 class="correcteur-exercice-envoi-redaction">Interface de rédaction</h2>
+<h2 id="correcteur-exercice-envoi-redaction">Interface de rédaction</h2>
 <div id="tabs">
 	<ul>
 		<li><a href="#envoi-texte">Source TeX</a></li>
@@ -82,7 +82,7 @@ if(isset($this->Erreurs))
 	</div>
 </div>
 
-<h2 class="h2_exercice">Exercice</h2>
+<h2 class="h2_exercice" id="correcteur-exercice-envoi-exercice">Exercice</h2>
 <?php 
 echo $this->Exercice($this->Exercice);
 ?>

@@ -1,10 +1,10 @@
-<h2 class="administrateur-index-index-dashboard">Tableau de bord administrateur</h2>
+<h2 id="administrateur-index-index-dashboard">Tableau de bord administrateur</h2>
 <p>D'abord, on flâne un peu en consultant ces statistiques inutiles. <a href="/admin/logs/">Plus de stats ?</a></p>
 <?php 
 echo $this->Html_ajaxTable('/administrateur/log/_global', 'Statistiques globales', array('Action', '24h', '48h', '7j'));
 ?>
 
-<h2 class="h2_actions">En attente</h2>
+<h2 class="h2_actions" id="administrateur-index-index-attente">En attente</h2>
 <?php 
 $Attentes = array();
 
@@ -55,7 +55,7 @@ else
 }
 ?>
 
-<h2 class="h2_actions">Liens</h2>
+<h2 class="h2_actions" id="administrateur-index-index-liens">Liens</h2>
 <?php 
 $Actions = array(
 	'membre/' => 'Rechercher un membre',
