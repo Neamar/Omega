@@ -23,7 +23,7 @@ foreach($this->Fichiers as $URL => $Infos)
 	}
 	elseif(in_array($Extension, $Documents))
 	{
-		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode($URL) . '&embedded=true" width="80%" height="780" style="border: none;"></iframe>';
+		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode(URL . '/public/exercices/' . $this->Exercice->LongHash . $URL) . '&embedded=true" width="80%" height="780" style="border: none;"></iframe>';
 	}
 	else
 	{
