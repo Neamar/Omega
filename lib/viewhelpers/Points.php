@@ -25,7 +25,7 @@
  */
 function ViewHelper_Points($Points, $Unite = 'point')
 {
-	return '<span class="pts">' . $Points . '&nbsp;' . $Unite . ($Points>1?'s':'') . '</span>';
+	return '<span class="pts">' . number_format($Points, 0, ',', ' ') . '&nbsp;' . $Unite . ($Points>1?'s':'') . '</span>';
 }
 
 /**
