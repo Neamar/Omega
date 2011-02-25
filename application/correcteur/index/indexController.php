@@ -75,10 +75,6 @@ class Correcteur_IndexController extends IndexAbstractController
 			{
 				$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 			}
-			elseif(!Validator::captcha())
-			{
-				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
-			}
 			else
 			{
 				$Correcteur = $this->logMe($_POST['email'], $_POST['password'], 'Correcteur');
@@ -221,6 +217,10 @@ ORDER BY Exercices.TimeoutEleve
 			elseif($_FILES['cv']['size'] > 3*1048576)
 			{
 				$this->View->setMessage('error', 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
+			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
 			}
 			else
 			{
