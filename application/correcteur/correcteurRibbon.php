@@ -29,8 +29,9 @@ if(!isset($_SESSION['Correcteur']))
 }
 else
 {
-	$Retour['left'] = '<a href="/correcteur/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" /></a> <a href="/correcteur/">' . $_SESSION['Correcteur']->Mail . '</a>';
-	$Retour['right'] = '<strong class="pts">' . $_SESSION['Correcteur']->getPoints() . ' pts</strong>. <a href="/correcteur/points/retrait">Retirer des points</a>';
+	$Retour['left'] = '<strong class="pts">' . $_SESSION['Correcteur']->getPoints() . ' pts</strong>. <a href="/correcteur/points/retrait">Retirer des points</a>';
+	$Retour['right'] = '<a href="/correcteur/">' . substr($_SESSION['Correcteur']->identite(), 0, 27) . '</a> <a href="/correcteur/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" title="Déconnexion" /></a>';
+	
 	$Retour['links'] = array(
 		'/correcteur/' => 'Accueil',
 		'/correcteur/liste' => 'Marché aux exercices',

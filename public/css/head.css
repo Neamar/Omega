@@ -99,8 +99,8 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
 		text-shadow: #000 1px 1px 1px;
 		}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
-			#ribbon-right a {border-bottom:1px solid #656565;}
-			#ribbon-right a:hover {border-bottom:1px dashed #7b7b7b;}
+			#ribbon-left a {border-bottom:1px solid #656565;}
+			#ribbon-left a:hover {border-bottom:1px dashed #7b7b7b;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 2. Logo --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
