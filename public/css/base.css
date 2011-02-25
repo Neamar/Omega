@@ -74,7 +74,7 @@ text-shadow:1px 1px 0px #fff;
 		font:bold 28px/100% "Helvetica", "Arial", sans-serif;
 	color:#676767;
 	text-shadow:1px 1px 0px #fff;
-	background-color:#f1f1f1;
+	background-color:#f1f1f1!important;
 		padding:16px 35px;
 		margin-top:50px;
 		margin-bottom:5px;
