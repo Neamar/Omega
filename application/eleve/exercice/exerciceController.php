@@ -459,7 +459,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
 				$Correcteur = $this->Exercice->getCorrecteur();
 				
-				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre");
+				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre par l'élève");
 				
 				//Dispatch de l'évènement REFUS
 				//Adjoindre le correcteur, qui n'est plus disponible sur l'exercice.
@@ -498,7 +498,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					Membre::getBanque()->credit($Prix, 'Stockage exercice', $this->Exercice);
 					
 					//Logger la bonne nouvelle
-					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre.");
+					$this->Exercice->setStatus('EN_COURS', $_SESSION['Eleve'], "Acceptation de l'offre par l'élève");
 
 					//Terminer la transaction
 					Sql::commit();

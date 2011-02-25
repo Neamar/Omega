@@ -320,14 +320,14 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 						Event::dispatch(Event::CORRECTEUR_EXERCICE_ENVOI, array('Exercice' => $this->Exercice));
 					
 						//Et rediriger
-						$this->View->setMessage('ok', 'Corrigé compilé avec succès.');
+						$this->View->setMessage('ok', 'Corrigé compilé avec succès et envoyé à l\'élève.');
 						$this->redirect('/correcteur/exercice/');
 					}
 					else
 					{
 						//Modifier le statut vers ENVOYE
 						Sql::start();
-						$this->Exercice->setStatus('REMBOURSE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé sans frais', array('Reclamation' => 'NON_PAYE'));
+						$this->Exercice->setStatus('REMBOURSE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé sans frais', array('Reclamation' => 'NON_PAYE', 'Remboursement' => '100'));
 						$Prix = $this->Exercice->pricePaid();
 						$this->Exercice->getEleve()->credit($Prix, 'Remboursement à titre gracieux de l\'exercice.', $this->Exercice);
 						Membre::getBanque()->debit($Prix, 'Remboursement gracieux', $this->Exercice);

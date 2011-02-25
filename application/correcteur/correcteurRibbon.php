@@ -33,7 +33,7 @@ else
 	$Retour['right'] = '<strong class="pts">' . $_SESSION['Correcteur']->getPoints() . ' pts</strong>. <a href="/correcteur/points/retrait">Retirer des points</a>';
 	$Retour['links'] = array(
 		'/correcteur/' => 'Accueil',
-		'/correcteur/liste' => 'Foire aux exercices',
+		'/correcteur/liste' => 'Marché aux exercices',
 		'/correcteur/exercice/' => 'Mes exercices',
 		'/correcteur/options/' => 'Options',
 	);

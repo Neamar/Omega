@@ -123,7 +123,7 @@ $(function()
 	//Clic sur le bouton aperçu
 	$('#apercu-exercice').click(function()
 	{
-		//Lancer la compilation en réucpérant le code et en affichant un message modal
+		//Lancer la compilation en récupérant le code et en affichant un message modal
 		IsCompiling = true;
 		Modal.html('<p>Veuillez patienter pendant la compilation du document...</p>')
 			.dialog('open')
@@ -137,8 +137,8 @@ $(function()
 				{
 					IsCompiling = false;
 					
-					//Mettre à jout l'onglet console
-					$('#pre_envoi-log').html(data);
+					//Mettre à jour l'onglet console
+					$('#pre_envoi-log').html('<p class="infos">Cet onglet affiche le résultat de la compilation</p> <pre>' + data + '</pre>');
 					
 					//Les liens vers des numéros de ligne.
 					$('#pre_envoi-log a.line-jump').click(function()
@@ -223,6 +223,7 @@ $(document).ready(function() {
 	
 	$('#ressource-upload').uploadify({
 		uploader : '/public/js/Uploadify/uploadify.swf',
+		buttonText: 'Envoyer un fichier',
 		script : '/correcteur/exercice/_ressource',
 		scriptData : {hash : LongHash, token : Token},
 		cancelImg : '/public/css/images/cancel.png',

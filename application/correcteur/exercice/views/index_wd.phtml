@@ -21,11 +21,18 @@ $ListeActions = array(
 	'ENVOYE' => 'Votre exercice a été transmis. Vous serez payé dès que l\'élève aura donné son accord (ou au plus tard le ' . date('d/m/y à H\h', strtotime($this->Exercice->Expiration) + DELAI_REMBOURSEMENT * 24 * 3600) . ')',
 	'TERMINE' => 'Votre correction a été acceptée et jugée comme valide. Vous avez dû être payé.',
 	'REFUSE' => 'Suite à une demande de l\'élève, nous vérifions la pertinence de votre travail. Vous serez informé de nos conclusions dès que possible. ' . $this->Doc_anchor('correcteur', 'qualite'),
-	'REMBOURSE' => 'Des failles dans votre travail nous ont conduit à rembourser l\'élève (en lui reversant <strong>' . $this->Exercice->Remboursement . '%</strong> du prix original). Que cela ne se reproduise plus ;)',
+	'REMBOURSE' => ($this->Exercice->Reclamation != 'NON_PAYE'?'Des failles dans votre travail nous ont conduit à rembourser l\'élève (en lui reversant <strong>' . $this->Exercice->Remboursement . '%</strong> du prix original). Que cela ne se reproduise plus ;)':'Vous avez envoyé le corrigé gratuitement.'),
 );
 ?>
 
-<p class="infos">Une fois cet exercice réalisé et validé, vous serez payé <?php echo $this->Points($this->Exercice->priceAsked()) ?>.</p>
+<?php 
+if(!in_array($this->Exercice->Statut, array('TERMINE', 'REFUSE', 'REMBOURSE')))
+{
+	?>
+	<p>Une fois cet exercice réalisé et validé, vous serez payé <?php echo $this->Points($this->Exercice->priceAsked()) ?>.</p>
+	<?php 
+}
+?>
 <h2 class="h2_actions" id="correcteur-exercice-index-options">Options de l'exercice</h2>
 
 <?php
