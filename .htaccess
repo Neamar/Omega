@@ -5,6 +5,7 @@ RewriteEngine on
 # Fichiers et répertoires directement accessibles
 #--------------------------------------------------
 RewriteRule ^public/.+ - [L]
+RewriteRule ^favicon.ico$ - [L]
 RewriteRule ^index\.htm$ - [L]
 
 #--------------------------------------------------
