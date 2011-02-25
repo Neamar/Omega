@@ -75,5 +75,6 @@ function sanitize($Valeur)
  */
 function lock($Reason)
 {
-	file_put_contents(DATA_PATH . '/.lock',$Reason); 
+	file_put_contents(DATA_PATH . '/.lock',$Reason);
+	exit();
 }

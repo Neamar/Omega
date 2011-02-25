@@ -139,6 +139,13 @@ header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 
 <h2 class="h2_actions" id="index-404-actions">Que faire maintenant ?</h2>
 <?php 
+if($Code == 500)
+{
+	?>
+	<p class="important">L'erreur 500 est la plus critique. Le site est probablement globalement indisponible ; merci de repasser plus tard.</p>
+	<?php 
+	exit();
+}
 include(OO2FS::viewHelperPath('Html'));
 
 $Actions = array(

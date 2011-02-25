@@ -51,6 +51,10 @@ $_GET['module'] = sanitize($_GET['module']);
 
 
 //Vérifier que le site n'est pas verrouillé (en maintenance, ou erreur critique)
+if(file_exists(DATA_PATH . '/.lock'))
+{
+	go404(file_get_contents(DATA_PATH . '/.lock'), 500);
+}
 
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);
