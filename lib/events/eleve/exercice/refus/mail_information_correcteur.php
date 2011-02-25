@@ -2,7 +2,7 @@
 $Datas = array(
 	'hash' => $Params['Exercice']->Hash,
 	'titre' => $Params['Exercice']->Titre,
-	'nom' => $Params['Correcteur']->Prenom . ' ' . $Params['Correcteur']->Nom,
+	'nom' => $Params['Correcteur']->identite(),
 	'prix' => $Params['Exercice']->priceAsked(),
 );
 

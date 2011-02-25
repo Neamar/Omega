@@ -7,7 +7,7 @@ echo $this->View_render($this->Membre);
 
 <?php
 $Infos = array(
-	'Identité' => $this->Correcteur->Prenom . ' ' . strtoupper($this->Correcteur->Nom),
+	'Identité' => $this->Correcteur->identite(),
 	'SIRET' => $this->Correcteur->Siret . '(' . ($this->Correcteur->SiretOK?'<span style="color:green">valide</span>':'<span style="color:red;">non validé</span>') . ')',
 	'Exercices attitrés' => $this->NbExos,
 	'Note moyenne' => $this->Note,
