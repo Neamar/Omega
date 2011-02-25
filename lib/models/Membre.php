@@ -169,28 +169,6 @@ class Membre extends DbObject
 	}
 	
 	/**
-	 * L'utilisateur peut-il effectuer un virement ?
-	 * (dépend de la date du dernier virement)
-	 * 
-	 * @return bool true si la personne peut effectuer un transfert
-	 */
-	public function isAbleToTransfer()
-	{
-		return ($this->getTransferAbility()<=time());
-	}
-	
-	/**
-	 * À quelle date l'utilisateur pourra-t-il demander un virement ?
-	 * 
-	 * @return int Le timestamp
-	 */
-	public function getTransferAbility()
-	{
-		//TODO Implémenter la date de virement
-		return 0;
-	}
-	
-	/**
 	 * Renvoie true si le membre est bloqué.
 	 * 
 	 * @return bool true si le membre est bloqué

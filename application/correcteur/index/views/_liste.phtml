@@ -18,7 +18,6 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	
 	//Créer un objet Exercice pour afficher la remarque de l'élève (le VH prend un exercice en paramètre, et pas un tableau)
 	//MOCHE
-	//TODO : gérer les mathématiques présentes dans la remarque (via MathJax.Hub.Queue(["Typeset", MathJax.Hub);)
 	$Cast = new Exercice();
 	$Cast->InfosEleve = $ExerciceDatas['InfosEleve'];
 	$Infos .= $this->Exercice_infos($Cast, 'Eleve');
