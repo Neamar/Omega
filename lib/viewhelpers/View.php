@@ -62,7 +62,7 @@ function ViewHelper_View_render(View $ViewObject, $DeltaH = 1)
 	}
 	
 	//Ajouter une classe au h2
-	$R = preg_replace('`<h([1-6])>`', '<h$1 class="' . $Page . '">', $R);
+	$R = preg_replace('`<h([1-6])>`', '<h$1 id="' . $Page . '">', $R);
 	
 	return $R;
 }
