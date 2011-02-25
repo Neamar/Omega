@@ -47,13 +47,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	 * 
 	 */
 	public function connexionAction()
-	{
-		//On ne s'inscrit pas si on est déjà connecté.
-		if(isset($_SESSION['Correcteur']))
-		{
-			$this->redirect('/correcteur/');
-		}
-		
+	{	
 		$this->View->setTitle(
 			'Connexion correcteur',
 			'Connectez-vous pour accéder au site.'
@@ -172,6 +166,12 @@ ORDER BY Exercices.TimeoutEleve
 	 */
 	public function inscriptionAction()
 	{
+		//On ne s'inscrit pas si on est déjà connecté.
+		if(isset($_SESSION['Correcteur']))
+		{
+			$this->redirect('/correcteur/');
+		}
+		
 		$this->View->setTitle(
 			'Inscription correcteur',
 			"L'inscription à <strong class=\"edevoir\"><span>e</span>Devoir</strong> en tant que correcteur demande de nombreuses informations, afin que nous puissions juger de vos compétences."

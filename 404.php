@@ -2,11 +2,13 @@
 $Codes_EN = array(
 	404 => 'Not Found',
 	403 => 'Forbidden',
+	500 => 'Internal Server Error'
 );
 
 $Codes_FR = array(
 	404 => 'La page recherchée est introuvable',
-	403 => 'Vous n\'avez pas le droit d\'accéder à cettre ressource.'
+	403 => 'Vous n\'avez pas le droit d\'accéder à cettre ressource.',
+	500 => 'Le serveur a rencontré un problème en traitant votre demande',
 );
 
 if(!isset($Code))

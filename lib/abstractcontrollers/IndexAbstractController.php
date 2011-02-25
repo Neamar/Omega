@@ -276,6 +276,22 @@ abstract class IndexAbstractController extends AbstractController
 			$Membre->setAndSave(array('Connexion' => SQL::getDate()));
 			$_SESSION['Membre']['Mail'] = $Membre->Mail;
 		}
+		else
+		{
+			if(!isset($_SESSION['NbTentativesConnexion']))
+			{
+				$_SESSION['NbTentativesConnexion'] = 0;
+			}
+			
+			$_SESSION['NbTentativesConnexion']++;
+			
+			if($_SESSION['NbTentativesConnexion'] >= 5)
+			{
+				//Bannir et remettre à 0 le compteur
+				Util::ban($_SERVER['REMOTE_ADDR'], 3600);
+				$_SESSION['NbTentativesConnexion'] = 0;
+			}
+		}
 		
 		return $Membre;
 	}

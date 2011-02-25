@@ -52,4 +52,21 @@ class Util
 	{
 		return sha1(SALT . $Pass);
 	}
+	
+	/**
+	 * Bannit une IP pour la durée indiquée
+	 * 
+	 * @param string $IP l'IP à bannir. Probablement $_SEVER['REMOTE_ADDR']
+	 * @param int $Delay le délai en secondes de banissement
+	 */
+	public static function ban($IP, $Delay)
+	{
+		Sql::insert(
+			'IP_ban',
+			array(
+				'_IP' => 'INET_ATON("' . Sql::escape($IP) . '")',
+				'Expiration' => Sql::getDate(time() + $Delay)
+			)
+		);
+	}
 }

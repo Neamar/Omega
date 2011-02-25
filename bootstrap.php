@@ -37,12 +37,12 @@
 $File = str_replace('\\', '/', __FILE__);
 define('PATH', substr($File, 0, strrpos($File, '/')));
 include PATH . '/lib/core/constants.php';
+include PATH . '/lib/core/functions.php';
 include PATH . '/lib/core/OO2FS.php';
 include PATH . '/lib/core/Sql.php';
 session_start();
 
-//Sécuriser l'entrée des données
-function sanitize($Valeur) { return str_replace(array('.', '/'), '', $Valeur); }
+
 //$_GET = array_map('sanitize', $_GET) ne peut pas fonctionner car il échapperait aussi data.
 $_GET['view'] = sanitize($_GET['view']);
 $_GET['controller'] = sanitize($_GET['controller']);
@@ -50,45 +50,10 @@ $_GET['module'] = sanitize($_GET['module']);
 
 
 
-/**
- * Définition de l'autoload
- *http://edevoir.com/correcteur/exercice/
- * @param string $ClassName la classe à charger dynamiquement.
- *
- * @return string le code retour de l'inclusion du fichier contenant la classe
- */
-function __autoload($ClassName)
-{
-	$Models = array('DbObject', 'Exercice', 'Membre', 'Correcteur', 'Eleve', 'Administrateur');
-
-	$FileName = $ClassName . '.php';
-	if(substr($ClassName, -18) == 'AbstractController')
-	{
-		return include LIB_PATH . '/abstractcontrollers/' . $FileName;
-	}
-	if(in_array($ClassName, $Models))
-	{
-		return  include LIB_PATH . '/models/' . $FileName;
-	}
-
-	return include LIB_PATH . '/' . $FileName;
-}
-
+//Vérifier que le site n'est pas verrouillé (en maintenance, ou erreur critique)
 
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('Debug::errHandler', -1);
-
-/**
- * Cette fonction permet de basculer sur une page d'erreur de type 404.
- * On la définit tôt afin de pouvoir s'en servir dans toutes les situations.
- * 
- * @param string $Message
- * @param int $Status le statut à renvoyer
- */
-function go404($Message, $Status = 404)
-{
-	include(PATH . '/404.php');
-}
 
 
 /**
@@ -107,6 +72,21 @@ $_GET['data']= AbstractController::buildData($_GET['data']);
 //Connecter le serveur SQL
 Sql::connect();
 
+//Vérifier que l'IP n'est pas bannie
+$Banni = Sql::singleColumn('SELECT Expiration FROM IP_ban WHERE IP = INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")', 'Expiration');
+if(!is_null($Banni))
+{
+	$Banni = strtotime($Banni);
+	if($Banni < time())
+	{
+		//Débannir
+		Sql::query('DELETE FROM IP_ban WHERE IP = INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '") LIMIT 1');
+	}
+	else
+	{
+		go404('Vous êtes banni !<br />Le serveur refuse de parler à ' . $_SERVER['REMOTE_ADDR'] . ' jusqu\'au ' . date('d/m/y à G\hi', $Banni) . '.', 500);
+	}
+}
 
 
 
