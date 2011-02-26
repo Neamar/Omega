@@ -1,9 +1,6 @@
+<h2 class="h2_exercice" id="correcteur-exercice-reservation-exercice">Exercice concerné</h2>
 <?php 
 echo $this->Exercice($this->Exercice);
-?>
-
-<?php 
-echo $this->Doc_box('correcteur', 'reservation', 'Besoin d\'aide pour compléter ce formulaire ?');
 ?>
 
 <form id="form_reservation-exercice" method="post" action="">
@@ -11,11 +8,14 @@ echo $this->Doc_box('correcteur', 'reservation', 'Besoin d\'aide pour compléter
 Si vous vous sentez prêt, indiquez votre prix puis cliquez sur valider. Faites-vite, vous n'êtes pas seul...</p>
 
 <h2 id="correcteur-exercice-reservation-couts">Coûts et délais</h2>
-<?php
+
+<?php 
+echo $this->Doc_box('correcteur', 'reservation', 'Besoin d\'aide pour compléter ce formulaire ?');
+
 //Prix
 echo $this->Form_pointsLabel(
 	'prix',
-	'Prix demandé',
+	'Prix demandé (en points)',
 	MAX_SOMME,
 	array(
 		'value' => 1000,
@@ -58,7 +58,10 @@ echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à h\h', 
 <?php
 echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires (facultatif)', array('class' => 'tex-container'));
 echo $this->Doc_inputBr('correcteur', 'champ_info');
+?>
 
-echo $this->Form_submit('reservation-exercice', "Réserver l'exercice");
+<h2 class="h2_infos" id="correcteur-exercice-reservation-envoi">Envoi de l'offre</h2>
+<?php
+echo $this->Form_submit('reservation-exercice', "Envoyer ma proposition");
 ?>
 </form>

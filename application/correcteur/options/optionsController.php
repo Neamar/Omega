@@ -106,7 +106,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			'Modifications des compétences',
 			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
 		);
-		$this->View->setSeelink('/correcteur/options/matieres_rapide', 'Faciliter la saisie des compétences ?');
+		$this->View->setSeelink('/correcteur/options/matieres_rapide', 'Formulaire simplifié');
 		
 		$this->View->addScript();
 		//Charger la liste des matières :
@@ -149,6 +149,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			if(!$this->View->issetMeta('message'))
 			{
 				$this->View->setMessage('ok', "Compétences enregistrées.");
+				$this->redirect('/correcteur/');
 			}
 		}
 		
@@ -208,6 +209,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			if(!$this->View->issetMeta('message'))
 			{
 				$this->View->setMessage('ok', "Compétences enregistrées.");
+				$this->redirect('/correcteur/');
 			}
 		}
 		
@@ -219,7 +221,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 		
 		if(!is_null($this->View->Competences) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage('warning', "Attention ! En utilisant cette page, vous perdrez aussi les <a href=\"/correcteur/options/matieres\">modifications plus avancées</a> que vous auriez pu apporter.");
+			$this->View->setMessage('warning', "Attention ! En utilisant cette page, vous perdrez toutes les <a href=\"/correcteur/options/matieres\">compétences précises</a> que vous auriez pu déjà définir.");
 		}
 	}
 }

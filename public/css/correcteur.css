@@ -11,7 +11,7 @@ Couleur Bleu
 3. Arianne 
 4. Classes sur content
 5. H2
-6. Formulaires avancés
+6. Formulaires avancÃ©s
 7. Tableau
 8.jQuery
 
@@ -94,8 +94,8 @@ color:#0e8fcb;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------- 5. Les H2 ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-h2#correcteur-index-index-foire {
-background:url('/public/css/images/h2-correcteur-index-index-foire.png') top left scroll no-repeat;
+h2#correcteur-index-index-marche {
+background:url('/public/css/images/h2-correcteur-index-index-marche.png') top left scroll no-repeat;
 }
 h2#correcteur-points-index {
 background:url('/public/css/images/h2-correcteur-points-index.png') top left scroll no-repeat;
@@ -103,8 +103,8 @@ background:url('/public/css/images/h2-correcteur-points-index.png') top left scr
 h2#correcteur-exercice-index {
 background:url('/public/css/images/h2-correcteur-exercice-index.png') top left scroll no-repeat;
 }
-h2#correcteur-index-liste-foire {
-background:url('/public/css/images/h2-correcteur-index-liste-foire.png') top left scroll no-repeat;
+h2#correcteur-index-liste-marche {
+background:url('/public/css/images/h2-correcteur-index-liste-marche.png') top left scroll no-repeat;
 }
 h2#correcteur-exercice-envoi-rappel {
 background:url('/public/css/images/h2-correcteur-exercice-envoi-rappel.png') top left scroll no-repeat;
@@ -175,7 +175,7 @@ padding:5px;
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------- 7. Tabelau ------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 7. Tableau ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 th{
 background-color:#bee0e7;
@@ -189,7 +189,7 @@ text-shadow:1px 1px 0px #e0faff;
 	border-left:3px solid #a8d3df;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-/*---------------------------------------------- 8. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
+/*---------------------------------------------- 8. AperÃ§u / Latex / jQuerry ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #envoi-apercu .pager{text-align:center;}
 #envoi-apercu .pdf-image{text-align:center;}

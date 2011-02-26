@@ -86,7 +86,7 @@ class Correcteur_IndexController extends IndexAbstractController
 					}
 					else
 					{
-						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints());
+						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints() . ' points.');
 						
 						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion.
 						$URL = isset($_SESSION['CorrecteurComingFrom'])?$_SESSION['CorrecteurComingFrom']:'/correcteur/';
@@ -99,7 +99,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Affiche la "foire aux exercices" du correcteur.
+	 * Affiche le "marché aux exercices" du correcteur.
 	 */
 	public function listeAction()
 	{
@@ -114,7 +114,7 @@ class Correcteur_IndexController extends IndexAbstractController
 	}
 	
 	/**
-	 * Affiche la "foire aux exercices" du correcteur (partie données).
+	 * Affiche le "marché aux exercices" du correcteur (partie données).
 	 * Doit faire des opérations relativement complexes sur les données, et ne passe donc pas par le helper ->json et sa vue associée.
 	 * Utilise une vue indépendante (_liste.phtml).
 	 */

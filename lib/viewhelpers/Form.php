@@ -232,7 +232,7 @@ function ViewHelper_Form_select($name, array $values, $selected=null, array $arg
  * Génère un radio avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
- * @param array $values Un tableau associatif : la valeur, l'étiquette.
+ * @param array $values Un tableau associatif : la valeur, l'étiquette.Si l'étiquette est un tableau, la première valeur est considérée comme le label, la seconde comme la suite.
  * @param string selected la valeur sélectionnée par défaut
  * 
  * @return string le code HTML demandé.
@@ -243,7 +243,15 @@ function ViewHelper_Form_radio($name, array $values, $selected=null, $id_prefix=
 	foreach($values as $value=>$caption)
 	{
 		//Ne pas utiliser VH_Form_label, qui ajoute ":" à la fin ce qui n'est pas nécessaire ici.
-		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $id_prefix . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $id_prefix . $value . '">' . $caption . "</label><br />\n";
+		$Return .= '<input type="radio" name="' . $name . '" value="' . $value . '" id="' . $id_prefix . $value . '"' . ($value===$selected?' checked="checked"':'') . ' /><label for="' . $id_prefix . $value . '">';
+		if(is_array($caption))
+		{
+			$Return .= $caption[0] . '</label>' . $caption[1] . "<br />\n";
+		}
+		else
+		{
+			$Return .= $caption . "</label><br />\n";
+		}
 	}
 	
 	return $Return;

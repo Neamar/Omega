@@ -7,10 +7,7 @@ $Rappels[] = 'Délai avant expiration : ' . $this->Date_countdown($this->Exercic
 $Rappels[] = 'Type de la demande : <strong>' . $this->Exercice->DetailsDemande . '</strong>. ' . $this->Doc_anchor('correcteur', 'demande_' . strtolower($this->Exercice->Demande));
 
 echo $this->Html_list($Rappels);
-?>
-<p>Vous retrouverez l'exercice au complet ci-dessous.</p>
 
-<?php 
 if(isset($this->Erreurs))
 {
 	?>
@@ -19,6 +16,11 @@ if(isset($this->Erreurs))
 	<?php
 	echo $this->Html_list($this->Erreurs);
 }?>
+
+<h2 class="h2_exercice" id="correcteur-exercice-envoi-exercice">Exercice</h2>
+<?php 
+echo $this->Exercice($this->Exercice);
+?>
 
 <h2 id="correcteur-exercice-envoi-redaction">Interface de rédaction</h2>
 <div id="tabs">
@@ -81,11 +83,6 @@ if(isset($this->Erreurs))
 		<p>À chaque fois que vous prévisualisez votre document, le texte est enregistré pour vous permettre de le consulter à nouveau si nécessaire.</p>
 	</div>
 </div>
-
-<h2 class="h2_exercice" id="correcteur-exercice-envoi-exercice">Exercice</h2>
-<?php 
-echo $this->Exercice($this->Exercice);
-?>
 
 <!-- Texte affiché pendant la compilation -->
 <div id="modal" title="Information">

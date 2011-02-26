@@ -30,8 +30,9 @@ if(!isset($_SESSION['Eleve']))
 }
 else
 {
-	$Retour['left'] = '<a href="/eleve/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" /></a> <a href="/eleve/">' . $_SESSION['Eleve']->Mail . '</a>';
-	$Retour['right'] = '<strong class="pts">' . $_SESSION['Eleve']->getPoints() . ' pts</strong>. <a href="/eleve/points/ajout">Ajouter des points</a>';
+	$Retour['left'] = '<strong class="pts">' . number_format($_SESSION['Eleve']->getPoints(), 0, ',', ' ') . ' pts</strong>. <a href="/eleve/points/ajout">Ajouter des points</a>';
+	$Retour['right'] = '<a href="/eleve/">' . $_SESSION['Eleve']->Mail . '</a><a href="/eleve/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" title="Déconnexion" /></a>';
+	
 	$Retour['links'] = array(
 		'/eleve/' => 'Accueil',
 		'/eleve/exercice/' => 'Mes exercices',

@@ -41,6 +41,14 @@ class Correcteur extends Membre
 	public $SiretOK;
 	
 	/**
+	 * Renvoie l'identité du correcteur
+	 */
+	public function identite()
+	{
+		return $this->Prenom . '&nbsp;' . $this->Nom;
+	}
+	
+	/**
 	 * Renvoie vrai si le correcteur peut réserver un exercice.
 	 * 
 	 * @return bool

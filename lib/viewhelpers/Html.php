@@ -130,21 +130,27 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
 		include OO2FS::viewHelperPath('Form');
 	}
 
-	$Quickjump = ViewHelper_Form_selectLabelBr(
-		'quickjump-' . $NbActions++,
-		'Liens rapides',
-		$Quickjump,
-		null,
-		array(
-			'id' => 'quickjump-' . $NbActions,
-			'class' => 'quickjump'
-		)
-	);
+	if(count($Quickjump) > 2)
+	{
+		$Quickjump = '<form method="get" action="" class="quickaction">'
+		. ViewHelper_Form_selectLabelBr(
+			'quickjump-' . $NbActions++,
+			'Liens rapides',
+			$Quickjump,
+			null,
+			array(
+				'id' => 'quickjump-' . $NbActions,
+				'class' => 'quickjump'
+			)
+		) . '</form>';
+	}
+	else
+	{
+		$Quickjump = '';
+	}
 	
 	$R = '<div class="list-actions">
-	<form method="get" action="" class="quickaction">
 	' . $Quickjump . '
-	</form>
 	' . ViewHelper_Html_list($Actions) . '
 	</div>';
 
