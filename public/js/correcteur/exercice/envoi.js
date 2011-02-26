@@ -138,7 +138,7 @@ $(function()
 					IsCompiling = false;
 					
 					//Mettre à jour l'onglet console
-					$('#pre_envoi-log').html('<p class="infos">Cet onglet affiche le résultat de la compilation</p> <pre>' + data + '</pre>');
+					$('#pre_envoi-log').html(data);
 					
 					//Les liens vers des numéros de ligne.
 					$('#pre_envoi-log a.line-jump').click(function()

@@ -556,7 +556,7 @@ position:relative;
 	cursor:pointer;
 }
 #pre_envoi-log {
-width:850px;
+word-wrap: break-word;
 }
 	textarea.tex-container {
 	display:block;
