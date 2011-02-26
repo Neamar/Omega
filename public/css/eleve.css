@@ -21,8 +21,8 @@ Couleur Orange
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 .content-base #content a { text-decoration: none; color: #e06c0e;}
 .content-base #content a:hover { text-decoration: underline; color:#7e3e13;}
-::selection{background:#e06c0e; color:#fff}
-::-moz-selection{background:#e06c0e; color:#fff}
+::selection{background:#e06c0e; color:#fff; text-shadow:none}
+::-moz-selection{background:#e06c0e; color:#fff; text-shadow:none}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 1. Ribbon --------------------------------------------------------------------------*/
@@ -109,7 +109,7 @@ color:#cb620e;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------- 5. Les H2 ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-h2:after {
+.countable {
 position:absolute;
 top:-2px;
 right:-11px;
@@ -117,6 +117,7 @@ line-height:60px;
 text-indent:45px;
 width:73px;
 height:64px;
+content:"1";
 background: url('/public/css/images/h2-avance.png') top no-repeat;
 z-index:40;/*laisse passer le doc-box a */
 }
@@ -132,25 +133,28 @@ background:url('/public/css/images/h2-eleve-points-index.png') top left scroll n
 }
 h2#eleve-exercice-creation-classe {
 background:url('/public/css/images/h2-eleve-exercice-creation-classe.png') top left scroll no-repeat;
-}
-	h2#eleve-exercice-creation-classe:after {content: "1";}
+}	
 h2#eleve-exercice-creation-envoi {
 background:url('/public/css/images/h2-eleve-exercice-creation-envoi.png') top left scroll no-repeat;
 }
-	h2#eleve-exercice-creation-envoi:after {content: "6";}
 h2#eleve-exercice-creation-date {
 background:url('/public/css/images/h2-eleve-exercice-creation-date.png') top left scroll no-repeat;
 }
-	h2#eleve-exercice-creation-date:after {content: "3";}
 h2#eleve-exercice-creation-demande {
 background:url('/public/css/images/h2-eleve-exercice-creation-demande.png') top left scroll no-repeat;
 }
+
+	/*h2#eleve-exercice-creation-classe:after {content: "1";}
 	h2#eleve-exercice-creation-demande:after {content: "2";}
 	h2#eleve-exercice-creation-options:after {content: "5";}
+	h2#eleve-exercice-creation-envoi:after {content: "6";}
+	h2#eleve-exercice-creation-date:after {content: "3";}
+	h2#eleve-exercice-creation-info:after {content: "4";}*/
+
+	
 h2#eleve-exercice-creation-info {
 background:url('/public/css/images/h2-eleve-exercice-creation-info.png') top left scroll no-repeat;
 }
-	h2#eleve-exercice-creation-info:after {content: "4";}
 h2#eleve-exercice-recapitulatif-envoi {
 background:url('/public/css/images/h2-eleve-exercice-recapitulatif-envoi.png') top left scroll no-repeat;
 }
