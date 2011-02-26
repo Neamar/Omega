@@ -150,6 +150,30 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', end
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
 	}
 	
+.matiere-box label { display:inline-block;}
+.matiere-box legend {
+	font-weight:bold;
+}
+#membre-exercice-index-actif + p {
+	margin-top:5px;
+	margin-left:5px;
+	}
+#membre-exercice-index-actif ~ ul {
+	border:1px dashed #83a8c2;
+	background-color:#f1f1ef;
+	margin-bottom:30px;
+	margin-left:10px;
+outline: 1px solid #fff;
+outline-offset: -2px;
+padding:5px;
+}
+#membre-exercice-index-actif ~ ul li {
+	list-style-image: url("/public/css/images/exercice-actif.png");
+}
+#membre-exercice-index-actif ~ ul li a {
+	font-weight:bold;
+}
+
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------- 7. Tabelau ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

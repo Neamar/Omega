@@ -66,6 +66,7 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	float:left;
 	}
 		#ribbon-left .deconnexion img {
+			margin-right:5px;
 		position:relative;
 		top:3px;
 		}
