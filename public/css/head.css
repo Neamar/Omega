@@ -30,6 +30,7 @@ line-height: 1.4;
 color:#2f2d29;
 background:#f1f1ef url('/public/css/images/repeat-top-x.jpg') top left scroll repeat-x; /*image r*/
 height:65%;
+counter-reset: creation;
 }
 
 html {font-size: 16px;height: 100%;}
@@ -65,10 +66,11 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	line-height:52px;
 	float:left;
 	}
-		#ribbon-left .deconnexion img {
-			margin-right:5px;
+		#ribbon-right .deconnexion {
+		margin-left:8px;
 		position:relative;
 		top:3px;
+			border-bottom:none!important;
 		}
 
 	#ribbon-center {
@@ -100,8 +102,8 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 		font:bold 16px/1.2em "Gill Sans MT", Georgia, serif;
 		text-shadow: #000 1px 1px 1px;
 		}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
-			#ribbon-left a {border-bottom:1px solid #656565;}
-			#ribbon-left a:hover {border-bottom:1px dashed #7b7b7b;}
+			#ribbon-left a, #ribbon-right a {border-bottom:1px solid #656565;}
+			#ribbon-left a:hover, ribbon-right a:hover {border-bottom:1px dashed #7b7b7b;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------- 2. Logo --------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
