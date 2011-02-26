@@ -552,6 +552,12 @@ color:#e78f08!important;
 z-index:30!important;
 position:relative;
 }
+#ressources ul li {
+	cursor:pointer;
+}
+#pre_envoi-log {
+width:850px;
+}
 	textarea.tex-container {
 	display:block;
 	}

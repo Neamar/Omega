@@ -117,8 +117,8 @@ line-height:60px;
 text-indent:45px;
 width:73px;
 height:64px;
-counter-increment: creation;
-content: counter(creation) "";
+counter-increment: etape;
+content: counter(etape) "";
 background: url('/public/css/images/h2-avance.png') top no-repeat;
 z-index:40;
 }
