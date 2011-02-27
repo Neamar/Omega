@@ -395,7 +395,7 @@ class View
 
 			return '<div id="content-message" class="' . $this->getMeta('messageClass')  . '">
 ' . $Content . '
-</div><!-- /content-message --->
+</div><!-- /content-message -->
 <div id="bottom-message" class="' . $this->getMeta('messageClass')  . '"></div>';
 		}
 		else
