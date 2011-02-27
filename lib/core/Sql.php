@@ -59,13 +59,27 @@ class Sql
 		if(is_array($Data))
 		{
 			$Data = array_map('mysql_real_escape_string', $Data);
+			$Data = array_map('Sql::escapeHtml', $Data);
 		}
 		else
 		{
 			$Data = mysql_real_escape_string($Data);
+			$Data = Sql::escapeHtml($Data);
 		}
 		
 		return $Data;
+	}
+	
+	/**
+	 * Échappe les entités HTML
+	 * 
+	 * @param string $Data
+	 * 
+	 * @return string $Data les données encodées
+	 */
+	public static function escapeHtml($Data)
+	{
+		return htmlspecialchars($Data, ENT_NOQUOTES, 'UTF-8');
 	}
 	
 	/**
