@@ -53,7 +53,7 @@ abstract class ExerciceAbstractController extends AbstractController
 
 			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
-				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
+				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
 				$this->redirect('/' . $this->getModule() . '/exercice/');
 			}
@@ -207,7 +207,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					Event::dispatch(Event::MEMBRE_FAQ_QUESTION, $Params);
 					
-					$this->View->setMessage('ok', 'Message enregistré.');
+					$this->View->setMessage('ok', 'Question enregistrée.');
 					unset($_POST['question']);
 					
 					$this->redirectExercice('/' . $this->getModule() . '/exercice/faq/');
@@ -258,7 +258,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					Event::dispatch(Event::MEMBRE_FAQ_REPONSE, $Params);
 					
-					$this->View->setMessage('ok', 'Message enregistré.');
+					$this->View->setMessage('ok', 'Réponse enregistrée.');
 					unset($_POST['question'], $_POST['reponse']);
 				}
 				else

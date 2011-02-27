@@ -180,23 +180,23 @@ abstract class IndexAbstractController extends AbstractController
 	{
 		if(!Validator::mail($Datas['email']))
 		{
-			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 		}
 		else if(External::isTrash($Datas['email']))
 		{
-			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
+			$this->View->setMessage('error', "Désolé, nous n'acceptons pas les adresses jetables.");
 		}
 		else if(empty($Datas['password']))
 		{
-			$this->View->setMessage("error", "Aucun mot de passe spécifié !");
+			$this->View->setMessage('error', "Aucun mot de passe spécifié !");
 		}
 		else if($Datas['password'] != $Datas['password_confirm'])
 		{
-			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+			$this->View->setMessage('error', "Les deux mots de passe ne concordent pas.");
 		}
 		else if(!isset($Datas['cgu']) || $Datas['cgu'] != 'on')
 		{
-			$this->View->setMessage("error", "Vous n'avez pas validé les conditions générales d'utilisation");
+			$this->View->setMessage('error', "Vous n'avez pas validé les conditions générales d'utilisation");
 		}
 		else
 		{
@@ -212,7 +212,7 @@ abstract class IndexAbstractController extends AbstractController
 			if(!Sql::insert('Membres', $ToInsert))
 			{
 				Sql::rollback();
-				$this->View->setMessage("error", "Impossible de vous enregistrer. L'adresse email est peut-être déjà réservée ?");
+				$this->View->setMessage('error', "Impossible de vous enregistrer. L'adresse email est peut-être déjà réservée ?");
 			}
 			else
 			{
@@ -222,12 +222,12 @@ abstract class IndexAbstractController extends AbstractController
 				if(!$this->createAccountSpecial($Datas))
 				{
 					Sql::rollback();
-					$this->View->setMessage("error", "Impossible de vous enregistrer. Veuillez réessayer plus tard.");
+					$this->View->setMessage('error', "Impossible de vous enregistrer. Veuillez réessayer plus tard.");
 				}
 				else 
 				{
 					Sql::commit();
-					$this->View->setMessage("info", "Vous êtes enregistré !");
+					$this->View->setMessage('info', "Vous êtes enregistré !");
 					return $ID ;
 				}
 			}

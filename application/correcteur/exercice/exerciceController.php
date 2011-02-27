@@ -88,7 +88,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		);
 		if($Deja['Vu'] > 0)
 		{
-			$this->View->setMessage("error", "Vous avez déjà fait une offre sur cet exercice.");
+			$this->View->setMessage('error', "Vous avez déjà fait une offre sur cet exercice.");
 			$this->redirect('/correcteur/liste');
 		}
 		
@@ -166,7 +166,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					)
 				);
 				
-				$this->View->setMessage('info', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
+				$this->View->setMessage('ok', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
 				
 				//Gestion de l'auto-accept.
 				if(!empty($this->Exercice->AutoAccept))

@@ -123,7 +123,7 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage('info', "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
+			$this->View->setMessage('warning', "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
 		}
 		
 		if(isset($_POST['inscription-eleve']))
