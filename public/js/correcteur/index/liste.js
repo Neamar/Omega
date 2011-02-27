@@ -12,6 +12,11 @@ function updateTex()
 	}
 	
 	Temps = DELAY / 1000;
+	
+	if($(this).find('td[colspan]').length == 1)
+	{
+		$(this).find('td[colspan]').html('Aucun exercice à afficher.<br /><a href="/correcteur/options/matieres">Définir mes compétences</a>.')
+	}
 }
 
 var Temps;
