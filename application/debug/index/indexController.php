@@ -249,7 +249,10 @@ class Debug_IndexController extends AbstractController
 			(
 				'/public/exercices',
 				'/data/CV',
-				'/data/logs'
+				'/data/logs',
+				'/data/ips',
+				'/data/ips/ban',
+				'/data/ips/try'
 			);
 			
 			foreach($Dirs as $Dir)

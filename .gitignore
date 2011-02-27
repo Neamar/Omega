@@ -2,5 +2,6 @@
 .buildpath
 .project
 data/logs/*
+data/logs/ips/*
 public/exercices/*
 data/CV/*

@@ -268,6 +268,9 @@ abstract class IndexAbstractController extends AbstractController
 			AND Type="' . Sql::escape($Type) . '"
 		)';
 		
+		//Fichier gardant en mémoire le nombre d'essais de connexion
+		$IPTryURL = DATA_PATH . '/ips/try/' . $_SERVER['REMOTE_ADDR'];
+		
 		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	
 		$_SESSION[$Type] = $Membre;
@@ -278,18 +281,32 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		else
 		{
-			if(!isset($_SESSION['NbTentativesConnexion']))
+			//Gestion du bannissement si trop d'essais
+			if(file_exists($IPTryURL))
 			{
-				$_SESSION['NbTentativesConnexion'] = 0;
+				$NbTentativesConnexion = unserialize(file_get_contents($IPTryURL));
 			}
 			
-			$_SESSION['NbTentativesConnexion']++;
 			
-			if($_SESSION['NbTentativesConnexion'] >= 5)
+			if(!isset($NbTentativesConnexion) || $NbTentativesConnexion['T'] < time())
+			{
+				$NbTentativesConnexion = array(
+					'E' => 0, //Nombre d'essais
+					'T' => time() + 3600, //Expiration
+				);
+			}
+			
+			$NbTentativesConnexion['E']++;
+			
+			if($NbTentativesConnexion['E'] >= 5)
 			{
 				//Bannir et remettre à 0 le compteur
 				Util::ban($_SERVER['REMOTE_ADDR'], 3600);
-				$_SESSION['NbTentativesConnexion'] = 0;
+				unlink($IPTryURL);
+			}
+			else
+			{
+				file_put_contents($IPTryURL, serialize($NbTentativesConnexion));
 			}
 		}
 		

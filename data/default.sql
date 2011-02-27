@@ -540,23 +540,6 @@ CREATE TABLE IF NOT EXISTS `Virements` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `IP_ban`
---
-
-CREATE TABLE `work`.`IP_ban` (
-`IP` INT( 10 ) UNSIGNED NOT NULL ,
-`Expiration` DATETIME NOT NULL ,
-PRIMARY KEY ( `IP` ) ,
-INDEX ( `Expiration` )
-) ENGINE = InnoDB COMMENT = 'IP bannies du site';
-
---
--- Contenu de la table `IP_ban`
---
-
-
-
---
 -- Contraintes pour les tables exportées
 --
 
