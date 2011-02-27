@@ -146,7 +146,7 @@ if($Code == 500)
 	<?php 
 	exit();
 }
-include(OO2FS::viewHelperPath('Html'));
+include OO2FS::viewHelperPath('Html');
 
 $Actions = array(
 	'/' => array(

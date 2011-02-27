@@ -49,7 +49,7 @@ function __autoload($ClassName)
  */
 function go404($Message, $Code = 404)
 {
-	include(PATH . '/404.php');
+	include PATH . '/404.php';
 }
 
 
@@ -75,7 +75,7 @@ function sanitize($Valeur)
  */
 function lock($Reason)
 {
-	file_put_contents(DATA_PATH . '/.lock',$Reason);
+	file_put_contents(DATA_PATH . '/.lock', $Reason);
 	External::mail('webmaster@edevoir.com', 'Faille critique du site', '<p>eDevoir a été fermé !</p><p>' . $Reason . '</p>');
 	exit();
 }

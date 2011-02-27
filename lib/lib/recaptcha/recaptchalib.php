@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 /*
  * This is a PHP library that handles calling reCAPTCHA.
  *    - Documentation and latest version
