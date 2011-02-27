@@ -72,7 +72,7 @@ abstract class PointsAbstractController extends AbstractController
 			Sql::start();
 			$this->getMembre()->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
 			Sql::commit();
-			$this->View->setMessage('info', 'Argent ajouté !');
+			$this->View->setMessage('ok', 'Argent ajouté !');
 		}
 	}
 	/**
@@ -90,7 +90,7 @@ abstract class PointsAbstractController extends AbstractController
 
 		if($this->getMembre()->getPoints() == 0)
 		{
-			$this->View->setMessage("error", 'Vous n\'avez aucun point à convertir.');
+			$this->View->setMessage('error', 'Vous n\'avez aucun point à convertir.');
 			$this->redirect('/' . $this->getModule() . '/points/');
 		}
 		
@@ -119,35 +119,35 @@ abstract class PointsAbstractController extends AbstractController
 			$_POST['retrait'] = intval($_POST['retrait']);
 			if(empty($_POST['password']))
 			{
-				$this->View->setMessage("error", "Pour des raisons de sécurité, vous devez fournir votre mot de passe.");
+				$this->View->setMessage('error', "Pour des raisons de sécurité, vous devez fournir votre mot de passe.");
 			}
 			elseif(!$this->getMembre()->comparePass(Util::hashPass($_POST['password'])))
 			{
-				$this->View->setMessage("error", "Mot de passe non valide.");
+				$this->View->setMessage('error', "Mot de passe non valide.");
 			}
 			elseif($_POST['retrait'] == 0)
 			{
-				$this->View->setMessage("error", "Valeur à retirer invalide ou nulle.");
+				$this->View->setMessage('error', "Valeur à retirer invalide ou nulle.");
 			}
 			elseif($_POST['retrait'] > $this->getMembre()->getPoints())
 			{
-				$this->View->setMessage("error", "Vous ne pouvez pas retirer autant !");
+				$this->View->setMessage('error', "Vous ne pouvez pas retirer autant !");
 			}
 			elseif(!isset($_POST['type']) || !in_array($_POST['type'], array('rib', 'paypal')))
 			{
-				$this->View->setMessage("error", "Choisissez le type de virement.");
+				$this->View->setMessage('error', "Choisissez le type de virement.");
 			}
 			elseif($_POST['type'] == 'rib' && !Validator::rib(array('codebanque' => $_POST['rib-banque'], 'codeguichet' => $_POST['rib-guichet'], 'nocompte' => $_POST['rib-compte'], 'key' => $_POST['rib-cle'])))
 			{
-				$this->View->setMessage("error", "Numéro de RIB invalide.");
+				$this->View->setMessage('error', "Numéro de RIB invalide.");
 			}
 			elseif($_POST['type'] == 'paypal' && !Validator::paypal($_POST['paypal']))
 			{
-				$this->View->setMessage("error", "Compte paypal invalide.");
+				$this->View->setMessage('error', "Compte paypal invalide.");
 			}
 			elseif($_POST['type'] == 'paypal' && strlen($_POST['paypal']) > 29)
 			{
-				$this->View->setMessage("error", "Votre adresse paypal ne doit pas dépasser 30 caractères.");
+				$this->View->setMessage('error', "Votre adresse paypal ne doit pas dépasser 30 caractères.");
 			}
 			else
 			{

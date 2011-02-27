@@ -69,6 +69,19 @@ $(function()
 	//Mettre en onglets
 	Tabs = $("#tabs").tabs();
 	
+	//Afficher le message "aperçu non à jour" quand nécessaire
+	$("#tabs").bind("tabsselect", function(e, ui){
+		if(ui.index == 1)
+		{
+			if($('#envoi-apercu').data('last-version') != editor.getCode())
+			{
+				$('#apercu-obsolete').show();
+			}
+		}
+	});
+	$('#apercu-obsolete').hide();
+	$('#envoi-apercu').data('last-version', $('#corrige').val());
+	
 	//Préparer les messages modaux
 	Modal = $('#modal').dialog({
 		autoOpen: false,
@@ -177,9 +190,11 @@ $(function()
 						}
 						R = '<p class="pager">' + Pages.join(' &ndash; ') + '</p>';
 						
-						//Mettre à jour l'onglet aperçu
-						$('#envoi-apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
-						$('#envoi-apercu .pager a').click(function(e)
+						//Mettre à jour l'onglet aperçu. Masquer le message comme quoi le contenu est obsolète.
+						$('#apercu-obsolete').hide();
+						$('#envoi-apercu').data('last-version', editor.getCode());
+						$('#apercu').html('<p>Cet aperçu ne correspond pas forcément au rendu exact. Vous pouvez <a href="' + PdfURL + '">télécharger le PDF</a>.</p>' + R + '<p id="pdf-image">' + pageImg(CurrentPage) + '</p>' + R);
+						$('#apercu .pager a').click(function(e)
 						{
 							$('#pdf-image').html(pageImg($(this).data('page')));
 							e.preventDefault();

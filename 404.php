@@ -114,14 +114,14 @@ header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 </ul> 
  
 </section> 
-</div><!-- /content-head ---> 
+</div><!-- /content-head --> 
  
 <div id="content-title"> 
 <section id="title"> 
 	<h1>Erreur <?php echo $Code; ?></h1> 
 	<p class="intro">Une erreur s'est produite, empêchant le chargement de la page.</p> 
 </section> 
-</div><!-- /content-title ---> 
+</div><!-- /content-title --> 
  
 <div id="main-message"> 
 <div id="content-message" class="error"> 
@@ -129,9 +129,9 @@ header('Status: ' . $Code. ' ' . $Codes_EN[$Code], true, $Code);
 	<p><?php echo $Message; ?></p> 
 </aside> 
  
-</div><!-- /content-message ---> 
+</div><!-- /content-message --> 
 <div id="bottom-message" class="error"></div> 
-</div><!-- /main-message ---> 
+</div><!-- /main-message --> 
  
 <div class="content-base"> 
 <section id="content">
@@ -146,7 +146,7 @@ if($Code == 500)
 	<?php 
 	exit();
 }
-include(OO2FS::viewHelperPath('Html'));
+include OO2FS::viewHelperPath('Html');
 
 $Actions = array(
 	'/' => array(

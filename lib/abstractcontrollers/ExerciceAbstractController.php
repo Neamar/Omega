@@ -53,7 +53,7 @@ abstract class ExerciceAbstractController extends AbstractController
 
 			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
-				$this->View->setMessage("warning", "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
+				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
 
 				$this->redirect('/' . $this->getModule() . '/exercice/');
 			}
@@ -207,7 +207,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					Event::dispatch(Event::MEMBRE_FAQ_QUESTION, $Params);
 					
-					$this->View->setMessage('ok', 'Message enregistré.');
+					$this->View->setMessage('ok', 'Question enregistrée.');
 					unset($_POST['question']);
 					
 					$this->redirectExercice('/' . $this->getModule() . '/exercice/faq/');
@@ -258,7 +258,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					Event::dispatch(Event::MEMBRE_FAQ_REPONSE, $Params);
 					
-					$this->View->setMessage('ok', 'Message enregistré.');
+					$this->View->setMessage('ok', 'Réponse enregistrée.');
 					unset($_POST['question'], $_POST['reponse']);
 				}
 				else
@@ -325,5 +325,25 @@ abstract class ExerciceAbstractController extends AbstractController
 		}
 		
 		$this->redirect($URL . $this->Exercice->Hash);
+	}
+	
+	/**
+	 * Crée un token à partir de l'identifiant du correcteur, du bigfish et de l'exercice.
+	 * Ce token permet de valider l'envoi d'une ressource sur un exercice sans utiliser le système de sessions.
+	 * 
+	 * En effet, uploadify passe par un fichier flash qui ne fait pas transiter les identifiants de sessions.
+	 * Autrement dit, il n'est pas possible d'avoir _ressource dans le "dossier" de l'exercice (/correcteur/exercice/_ressource/HASH)
+	 * puisque le script redirigerait automatiquement vers la page de connexion. 
+	 * Afin de pallier au problème, la page _ressource est rendue disponible hors connexion.
+	 * Cependant, elle demande un token justifiant que la personne derrière est habilitée à l'envoi de données sur cet exercice.
+	 * 
+	 * @param int $ID l'identifiant du membre
+	 * @param string $Hash le hash de l'exercice (en version longue)
+	 * 
+	 * @return string un token.
+	 */
+	protected function computeToken($ID, $Hash)
+	{
+		return sha1(substr($Hash, -10) . SALT . ($ID * ord($Hash[0])));
 	}
 }

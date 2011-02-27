@@ -206,7 +206,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						)
 					);
 					
-					$this->View->setMessage('info', 'Votre exercice a bien été ajouté');
+					$this->View->setMessage('ok', 'Votre exercice a bien été ajouté');
 					
 					$this->redirect('/eleve/exercice/ajout/' . $ToInsert['Hash']);
 				}
@@ -230,8 +230,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			"Cette page permet d'ajouter des fichiers à l'exercice avant de l'envoyer aux correcteurs."
 		);
 		
+		//Multiupload javascript
 		$this->View->addScript('/public/js/jquery-multiupload.min.js');
-		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
+		
+		//Et le script de la page pour mettre tout ça en forme
+		$this->View->addScript();
 		
 		//Le nombre maximum de fichiers que l'on pourra envoyer depuis la page :
 		//10, ou moins si la limite des 25 est proche.
@@ -512,7 +515,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					);
 
 					//Et rediriger.
-					$this->View->setMessage('info', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...", 'eleve/acceptation');
+					$this->View->setMessage('ok', "Paiement effectué avec succès. Le correcteur va maintenant commencer à travailler...", 'eleve/acceptation');
 					$this->redirect('/eleve/');					
 				}
 			}
@@ -548,7 +551,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				$this->Exercice->closeExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
 				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE, array('Exercice' => $this->Exercice));
 				
-				$this->View->setMessage('info', 'La note a été enregistrée, l\'exercice est terminé.');
+				$this->View->setMessage('ok', 'La note a été enregistrée, l\'exercice est terminé.');
 				$this->redirectExercice();
 			}
 		}
@@ -665,7 +668,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						)
 					);
 					
-					$this->View->setMessage('ok', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
+					$this->View->setMessage('info', 'Contestation envoyée. Vous serez informé par mail du dénouement de cette affaire...');
 					$this->redirectExercice();
 				}
 			}//fin empty(message)

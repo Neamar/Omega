@@ -149,7 +149,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			if(!$this->View->issetMeta('message'))
 			{
 				$this->View->setMessage('ok', "Compétences enregistrées.");
-				$this->redirect('/correcteur/');
+				$this->redirect('/correcteur/liste');
 			}
 		}
 		
@@ -209,7 +209,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 			if(!$this->View->issetMeta('message'))
 			{
 				$this->View->setMessage('ok', "Compétences enregistrées.");
-				$this->redirect('/correcteur/');
+				$this->redirect('/correcteur/liste');
 			}
 		}
 		

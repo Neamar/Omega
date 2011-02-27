@@ -272,7 +272,7 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 			elseif(in_array($Extension, $Documents))
 			{
 				$FichierURL = URL . $BaseURL . $Datas['URL'];
-				$Fichier = 'http://docs.google.com/viewer?embedded=true&url=' . urlencode($FichierURL) . '&iframe=true&width=90%&height=90%';
+				$Fichier = 'http://docs.google.com/viewer?embedded=true&amp;url=' . urlencode($FichierURL) . '&amp;iframe=true&amp;width=90%25&amp;height=90%25';
 			}
 			else
 			{

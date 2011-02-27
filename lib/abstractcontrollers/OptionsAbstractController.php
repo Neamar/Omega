@@ -39,15 +39,15 @@ abstract class OptionsAbstractController extends AbstractController
 	{
 		if(!Validator::mail($Datas['email']))
 		{
-			$this->View->setMessage("error", "L'adresse email spécifiée est incorrecte.");
+			$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 		}
 		else if(External::isTrash($Datas['email']))
 		{
-			$this->View->setMessage("error", "Désolé, nous n'acceptons pas les adresses jetables.");
+			$this->View->setMessage('error', "Désolé, nous n'acceptons pas les adresses jetables.");
 		}
 		else if(!empty($Datas['password_confirm']) && $Datas['password'] != $Datas['password_confirm'])
 		{
-			$this->View->setMessage("error", "Les deux mots de passe ne concordent pas.");
+			$this->View->setMessage('error', "Les deux mots de passe ne concordent pas.");
 		}
 		else
 		{

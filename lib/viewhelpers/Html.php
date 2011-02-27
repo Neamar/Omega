@@ -25,12 +25,12 @@
  */
 function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
 {
-	if(count($Items)==0)
+	if(count($Items) == 0)
 	{
 		return '';
 	}
 
-	$R = '<' . $Type . ($Id==''?'':' id="' . $Id . '"') . ">\n";
+	$R = '<' . $Type . ($Id ==''?'':' id="' . $Id . '"') . ">\n";
 	foreach($Items as $Item)
 	{
 		$R .= '	<li>' . $Item . "</li>\n";
@@ -134,7 +134,7 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
 	{
 		$Quickjump = '<form method="get" action="" class="quickaction">'
 		. ViewHelper_Form_selectLabelBr(
-			'quickjump-' . $NbActions++,
+			'quickjump-' . $NbActions,
 			'Liens rapides',
 			$Quickjump,
 			null,
@@ -143,6 +143,8 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
 				'class' => 'quickjump'
 			)
 		) . '</form>';
+		
+		 $NbActions++;
 	}
 	else
 	{

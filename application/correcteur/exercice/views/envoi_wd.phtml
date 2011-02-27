@@ -52,8 +52,11 @@ echo $this->Exercice($this->Exercice);
 		</form>
 	</div>
 	<div id="envoi-apercu">
-		<p>Aucune information disponible pour l'instant.
-		<a href="#" class="compiler">Prévisualiser maintenant</a>.</p>
+		<p class="infos" id="apercu-obsolete">Cet aperçu n'est pas à jour. <a href="#" class="compiler">Recompiler le document</a></p>
+		<div id="apercu">
+			<p>Aucune information disponible pour l'instant.
+			<a href="#" class="compiler">Prévisualiser maintenant</a>.</p>
+		</div>
 	</div>
 	<div id="envoi-log">
 		<p class="infos">Cet onglet affiche le résultat de la compilation.</p>

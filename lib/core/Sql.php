@@ -59,13 +59,27 @@ class Sql
 		if(is_array($Data))
 		{
 			$Data = array_map('mysql_real_escape_string', $Data);
+			$Data = array_map('Sql::escapeHtml', $Data);
 		}
 		else
 		{
 			$Data = mysql_real_escape_string($Data);
+			$Data = Sql::escapeHtml($Data);
 		}
 		
 		return $Data;
+	}
+	
+	/**
+	 * Échappe les entités HTML
+	 * 
+	 * @param string $Data
+	 * 
+	 * @return string $Data les données encodées
+	 */
+	public static function escapeHtml($Data)
+	{
+		return htmlspecialchars($Data, ENT_NOQUOTES, 'UTF-8');
 	}
 	
 	/**
@@ -116,8 +130,28 @@ class Sql
 	 */
 	public static function commit()
 	{
-		self::$isTransaction = false;
-		return self::query('COMMIT');
+		//Vérifier que de l'argent n'est pas apparu de nulle part.
+		$Points = Sql::singleColumn(
+			'SELECT SUM(Points) AS Points
+			FROM
+			(
+				SELECT SUM(Points) AS Points FROM Membres
+				UNION
+				SELECT -SUM(Delta) AS Points FROM Logs
+			) V',
+			'Points'
+		);
+		
+		if($Points == 0)
+		{
+			self::$isTransaction = false;
+			return self::query('COMMIT');
+		}
+		else
+		{
+			self::rollback();
+			lock('Problème de cohérence relationnelle.');
+		}
 	}
 	
 	/**

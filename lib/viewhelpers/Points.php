@@ -23,7 +23,7 @@
  * 
  * @return une structure HTML
  */
-function ViewHelper_Points($Points, $Unite = 'point')
+function ViewHelper_points($Points, $Unite = 'point')
 {
 	return '<span class="pts">' . number_format($Points, 0, ',', ' ') . '&nbsp;' . $Unite . ($Points>1?'s':'') . '</span>';
 }

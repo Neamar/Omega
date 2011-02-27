@@ -77,14 +77,13 @@ $_GET['data']= AbstractController::buildData($_GET['data']);
 Sql::connect();
 
 //Vérifier que l'IP n'est pas bannie
-$Banni = Sql::singleColumn('SELECT Expiration FROM IP_ban WHERE IP = INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")', 'Expiration');
-if(!is_null($Banni))
+if(file_exists(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']))
 {
-	$Banni = strtotime($Banni);
+	$Banni = file_get_contents(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
 	if($Banni < time())
 	{
 		//Débannir
-		Sql::query('DELETE FROM IP_ban WHERE IP = INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '") LIMIT 1');
+		unlink(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
 	}
 	else
 	{

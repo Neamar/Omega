@@ -181,7 +181,7 @@ ORDER BY Exercices.TimeoutEleve
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Correcteur_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage('info', "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
+			$this->View->setMessage('warning', "Vous êtes déjà inscrit ! Votre demande est en cours de traitement.", 'correcteur/validation');
 		}
 		
 		if(isset($_POST['inscription-correcteur']))

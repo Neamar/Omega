@@ -273,7 +273,7 @@ $(function()
 				NotLoaded = false;
 			}
 			
-			Apercu.html(jTextArea.val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2'));
+			Apercu.html(jTextArea.val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2').replace(/\</g, '&lt;').replace(/\>/g, '&gt;'));
 			if(jTextArea.val().indexOf('$') != -1)
 			{
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, Apercu[0]]);

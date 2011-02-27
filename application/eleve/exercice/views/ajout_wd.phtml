@@ -22,9 +22,9 @@ if($this->NbFiles > 0)
 ?>
 <div id="tabs">
 	<ul>
-		<li><a href="#ajout-noscript">Ajout sans Javascript</a></li>
 		<li><a href="#ajout-basique">Ajout basique</a></li>
-		<li><a href="#ajout-complet">Ajout complet</a></li>
+		<li><a href="#ajout-noscript">Ajout sans Javascript</a></li>
+		<!--<li><a href="#ajout-complet">Ajout complet</a></li>  -->
 	</ul>
 	<div id="ajout-noscript">
 		<p>Cet onglet sert aux personnes ayant désactivées Javascript.<br />
@@ -61,9 +61,9 @@ for($i=0; $i < $this->NbFilesUpload; $i++)
 		?>
 		</form>
 	</div>
-	<div id="ajout-basique">
-		<p>Cet onglet sert aux personnes ne disposant pas de Flash ou étant bloquée par un pare-feu.<br />
-		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>
+	<div id="ajout-basique" style="display:none">
+		<!-- <p>Cet onglet sert aux personnes ne disposant pas de Flash ou étant bloquée par un pare-feu.<br />
+		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>-->
 
 		<p>Cet onglet permet d'ajouter des fichiers à votre exercice.<br />
 		Sélectionnez vos fichiers un par un, puis cliquez sur Envoyer.</p>
@@ -91,8 +91,9 @@ else
 		?>
 		</form>
 	</div>
-	<div id="ajout-complet">
+<!-- 	<div id="ajout-complet">
 		<p>Non implémenté pour l'instant.</p>
 	</div>
+-->
 </div>
 

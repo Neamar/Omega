@@ -61,12 +61,6 @@ class Util
 	 */
 	public static function ban($IP, $Delay)
 	{
-		Sql::insert(
-			'IP_ban',
-			array(
-				'_IP' => 'INET_ATON("' . Sql::escape($IP) . '")',
-				'Expiration' => Sql::getDate(time() + $Delay)
-			)
-		);
+		file_put_contents(DATA_PATH . '/ips/bans/' . $IP, time() + $Delay);
 	}
 }

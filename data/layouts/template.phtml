@@ -41,7 +41,7 @@
 ?>
 
 </section>
-</div><!-- /content-head --->
+</div><!-- /content-head -->
 
 <div id="content-title">
 <section id="title">
@@ -50,7 +50,7 @@
 	echo $this->renderTitle()
 ?>
 </section>
-</div><!-- /content-title --->
+</div><!-- /content-title -->
 
 <div id="main-message">
 <?php 
@@ -58,7 +58,7 @@
 	echo $this->renderMessage()
 ?>
 
-</div><!-- /main-message --->
+</div><!-- /main-message -->
 
 <div class="content-base">
 <section id="content">	
@@ -67,6 +67,17 @@
 	$this->renderContent();
 ?>
 </section>
-</div><!-- /content-base --->
+</div><!-- /content-base -->
+
+<footer>
+	<ul>
+		<li><a href="/contact.htm">Nous contacter</a></li>
+		<li><a href="/legal.htm">Mentions légales</a></li>
+		<li><a href="/cgu.htm">CGU</a></li>
+		<li><a href="/cgv.htm">CGV</a></li>
+		<li><a href="/confidentialite.htm">Confidentialité</a></li>
+	</ul>
+	<p class="copyright">© <?php echo $this->Html_eDevoir(); ?></p>
+</footer>
 </body>
 </html>
