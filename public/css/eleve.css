@@ -206,3 +206,6 @@ text-shadow:1px 1px 0px #ffefe0;
 	td:first-child {
 	border-left:3px solid #dfc8a8;
 	}
+.ui-state-disabled:hover a {
+color:#e78f08!important;
+}

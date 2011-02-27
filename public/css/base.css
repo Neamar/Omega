@@ -546,7 +546,6 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 .ui-state-disabled:hover a {
 text-decoration: none!important;
-color:#e78f08!important;
 }
 #ui-datepicker-div {
 z-index:30!important;

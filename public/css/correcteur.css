@@ -193,3 +193,7 @@ text-shadow:1px 1px 0px #e0faff;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #envoi-apercu .pager{text-align:center;}
 #envoi-apercu .pdf-image{text-align:center;}
+
+.ui-state-disabled:hover a {
+color:#5a8da0!important;
+}
