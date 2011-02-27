@@ -230,8 +230,11 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			"Cette page permet d'ajouter des fichiers à l'exercice avant de l'envoyer aux correcteurs."
 		);
 		
+		//Multiupload javascript
 		$this->View->addScript('/public/js/jquery-multiupload.min.js');
-		$this->View->addScript('/public/js/eleve/exercice/ajout.js');
+		
+		//Et le script de la page pour mettre tout ça en forme
+		$this->View->addScript();
 		
 		//Le nombre maximum de fichiers que l'on pourra envoyer depuis la page :
 		//10, ou moins si la limite des 25 est proche.
