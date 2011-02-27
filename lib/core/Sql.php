@@ -130,8 +130,28 @@ class Sql
 	 */
 	public static function commit()
 	{
-		self::$isTransaction = false;
-		return self::query('COMMIT');
+		//Vérifier que de l'argent n'est pas apparu de nulle part.
+		$Points = Sql::singleColumn(
+			'SELECT SUM(Points) AS Points
+			FROM
+			(
+				SELECT SUM(Points) AS Points FROM Membres
+				UNION
+				SELECT -SUM(Delta) AS Points FROM Logs
+			) V',
+			'Points'
+		);
+		
+		if($Points == 0)
+		{
+			self::$isTransaction = false;
+			return self::query('COMMIT');
+		}
+		else
+		{
+			self::rollback();
+			lock('Problème de cohérence relationnelle.');
+		}
 	}
 	
 	/**

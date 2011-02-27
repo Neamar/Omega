@@ -76,5 +76,6 @@ function sanitize($Valeur)
 function lock($Reason)
 {
 	file_put_contents(DATA_PATH . '/.lock',$Reason);
+	External::mail('webmaster@edevoir.com', 'Faille critique du site', '<p>eDevoir a été fermé !</p><p>' . $Reason . '</p>');
 	exit();
 }
