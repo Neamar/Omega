@@ -121,7 +121,7 @@ height:64px;
 counter-increment: etape;
 content: counter(etape) "";
 background: url('/public/css/images/spr_content.png') top no-repeat; /*h2-avance.png*/
-background-position:0 -1286px;
+background-position:0 -1306px;
 z-index:40;
 }
 

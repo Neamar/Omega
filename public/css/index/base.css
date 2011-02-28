@@ -96,8 +96,8 @@ header hgroup#logo{
 position:absolute;
 top:87px;
 background: url('/public/images/index/logo.png') top left scroll no-repeat;
-width:249px;
-height:54px;
+width:258px;
+height:57px;
 z-index:15;
 }
 	header:before{

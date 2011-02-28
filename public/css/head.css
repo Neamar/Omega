@@ -128,7 +128,7 @@ height:103px; /*taille du bloc*/
 		top:25px;
 		left:inherit;
 		width:261px;
-		height:58px;
+		height:61px;
 		background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*Gris - logo-doc.png*/
 		background-position:-739px -339px;
 		z-index:10;
@@ -350,7 +350,7 @@ background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
 	}
 aside.message.info:before {
 background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-info.png*/
-background-position:-41px -40px;
+background-position:-41px -39px;
 }
 
 /* -- Classe attention / .warning -- */		
