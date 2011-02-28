@@ -90,25 +90,32 @@ text-shadow:1px 1px 0px #fff;
 
 /* - - TITRE H2 - - */
 .content-base h2 {
-background:url('/public/css/images/h2.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2.png*/
+background-position:0 -1240px;
 }
 h2.h2_options {
-background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_actions.png*/
+background-position:0 -240px;
 }
 h2.h2_logs {
-background:url('/public/css/images/h2-logs.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-logs.png*/
+background-position:0 -140px;
 }
 h2.membre-exercice-index-actif {
-background:url('/public/css/images/h2-membre-exercice-index-actif.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-membre-exercice-index-actif.png*/
+background-position:0 -90px;
 }
 h2.h2_actions {
-background:url('/public/css/images/h2-h2_actions.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*2-h2_actions.png*/
+background-position:0 -240px;
 }
 h2.h2_exercice {
-background:url('/public/css/images/h2-h2_exercice.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_exercice.png*/
+background-position:0 -190px;
 }
 h2.correcteur-options-compte, h2.eleve-options-compte {
-background:url('/public/css/images/h2-eleve-options-compte.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-options-compte.png*/
+background-position:0 -340px;
 }
 
 /* Supression des marges dans les listes */
@@ -356,7 +363,8 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 p.faq-ajout-reponse a {
 	display:inline-block;
 	margin-bottom:7px;
-	background:url('/public/css/images/more2.png') left scroll no-repeat;
+	background:url('/public/css/images/spr_content.png') left scroll no-repeat; /*more2.png*/
+	background-position:0 -25px;
 	padding-left:20px;
 	color:#248c1f!important;
 }
@@ -449,7 +457,8 @@ font-size:14px;
 
 /* - - Les types Particuliers - - */
 form input[type=email] {
-background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
+background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*email-d.png*/
+background-position:3px 2px;
 padding-left:26px;
 width:324px;
 }
@@ -458,10 +467,12 @@ background:#fff url('/public/css/images/pts-input.png') center left scroll no-re
 padding-left:18px;
 }
 form input[type=email]:hover, form input[type=email]:focus {
-background:#fff url('/public/css/images/email-d.png') center left scroll no-repeat;
+background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*email-d.png*/
+background-position:3px 2px;
 }
 form input[type=password] {
-background:#fff url('/public/css/images/pass-d.png') center left scroll no-repeat;
+background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pass-d.png*/
+background-position:5px -68px;
 padding-left:26px;
 width:324px;
 }
@@ -540,7 +551,8 @@ text-shadow:1px 1px 0px #f8f8f8;
 		}
 			td.ajax-more a{
 				padding-left:20px;
-			background:url('/public/css/images/more2.png') center left scroll no-repeat;
+			background:url('/public/css/images/spr_content.png') center left scroll no-repeat; /*more2.png*/
+			background-position:0 -25px;
 			}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------- 7 jQuerry -------------------------------------------------------------------------*/
