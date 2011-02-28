@@ -1,30 +1,42 @@
-<?php 
-echo $this->Doc_box('correcteur', 'options', 'Besoin d\'aide pour compléter ce formulaire ?');
+<form method="post" action="" id="form_edition-compte">
+<p class="infos">Avant de pouvoir modifier votre compte, veuillez marquer votre mot de passe.</p>
+<?php
+echo $this->Form_inputLabelBr(
+	'password',
+	'Votre mot de passe actuel',
+	array(
+		'type' => 'password',
+		'required' => 'required'
+	)
+);
 ?>
 
-<form method="post" action="" id="form_edition-compte">
+<p>Modifiez ici vos informations, puis cliquer sur le bouton d'envoi</p>
+
 <?php
+echo $this->Doc_box('correcteur', 'options', 'Besoin d\'aide pour compléter ce formulaire ?');
+
 echo $this->Form_inputLabelBr(
 	'email',
 	'Votre adresse mail',
 	array(
 		'type' => 'email',
-		'placeholder' => 'nom@fai.fr',
+		'placeholder' => 'nom@domaine.fr',
 		'value' => $_SESSION['Correcteur']->Mail,
 		'required' => 'required'
 	)
 );
 
 echo $this->Form_inputLabelBr(
-	'password',
-	'Votre mot de passe (laissez vide pour conserver le mot de passe actuel)',
+	'new-password',
+	'Nouveau mot de passe (laissez vide pour conserver le mot de passe actuel)',
 	array(
 		'type' => 'password',
 	)
 );
 echo $this->Form_inputLabelBr(
-	'password_confirm',
-	'Confirmez votre mot de passe',
+	'new-password-confirm',
+	'Confirmez votre nouveau mot de passe',
 	array(
 		'type' => 'password',
 	)

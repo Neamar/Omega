@@ -287,3 +287,26 @@ $(function()
 		return Item;
 	});
 });
+
+/**
+ * Liens #anchor sur les <h2> ou <h3>
+ */
+$(function() {
+	$('#content h2[id], #content h3[id]').each(function()
+	{
+		var jThis = $(this);
+		var jThisA;
+		jThis.append(' <a href="#' + jThis.attr('id') + '" title="Permalink vers «&nbsp;' + jThis.text() + '&nbsp;»" class="a_h2-anchor">#</a>');
+		
+		jThisA = jThis.find('a.a_h2-anchor');
+		jThisA.hide();
+		
+		jThis.hover(function()
+		{
+			jThis.find('a.a_h2-anchor').show(250);
+		}, function()
+		{
+			jThis.find('a.a_h2-anchor').hide();
+		}); 
+	});
+})

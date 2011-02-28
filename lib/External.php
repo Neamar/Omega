@@ -73,8 +73,7 @@ class External
 		// En-têtes additionnels
 		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
 
-		//register_shutdown_function("mail",$to, $subject, $message, $headers);
-		file_put_contents(DATA_PATH . '/logs/last_mail', $to . "\n" . $subject . "\n\n" . $message);
+		register_shutdown_function("mail", $to, $subject, $message, $headers);
 
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
 	}

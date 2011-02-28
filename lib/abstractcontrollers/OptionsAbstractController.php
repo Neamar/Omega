@@ -37,7 +37,11 @@ abstract class OptionsAbstractController extends AbstractController
 	 */
 	protected function editAccount(array $Datas, Membre $Base)
 	{
-		if(!Validator::mail($Datas['email']))
+		if(!$this->getMembre()->comparePass(Util::hashPass($_POST['password'])))
+		{
+			$this->View->setMessage('error', "Mot de passe invalide ; impossible de modifier votre compte.");
+		}
+		else if(!Validator::mail($Datas['email']))
 		{
 			$this->View->setMessage('error', "L'adresse email spécifiée est incorrecte.");
 		}
@@ -45,7 +49,7 @@ abstract class OptionsAbstractController extends AbstractController
 		{
 			$this->View->setMessage('error', "Désolé, nous n'acceptons pas les adresses jetables.");
 		}
-		else if(!empty($Datas['password_confirm']) && $Datas['password'] != $Datas['password_confirm'])
+		else if(!empty($Datas['new-password-confirm']) && $Datas['new-password'] != $Datas['new-password-confirm'])
 		{
 			$this->View->setMessage('error', "Les deux mots de passe ne concordent pas.");
 		}
@@ -58,9 +62,9 @@ abstract class OptionsAbstractController extends AbstractController
 				$ToUpdate['Mail'] = $Datas['email'];
 			}
 			
-			if(!empty($Datas['password_confirm']))
+			if(!empty($Datas['new-password-confirm']))
 			{
-				$ToUpdate['Pass'] = sha1(SALT . $Datas['password']);
+				$ToUpdate['Pass'] = sha1(SALT . $Datas['new-password']);
 			}
 			
 			return $ToUpdate;
