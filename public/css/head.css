@@ -58,7 +58,8 @@ margin:auto;
 height:59px; /*taille du bloc*/
 width:1000px;
 margin:auto;
-background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repeat; /*CONTENT*/
+background:#1b1c1d url('/public/css/images/spr_head.png') top left scroll no-repeat; /*CONTENT ribbon.jpg */
+background-position:0 -160px;
 }
 
 	#ribbon-left {
@@ -94,8 +95,9 @@ background:#1b1c1d url('/public/css/images/ribbon.jpg') top left scroll no-repea
 	margin-top:-25px;
 	}
 	.pts {
-	background:url('/public/css/images/pts.png') left scroll no-repeat;
-	padding-left:16px;
+	background:url('/public/css/images/spr_head.png') bottom left scroll no-repeat; /*pts.png*/
+	background-position:-578px -372px;
+	padding-left:20px;
 	}
 		#ribbon, #ribbon a{
 		color:#acacac;
@@ -115,7 +117,8 @@ height:103px; /*taille du bloc*/
 	position:absolute;
 	top:0;
 	left:31px;
-	background:url('/public/css/images/logo-fond.png') top left scroll no-repeat; /*image*/
+	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*logo-fond.png*/
+	background-position:0 -280px;
 	width:376px;
 	height:103px;
 	z-index:5;
@@ -126,7 +129,8 @@ height:103px; /*taille du bloc*/
 		left:inherit;
 		width:261px;
 		height:58px;
-		background:url('/public/css/images/logo-doc.png') top left scroll no-repeat; /*Gris*/
+		background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*Gris - logo-doc.png*/
+		background-position:-739px -339px;
 		z-index:10;
 		}
 	
@@ -156,7 +160,8 @@ height:103px; /*taille du bloc*/
 					#logo-liens ul li a:hover {
 					color:#fff;
 					text-shadow:1px 1px 0px #737373;
-					background:url('/public/css/images/menu_top-d-l.png') top left scroll no-repeat;
+					background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*menu_top-d-l.png */
+					background-position:-631px -339px;
 					}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 					
 				#logo-liens ul li a span {
@@ -173,7 +178,8 @@ height:103px; /*taille du bloc*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/	
 #ariane {
 clear:both;
-background:url('/public/css/images/ariane.jpg') top left scroll no-repeat; /*CONTENT*/
+background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*CONTENT - ariane.jpg*/
+background-position:0 -230px;
 height:40px;
 width:930px; /*débordement 1000*/
 }
@@ -182,8 +188,8 @@ width:930px; /*débordement 1000*/
 float:right;
 }
 	#ariane .see-link a{
-	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
-	background-position:0px 0px;
+	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*image see-link2.png*/
+	background-position:-653px -339px;
 	height:18px;
 	display:block;
 	padding-left:22px;
@@ -205,7 +211,7 @@ height:40px;
 	padding-right:40px;
 	display:block;
 	padding-top:15px;
-	background:url('/public/css/images/ariane-sep.png') right bottom scroll no-repeat;
+	background:url('/public/css/images/ariane-sep.png') right bottom scroll no-repeat; /*ariane-sep.png*/
 	}
 		#ariane ul li a {
 		color:#484848;
@@ -231,7 +237,8 @@ height:auto;
 #title {
 clear:both;
 background-color: #CCCCCC;
-background:url('/public/css/images/title.jpg') top left scroll no-repeat; /*CONTENT*/
+background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*CONTENT - title.jpg*/
+background-position:0 0;
 padding-top:5px;
 width:931px; /*débordement (1000*/
 margin:auto;
