@@ -21,6 +21,13 @@ if(isset($_SESSION['Administrateur']))
 {
 	//Mettre à jour l'objet :
 	$_SESSION['Administrateur'] = Administrateur::load($_SESSION['Administrateur']->ID);
+	
+	//Le module administrateur permet potentiellement de faire des actions extrêmement dangereuses.
+	//Pour éviter tout problème, on vérifie à chaque chargement de pages l'intégrité du site.
+	if(!Sql::constraint())
+	{
+		lock('Problème de cohérence relationnelle détectée chez les administrateurs ; site verrouillé pour vérifications.');
+	}
 	return true;
 }
 else 

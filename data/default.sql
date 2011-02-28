@@ -540,6 +540,25 @@ CREATE TABLE IF NOT EXISTS `Virements` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `Entrees`
+--
+
+CREATE TABLE IF NOT EXISTS `Entrees` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Membre` int(11) NOT NULL,
+  `Montant` int(11) NOT NULL,
+  `Date` datetime NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Membre` (`Membre`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des entrées d''argent' AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `Entrees`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Contraintes pour les tables exportées
 --
 
@@ -647,6 +666,12 @@ ALTER TABLE `Membres_Mails`
 ALTER TABLE `Virements`
   ADD CONSTRAINT `Virements_ibfk_1` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`);
   
+--
+-- Contraintes pour la table `Entrees`
+--
+ALTER TABLE `Entrees`
+  ADD CONSTRAINT `Entrees_ibfk_1` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`);
+ 
 --
 -- Valeurs par défaut
 --
