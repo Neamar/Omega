@@ -27,8 +27,16 @@ foreach($this->RawDatas as $Hash => $ExerciceDatas)
 	if(!is_null($ExerciceDatas['Sujets']))
 	{
 		$ExerciceDatas['Sujets'] = explode(',', $ExerciceDatas['Sujets']);
-		$ExerciceDatas['Sujets'] = array_flip($ExerciceDatas['Sujets']);
-		$Infos .= $this->Exercice_thumbs($ExerciceDatas['Sujets'], $ExerciceDatas['LongHash']);
+		$ExerciceDatas['SujetsThumbs'] = explode(',', $ExerciceDatas['SujetsThumbs']);
+		$Sujets = array();
+		for($i = 0; $i < count($ExerciceDatas['Sujets']); $i++)
+		{
+			$Sujets[$ExerciceDatas['SujetsThumbs'][$i]] = array(
+				'URL' => $ExerciceDatas['Sujets'][$i],
+				'alt' => 'Fichier #' . $i
+			);
+		}
+		$Infos .= $this->Exercice_thumbs($Sujets, $ExerciceDatas['LongHash']);
 	}
 	
 	$Infos .= '</p>';

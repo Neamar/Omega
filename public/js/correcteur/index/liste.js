@@ -1,21 +1,26 @@
 /**
- * Gestion dynamique des mathématiques enchâssées
+ * Gestion dynamique des mathématiques enchâssées et des lightbox
  * 
  * Le tableau récupère du contenu en permanence, qui peut contenir du LaTeX.
  * Il faut donc les mettre en forme.
  */
 function updateTex()
 {
+	var jThis = $(this);
 	if(window.MathJax)
 	{
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this]);
 	}
 	
+	jThis.find("a[rel^='prettyPhoto']").prettyPhoto({
+		theme: 'light_rounded'
+	});
+	
 	Temps = DELAY / 1000;
 	
-	if($(this).find('td[colspan]').length == 1)
+	if(jThis.find('td[colspan]').length == 1)
 	{
-		$(this).find('td[colspan]').html('Aucun exercice à afficher.<br /><a href="/correcteur/options/matieres">Définir mes compétences</a>.')
+		jThis.find('td[colspan]').html('Aucun exercice à afficher.<br /><a href="/correcteur/options/matieres">Définir mes compétences</a>.')
 	}
 }
 

@@ -17,7 +17,16 @@ echo $this->Form_submit('change-info', 'Modifier ces informations, puis revenir 
 ?>
 </form>
 
-<h2 id="eleve-exercice-recapitulatif-fichiers">Ajout de fichiers</h2>
+<h2 id="eleve-exercice-recapitulatif-fichiers">Fichiers</h2>
+<?php
+$Fichiers = array(); 
+$BaseURL = '/public/exercices/' . $this->Exercice->LongHash;
+foreach($this->Fichiers as $URL => $Infos)
+{
+	$Fichiers[] = $this->Exercice_lightbox($BaseURL . $URL, 'fichiers', $Infos['NomUpload']);
+}
+echo $this->Html_list($Fichiers);
+?>
 <p>Il manque des fichiers ?<br />
 <a href="/eleve/exercice/ajout/<?php echo $this->Exercice->Hash ?>">Retourner à l'ajout de fichiers.</a></p>
 

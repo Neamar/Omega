@@ -257,29 +257,11 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 	$Hash = substr($LongHash, 0, HASH_LENGTH);
 	$BaseURL = '/public/exercices/' . $LongHash;
 	
-	$Images = array('jpg', 'jpeg', 'png', 'gif');
-	$Documents = array('pdf', 'doc', 'docx', 'odt');
-
 	foreach($Thumbs as $URL => $Datas)
 	{
 		if(is_array($Datas))
 		{
-			$Extension = Util::extension($Datas['URL']);
-			if(in_array($Extension, $Images))
-			{
-				$Fichier = $BaseURL . $Datas['URL'];
-			}
-			elseif(in_array($Extension, $Documents))
-			{
-				$FichierURL = URL . $BaseURL . $Datas['URL'];
-				$Fichier = 'http://docs.google.com/viewer?embedded=true&amp;url=' . urlencode($FichierURL) . '&amp;iframe=true&amp;width=90%25&amp;height=90%25';
-			}
-			else
-			{
-				$Fichier = $BaseURL . $Datas['URL'];
-			}
-			
-			$R .= '	<a href="' . $Fichier . '" rel="prettyPhoto[' . $Hash . ']"><img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" /></a>';
+			$R .= '	' . ViewHelper_Exercice_lightbox($BaseURL . $Datas['URL'], $Hash, '<img src="' . $BaseURL . $URL . '" alt="' . $Datas['alt'] . '" />');	
 		}
 		else
 		{
@@ -288,4 +270,24 @@ function ViewHelper_Exercice_thumbs(array $Thumbs, $LongHash)
 	}
 	
 	return $R;
+}
+
+/**
+ * Renvoie un lien de type "lightbox" (un clic agrandit)
+ * 
+ * @param string $URL le fichier à afficher dans le lightbox
+ * @param string $GalleryID l'identifiant de la galerie. Tous les lightbox partageant le même identifiant affichent un bouton "suivant" et "précédent".
+ * @param string $Content le contenu de la "miniature".
+ */
+function ViewHelper_Exercice_lightbox($URL, $GalleryID, $Content)
+{
+	$Documents = array('pdf', 'doc', 'docx', 'odt');
+	
+	$Extension = Util::extension($URL);
+	if(in_array($Extension, $Documents))
+	{
+		$URL = 'http://docs.google.com/viewer?embedded=true&amp;url=' . urlencode($URL) . '&amp;iframe=true&amp;width=90%25&amp;height=90%25';
+	}
+	
+	return '<a href="' . $URL . '" rel="prettyPhoto[' . $GalleryID . ']">' . $Content . '</a>';
 }

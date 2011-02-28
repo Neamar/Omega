@@ -132,7 +132,9 @@ SELECT
 	Exercices.InfosEleve,
 	Classes.DetailsClasse,
 	Demandes.DetailsDemande,
-	GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
+	GROUP_CONCAT(Exercices_Fichiers.ThumbURL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS SujetsThumbs,
+	GROUP_CONCAT(Exercices_Fichiers.URL ORDER BY Exercices_Fichiers.ID SEPARATOR ",") AS Sujets
+	
 FROM Exercices
 NATURAL JOIN Classes
 NATURAL JOIN Demandes

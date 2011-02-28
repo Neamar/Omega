@@ -104,7 +104,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->Type = 'Eleve';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
-		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
+		$this->fichiersActionWd();
 	}
 	
 	/**
@@ -119,7 +119,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->Type = 'Correcteur';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('CORRIGE'));
 		
-		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
+		$this->fichiersActionWd();
 	}
 	
 	/**
@@ -140,7 +140,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		$this->View->Type = 'Reclamation';
 		$this->View->Fichiers = $this->Exercice->getFiles(array('RECLAMATION'));
 		
-		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
+		$this->fichiersActionWd();
 	}
 	
 	public function zipActionWd()
@@ -150,7 +150,6 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		//Charger les fichiers nécessaires :
 		$this->View->Files = $this->Exercice->getSortedFiles();
-		var_dump($this->View->Files);
 		//Et dévier la vue :
 		$this->deflectView(OO2FS::genericViewPath('exercice/zip_wd'));
 	}
@@ -279,6 +278,15 @@ abstract class ExerciceAbstractController extends AbstractController
 		);
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/faq_wd'));
+	}
+	
+	/**
+	 * Page générique affichant des fichiers ; par exemple sujet, corrige et reclamation.
+	 */
+	protected function fichiersActionWd()
+	{
+		$this->View->addScript('/public/js/membre/exercice/fichiers.js');
+		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
 	}
 	
 	/**

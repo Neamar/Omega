@@ -119,6 +119,15 @@ WHERE Hash="%ID%"';
 	public $Retard;
 	
 	/**
+	 * Renvoie le titre de l'exercice filtré de tous caractères spéciaux, par exemple pour un nom de fichier
+	 * 
+	 * @return string
+	 */
+	public function filterTitle()
+	{
+		return preg_replace('`[^a-z0-9-_]`i', '_', $this->Titre);
+	}
+	/**
 	 * Modifie le statut de l'exercice
 	 * 
 	 * @param string $Status
