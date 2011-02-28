@@ -265,7 +265,7 @@ margin:auto;
 /* -- Classe Globale -- */
 #content-message {
 padding:5px 0;
-background:#f1f1ef url('/public/css/images/message-r.jpg') center scroll repeat-x;
+background:#f1f1ef url('/public/css/images/mess-message-r.jpg') center scroll repeat-x;
 height:auto;
 }
 	#bottom-message {
@@ -295,7 +295,7 @@ z-index:10;/*laisse passer le doc-box a */
 #main-message #content-message.error {
 padding-left:60px;
 padding-right:5px;
-background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
+background:#f1f1ef url('/public/css/images/mess-error-r.jpg') top scroll repeat-x;
 }
 #main-message #bottom-message.error {
 height:13px;
@@ -305,14 +305,15 @@ background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
 	color:#d43b3e;
 	}
 aside.message.error:before {
-background: url('/public/css/images/mess-error.png') top no-repeat;
+background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-error.png*/
+background-position:-41px 0;
 }
 
 /* -- Classe OK / .ok -- */		
 #main-message #content-message.ok {
 padding-left:60px;
 padding-right:5px;
-background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x; 
+background:#f1f1ef url('/public/css/images/mess-ok-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.ok {
 height:13px;
@@ -322,14 +323,15 @@ background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
 	color:#006600;
 	}
 aside.message.ok:before {
-background: url('/public/css/images/mess-ok.png') top no-repeat;
+background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-ok.png*/
+background-position:0 -40px;
 }
 	
 /* -- Classe Information / .info -- */		
 #main-message #content-message.info {
 padding-left:60px;
 padding-right:5px;
-background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x; 
+background:#f1f1ef url('/public/css/images/mess-info-r.jpg') top scroll repeat-x;
 }
 #main-message #bottom-message.info {
 height:13px;
@@ -340,14 +342,15 @@ background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
 aside.message.info:before {
-background: url('/public/css/images/mess-info.png') top no-repeat;
+background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-info.png*/
+background-position:-41px -40px;
 }
 
 /* -- Classe attention / .warning -- */		
 #main-message #content-message.warning {
 padding-left:60px;
 padding-right:5px;
-background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x; 
+background:#f1f1ef url('/public/css/images/mess-warning-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.warning {
 height:13px;
@@ -358,7 +361,8 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
 aside.message.warning:before {
-background: url('/public/css/images/mess-warn.png') top no-repeat;
+background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-warn.png*/
+background-position:0 0;
 }
 	
 /* --  Message droite / Classe Global  -- */	
