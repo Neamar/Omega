@@ -74,7 +74,8 @@ margin-top:20px;
 	#content h2:before {
 	position:absolute;
 	left:-55px;
-	background: url('/public/css/images/separateur-h2-doc.png') top no-repeat;
+	background: url('/public/css/images/spr_head.png') top no-repeat; /*separateur-h2-doc.png*/
+	background-position:0 -397px;
 	}
 
 /* Bulle sur p */

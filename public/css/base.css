@@ -63,7 +63,8 @@ text-shadow:1px 1px 0px #fff;
 	content: "";
 	height:34px;
 	width:1000px;
-	background: url('/public/css/images/separateur-h2-2x.png') top no-repeat;
+	background: url('/public/css/images/spr_head.png') top no-repeat; /*separateur-h2-2x.png*/
+	background-position:0 -427px;
 	z-index:10;/*laisse passer le doc-box a */
 }
 #content h2:first-child:before, #tabs h2:before {background-image:none!important;}

@@ -96,7 +96,7 @@ background-position:0 -160px;
 	}
 	.pts {
 	background:url('/public/css/images/spr_head.png') bottom left scroll no-repeat; /*pts.png*/
-	background-position:-578px -372px;
+	background-position:0 -375px;
 	padding-left:20px;
 	}
 		#ribbon, #ribbon a{
@@ -118,7 +118,7 @@ height:103px; /*taille du bloc*/
 	top:0;
 	left:31px;
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*logo-fond.png*/
-	background-position:0 -280px;
+	background-position:0 -271px;
 	width:376px;
 	height:103px;
 	z-index:5;
