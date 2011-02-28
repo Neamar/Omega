@@ -86,7 +86,8 @@ text-decoration:none!important;
 	.a_creation-exercice {
 	padding-left:20px;
 	display:inline-block;
-	background:url('/public/css/images/more.png') center left scroll no-repeat;
+	background:url('/public/css/images/spr_content.png') center left scroll no-repeat; /*more.png*/
+	background-position:0 -43px;
 	}
 	
 
@@ -119,42 +120,54 @@ width:73px;
 height:64px;
 counter-increment: etape;
 content: counter(etape) "";
-background: url('/public/css/images/h2-avance.png') top no-repeat;
+background: url('/public/css/images/spr_content.png') top no-repeat; /*h2-avance.png*/
+background-position:0 -1286px;
 z-index:40;
 }
 
 h2#eleve-exercice-index {
-background:url('/public/css/images/h2-eleve-exercice-index.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-index.png*/
+background-position:0 -590px;
 }
 h2#eleve-exercice-index-creation {
-background:url('/public/css/images/h2-eleve-exercice-index-creation.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-index-creation.png*/
+background-position:0 -540px;
 }
 h2#eleve-points-index {
-background:url('/public/css/images/h2-eleve-points-index.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-points-index.png*/
+background-position:0 -290px;
 }
 h2#eleve-exercice-creation-classe {
-background:url('/public/css/images/h2-eleve-exercice-creation-classe.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-creation-classe.png*/
+background-position:0 -840px;
 }	
 h2#eleve-exercice-creation-envoi {
-background:url('/public/css/images/h2-eleve-exercice-creation-envoi.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-creation-envoi.png*/
+background-position:0 -690px;
 }
 h2#eleve-exercice-creation-date {
-background:url('/public/css/images/h2-eleve-exercice-creation-date.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-creation-date.png*/
+background-position:0 -790px;
 }
 h2#eleve-exercice-creation-demande {
-background:url('/public/css/images/h2-eleve-exercice-creation-demande.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-creation-demande.png*/
+background-position:0 -740px;
 }	
 h2#eleve-exercice-creation-info {
-background:url('/public/css/images/h2-eleve-exercice-creation-info.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-creation-info.png*/
+background-position:0 -640px;
 }
 h2#eleve-exercice-recapitulatif-envoi {
-background:url('/public/css/images/h2-eleve-exercice-recapitulatif-envoi.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-recapitulatif-envoi.png*/
+background-position:0 -490px;
 }
 h2#eleve-exercice-recapitulatif-infos {
-background:url('/public/css/images/h2-eleve-exercice-recapitulatif-infos.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-recapitulatif-infos.png*/
+background-position:0 -390px;
 }
 h2#eleve-exercice-recapitulatif-fichiers {
-background:url('/public/css/images/h2-eleve-exercice-recapitulatif-fichiers.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-exercice-recapitulatif-fichiers.png*/
+background-position:0 -440px;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------------- 6. Les Forumlaires --------------------------------------------------------------------*/
@@ -206,3 +219,6 @@ text-shadow:1px 1px 0px #ffefe0;
 	td:first-child {
 	border-left:3px solid #dfc8a8;
 	}
+.ui-state-disabled:hover a {
+color:#e78f08!important;
+}
