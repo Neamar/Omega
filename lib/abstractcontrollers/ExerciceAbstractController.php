@@ -150,7 +150,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		
 		//Charger les fichiers nécessaires :
 		$this->View->Files = $this->Exercice->getSortedFiles();
-		
+		var_dump($this->View->Files);
 		//Et dévier la vue :
 		$this->deflectView(OO2FS::genericViewPath('exercice/zip_wd'));
 	}
@@ -260,6 +260,7 @@ abstract class ExerciceAbstractController extends AbstractController
 					
 					$this->View->setMessage('ok', 'Réponse enregistrée.');
 					unset($_POST['question'], $_POST['reponse']);
+					$this->redirectExercice('/' . $this->getModule() . '/exercice/faq/');
 				}
 				else
 				{

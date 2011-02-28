@@ -50,7 +50,7 @@ echo $this->Form_inputLabel(
 	)
 );
 echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('correcteur', 'champ_annulation');
-echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à h\h', strtotime($this->Exercice->Expiration)) . '</strong>. Vous devez avoir fourni le corrigé à cette heure !<br />';
+echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à H\h', strtotime($this->Exercice->Expiration)) . '</strong>. Vous devez avoir fourni le corrigé à cette heure !<br />';
 ?>
 
 <h2 class="h2_infos" id="correcteur-exercice-reservation-infos">Informations complémentaires</h2>

@@ -6,11 +6,6 @@ echo $this->View_render($this->Compte, 1);
 <?php 
 $Actions = array
 (
-	'desinscription'=> array(
-		'Fermer mon compte',
-		'Vous pouvez vous désinscrire défintivement d\'' . $this->Html_eDevoir() . '.',
-		'desinscription',
-	), 
 	'points/ajout' => array(
 		'Ajouter des points',
 		'Vous pouvez ajouter des points sur votre compte afin de pouvoir accepter les offres des correcteurs sur vos exercices',
@@ -21,6 +16,11 @@ $Actions = array
 		'Si votre compte est trop plein, vous pouvez retirer des points du site vers votre compte en banque.',
 		'retrait'
 	),
+	'desinscription'=> array(
+		'Fermer mon compte',
+		'Vous pouvez vous désinscrire défintivement d\'' . $this->Html_eDevoir() . '.',
+		'desinscription',
+	), 
 );
 
 echo $this->Html_listAction($Actions, '/eleve/__URL__', 'eleve');

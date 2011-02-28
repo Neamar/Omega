@@ -52,7 +52,7 @@ else
 			
 			//QUESTION
 			?>
-			<h3 class="faq-question faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></h3>
+			<h3 class="faq-question faq-<?php echo $Datas['Type'] ?>"><?php echo nl2br($Datas['Texte']) ?></h3>
 			<?php
 			$LastQuestion = $ID;
 		}
@@ -60,7 +60,7 @@ else
 		{
 			//RÉPONSE
 			?>
-			<p class="faq-reponse faq-<?php echo $Datas['Type'] ?>"><?php echo $Datas['Texte'] ?></p>		
+			<p class="faq-reponse faq-<?php echo $Datas['Type'] ?>"><?php echo nl2br($Datas['Texte']) ?></p>		
 			<?php
 		}
 	}

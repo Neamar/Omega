@@ -67,7 +67,7 @@ $(function()
 $(function()
 {
 	//Mettre en onglets
-	Tabs = $("#tabs").tabs();
+	Tabs = $("#tabs").tabs().css('min-width', '1000px');
 	
 	//Afficher le message "aperçu non à jour" quand nécessaire
 	$("#tabs").bind("tabsselect", function(e, ui){
@@ -203,7 +203,13 @@ $(function()
 						//Mettre à jour l'onglet historique
 						Revision = data.match(/Révision #([0-9]+)\n/)[1];
 						var Now = new Date();
-						$('#historique').prepend('<option value="' + Revision + '">' + Now.getHours() + ':' + Now.getMinutes() + '(' + Texte.length + ' caractères)</option>');
+						$('#historique').prepend('<option value="' + Revision + '">' + Now.getHours() + ':' + Now.getMinutes() + ' (' + Texte.length + ' caractère' + (Texte.length>1?'s':'') + ')</option>');
+						
+						//Amener le scroll au bon endroit
+						var container = $('html');
+						container.scrollTop(
+							$('#apercu').offset().top
+						);
 					}
 				}
 		);
@@ -229,7 +235,7 @@ $(document).ready(function() {
 				Ressources.find('li').click(function()
 				{
 					Tabs.tabs('select', 'envoi-texte');
-					Modal.html('<p>Vous pouvez insérer cette ressource en utilisant ce code :<br />\\includegraphics{' + $(this).text() + '}</p>')
+					Modal.html('<p>Vous pouvez insérer cette ressource en utilisant ce code :<br /><input type="text" readonly="readonly" value="\\includegraphics{' + $(this).text() + '}" onclick=this.select() /></p>')
 						.dialog('open');
 					
 				});

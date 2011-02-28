@@ -33,7 +33,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	{
 		$this->View->setTitle(
 			'Mes exercices',
-			"Cette page permet de consulter d'un coup d'œil les dernières actions sur les exercices que vous avez réservé."
+			"Cette page permet de consulter d'un coup d'œil les dernières actions sur les exercices que vous avez réservés."
 		);
 		
 		$this->View->ExercicesActifs = Sql::queryAssoc(
@@ -349,7 +349,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					DATE_FORMAT(Date,"%d/%m/%y à %H:%m"),
 					" (",
 					Longueur,
-					" caractères)"
+					" caractère",
+					IF(Longueur > 1,"s)",")")
 				) AS Caption
 			FROM Exercices_Corriges
 			WHERE Exercice = "' . DbObject::filterID($this->Exercice->ID) . '"

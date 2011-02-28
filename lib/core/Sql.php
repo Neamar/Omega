@@ -71,7 +71,8 @@ class Sql
 	}
 	
 	/**
-	 * Échappe les entités HTML
+	 * Échappe les entités HTML.
+	 * N'utilise par htmlspecialchars qui échappe aussi le &, empêchant d'insérer un espace insécable.
 	 * 
 	 * @param string $Data
 	 * 
@@ -79,7 +80,7 @@ class Sql
 	 */
 	public static function escapeHtml($Data)
 	{
-		return htmlspecialchars($Data, ENT_NOQUOTES, 'UTF-8');
+		return str_replace(array('<', '>'), array('&lt;', '&gt;'), $Data);
 	}
 	
 	/**

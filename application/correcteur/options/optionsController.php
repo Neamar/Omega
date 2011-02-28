@@ -104,7 +104,7 @@ Si vous ne l'avez pas encore fait, vous pourrez aussi spécifier votre numéro d
 	{
 		$this->View->setTitle(
 			'Modifications des compétences',
-			"Cette page vous permet de modifier vos compétences ; et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
+			"Cette page vous permet de modifier vos compétences et ainsi de filtrer les exercices pour n'afficher que ceux qui vous correspondent."
 		);
 		$this->View->setSeelink('/correcteur/options/matieres_rapide', 'Formulaire simplifié');
 		

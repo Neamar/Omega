@@ -50,4 +50,18 @@ class Correcteur_PointsController extends PointsAbstractController
 		
 		$this->redirect('/correcteur/points/');
 	}
+	
+	/**
+	 * Ajoute un message si le numéro de SIRET n'est pas présent.
+	 * @see PointsAbstractController::indexAction()
+	 */
+	public function indexAction()
+	{
+		if(empty($this->getMembre()->Siret))
+		{
+			$this->View->Infos = 'Attention ! Vous ne pouvez pas retirer d\'argent tant que vous ne nous avez pas <a href="/correcteur/options/compte">indiqué votre SIRET</a>.';
+		}
+		
+		parent::indexAction();
+	}
 }

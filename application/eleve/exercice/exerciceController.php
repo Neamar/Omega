@@ -534,7 +534,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'Noter la correction de «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Cette page permet de noter le travail du correcteur."
 		);
-		$this->View->setSeelink('/eleve/exercice/reclamation/' . $this->Exercice->Hash, "Émettre une réclamation");
+		$this->View->setSeelink('/eleve/exercice/contestation/' . $this->Exercice->Hash, "Émettre une réclamation");
 		
 		if(isset($_POST['note-exercice']))
 		{
@@ -574,6 +574,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			"Émettre une réclamation",
 			"Cette page permet de demander un jugement externe si le travail du correcteur n'est pas correct."
 		);
+		$this->View->setSeelink('/eleve/exercice/note/' . $this->Exercice->Hash, "Noter l'exercice");
+		
 				
 		$this->View->addScript('/public/js/jquery-multiupload.min.js');
 		$this->View->addScript('/public/js/eleve/exercice/ajout.js');

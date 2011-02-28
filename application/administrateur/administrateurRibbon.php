@@ -27,8 +27,9 @@ if(!isset($_SESSION['Administrateur']))
 }
 else
 {
-	$Retour['left'] = '<a href="/administrateur/connexion" class="deconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" /></a> <a href="/correcteur/">' . $_SESSION['Administrateur']->Mail . '</a>';
-	$Retour['right'] = '<a href="/administrateur/">Espace admin</a>';
+	$Retour['left'] = '<a href="/administrateur/">Espace admin</a>';
+	$Retour['right'] = '<a href="/correcteur/">' . $_SESSION['Administrateur']->Mail . '</a> <a href="/administrateur/connexion" class="deconnexion" title="Déconnexion"><img src="/public/images/global/deconnexion.png" alt="Déconnexion" /></a>';
+	
 	$Retour['links'] = array(
 		'/administrateur/' => 'Admin',
 		'/administrateur/log/' => 'Logs',

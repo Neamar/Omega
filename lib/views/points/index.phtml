@@ -1,5 +1,10 @@
 <?php 
 $Module = $this->getController()->getModule();
+
+if(isset($this->Infos))
+{
+	echo '<p class="infos">' . $this->Infos . '</p>';
+}
 ?>
 
 <h2>Actions</h2>
