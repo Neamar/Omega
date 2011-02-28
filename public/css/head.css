@@ -279,10 +279,22 @@ height:auto;
 font-weight:bold;
 text-shadow:1px 1px 0px #fff;
 }
+/* icone avec before*/
+aside.message:before {
+position:absolute;
+top:50%;
+margin-top:-16px;
+left:5px;
+content: "";
+height:32px;
+width:32px;
+z-index:10;/*laisse passer le doc-box a */
+}
 
 /* -- Classe Erreur / .error -- */		
 #main-message #content-message.error {
-padding:5px 0;
+padding-left:60px;
+padding-right:5px;
 background:#f1f1ef url('/public/css/images/error-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.error {
@@ -292,10 +304,14 @@ background:url('/public/css/images/bottom-r.png') bottom scroll repeat-x;
 	aside.error p:first-child, aside.error p:first-child a:hover {
 	color:#d43b3e;
 	}
+aside.message.error:before {
+background: url('/public/css/images/mess-error.png') top no-repeat;
+}
 
 /* -- Classe OK / .ok -- */		
 #main-message #content-message.ok {
-padding:5px 0;
+padding-left:60px;
+padding-right:5px;
 background:#f1f1ef url('/public/css/images/ok-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.ok {
@@ -305,9 +321,14 @@ background:url('/public/css/images/bottom-ok-r.png') bottom scroll repeat-x;
 	aside.ok p:first-child, aside.ok p:first-child a:hover {
 	color:#006600;
 	}
+aside.message.ok:before {
+background: url('/public/css/images/mess-ok.png') top no-repeat;
+}
+	
 /* -- Classe Information / .info -- */		
 #main-message #content-message.info {
-padding:5px 0;
+padding-left:60px;
+padding-right:5px;
 background:#f1f1ef url('/public/css/images/info-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.info {
@@ -318,10 +339,14 @@ background:url('/public/css/images/bottom-info-r.png') top scroll repeat-x;
 	color:#006699;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
+aside.message.info:before {
+background: url('/public/css/images/mess-info.png') top no-repeat;
+}
 
 /* -- Classe attention / .warning -- */		
 #main-message #content-message.warning {
-padding:5px 0;
+padding-left:60px;
+padding-right:5px;
 background:#f1f1ef url('/public/css/images/warning-r.jpg') top scroll repeat-x; 
 }
 #main-message #bottom-message.warning {
@@ -332,13 +357,16 @@ background:url('/public/css/images/bottom-warning-r.png') top scroll repeat-x;
 	color:#704508;
 	text-shadow:1px 1px 0px #ebf8ff!important;
 	}
+aside.message.warning:before {
+background: url('/public/css/images/mess-warn.png') top no-repeat;
+}
 	
 /* --  Message droite / Classe Global  -- */	
 .message .doc-box-link a{
 	z-index:20; /*pour contrer le before h2*/
 position:absolute;
 bottom:-30px;
-right:40px;
+right:70px;
 display: inline-block;
 outline: none;
 cursor: pointer;
