@@ -261,7 +261,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 
 				$ExtensionFichier = Util::extension($_FILES['fichiers']['name'][$i]);
-				$URL = '/Sujet/' . $NbFichiersPresents . '.' . $ExtensionFichier;
+				$URL = '/Sujet/' . uniqid() . '.' . $ExtensionFichier;
 				$URLAbsolue = PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL;
 				
 				//Effectuer les vérifications usuelles
@@ -355,6 +355,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		$this->View->NbFilesUpload = min(10, MAX_FICHIERS_EXERCICE - $NbFichiersPresents);
 		$this->View->NbFiles = $this->Exercice->getFilesCount(array('SUJET'));
+		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 	}
 	
 	/**
@@ -730,6 +731,29 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()
 		);
+	}
+	
+	/**
+	 * Supprimer un des fichiers envoyés
+	 */
+	public function _supprimerActionWd()
+	{
+		//Par défaut, la page renvoie sur le récapitulatif
+		if(!isset($this->Data['retour']))
+		{
+			$this->Data['retour'] = 'recapitulatif';
+		}
+		
+		if(!isset($this->Data['fichier']))
+		{
+			$this->View->setMessage('error', 'Impossible de supprimer ce fichier');
+		}
+		else
+		{
+			Sql::query('DELETE FROM Exercices_Fichiers WHERE TYPE="SUJET" AND Exercice = ' . DbObject::filterID($this->Exercice->ID) . ' AND URL = "/Sujet/' . Sql::escape($this->Data['fichier']) . '" LIMIT 1');
+			$this->View->setMessage('info', 'Fichier supprimé de l\'exercice.');
+		}
+		$this->redirectExercice('/eleve/exercice/' . $this->Data['retour'] . '/');
 	}
 	
 	/**

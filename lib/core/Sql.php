@@ -188,7 +188,9 @@ class Sql
 
 	/**
 	 * Exécute une requête sur la base. En cas d'erreur, le script n'est pas interrompu et la fonction appelante peut traiter l'exception.
+	 * 
 	 * @param string $Query la requête à effectuer
+	 * 
 	 * @return SQLResource le résultat de la requête.
 	 */
 	public static function queryNoFail($Query)
@@ -198,11 +200,13 @@ class Sql
 
 	/**
 	 * Exécute une requête sur la base et ne renvoie que le premier résultat
+	 * 
 	 * @param string $Query la requête à effectuer
 	 * @param string $Type le type de l'objet de retour. Si null (par défaut), on renvoie un tableau.
+	 * 
 	 * @return (Object|array) le premier résultat de la requête. Si aucun résultat, la fonction renvoie null.
 	 */
-	public static function singleQuery($Query,$Type=null)
+	public static function singleQuery($Query, $Type=null)
 	{
 		$R = self::query($Query);
 		if(mysql_num_rows($R)==0)
@@ -225,7 +229,7 @@ class Sql
 	 * @param string $Query la requête à effectuer
 	 * @param string $Column la colonne à renvoyer
 	 */
-	public static function singleColumn($Query,$Column)
+	public static function singleColumn($Query, $Column)
 	{
 		$Resultat = self::singleQuery($Query);
 		return $Resultat[$Column];
@@ -265,14 +269,17 @@ class Sql
 	 * Insère un tuple dans une table de la base de données.
 	 * En cas d'erreurs (duplicate), l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
 	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
+	 * 
 	 * @param string $Table la table dans laquelle insérer les données.
 	 * @param array $Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs seront échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
+	 * 
 	 * @return SQLResource le résultat de la requête.
+	 * 
 	 * @example
 	 *	$ToInsert = array('Reference'=>$ArticleID,'URL' => 'http://neamar.fr');
 	 *	SQL::insert('More',$ToInsert);
 	 */
-	public static function insert($Table,array $Valeurs)
+	public static function insert($Table, array $Valeurs)
 	{
 		//On ne peut pas simplement utiliser array_keys, car on peut avoir à modifier les clés (règle de l'underscore)
 		$Keys=array();
@@ -299,16 +306,20 @@ class Sql
 	 * Met à jour un tuple dans une table de la base de données selon l'identifiant spécifié.
 	 * En cas d'erreurs, l'erreur n'est pas traitée et est renvoyée à l'appelant pour gestion.
 	 * NOTE: Les clés du tableau Datas commençant par un "_" indiquent que la valeur associée ne doit pas être échappée. Le "_" est ensuite supprimé lors de l'update sur la table. Voir le deuxième exemple.
+	 * 
 	 * @param string Table la table dans laquelle insérer les données.
 	 * @param int ID l'identifiant du tuple à mettre à jour. Forcément l'ID.
 	 * @param array Datas un tableau associatif sous la forme clé=>valeur dans la table. Les valeurs doivent être échappées ! Elle n'ont cependant pas à être quotées, des guillemets seront ajoutés sauf si la clé commence par un _ (cf. note).
 	 * @param string And des contraintes supplémentaires permettant de valider la mise à jour (exemple : "AND Auteur.ID=2" pour empêcher la modification de n'importe quoi)
 	 * @param int Limit nombre maximal d'enregistrements à modifier
+	 * 
 	 * @return SQLResource le résultat de la requête.
+	 * 
 	 * @example
 	 * //Notez la réalisation de la proposition si nécessaire :
 	 *	if(is_numeric($_POST['proposition']))
 	 *		SQL::update('Propositions',$_POST['proposition'],array('OmniID'=>mysql_insert_id()),'AND ReservePar=' . AUTHOR_ID);
+	 *
 	 * @example
 	 * //Explicitation du _
 	 *
@@ -317,12 +328,13 @@ class Sql
 	 *
 	 * //Correct : pour indiquer qu'il s'agit d'un appel à une fonction / expression, précédez votre clé d'un _ :
 	 * SQL::update('Propositions',$_POST['proposition'],array('_Date' => 'NOW()');
+	 * 
 	 * @example
 	 * //Explicitation du $And
 	 * //Petit "hack" pour mettre à jour un tuple dont on ne connaît pas l'ID :
 	 * SQL::update('Propositions',-1,array('Titre' => 'Lol'),'OR ID=(SELECT MAX(ID) FROM Propositions)'
 	 */
-	public static function update($Table, $ID, array $Valeurs, $And='', $Limit=1)
+	public static function update($Table, $ID, array $Valeurs, $And='', $Limit = 1)
 	{
 		$Set=array();
 		foreach($Valeurs as $K=>$V)
@@ -345,17 +357,17 @@ class Sql
 
 	/**
 	 * Supprime un tuple basé sur les contraintes spécifiées.
+	 * Attention ! Dans notre cas, l'utilisateur SQL n'a pas tous les droits et ne peut supprimer que sur certaines tables
+	 * 
 	 * @param Table:String la table dans laquelle supprimer les données.
 	 * @param ID:int l'identifiant du tuple à détruire. Forcément l'ID.
 	 * @param $And:String des contraintes supplémentaires permettant de valider la mise à jour (exemple : "AND Auteur.ID=2" pour empêcher la modification de n'importe quoi)
+	 * 
 	 * @return :SQLResource le résultat de la requête.
 	 */
-	public static function delete($Table,$ID,$And)
+	public static function delete($Table, $ID, $And)
 	{
-		//La suppression de tuples n'est pas disponible pour ce projet.
-		//L'utilisateur de la base ne peut pas supprimer de tuples.
-		Debug::fail('Cf. Sql::delete pour détails.');
-		SQL::delete('DELETE FROM ' . $Table . ' WHERE ID=' . intval($ID) . ' ' . $And . ' LIMIT 1');
+		SQL::delete('DELETE FROM ' . $Table . ' WHERE ID = ' . intval($ID) . ' ' . $And . ' LIMIT 1');
 	}
 	
 	/**
@@ -365,7 +377,7 @@ class Sql
 	 * 
 	 * @return string une chaîne formatée
 	 */
-	public static function getDate($time=-1)
+	public static function getDate($time = -1)
 	{
 		if($time==-1)
 		{

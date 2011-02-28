@@ -19,11 +19,16 @@ echo $this->Form_submit('change-info', 'Modifier ces informations, puis revenir 
 
 <h2 id="eleve-exercice-recapitulatif-fichiers">Fichiers</h2>
 <?php
-$Fichiers = array(); 
+$Fichiers = array();
 $BaseURL = '/public/exercices/' . $this->Exercice->LongHash;
 foreach($this->Fichiers as $URL => $Infos)
 {
-	$Fichiers[] = $this->Exercice_lightbox($BaseURL . $URL, 'fichiers', $Infos['NomUpload']);
+	$Infos['Numero'] = str_replace('/Sujet/', '', $URL);
+	$R = '';
+	$R .= '<a href="/eleve/exercice/_supprimer/' . $this->Exercice->Hash . '/fichier/' . $Infos['Numero'] . '" class="suppression-fichier">Supprimer</a> ';
+	$R .= $this->Exercice_lightbox($BaseURL . $URL, 'fichiers', $Infos['NomUpload']);
+	
+	$Fichiers[] = $R;
 }
 echo $this->Html_list($Fichiers);
 ?>
