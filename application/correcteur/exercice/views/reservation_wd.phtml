@@ -54,7 +54,7 @@ echo "Rappel date d'expiration de l'exercice : <strong>" . date('d/m/Y à h\h', 
 ?>
 
 <h2 class="h2_infos" id="correcteur-exercice-reservation-infos">Informations complémentaires</h2>
-<p>Si nécessaire, vous pouvez ajouter des informations complémentaires.
+<p>Si nécessaire, vous pouvez ajouter des informations complémentaires au format LaTeX. <?php echo $this->Doc_anchor('correcteur', 'aide_tex'); ?>
 <?php
 echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires (facultatif)', array('class' => 'tex-container'));
 echo $this->Doc_inputBr('correcteur', 'champ_info');

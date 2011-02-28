@@ -48,4 +48,13 @@ class Documentation_CorrecteurController extends Documentation_IndexController
 	{
 		$this->__call('matieresAction', array());
 	}
+	
+	/**
+	 * Overrider le guide tex de l'index
+	 * @see Documentation_IndexController::texAction()
+	 */
+	public function texAction()
+	{
+		$this->__call('texAction', array());
+	}
 }

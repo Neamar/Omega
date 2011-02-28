@@ -265,6 +265,12 @@ class Documentation_IndexController extends AbstractController
 	 */
 	public function __call($methodName, array $args)
 	{
+		//Si on arrive du site, mettre une option pour fermer la page.
+		if(isset($_SERVER['HTTP_REFERER']) && preg_match('`^' . preg_quote(URL) . '/(eleve|correcteur)/`', $_SERVER['HTTP_REFERER']))
+		{
+			$this->View->setMessage('info', 'Vous avez fini de lire ? <a href=# onclick=window.close() >Fermer cette page</a>.');
+		}
+		
 		if(!substr($methodName, -6) == 'Action')
 		{
 			throw new Exception("Méthode " . $methodName . " inconnue.", 1);

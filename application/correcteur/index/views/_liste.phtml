@@ -3,11 +3,11 @@ $Datas = array();
 		
 foreach($this->RawDatas as $Hash => $ExerciceDatas)
 {
-	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Je prends !</a><br />';
+	$Expiration = '<a href="/correcteur/exercice/reservation/' . $Hash . '">Réserver l\'exercice</a><br />';
 	$Expiration .= $this->Date_countdown($ExerciceDatas['TimeoutEleve']);
 	
-	$Infos = '<p>Exercice «&nbsp;<strong>' . $ExerciceDatas['Titre'] . '</strong>&nbsp;»';
-	$Infos .= ', <strong>' . $ExerciceDatas['Matiere'] . '</strong>';
+	$Infos = '<h2>' . $ExerciceDatas['Titre'] . '</h2>';
+	$Infos .= '<p><strong>' . $ExerciceDatas['Matiere'] . '</strong>';
 	if($ExerciceDatas['Section'] != '')
 	{
 		$Infos .= ' (' . $ExerciceDatas['Section'] . ')';
