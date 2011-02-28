@@ -6,8 +6,8 @@ echo $this->Doc_box('correcteur', 'marche', 'Besoin d\'aide ?');
 //TODO: Formulaire de filtre
 if($this->NbReserves > 0)
 {
-	$Chiffres = array('un', 'deux', 'trois', 'quatre', 'cinq');
-	echo '<p class="important">Attention : vous vous êtes déjà engagés à répondre à ' . $Chiffres[$this->NbReserves] . ' exercice' . ($this->NbReserves>1?'s':'') . '. N\'ayez pas les yeux plus gros que le ventre :)</p>';
+	$Chiffres = array('', 'un', 'deux', 'trois', 'quatre', 'cinq');
+	echo '<p class="important">Attention : vous vous êtes déjà engagé à répondre à ' . $Chiffres[$this->NbReserves] . ' exercice' . ($this->NbReserves>1?'s':'') . '. N\'ayez pas les yeux plus gros que le ventre :)</p>';
 }
 ?>
 

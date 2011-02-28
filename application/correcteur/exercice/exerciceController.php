@@ -279,7 +279,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		if(isset($_POST['envoi-exercice']))
 		{
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
-			$FileName = 'head';
+			$FileName = $this->Exercice->filterTitle();
 
 			//L'url du fichier Tex
 			$CorrigeURL = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/' . $FileName . '.tex';
@@ -303,7 +303,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 					'Type' => 'CORRIGE',
 					'URL' => '/Corrige/' . $FileName . '.pdf',
 					'ThumbURL' => Thumbnail::create($CorrigeURLPDF),
-					'NomUpload' => 'Corrige.pdf',
+					'NomUpload' => $FileName . '.pdf',
 				);
 				
 				if(!Sql::insert('Exercices_Fichiers', $ToInsert))
@@ -426,7 +426,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		{
 			//Effectuer une translation de 1.
 			$Page = intval($this->Data['page']) - 1;
-			$Largeur = min(1000, intval($this->Data['width']));
+			$Largeur = min(1300, intval($this->Data['width']));
 			$Filename = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.pdf';
 			$FilenameOut = PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/preview.png';
 			if(!is_file($Filename))

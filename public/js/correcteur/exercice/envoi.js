@@ -130,7 +130,16 @@ $(function()
 	{
 		Largeur = parseInt($('#envoi-apercu').width()) - 40;
 		CurrentPage = page;
-		return '<img id="apercu" src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', Largeur) + '?_=' + (new Date().getTime()).toString() + '" alt="Image de la page ' + page + ' de l\'aperçu" style="width:' + Largeur + 'px; height:' + Math.round(Largeur * 1.4142) + 'px; background:url(/public/images/global/loader.gif) center center no-repeat;" onload="this.removeAttribute(\'style\');"/>';
+		Img = '<img \
+			id="apercu" \
+			src="' + PageURL.replace('__PAGE__', page).replace('__LARGEUR__', Largeur) + '?_=' + (new Date().getTime()).toString() + '" \
+			alt="Image de la page ' + page + ' de l\'aperçu" \
+			style="width:' + Largeur + 'px; height:' + Math.round(Largeur * 1.4142) + 'px; background:url(/public/images/global/loader.gif) center center no-repeat;" \
+			onload="this.removeAttribute(\'style\');" \
+			onclick="$.prettyPhoto.open(\'http://omega.localhost/correcteur/exercice/_preview/70bdb1/page/' + page + '/width/1300\', \'Page' + page + '\')" \
+		/>';
+		
+		return Img;
 	}
 	
 	//Clic sur le bouton aperçu

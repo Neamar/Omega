@@ -24,7 +24,7 @@ foreach($this->Fichiers as $URL => $Infos)
 	}
 	elseif(in_array($Extension, $Documents))
 	{
-		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode($LongURL) . '&amp;embedded=true" width="80%" height="780" style="border: none;"></iframe>';
+		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode($LongURL) . '&amp;embedded=true" style="border: none; width:96%; height:780px; margin-left:2%;"></iframe>';
 	}
 	else
 	{

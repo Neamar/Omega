@@ -2,7 +2,7 @@
 /**
  * Eleve.php - 3 déc. 2010
  * 
- * Un élève. La classe étend les mzmbre génériques et fournit quelques méthodes utiles.
+ * Un élève. La classe étend les membres génériques et fournit quelques méthodes utiles.
  * 
  * PHP Version 5
  * 
