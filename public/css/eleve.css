@@ -45,7 +45,8 @@ color:#d29d1e;
 	#logo-liens ul li a:hover {
 	color:#fff;
 	text-shadow:1px 1px 0px #ff8812;
-	background:url('/public/css/images/menu_top-e-l.png') top left scroll no-repeat;
+	background:url('/public/css/images/spr_oran.png') top left scroll no-repeat; /*menu_top-e-l.png*/
+	background-position:0 -135px;
 	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 			
 		#logo-liens ul li a:hover span {
@@ -94,15 +95,18 @@ text-decoration:none!important;
 
 	/* Les forms*/
 	form input[type=email]:hover, form input[type=email]:focus {
-	background:#fff url('/public/css/images/email-e.png') center left scroll no-repeat;
+	background:#fff url('/public/css/images/spr_oran.png') center left scroll no-repeat; /*email-e.png*/
+	background-position:0 -94px;
 	}
 	form input[type=password]:hover, form input[type=password]:focus {
-	background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
+	background:#fff url('/public/css/images/spr_oran.png') center left scroll no-repeat; /*pass-e.png*/
+	background-position:0 -173px;
 	}
 	
 /*Paragraphes*/
 p.action-detail a:hover{
-background:url('/public/css/images/doc-e.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_oran.png') top left scroll no-repeat; /*doc-e.png*/
+background-position:0 -65px;
 padding-left:20px;
 }
 p.action-detail a {
