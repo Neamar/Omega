@@ -1,0 +1,58 @@
+<h2 id="administrateur-index-bannis-ajout">Ajout manuel</h2>
+
+<form method="post" action="" id="form_ajout-ban">
+<p>Vous pouvez ajouter manuellement un utilisateur qui sera banni par son adresse IP. Notez que cette action est normalement automatique (après plusieurs tentatives de connexion par exemple)</p>
+<?php 
+echo $this->Form_inputLabelBr(
+	'ip',
+	'IP à bannir',
+	array(
+		'pattern' => '\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'
+	)
+);
+
+echo $this->Form_inputLabelBr(
+	'duree',
+	'Durée (en s)',
+	array(
+		'type' => 'numeric'
+	)
+);
+
+echo $this->Form_submit('ajout-ban', 'Bannir');
+?>
+</form>
+
+<h2 id="administrateur-index-bannis-liste">Liste des IPs bannies</h2>
+<p>Un point intéressant : les IP affichant le texte "échéance dépassée" ont été bannies, mais ne le sont actuellement plus (c'est-à-dire que le membre ne s'est pas reconnecté depuis son bannissement).</p>
+
+<?php 
+
+echo $this->Html_tableHead(
+	'Liste des IPs bannies',
+	array(
+		'Débannir',
+		'IP',
+		'Durée'
+	),
+	'style="width:90%"'
+);
+?>
+<tbody>
+
+<?php
+foreach($this->Bannis as $File)
+{
+	$IP = str_replace(DATA_PATH . '/ips/ban/', '', $File);
+	
+	echo $this->Html_tableRow(
+		array(
+			'<form method="post" action=""><input type="hidden" name="unban" value="' . $IP . '" /><input type="submit" value="Unban" /></form>',
+			str_replace(DATA_PATH . '/ips/ban/', '', $IP),
+			$this->Date_countdownFull(file_get_contents($File))
+		)
+	);
+}
+?>
+</tbody>
+</table>
