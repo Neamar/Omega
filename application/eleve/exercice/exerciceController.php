@@ -96,6 +96,19 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['creation-exercice']))
 		{
+			//Mettre en ordre les données envoyées en fonction des options avancées sélectionnées
+			if(!isset($_POST['auto-annulation-enabled']))
+			{
+				//Pas d'annulation automatique <--> annulation auto == expiration
+				$_POST['annulation_date'] = $_POST['rendu_date'];
+				$_POST['annulation_heure'] = $_POST['rendu_heure'];
+			}
+			if(!isset($_POST['auto-accept-enabled']))
+			{
+				$_POST['auto_accept'] = 0;
+			}
+			
+			//Vérification de la cohérence des données
 			if($_POST['titre'] == '')
 			{
 				$this->View->setMessage('error', "Vous devez donner un nom à votre article.");
@@ -166,7 +179,6 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					'Createur' => $_SESSION['Eleve']->ID,
 					'_IP' => 'INET_ATON("' . Sql::escape($_SERVER['REMOTE_ADDR']) . '")',
 					'_Creation' => 'NOW()',
-					'TimeoutEleve' => Sql::getDate($_POST['annulation_ts']),
 					'Expiration' => Sql::getDate($_POST['rendu_ts']),
 					'Matiere' => $_POST['matiere'],
 					'Classe' => $_POST['classe'],
@@ -177,11 +189,15 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					'Modificateur' => $_SESSION['Eleve']->getRaise(),
 				);
 				
+				//Cas particuliers
+				if($_POST['annulation_ts'] < $_POST['rendu_ts'])
+				{
+					$ToInsert['TimeoutEleve'] = Sql::getDate($_POST['annulation_ts']);
+				}
 				if($_POST['auto_accept'] > 0)
 				{
 					$ToInsert['AutoAccept'] = $_POST['auto_accept'];
 				}
-				
 				if(Sql::insert('Exercices', $ToInsert))
 				{
 					//Créer les dossiers contenant les images et les miniatures :

@@ -80,13 +80,21 @@ echo $this->Form_inputLabel(
 	'Votre numéro de SIRET',
 	array(
 		'placeholder' => '000 000 000 00000',
+		'pattern' => '^[0-9]{3} ?[0-9]{3} ?[0-9]{3} ?[0-9]{5}$'
 	)
 ) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
 ?>
 CGU Correcteurs<br />
 
 <?php 
-echo $this->Form_checkbox('cgu', "J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
+echo $this->Form_checkbox(
+	'cgu',
+	"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site",
+	false,
+	array(
+		'required' => 'required'
+	)	
+);
 
 echo $this->Form_captcha();
 

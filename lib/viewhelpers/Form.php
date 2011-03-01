@@ -266,7 +266,7 @@ function ViewHelper_Form_radio($name, array $values, $selected=null, $id_prefix=
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_checkbox($name, $label, $selected=false, $args=array())
+function ViewHelper_Form_checkbox($name, $label, $selected = false, $args = array())
 {
 	$args['type'] = 'checkbox';
 	
@@ -283,7 +283,7 @@ function ViewHelper_Form_checkbox($name, $label, $selected=false, $args=array())
 		$args['checked'] = 'checked';
 	}
 	
-	return  '<input ' . ViewHelper_Form_args($args) . ' /><label for="' . $args['name'] . '">' . $label . "</label><br />\n";
+	return  '<input ' . ViewHelper_Form_args($args) . ' /><label for="' . $args['id'] . '">' . $label . "</label><br />\n";
 }
 
 
@@ -296,7 +296,7 @@ function ViewHelper_Form_checkbox($name, $label, $selected=false, $args=array())
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_checkboxs($name, array $values, $selected=null)
+function ViewHelper_Form_checkboxs($name, array $values, $selected = null)
 {
 	if(!is_array($selected))
 	{
@@ -334,7 +334,7 @@ function ViewHelper_Form_label($name, $label)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_inputLabel($name, $label, array $args=array())
+function ViewHelper_Form_inputLabel($name, $label, array $args = array())
 {
 	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_input($name, $args);
 }
@@ -376,7 +376,7 @@ function ViewHelper_Form_ribLabelBr($name, $label)
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $args=array())
+function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $args = array())
 {
 	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_points($name, $max, $args);
 }
@@ -390,7 +390,7 @@ function ViewHelper_Form_pointsLabel($name, $label, $max = MAX_SOMME, array $arg
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
+function ViewHelper_Form_textareaLabel($name, $label, array $args = array())
 {
 	return ViewHelper_Form_label($name, $label) . ViewHelper_Form_textarea($name, $args);
 }
@@ -404,7 +404,7 @@ function ViewHelper_Form_textareaLabel($name, $label, array $args=array())
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_inputLabelBr($name, $label, array $args=array())
+function ViewHelper_Form_inputLabelBr($name, $label, array $args = array())
 {
 	return ViewHelper_Form_inputLabel($name, $label, $args) . "<br />\n";
 }
@@ -419,7 +419,7 @@ function ViewHelper_Form_inputLabelBr($name, $label, array $args=array())
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_pointsLabelBr($name, $label, $max = MAX_SOMME, array $args=array())
+function ViewHelper_Form_pointsLabelBr($name, $label, $max = MAX_SOMME, array $args = array())
 {
 	return ViewHelper_Form_pointsLabel($name, $label, $max, $args) . "<br />\n";
 }
@@ -433,7 +433,7 @@ function ViewHelper_Form_pointsLabelBr($name, $label, $max = MAX_SOMME, array $a
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_textareaLabelBr($name, $label, array $args=array())
+function ViewHelper_Form_textareaLabelBr($name, $label, array $args = array())
 {
 	return ViewHelper_Form_textareaLabel($name, $label, $args) . "<br />\n";
 }
@@ -449,7 +449,7 @@ function ViewHelper_Form_textareaLabelBr($name, $label, array $args=array())
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_selectLabel($name, $label, array $values, $selected = null, array $args=array())
+function ViewHelper_Form_selectLabel($name, $label, array $values, $selected = null, array $args = array())
 {
 	return ViewHelper_Form_Label($name, $label) . ViewHelper_Form_select($name, $values, $selected, $args);
 }
@@ -465,7 +465,7 @@ function ViewHelper_Form_selectLabel($name, $label, array $values, $selected = n
  * 
  * @return string le code HTML demandé.
  */
-function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected = null, array $args=array())
+function ViewHelper_Form_selectLabelBr($name, $label, array $values, $selected = null, array $args = array())
 {
 	return ViewHelper_Form_selectLabel($name, $label, $values, $selected, $args) . "<br />\n";
 }

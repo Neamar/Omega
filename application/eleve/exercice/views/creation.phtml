@@ -47,8 +47,8 @@ echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET');
 ?>
 
-<h2 id="eleve-exercice-creation-date" class="countable">Dates</h2>
-<p>Tout d'abord, indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu. Il s'agit de la date limite finale, si vous n'avez rien à ce moment là vous serez remboursé.<br />
+<h2 id="eleve-exercice-creation-date" class="countable">Date</h2>
+<p>Indiquez la date butoir à laquelle le corrigé <strong>doit</strong> vous être rendu. Il s'agit de la date limite finale, si vous n'avez rien à ce moment là vous serez remboursé.<br />
 <?php
 $HeureData = array(
 	'type' => 'number',
@@ -77,24 +77,6 @@ echo 'à ' . $this->Form_input('rendu_heure', $HeureData) . 'h ' . $this->Doc_in
 ?>
 </p>
 
-<p>Ensuite, indiquez-nous à quel moment vous préférez abandonner automatiquement votre demande <strong>si aucune offre ne vous a conquis à cette date</strong>. Bien évidemment, cette date doit précéder la date de rendu !<br />
-<?php
-//Annulation automatique
-$HeureData['value'] = 18;
-echo $this->Form_inputLabel(
-	'annulation_date',
-	'Date d\'annulation',
-	array(
-		'value'=> date('d/m/Y', time()+3600*24*3),
-		'placeholder' => 'JJ/MM/AAAA',
-		'required' => 'required',
-		'pattern' => '[0-3][0-9]/[0-1][0-9]/201[1-9]'
-	)
-);
-echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
-?>
-</p>
-
 <h2 id="eleve-exercice-creation-info" class="countable">Informations complémentaires</h2>
 <?php
 echo $this->Form_textareaLabelBr('infos', 'Informations complémentaires', array('class' => 'tex-container'));
@@ -103,9 +85,12 @@ echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 
 <h2 id="eleve-exercice-creation-options" class="countable">Options avancées</h2>
 <fieldset>
-	<legend><input id="avance" type="checkbox" /><label for="avance">Afficher les options avancées</label></legend>
+	<legend><?php echo $this->Form_checkbox('checkbox_options-avancees-enabled', "Options avancées", false, array('id' => 'checkbox_options-avancees')); ?></legend>
 
-	<div id="div_auto-accept">
+	<div id="div_options-avancees">
+	<fieldset>
+		<legend><?php echo $this->Form_checkbox('auto-accept-enabled', "Paramètres d'acceptation automatique", false, array('id' => 'checkbox_auto-accept')); ?></legend>
+		<div id="div_auto-accept">
 		<?php 
 			echo $this->Form_pointsLabel(
 				'auto_accept',
@@ -115,7 +100,32 @@ echo $this->Doc_input('eleve', 'champ_info') . PHP_EOL;
 			echo $this->Doc_inputBr('eleve', 'auto_accept');
 		?>
 		<div id="slider_auto-accept">Valeur maximum : <span><?php echo $_SESSION['Eleve']->getPoints(); ?></span></div>
-	</div>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend><?php echo $this->Form_checkbox('auto-annulation-enabled', "Date d'annulation automatique", false, array('id' => 'checkbox_auto-annulation')); ?></legend>
+		<div id="div_auto-annulation">
+		<p>Indiquez-nous à quel moment vous préférez abandonner automatiquement votre demande <strong>si aucune offre ne vous a conquis à cette date</strong>. Bien évidemment, cette date doit précéder la date de rendu !<br />
+		<?php
+		//Annulation automatique
+		$HeureData['value'] = 18;
+		echo $this->Form_inputLabel(
+			'annulation_date',
+			'Date d\'annulation',
+			array(
+				'value'=> date('d/m/Y', time()+3600*24*3),
+				'placeholder' => 'JJ/MM/AAAA',
+				'required' => 'required',
+				'pattern' => '[0-3][0-9]/[0-1][0-9]/201[1-9]'
+			)
+		);
+		echo 'à ' . $this->Form_input('annulation_heure', $HeureData) . 'h ' . $this->Doc_inputBr('eleve', 'champ_annulation');
+		?>
+		</p>
+		</div>
+	</fieldset>
+	</div><!-- div_options_avancees -->
 </fieldset>
 
 <h2 id="eleve-exercice-creation-envoi" class="countable">Envoi du formulaire</h2>
