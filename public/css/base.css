@@ -178,7 +178,7 @@ text-shadow:1px 1px 0px #fff;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:15px 15px;
+margin:0 15px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -568,7 +568,6 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*--------------------------------------------------------- 7 jQuerry -------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #eleve-exercice-recapitulatif-fichiers ul li {
-
 }
 
 #ressources ul li {

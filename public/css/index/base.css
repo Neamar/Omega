@@ -246,7 +246,20 @@ line-height:24px;/*ie*/
 	background: url('/public/images/index/input-sp.png') no-repeat; /*input-f*/
 	background-position: 0px -62px;
 	outline:none;
+	}	
+/* ------------------------------------- Non Connecté --*/
+#eleve_form ul li, #correcteur_form ul li {
+	margin-left:15px;
+	list-style-type:disc;
+	list-style-position:inside;
+}
+	#eleve_form ul li a, #correcteur_form ul li a{
+	color:#666;
 	}
+	#eleve_form ul li a:hover, #correcteur_form ul li a:hover{
+		color:#000;
+	}
+.deja-connecte {color:#093;}
 
 /* ------------------------------------- Formulaire élève / correcteur --*/
 #eleve_form, #correcteur_form {
@@ -263,7 +276,7 @@ color:#5c5b5b;
 	#eleve_form p a:hover, #correcteur_form p a:hover {
 	color:#8c5b00;
 	}
-	
+
 /* ------------------------------------- Formulaire élève --*/
 #eleve_form {
 margin-right:150px;
