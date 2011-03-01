@@ -40,7 +40,7 @@ else
 	}
 	else
 	{
-		Debug::redirect('/administrateur/connexion', 302);
+		redirect('/administrateur/connexion', 302);
 	}
 }
 

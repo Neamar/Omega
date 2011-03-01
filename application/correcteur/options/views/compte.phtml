@@ -68,7 +68,7 @@ if(is_null($_SESSION['Correcteur']->Siret))
 		'Votre numéro de SIRET',
 		array(
 			'placeholder' => '000 000 000 00000',
-			'type' =>  'number'
+			'pattern' => '^[0-9]{3} ?[0-9]{3} ?[0-9]{3} ?[0-9]{5}$'
 		)
 	) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
 }

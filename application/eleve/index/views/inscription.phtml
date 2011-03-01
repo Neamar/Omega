@@ -49,8 +49,14 @@ echo $this->Form_inputLabelBr(
 CGU Élèves<br />
 
 <?php 
-echo $this->Form_checkbox('cgu', "J'ai lu et j'accepte les Conditions Générales d'Utilisation du site");
-
+echo $this->Form_checkbox(
+	'cgu',
+	"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site",
+	false,
+	array(
+		'required' => 'required'
+	)	
+);
 echo $this->Form_captcha();
 
 echo $this->Form_submit('inscription-eleve', "M'inscrire");

@@ -138,7 +138,7 @@ abstract class DbObject
 				//Il y a des éléments à mettre à jour sur cette table !
 				if(!SQL::update($Class::TABLE_NAME, $this->ID, $CurrentChanges))
 				{
-					Debug::fail('Erreur au setAndSave : ' . Sql::error());
+					throw new Exception('Erreur au setAndSave : ' . Sql::error());
 				}
 			}
 			

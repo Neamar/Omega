@@ -49,6 +49,7 @@ function __autoload($ClassName)
  */
 function go404($Message, $Code = 404)
 {
+	Event::log('Statut ' . $Code . '	' . $Message);
 	if(!defined('NO_404'))
 	{
 		include PATH . '/404.php';
@@ -100,4 +101,29 @@ function lock($Reason)
 function error($errno, $errstr, $errfile, $errline)
 {
     throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+}
+
+/**
+ * Arrête le script en faisant une redirection HTML avec le code d'erreur spécifié.
+ * 
+ * @param string $Location le chemin absolu du nouvel emplacement
+ * 
+ * @return void La fonction ne retourne jamais, le script est interrompu.
+ */
+function redirect($Location, $Code = null)
+{
+	$Codes = array
+	(
+		200 => 'OK',
+		301 => 'Moved Permanently',
+		302 => 'Found',
+	);
+	if(!is_null($Code))
+	{
+		header('Status: ' . $Code. ' ' . $Codes[$Code], true, $Code);
+	}
+	
+	header('Location: ' . URL . $Location);
+	
+	exit();
 }

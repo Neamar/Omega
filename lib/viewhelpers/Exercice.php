@@ -172,7 +172,7 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 	$Dates = array();
 	
 	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
-	if($Exercice->isCancellable())
+	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== NULL)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}

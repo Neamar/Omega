@@ -1,10 +1,22 @@
-//Slide du pressé
+//Options avancées
 $(function(){
-	$('#div_auto-accept').hide();
-	$('#avance').change(function()
+	$('#div_options-avancees, #div_auto-annulation, #div_auto-accept').hide();
+	
+	$('#checkbox_options-avancees, #checkbox_auto-accept, #checkbox_auto-annulation').change(function()
 	{
-		$('#div_auto-accept').toggle('slow');
+		$(this).closest('fieldset').find('div:first').toggle('slow');
 	});
+	
+	//Remise dans l'état d'envoi en cas d'erreurs
+	if($('#checkbox_auto-accept').is(':checked'))
+	{
+		$('#div_options-avancees, #div_auto-accept').show();
+	}
+	
+	if($('#checkbox_auto-annulation').is(':checked'))
+	{
+		$('#div_options-avancees, #div_auto-annulation').show();
+	}
 });
 
 //Slider d'auto-accept :
