@@ -36,7 +36,7 @@ $HeureData = array(
 );
 
 //Rendu
-$AnnulationAuto = strtotime($this->Exercice->TimeoutEleve);
+$AnnulationAuto = strtotime($this->Exercice->TimeoutEleve==NULL?$this->Exercice->Expiration:$this->Exercice->TimeoutEleve);
 $HeureData['value'] = date('h', $AnnulationAuto);
 echo $this->Form_inputLabel(
 	'annulation_date',

@@ -126,7 +126,15 @@ WHERE Hash="%ID%"';
 	 */
 	public function filterTitle()
 	{
-		return preg_replace('`[^a-z0-9-_]`i', '_', $this->Titre);
+		return preg_replace(
+			'`[^a-z0-9-_]`iu',
+			'_',
+			str_replace(
+				array('é', 'è', 'ê', 'à', 'ç'),
+				array('e', 'e', 'e', 'a', 'c'),
+				$this->Titre
+			)
+		);
 	}
 	/**
 	 * Modifie le statut de l'exercice
