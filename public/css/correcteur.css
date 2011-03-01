@@ -29,7 +29,8 @@ Couleur Bleu
 color:#1eaed2;
 }
 	#ribbon #ribbon-center {
-	background:url('/public/css/images/top-c-correcteur.png') top scroll no-repeat; /*neutre*/
+	background:url('/public/css/images/spr_head.png') top scroll no-repeat; /*top-c-correcteur.png*/
+	background-position:-352px -514px;
 	}
 	#ribbon-right a:hover {border-bottom:1px dashed #006699;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -41,7 +42,8 @@ color:#1eaed2;
 	#logo-liens ul li a:hover {
 	color:#fff;
 	text-shadow:1px 1px 0px #1389ff;
-	background:url('/public/css/images/menu_top-c-l.png') top left scroll no-repeat;
+	background:url('/public/css/images/spr_blue.png') top left scroll no-repeat; /*menu_top-c-l.png*/
+	background-position:0 -129px;
 	}			
 		#logo-liens ul li a:hover span {
 		height:33px;
@@ -78,14 +80,17 @@ color:#1a80bc;
 }
 	/*form*/
 	form input[type=email]:hover, form input[type=email]:focus {
-	background:#fff url('/public/css/images/email-c.png') center left scroll no-repeat;
+	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*email-c.png*/
+	background-position:0 -93px;
 	}
 	form input[type=password]:hover, form input[type=password]:focus {
-	background:#fff url('/public/css/images/pass-c.png') center left scroll no-repeat;
+	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*pass-c.png*/
+	background-position:0 -163px;
 	}
 /*paragraphes*/
 p.action-detail a:hover{
-background:url('/public/css/images/doc-c.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_blue.png') top left scroll no-repeat; /*doc-c.png*/
+background-position:0 -69px;
 padding-left:20px;
 }
 p.action-detail a {

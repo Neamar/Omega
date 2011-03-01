@@ -280,7 +280,8 @@ margin-left:65px;
 /* ------------------------------------- Formulaire correcteur --*/
 #correcteur_form h1 {
 font-size:29px;
-background: url('/public/images/index/correct.png') left no-repeat;
+background: url('/public/css/images/spr_blue.png') left no-repeat; /*correct.png*/
+background-position:0 0;
 padding-left:22px;
 }
 	#connexion-correcteur {

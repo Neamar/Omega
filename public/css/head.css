@@ -83,7 +83,8 @@ background-position:0 -160px;
 	text-shadow: #323232 1px 1px 1px;
 	text-align:center;
 	padding-top:4px;
-		background:url('/public/css/images/top-c-doc.png') top scroll no-repeat; /*neutre*/
+		background:url('/public/css/images/spr_head.png') top scroll no-repeat; /*neutre - top-c-doc.png*/
+		background-position:-11px -514px;
 		width:291px;
 		height:39px;
 		margin:auto;
@@ -95,8 +96,8 @@ background-position:0 -160px;
 	margin-top:-25px;
 	}
 	.pts {
-	background:url('/public/css/images/spr_head.png') bottom left scroll no-repeat; /*pts.png*/
-	background-position:0 -375px;
+	background:url('/public/css/images/spr_content.png') bottom left scroll no-repeat; /*pts.png*/
+	background-position:-1px -1402px;
 	padding-left:20px;
 	}
 		#ribbon, #ribbon a{
@@ -129,8 +130,7 @@ height:103px; /*taille du bloc*/
 		left:inherit;
 		width:261px;
 		height:61px;
-		background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*Gris - logo-doc.png*/
-		background-position:-739px -339px;
+		background:url('/public/css/images/logo-doc.png') top left scroll no-repeat; /*Gris */
 		z-index:10;
 		}
 	
