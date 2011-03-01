@@ -175,7 +175,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->View->Ouvert = true;
 		}
 		
-		$this->View->addScript('/public/js/eleve/exercice/faq.js');
+		$this->View->addScript('/public/js/membre/exercice/faq.js');
 		
 		//Ajout d'une question
 		if($this->View->Ouvert && isset($_POST['faq-question-exercice']))
@@ -278,6 +278,19 @@ abstract class ExerciceAbstractController extends AbstractController
 		);
 		
 		$this->deflectView(OO2FS::genericViewPath('exercice/faq_wd'));
+	}
+	
+	/**
+	 * Renvoie le timestamp du dernier message envoyé sur la FAQ
+	 */
+	public function _lastFaqActionWd()
+	{
+		$this->View->Last = Sql::singleColumn(
+			'SELECT MAX(Creation) AS Max FROM Exercices_FAQ WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID),
+			'Max'
+		);
+		
+		$this->deflectView(OO2FS::genericViewPath('exercice/_lastFaq_wd'));
 	}
 	
 	/**

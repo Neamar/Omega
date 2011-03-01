@@ -7,7 +7,7 @@ if($this->Ouvert)
 {
 	?>
 
-	<h2>Poster une nouvelle question</h2>
+	<h2 id="membre-exercice-faq-question">Poster une nouvelle question</h2>
 	<form id="form_faq-question-exercice" method="post" action="">
 	<?php 
 	echo $this->Form_textareaLabeLBr(
@@ -27,7 +27,9 @@ if($this->Ouvert)
 }//Fin if($this->Ouvert)
 ?>
 
-<h2>Chat actuel</h2>
+<h2 id="membre-exercice-faq-chat">Chat actuel</h2>
+<p style="display: none;" class="important" id="faq-nouveaux">De nouveaux éléments ont été ajoutés ! <a href="">Cliquez pour mettre à jour la page</a>.</p>
+
 <div class="texable">
 <?php 
 if(empty($this->FAQ))
