@@ -192,9 +192,6 @@ class Administrateur_IndexController extends IndexAbstractController
 			'Liste des IPs bannies',
 			'Cette page permet de bloquer une IP, et de consulter la liste des bannis.'
 		);
-		Util::ban('158.125.45.18', 3618);
-		Util::ban('159.125.45.18', 3571);
-		Util::ban('247.125.45.18', 100024);
 		
 		//Débannir
 		if(isset($_POST['unban']))

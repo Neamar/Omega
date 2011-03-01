@@ -57,8 +57,7 @@ if(file_exists(DATA_PATH . '/.lock'))
 }
 
 //Démarrer le gestionnaire d'erreurs
-set_error_handler('Debug::errHandler', -1);
-
+set_error_handler('error', -1);
 
 /**
  * Lecture des données de la requête
@@ -153,9 +152,38 @@ if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName,
 /**
  * Exploitation.
  */
-//Chargement du contrôleur
-$Controller = new $ControllerName($_GET['module'], $_GET['controller'], $_GET['view'], $_GET['data']);
-//Exécution du modèle
-$Controller->$ViewName();
-//Rendu de la vue
-$Controller->renderView();
+try
+{
+	//Chargement du contrôleur
+	$Controller = new $ControllerName($_GET['module'], $_GET['controller'], $_GET['view'], $_GET['data']);
+	//Exécution du modèle
+	$Controller->$ViewName();
+	//Rendu de la vue
+	define('NO_404', true); //On ne peut plus utiliser go404(), car du contenu a été envoyé.
+	$Controller->renderView();
+} catch (Exception $e) //Gestion des problèmes
+{
+	//Récupérer les infos utiles
+	ob_start();
+	print_r($_SESSION);
+	$DumpSession = ob_get_clean();
+	
+	ob_start();
+	print_r($_SERVER);
+	$DumpServer = ob_get_clean();
+	
+	$Dump = '
+	<h2>Erreur</h2>
+		<p>Erreur : <strong>' . $e->getMessage() . '</strong><br />
+		Sur : <strong>' . $_SERVER['REQUEST_URI'] . '</strong></p>
+	<h2>Pile d\'appel</h2>
+		<pre>' . $e->getTraceAsString() . '</pre>
+	<h2>Session</h2>
+		<pre>' . $DumpSession . '</pre>
+	<h2>Serveur</h2>
+		<pre>' . $DumpServer . '</pre>';
+	
+	External::mail('matthieu@bacconnier.fr', 'Erreur eDevoir : ' . $e->getMessage(), $Dump);
+	//echo $Dump;
+	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...</p>');
+}
