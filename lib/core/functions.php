@@ -49,7 +49,14 @@ function __autoload($ClassName)
  */
 function go404($Message, $Code = 404)
 {
-	include PATH . '/404.php';
+	if(!defined('NO_404'))
+	{
+		include PATH . '/404.php';
+	}
+	else
+	{
+		exit('<p class="crash">' . $Message . '</p>');
+	}
 }
 
 
@@ -78,4 +85,19 @@ function lock($Reason)
 	file_put_contents(DATA_PATH . '/.lock', $Reason);
 	External::mail('webmaster@edevoir.com', 'Faille critique du site', '<p>eDevoir a été fermé !</p><p>' . $Reason . '</p>');
 	exit();
+}
+
+/**
+ * Fonction appelée quand PHP déclenche une erreur.
+ * @see set_error_handler()
+ * @see Bootstrap.php
+ * 
+ * @param int $errno contains the level of the error raised, as an integer. 
+ * @param unknown_type $errstr contains the error message, as a string.
+ * @param unknown_type $errfile contains the filename that the error was raised in, as a string. 
+ * @param unknown_type $errline contains the line number the error was raised at, as an integer. 
+ */
+function error($errno, $errstr, $errfile, $errline)
+{
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
