@@ -61,6 +61,6 @@ class Util
 	 */
 	public static function ban($IP, $Delay)
 	{
-		file_put_contents(DATA_PATH . '/ips/bans/' . $IP, time() + $Delay);
+		file_put_contents(DATA_PATH . '/ips/ban/' . $IP, time() + $Delay);
 	}
 }

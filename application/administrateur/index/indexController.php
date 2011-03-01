@@ -184,6 +184,38 @@ class Administrateur_IndexController extends IndexAbstractController
 	}
 	
 	/**
+	 * Liste des utilisateurs bannis
+	 */
+	public function bannisAction()
+	{
+		$this->View->setTitle(
+			'Liste des IPs bannies',
+			'Cette page permet de bloquer une IP, et de consulter la liste des bannis.'
+		);
+		Util::ban('158.125.45.18', 3618);
+		Util::ban('159.125.45.18', 3571);
+		Util::ban('247.125.45.18', 100024);
+		
+		//Débannir
+		if(isset($_POST['unban']))
+		{
+			if(unlink(DATA_PATH . '/ips/ban/' . preg_replace('`[^0-9.]`', '', $_POST['unban'])))
+			{
+				$this->View->setMessage('ok', 'Cette ip a été débannie');
+				$this->redirect('/administrateur/bannis');
+			}
+		}
+		
+		//Bannir
+		if(isset($_POST['ajout-ban']) && !empty($_POST['ip']) && !empty($_POST['duree']) && is_numeric($_POST['duree']))
+		{
+			Util::ban(preg_replace('`[^0-9.]`', '', $_POST['ip']), intval($_POST['duree']));
+		}
+		
+		$this->View->Bannis = glob(DATA_PATH . '/ips/ban/*');
+	}
+	
+	/**
 	 * Renvoie le nombre de virements en attente d'être effectués.
 	 * 
 	 * @return int
