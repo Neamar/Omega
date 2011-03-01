@@ -115,7 +115,8 @@ WHERE Hash="%ID%"';
 	public $Reclamation;
 	public $InfosReclamation;
 	public $Remboursement;
-	public $Notation;
+	public $Note;
+	public $InfosNote;
 	public $Retard;
 	
 	/**

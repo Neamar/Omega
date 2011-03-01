@@ -547,8 +547,13 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			else
 			{
 				$ToUpdate = array(
-					'Notation' => intval($_POST['note'])
+					'Note' => intval($_POST['note']),
 				);
+				
+				if(!empty($_POST['message']))
+				{
+					$ToUpdate['InfosNote'] = $_POST['message'];
+				}
 				
 				$this->Exercice->closeExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
 				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE, array('Exercice' => $this->Exercice));
@@ -738,6 +743,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function _supprimerActionWd()
 	{
+		$this->canAccess(array('VIERGE'), 'Il n\'est plus possible de supprimer un fichier.');
+		
 		//Par défaut, la page renvoie sur le récapitulatif
 		if(!isset($this->Data['retour']))
 		{

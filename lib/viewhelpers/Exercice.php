@@ -75,6 +75,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Eleve');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Correcteur');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Reclamation');
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Note');
 	
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);
@@ -150,7 +151,11 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 	{
 		$Infos[] = $Dates[0];
 	}
-	
+
+	if($Exercice->Note !== NULL)
+	{
+		$Infos[] = "Note : " . ($Exercice->Note == 0?'<span style="color:red">&empty;</span>':str_repeat('✭', $Exercice->Note));
+	}
 	return $Infos;
 }
 
@@ -203,7 +208,8 @@ function ViewHelper_Exercice_infos(Exercice $Exercice, $Info)
 	$Caption = array(
 			'Eleve' => 'élève',
 			'Correcteur' => 'correcteur',
-			'Reclamation' => 'réclamation'
+			'Reclamation' => 'justifiant la réclamation',
+			'Note' => 'justifiant la note',
 	);
 	
 	if(!isset($Caption[$Info]))

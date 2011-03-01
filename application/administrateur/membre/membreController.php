@@ -128,10 +128,10 @@ class Administrateur_MembreController extends AbstractController
 		$this->View->NbExos = count($this->View->Exos);
 		
 		$this->View->Note = Sql::singleColumn(
-			'SELECT COALESCE(AVG(Notation),"&empty;") AS M
+			'SELECT COALESCE(AVG(Note),"&empty;") AS M
 			FROM Exercices
 			WHERE Correcteur = ' . $Correcteur->getFilteredId() . '
-			AND !ISNULL(Notation)',
+			AND !ISNULL(Note)',
 			'M'
 		);
 		

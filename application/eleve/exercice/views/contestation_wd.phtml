@@ -28,7 +28,14 @@ echo $this->Doc_box('eleve', 'contestation', "Besoin d'aide pour compléter ce f
 
 <form id="form_contestation-exercice" method="post" action="" enctype="multipart/form-data">
 <?php 
-echo $this->Form_textareaLabelBr('message', 'Justifiez votre demande', array('class' => 'tex-container'));
+echo $this->Form_textareaLabelBr(
+	'message',
+	'Justifiez votre demande',
+	array(
+		'class' => 'tex-container',
+		'required' => 'required',
+	)
+);
 ?>
 <p>Merci d'être précis et complet dans ce message. Plus vos griefs seront clairs, plus il sera facile de les juger.</p>
 
