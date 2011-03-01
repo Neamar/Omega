@@ -579,6 +579,8 @@ position:relative;
 }
 #pre_envoi-log {
 word-wrap: break-word;
+font-size: 65%;
+line-height: 1em;
 }
 	textarea.tex-container {
 	display:block;

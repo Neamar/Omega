@@ -114,6 +114,40 @@ class Sql
 	}
 	
 	/**
+	 * Vérifie l'intégrité des contraintes relationnelles du site.
+	 * Automatiquement appelé au COMMIT pour simuler les CONSTRAINT CHECK non disponibles avec MySQL.
+	 */
+	public static function constraint()
+	{
+		//Vérifier que de l'argent n'est pas apparu de nulle part.
+		$Points = Sql::singleColumn(
+			'SELECT SUM(Points) AS Points
+			FROM
+			(
+				SELECT SUM(Points) AS Points FROM Membres
+				UNION
+				SELECT -SUM(Delta) AS Points FROM Logs
+			) V',
+			'Points'
+		);
+		
+		$Argent = Sql::singleColumn(
+			'SELECT SUM(Montant) AS Montant
+			FROM
+			(
+				SELECT SUM(Montant) AS Montant FROM Entrees
+				UNION
+				SELECT -SUM(Montant) AS Montant FROM Virements
+				UNION
+				SELECT -SUM(Points) AS Montant FROM Membres
+			) V',
+			'Montant'
+		);
+		
+		return ($Points == 0 && $Argent == 0);
+	}
+	
+	/**
 	 * Débute une transaction.
 	 * 
 	 * @return SQLResource
@@ -130,20 +164,8 @@ class Sql
 	 * @return SQLResource
 	 */
 	public static function commit()
-	{
-		//Vérifier que de l'argent n'est pas apparu de nulle part.
-		$Points = Sql::singleColumn(
-			'SELECT SUM(Points) AS Points
-			FROM
-			(
-				SELECT SUM(Points) AS Points FROM Membres
-				UNION
-				SELECT -SUM(Delta) AS Points FROM Logs
-			) V',
-			'Points'
-		);
-		
-		if($Points == 0)
+	{	
+		if(self::constraint())
 		{
 			self::$isTransaction = false;
 			return self::query('COMMIT');

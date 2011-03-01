@@ -69,8 +69,19 @@ abstract class PointsAbstractController extends AbstractController
 
 		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
 		{
+			$_POST['ajout'] = intval($_POST['ajout']);
+			
 			Sql::start();
 			$this->getMembre()->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
+			Sql::insert(
+				'Entrees',
+				array(
+					'Membre' => $this->getMembre()->getFilteredId(),
+					'Montant' => $_POST['ajout'],
+					'_Date' => 'NOW()'
+				)
+			);
+			
 			Sql::commit();
 			$this->View->setMessage('ok', 'Argent ajouté !');
 		}
