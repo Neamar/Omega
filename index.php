@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,28 +54,64 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
 <div id="content-form">
 <!-- Formulaire de connexion élève -->
 <section id="eleve_form">
-<h1>Connexion élève</h1>
-<form method="post" action="/eleve/connexion" id="connexion-eleve">
-	<label for="eleve_email">E-mail :</label>
-	<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
-	<label for="eleve_password">Mot de passe :</label>
-	<input type="password" name="password" id="eleve_password" /><br />
-	<input type="submit" name="connexion-eleve" value="Connexion" />
-</form>
-<p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
+<?php 
+if(!isset($_SESSION['Eleve']))
+{
+	?>
+	<h1>Connexion élève</h1>
+	<form method="post" action="/eleve/connexion" id="connexion-eleve">
+		<label for="eleve_email">E-mail :</label>
+		<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
+		<label for="eleve_password">Mot de passe :</label>
+		<input type="password" name="password" id="eleve_password" /><br />
+		<input type="submit" name="connexion-eleve" value="Connexion" />
+	</form>
+	<p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
+	<?php 
+}
+else
+{
+	?>
+	<h1>Élève connecté</h1>
+	<p class="deja-connecte">Vous êtes connecté.</p>
+	<ul>
+		<li><a href="/eleve/">Accéder à votre compte</a></li>
+		<li><a href="/eleve/connexion">Me déconnecter</a></li>
+	</ul>
+	<?php
+}
+?>
 </section>
 
 <!-- Formulaire de connexion correcteur -->
 <section id="correcteur_form">
-<h1>Connexion correcteur</h1>
-<form method="post" action="/correcteur/connexion" id="connexion-correcteur">
-	<label for="correcteur_email">E-mail :</label>
-	<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
-	<label for="correcteur_password">Mot de passe :</label>
-	<input type="password" name="password" id="correcteur_password" /><br />
-	<input type="submit" name="connexion-correcteur" value="Connexion" />
-</form>
-<p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
+<?php 
+if(!isset($_SESSION['Correcteur']))
+{
+	?>
+	<h1>Connexion correcteur</h1>
+	<form method="post" action="/correcteur/connexion" id="connexion-correcteur">
+		<label for="correcteur_email">E-mail :</label>
+		<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
+		<label for="correcteur_password">Mot de passe :</label>
+		<input type="password" name="password" id="correcteur_password" /><br />
+		<input type="submit" name="connexion-correcteur" value="Connexion" />
+	</form>
+	<p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
+	<?php 
+}
+else
+{
+	?>
+	<h1>Correcteur connecté</h1>
+	<p class="deja-connecte">Vous êtes connecté.</p>
+	<ul>
+		<li><a href="/correcteur/">Accéder à votre compte</a></li>
+		<li><a href="/correcteur/connexion">Me déconnecter</a></li>
+	</ul>
+	<?php
+}
+?>
 </section>
 </div><!-- /content-form -->
 
