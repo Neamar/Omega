@@ -67,7 +67,8 @@ text-shadow:1px 1px 0px #fff;
 	background-position:0 -466px;
 	z-index:10;/*laisse passer le doc-box a */
 }
-#content h2:first-child:before, #tabs h2:before {background:url('/public/css/images/separateur-first.jpg') top scroll no-repeat!important;}
+/*#content h2:first-child:before, #tabs h2:before {background:url('/public/css/images/separateur-first.jpg') top scroll no-repeat!important;} - A voir plus tard (colision dans tableau ajax)*/
+#content h2:first-child:before {background:none!important;}
 #content h2:first-child {margin-top:10px;}
 #content h2 a.a_h2-anchor {
 	display:inline-block;
@@ -156,7 +157,8 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 	}
 p.action-detail a {
 color:#a6a6a6;
-background:url('/public/css/images/doc-d.png') top left scroll no-repeat;
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*doc-d.png*/
+background-position:-5px -1380px;
 padding-left:20px;
 }
 /*p.action-detail {
@@ -235,6 +237,7 @@ aside.doc-box {
 padding-left:44px;
 margin-bottom:10px;
 background:#f1f1ef url('/public/css/images/doc-box.png') center left scroll no-repeat;
+background-position:-5px 
 font: 16px/1.2em "Georgia", serif;
 color:#676767;
 font-weight:bold;
@@ -469,7 +472,8 @@ padding-left:26px;
 width:324px;
 }
 form input[type=number].pts {
-background:#fff url('/public/css/images/pts-input.png') center left scroll no-repeat;
+background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pts-input.png*/
+background-position:-1px -1402px;
 padding-left:18px;
 }
 form input[type=email]:hover, form input[type=email]:focus {
