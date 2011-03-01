@@ -298,7 +298,6 @@ abstract class ExerciceAbstractController extends AbstractController
 	 */
 	protected function fichiersActionWd()
 	{
-		$this->View->addScript('/public/js/membre/exercice/fichiers.js');
 		$this->deflectView(OO2FS::genericViewPath('exercice/fichiers_wd'));
 	}
 	
