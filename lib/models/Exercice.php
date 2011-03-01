@@ -140,7 +140,7 @@ WHERE Hash="%ID%"';
 	{
 		if(!in_array($Status, self::$Workflow[$this->Statut]))
 		{
-			Debug::fail('Impossible de passer du statut ' . $this->Statut . ' au statut ' . $Status);
+			throw new Exception('Impossible de passer du statut ' . $this->Statut . ' au statut ' . $Status);
 		}
 		
 		$AncienStatut = $this->Statut;

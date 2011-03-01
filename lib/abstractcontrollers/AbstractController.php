@@ -276,12 +276,11 @@ abstract class AbstractController
 				);
 			}
 			
-			header('Location:' . URL . $URL);
-			exit();
+			redirect($URL);
 		}
 		else
 		{
-			Debug::fail('Impossible de rediriger après l\'envoi des headers.');
+			throw new Exception('Impossible de rediriger après l\'envoi des headers.');
 		}
 	}
 
@@ -402,7 +401,7 @@ abstract class AbstractController
 		// Inconnu :(
 		else
 		{
-			Debug::fail('URL indécodable.');
+			throw new Exception('URL indécodable.');
 		}
 	}
 	
