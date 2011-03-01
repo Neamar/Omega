@@ -29,7 +29,8 @@ Couleur Bleu
 color:#1eaed2;
 }
 	#ribbon #ribbon-center {
-	background:url('/public/css/images/top-c-correcteur.png') top scroll no-repeat; /*neutre*/
+	background:url('/public/css/images/spr_head.png') top scroll no-repeat; /*top-c-correcteur.png*/
+	background-position:-352px -514px;
 	}
 	#ribbon-right a:hover {border-bottom:1px dashed #006699;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/

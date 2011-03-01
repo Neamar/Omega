@@ -31,7 +31,8 @@ Couleur Orange
 color:#d29d1e;
 }
 	#ribbon #ribbon-center {
-	background:url('/public/css/images/top-c-eleve.png') top scroll no-repeat; /*neutre*/
+	background:url('/public/css/images/spr_head.png') top scroll no-repeat; /*top-c-eleve.png*/
+	background-position:-692px -514px;
 	}
 	#ribbon-right a:hover {border-bottom:1px dashed #7e3e13;}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
