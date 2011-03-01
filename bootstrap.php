@@ -90,8 +90,6 @@ $_GET['data']= AbstractController::buildData($_GET['data']);
 //Connecter le serveur SQL
 Sql::connect();
 
-Event::dispatch(Event::DAILY_CRON, array());
-exit();
 
 
 
