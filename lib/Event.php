@@ -53,6 +53,7 @@ class Event
 	const MEMBRE_EXERCICE_DEDOMMAGEMENT = 'membre/exercice/dedommagement';
 	
 	const CRON = 'cron';
+	const DAILY_CRON = 'cron-daily';
 	
 	/**
 	* Transmet un événement aux écouteurs associés.
@@ -66,6 +67,7 @@ class Event
 		
 		//Récupérer le chemin complet.
 		$EventPath = OO2FS::eventPath($Event);
+
 		//S'il y a des listeners associés :
 		if(is_dir($EventPath))
 		{
