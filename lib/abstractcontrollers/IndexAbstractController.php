@@ -60,6 +60,9 @@ abstract class IndexAbstractController extends AbstractController
 			}
 			else
 			{
+				//Envoyer un mail de confirmation de désinscription (et le faire avant d'unset la $_SESSION ^^)
+				External::templateMailFast($this->getMembre(), '/membre/compte/desinscription');
+				
 				unset($_SESSION[$this->getMembreIndex()]);
 				
 				//Récupérer sur la banque les points du compte
@@ -72,6 +75,7 @@ abstract class IndexAbstractController extends AbstractController
 					Sql::commit();
 				}
 				
+				//Puis rediriger vers la page de connexion
 				$this->View->setMessage(
 					'ok',
 					"Vous avez été désinscrit. Que les vents vous soient favorables !<br />
@@ -151,19 +155,20 @@ abstract class IndexAbstractController extends AbstractController
 				{
 					$Datas = array(
 						'mail' => $_POST['email'],
-						'mdp' => $Password
+						'password' => $Password,
+						'ip' => $_SERVER['REMOTE_ADDR']
 					);
 					
-					External::templateMail($_POST['email'], '/membre/recuperation', $Datas);
+					External::templateMail($_POST['email'], '/membre/compte/recuperation_mdp', $Datas);
 					
-					$this->View->setMessage('info', "Un mail a bien été envoyé avec vos nouveaux identifiants.");
+					$this->View->setMessage('ok', "Un mail a bien été envoyé avec vos nouveaux identifiants.");
 					$this->redirect('/' . $this->getModule() . '/connexion');
 				}
 			}
 		}
 		
 		//Utiliser une vue générique.
-		$this->deflectView(LIB_PATH . '/View/membre/recuperation.phtml');
+		$this->deflectView(LIB_PATH . '/views/membre/recuperation.phtml');
 	}
 	
 	/**
