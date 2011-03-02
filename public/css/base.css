@@ -313,7 +313,7 @@ background-color:#f1f1ef;
 /*-------------------------------------------------- 4. Le module de chat ---------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* les images (icones) */
-h3.faq-question.faq-eleve, h3.faq-question.faq-correcteur {
+h3.faq-question.faq-eleve, h3.faq-question.faq-correcteur, h3.faq-question.faq-administrateur {
 font:bold 21px "Palatino", "Palatino Linotype,", "Book Antiqua", serif;
 text-transform:none;
 text-shadow:1px 1px 0px #fff;
@@ -329,26 +329,36 @@ text-shadow:1px 1px 0px #fff;
 	background:url('/public/css/images/correct.png') left scroll no-repeat;
 	padding-left:28px;
 	}
+	h3.faq-question.faq-administrateur {
+	color:#d81616;
+	background:url('/public/css/images/admin.png') left scroll no-repeat;
+	padding-left:28px;
+	}
 /*h3.faq-question.faq-eleve:after, h3.faq-question.faq-correcteur:after {content: " »";}
 h3.faq-question.faq-eleve:before, h3.faq-question.faq-correcteur:before {content: "« ";}*/
 
 /* bordure */
-p.faq-reponse.faq-correcteur, p.faq-reponse.faq-eleve {
+p.faq-reponse.faq-correcteur, p.faq-reponse.faq-eleve, p.faq-reponse.faq-administrateur {
 position:relative;
 text-transform:none;
 margin-left:50px;
 padding-left:5px;
 font-style:italic;
 }
+p.faq-reponse.faq-administrateur {color:#d81616;}
+
 	p.faq-reponse.faq-eleve {
 	border-left:2px solid #e06c0e;
 	}
 	p.faq-reponse.faq-correcteur {
 	border-left:2px solid #006699;
 	}
+	p.faq-reponse.faq-administrateur {
+	border-left:2px solid #990000;
+	}
 
 /* minis icones*/
-p.faq-reponse.faq-correcteur:before , p.faq-reponse.faq-eleve:before{
+p.faq-reponse.faq-correcteur:before , p.faq-reponse.faq-eleve:before, p.faq-reponse.faq-administrateur:before{
 position:absolute;
 top:50%;
 margin-top:-10px;
@@ -362,6 +372,9 @@ width:15px;
 	}
 	p.faq-reponse.faq-eleve:before {
 	background:url('/public/css/images/eleve2-min.png') left scroll no-repeat;
+	}
+	p.faq-reponse.faq-administrateur:before {
+	background:url('/public/css/images/admin-min.png') left scroll no-repeat;
 	}
 
 /*Ajouter une réponse*/
@@ -486,6 +499,12 @@ background-position:5px -68px;
 padding-left:26px;
 width:324px;
 }
+form input[type=text].hasDatepicker { /* les dates youpi*/
+background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pass-d.png*/
+background-position:3px -1427px;
+padding-left:26px;
+width:324px;
+}
 	form input[type=password]:hover, form input[type=password]:focus {
 	background:#fff url('/public/css/images/pass-e.png') center left scroll no-repeat;
 	}
@@ -545,7 +564,7 @@ text-shadow:1px 1px 0px #f8f8f8;
 }
 	td {
 	background-color:#f0f0f0;
-	padding:13px;
+	padding:7px;
 	border-left:1px solid #d6d6d6;
 	}
 		td:first-child {
@@ -569,6 +588,8 @@ text-shadow:1px 1px 0px #f8f8f8;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 #eleve-exercice-recapitulatif-fichiers ul li {
 }
+.fichier-sujet {max-width:910px;}
+.fichier a {font-weight:bold; display:inline-block; margin-bottom:5px;}
 
 #ressources ul li {
 	cursor:pointer;

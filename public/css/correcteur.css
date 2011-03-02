@@ -58,8 +58,8 @@ color:#1eaed2;
 color:#057cff;
 }
 	#ariane .see-link a:hover{
-	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
-	background-position:0px -36px;
+	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*see-link2.png*/
+	background-position:-653px -375px;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/
@@ -86,6 +86,10 @@ color:#1a80bc;
 	form input[type=password]:hover, form input[type=password]:focus {
 	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*pass-c.png*/
 	background-position:0 -163px;
+	}
+	form input[type=text].hasDatepicker:hover, form input[type=text].hasDatepicker:focus {
+	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*pass-c.png*/
+	background-position:-1px -189px;
 	}
 /*paragraphes*/
 p.action-detail a:hover{
