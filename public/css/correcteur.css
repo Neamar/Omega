@@ -58,8 +58,8 @@ color:#1eaed2;
 color:#057cff;
 }
 	#ariane .see-link a:hover{
-	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
-	background-position:0px -36px;
+	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*see-link2.png*/
+	background-position:-653px -375px;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/
@@ -86,6 +86,10 @@ color:#1a80bc;
 	form input[type=password]:hover, form input[type=password]:focus {
 	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*pass-c.png*/
 	background-position:0 -163px;
+	}
+	form input[type=text].hasDatepicker:hover, form input[type=text].hasDatepicker:focus {
+	background:#fff url('/public/css/images/spr_blue.png') center left scroll no-repeat; /*pass-c.png*/
+	background-position:-1px -189px;
 	}
 /*paragraphes*/
 p.action-detail a:hover{
@@ -203,6 +207,11 @@ text-shadow:1px 1px 0px #e0faff;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------- 8. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
+.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url("public/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x; color: #333333; }
+.ui-widget-content a { color: #333333; }
+.ui-widget-header { border: 1px solid #088be7; background: #4fa2da url("public/images/ui-bg_gloss-wave_35_f6a828_500x100-cor.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-header a { color: #ffffff; }
+
 #envoi-apercu .pager{text-align:center;}
 #envoi-apercu .pdf-image{text-align:center;}
 

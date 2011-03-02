@@ -62,8 +62,8 @@ color:#d29d1e;
 color:#996600;
 }
 	#ariane .see-link a:hover{
-	background:url('/public/css/images/see-link2.png') top left scroll no-repeat; /*image*/
-	background-position:0px -18px;
+	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*see-link2.png*/
+	background-position:-653px -357px;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/
@@ -88,6 +88,7 @@ text-decoration:none!important;
 	.a_creation-exercice {
 	padding-left:20px;
 	display:inline-block;
+	margin-top:10px;
 	background:url('/public/css/images/spr_content.png') center left scroll no-repeat; /*more.png*/
 	background-position:0 -43px;
 	}
@@ -101,6 +102,10 @@ text-decoration:none!important;
 	form input[type=password]:hover, form input[type=password]:focus {
 	background:#fff url('/public/css/images/spr_oran.png') center left scroll no-repeat; /*pass-e.png*/
 	background-position:0 -173px;
+	}
+	form input[type=text].hasDatepicker:hover, form input[type=text].hasDatepicker:focus {
+	background:#fff url('/public/css/images/spr_oran.png') center left scroll no-repeat; /*pass-e.png*/
+	background-position:0 -209px;
 	}
 	
 /*Paragraphes*/
@@ -227,3 +232,12 @@ text-shadow:1px 1px 0px #ffefe0;
 .ui-state-disabled:hover a {
 color:#e78f08!important;
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------- 8. jQuerry ------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/* Component containers
+----------------------------------*/
+.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url("public/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x; color: #333333; }
+.ui-widget-content a { color: #333333; }
+.ui-widget-header { border: 1px solid #e78f08; background: #f6a828 url("public/images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-header a { color: #ffffff; }

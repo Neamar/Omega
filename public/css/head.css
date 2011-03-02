@@ -371,7 +371,7 @@ aside.message.warning:before {
 background: url('/public/css/images/spr_message.png') top no-repeat; /*mess-warn.png*/
 background-position:0 0;
 }
-	
+
 /* --  Message droite / Classe Global  -- */	
 .message .doc-box-link a{
 	z-index:20; /*pour contrer le before h2*/
