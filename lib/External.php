@@ -105,6 +105,25 @@ class External
 		self::mail($to, $subject, $message);
 	}
 	
+	/**
+	 * Envoie un mail en prenant un membre en paramètre.
+	 * Les données usuelles du membre sont intégrées dans le tableau (par exemple, son mail, son nom s'il est correcteur, etc.)
+	 * 
+	 * @param Membre $to le destinataire du mail, ainsi que les infos de base
+	 * @param string $template le template à utiliser
+	 * @param array $Datas un tableau de données qui sera complémenté par les données du membre
+	 */
+	public static function templateMailFast(Membre $to, $template, array $Datas = array())
+	{
+		$Datas['mail'] = $to->Mail;
+		if(get_class($to) == 'Correcteur')
+		{
+			$Datas['nom'] = $to->identite();
+		}
+		
+		self::templateMail($to->Mail, $template, $Datas);
+	}
+	
 	private static function _templateReplace($Matches)
 	{
 		if(isset(External::$_Datas[$Matches[1]]))
