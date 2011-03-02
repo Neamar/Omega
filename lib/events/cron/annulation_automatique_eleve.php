@@ -28,7 +28,8 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	
 	$Datas = array(
 		'titre' => $Exercice->Titre,
-		'hash' => $Exercice->Hash
+		'hash' => $Exercice->Hash,
+		'mail' => $Exercice->Createur
 	);
 	External::templateMail($Exercice->Createur, '/eleve/annulation_automatique', $Datas);
 }

@@ -129,9 +129,9 @@ class External
 		{
 			$_Datas['titre'] = $Exercice->Titre;
 			$_Datas['hash'] = $Exercice->Hash;
-			$_Datas['points_correcteur'] = $Exercice->priceAsked();
-			$_Datas['points_eleve'] = $Exercice->pricePaid();
-			$_Datas['expiration'] = date('d/M/Y à \Hh', strtotime($Exercice->Expiration)); 
+			$_Datas['prix_correcteur'] = $Exercice->priceAsked();
+			$_Datas['prix_eleve'] = $Exercice->pricePaid();
+			$_Datas['expiration'] = date('d/m/Y à H\h', strtotime($Exercice->Expiration)); 
 		}
 		
 		$Datas = array_merge($_Datas, $Datas);

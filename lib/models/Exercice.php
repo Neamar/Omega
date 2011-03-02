@@ -206,7 +206,7 @@ WHERE Hash="%ID%"';
 			'Enchere' => '0',
 		);
 				
-		$this->setStatus('ANNULE', $Canceller, $Message, $Changes);		
+		$this->setStatus('ANNULE', $Canceller, $Message, $Changes);
 	}
 	
 	/**

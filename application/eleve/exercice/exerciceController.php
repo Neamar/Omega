@@ -485,6 +485,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			{
 				//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
 				$Correcteur = $this->Exercice->getCorrecteur();
+				$OffreCorrecteur = $this->Exercice->priceAsked();
 				
 				$this->Exercice->cancelOffer($_SESSION['Eleve'], "Refus de l'offre par l'élève");
 				
@@ -495,7 +496,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					array(
 						'Exercice' => $this->Exercice,
 						'Correcteur' => $Correcteur,
-						'Eleve' => $this->getMembre()
+						'Eleve' => $this->getMembre(),
+						'prix_correcteur' => $OffreCorrecteur
 					)
 				);
 
@@ -535,7 +537,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					Event::dispatch(
 						Event::ELEVE_EXERCICE_ACCEPTATION,
 						array(
-							'Exercice' => $this->Exercice
+							'Exercice' => $this->Exercice,
+							'Correcteur' => $this->Exercice->getCorrecteur()
 						)
 					);
 
