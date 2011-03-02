@@ -20,7 +20,7 @@ foreach($this->Fichiers as $URL => $Infos)
 	$Extension = Util::extension($URL);
 	if(in_array($Extension, $Images))
 	{
-		echo '<img src="/public/exercices/' . $this->Exercice->LongHash . $URL . '" alt="' . $this->Exercice->Titre . ', fichier ' . $Infos['NomUpload'] . '" class="fichier-sujet" />';
+		echo '<a href="/public/exercices/' . $this->Exercice->LongHash . $URL . '" rel="prettyphoto[fichiers]"><img src="/public/exercices/' . $this->Exercice->LongHash . $URL . '" alt="' . $this->Exercice->Titre . ', fichier ' . $Infos['NomUpload'] . '" class="fichier-sujet" /></a>';
 	}
 	elseif(in_array($Extension, $Documents))
 	{

@@ -42,7 +42,6 @@ include PATH . '/lib/core/OO2FS.php';
 include PATH . '/lib/core/Sql.php';
 session_start();
 
-
 //$_GET = array_map('sanitize', $_GET) ne peut pas fonctionner car il échapperait aussi data.
 $_GET['view'] = sanitize($_GET['view']);
 $_GET['controller'] = sanitize($_GET['controller']);
@@ -55,6 +54,22 @@ if(file_exists(DATA_PATH . '/.lock'))
 {
 	go404(file_get_contents(DATA_PATH . '/.lock'), 500);
 }
+
+//Vérifier que l'IP n'est pas bannie
+if(file_exists(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']))
+{
+	$Banni = file_get_contents(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
+	if($Banni < time())
+	{
+		//Débannir
+		unlink(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
+	}
+	else
+	{
+		go404('Vous êtes banni !<br />Le serveur refuse de parler à ' . $_SERVER['REMOTE_ADDR'] . ' jusqu\'au ' . date('d/m/y à G\hi', $Banni) . '.', 500);
+	}
+}
+
 
 //Démarrer le gestionnaire d'erreurs
 set_error_handler('error', -1);
@@ -75,20 +90,6 @@ $_GET['data']= AbstractController::buildData($_GET['data']);
 //Connecter le serveur SQL
 Sql::connect();
 
-//Vérifier que l'IP n'est pas bannie
-if(file_exists(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']))
-{
-	$Banni = file_get_contents(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
-	if($Banni < time())
-	{
-		//Débannir
-		unlink(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
-	}
-	else
-	{
-		go404('Vous êtes banni !<br />Le serveur refuse de parler à ' . $_SERVER['REMOTE_ADDR'] . ' jusqu\'au ' . date('d/m/y à G\hi', $Banni) . '.', 500);
-	}
-}
 
 
 
