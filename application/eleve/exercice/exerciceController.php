@@ -494,7 +494,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					Event::ELEVE_EXERCICE_REFUS,
 					array(
 						'Exercice' => $this->Exercice,
-						'Correcteur' => $Correcteur
+						'Correcteur' => $Correcteur,
+						'Eleve' => $this->getMembre()
 					)
 				);
 

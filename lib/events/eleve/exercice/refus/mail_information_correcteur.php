@@ -1,9 +1,5 @@
 <?php
-$Datas = array(
-	'hash' => $Params['Exercice']->Hash,
-	'titre' => $Params['Exercice']->Titre,
-	'nom' => $Params['Correcteur']->identite(),
-	'prix' => $Params['Exercice']->priceAsked(),
-);
-
-External::templateMail($Params['Correcteur']->Mail, '/correcteur/refus', $Datas);
+/**
+ * Envoyer un mail informant le correcteur que son offre a été refusée.
+ */
+External::templateMailFast($Params['Correcteur'], '/correcteur/refus');

@@ -198,16 +198,17 @@ abstract class PointsAbstractController extends AbstractController
 					{
 						Sql::commit();
 
-						$Datas = array(
-							'montant' => $_POST['retrait'] / EQUIVALENCE_POINT,
-							'type' => $_POST['type'],
-							'ordre' => $Ordre,
-							'ip' => $_SERVER['REMOTE_ADDR']
+						Event::dispatch(
+							Event::MEMBRE_POINTS_RETRAIT,
+							array(
+								'montant' => $_POST['retrait'] / EQUIVALENCE_POINT,
+								'type' => $_POST['type'],
+								'ordre' => $Ordre,
+								'ip' => $_SERVER['REMOTE_ADDR'],
+								'membre' => $this->getMembre()
+							)
 						);
 						
-						External::templateMailFast($this->getMembre(), '/membre/virement_demande', $Datas);
-						
-
 						$this->View->setMessage('info', "Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais (usuellement dans la semaine).");
 						$this->redirect('/' . $this->getModule() . '/points/');
 					}

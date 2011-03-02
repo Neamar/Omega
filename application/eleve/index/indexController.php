@@ -142,15 +142,12 @@ class Eleve_IndexController extends IndexAbstractController
 				if($ID != FAIL)
 				{
 					//Enregistrer le nouveau membre et le rediriger vers la page de connexion
-					$Datas = array(
-						'mail' => $_POST['email'],
-						'lien' => sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
-					);
-					External::templateMail($_POST['email'], '/eleve/compte/en_attente', $Datas);
-					
 					Event::dispatch(
 						Event::ELEVE_INSCRIPTION, 
-						$Datas
+						array(
+							'mail' => $_POST['email'],
+							'lien' => sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
+						)
 					);
 					
 					$_SESSION['Eleve_JusteInscrit'] = $_POST['email'];

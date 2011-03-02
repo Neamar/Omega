@@ -95,7 +95,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			$this->redirect('/correcteur/');
 		}
 		
-		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Vous ne pouvez plus réserver cet exercice !');
+		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Trop tard ! Vous ne pouvez plus réserver cet exercice !');
 		
 		//Peut-on accéder à l'exo ?
 		$Deja = Sql::singleQuery(
@@ -146,10 +146,6 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', "La date d'expiration doit dépasser d'au moins une heure la date d'annulation !");
 			}
-			elseif($this->Exercice->Statut != 'ATTENTE_CORRECTEUR')
-			{
-				$this->View->setMessage('error', "Désolé, cet exercice n'est plus disponible à la réservation. Soyez plus rapide la prochaine fois :)");
-			}
 			else
 			{
 				$ToUpdate = array(
@@ -176,22 +172,24 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				
 				Sql::commit();
 				
-				Event::dispatch(
-					Event::CORRECTEUR_EXERCICE_PROPOSITION,
-					array(
-						'Exercice' => $this->Exercice
-					)
-				);
-				
-				$this->View->setMessage('ok', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
-				
 				//Gestion de l'auto-accept.
-				if(!empty($this->Exercice->AutoAccept))
+				if(empty($this->Exercice->AutoAccept))
+				{
+					Event::dispatch(
+						Event::CORRECTEUR_EXERCICE_PROPOSITION,
+						array(
+							'Exercice' => $this->Exercice,
+							'Eleve' => $this->Exercice->getEleve()
+						)
+					);
+					$this->View->setMessage('ok', "Vous avez fait votre proposition ! Vous serez informés par mail de son résultat.");
+				}
+				else
 				{
 					$Eleve = $this->Exercice->getEleve();
 					$Prix = $this->Exercice->pricePaid();
 					
-					//prendre le minimum entre le solde et la valeur indiquée.
+					//Prendre le minimum entre le solde et la valeur indiquée.
 					$AutoAccept = min($Eleve->getPoints(), $this->Exercice->AutoAccept);
 					if($Prix <= $AutoAccept)
 					{

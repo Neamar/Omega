@@ -195,7 +195,7 @@ class Administrateur_MembreController extends AbstractController
 		else if($Membre->Type == 'CORRECTEUR')
 		{
 			$_SESSION['Correcteur'] = $this->exists($this->Data['data'], 'Correcteur');
-			$this->View->setMessage('info', 'Vous êtes maintenant connecté sur le compte de ' . $_SESSION['Eleve']->Mail);
+			$this->View->setMessage('info', 'Vous êtes maintenant connecté sur le compte de ' . $_SESSION['Correcteur']->Mail);
 			$this->redirect('/correcteur/');
 		}
 		else

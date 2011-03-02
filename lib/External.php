@@ -111,15 +111,30 @@ class External
 	 * 
 	 * @param Membre $to le destinataire du mail, ainsi que les infos de base
 	 * @param string $template le template à utiliser
-	 * @param array $Datas un tableau de données qui sera complémenté par les données du membre
+	 * @param array $Datas un tableau de données qui sera complémenté par les données du membre et de l'exercice. En cas de conflit, les clés de ce tableau ont la priorité.
+	 * @param Exercice $Exercice un exercice dont les clés principales seront injectées dans le tableau
 	 */
-	public static function templateMailFast(Membre $to, $template, array $Datas = array())
+	public static function templateMailFast(Membre $to, $template, array $Datas = array(), Exercice $Exercice = null)
 	{
-		$Datas['mail'] = $to->Mail;
+		//Incorporer les données du membre
+		$_Datas = array();
+		$_Datas['mail'] = $to->Mail;
 		if(get_class($to) == 'Correcteur')
 		{
-			$Datas['nom'] = $to->identite();
+			$_Datas['nom'] = $to->identite();
 		}
+		
+		//Incorporer les données de l'exercice
+		if(!is_null($Exercice))
+		{
+			$_Datas['titre'] = $Exercice->Titre;
+			$_Datas['hash'] = $Exercice->Hash;
+			$_Datas['points_correcteur'] = $Exercice->priceAsked();
+			$_Datas['points_eleve'] = $Exercice->pricePaid();
+			$_Datas['expiration'] = date('d/M/Y à \Hh', strtotime($Exercice->Expiration)); 
+		}
+		
+		$Datas = array_merge($_Datas, $Datas);
 		
 		self::templateMail($to->Mail, $template, $Datas);
 	}

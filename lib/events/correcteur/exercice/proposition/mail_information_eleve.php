@@ -1,12 +1,5 @@
 <?php
-//Préparer l'envoi du mail à l'élève.
-$Exercice = $Params['Exercice'];
-
-$Params['Eleve'] = $Params['Exercice']->getEleve();
-$Datas = array(
-	'mail' => $Params['Eleve']->Mail,
-	'titre' => $Params['Exercice']->Titre,
-	'hash' => $Params['Exercice']->Hash,
-	'prix' => $Params['Exercice']->pricePaid(),
-);
-External::templateMail($Params['Eleve']->Mail, '/eleve/proposition', $Datas);
+/**
+ * Envoyer un mail à l'élève l'informant de la proposition effectuée
+ */
+External::templateMailFast($Params['Eleve'], '/eleve/exercice/proposition', array(), $Params['Exercice']);
