@@ -10,7 +10,21 @@ if(count($this->ExercicesActifs) > 0)
 	{
 		$ExercicesActifs[] = '<a href="/correcteur/exercice/envoi/' . $Hash . '">' . $Donnees['Titre'] . '</a> (expiration : ' . $this->Date_countdown($Donnees['Expiration']) . ')';
 	}
-	echo $this->Html_list($ExercicesActifs, 'ul', '/correcteur/exercice/index/');
+	echo $this->Html_list($ExercicesActifs, 'ul', 'ul_exercices-actifs');
+}
+
+if(count($this->QuestionsActives) > 0)
+{
+	?>
+	<h2 id="membre-exercice-index-faq">Questions en suspens</h2>
+	<p>Des questions sans réponse attendent désespérement votre passage pour les éclairer de votre lumière.</p>
+	<?php 
+	$Questions = array();
+	foreach($this->QuestionsActives as $Hash => $Donnees)
+	{
+		$Questions[] = '<a href="/correcteur/exercice/faq/' . $Hash . '">' . $Donnees['Titre'] . '</a>&nbsp;: ' . ($Donnees['NbQuestions'] == 1?'une question':$Donnees['NbQuestions'] . ' questions') . ' en suspens.';
+	}
+	echo $this->Html_list($Questions, 'ul', 'ul_questions_actives');
 }
 ?>
 

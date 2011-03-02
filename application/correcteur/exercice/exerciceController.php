@@ -44,6 +44,17 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			ORDER BY Expiration',
 			'Hash'
 		);
+		
+		$this->View->QuestionsActives = Sql::queryAssoc(
+			'SELECT Exercices.Hash, Exercices.Titre, COUNT(*) AS NbQuestions
+			FROM Exercices_FAQ FAQ
+			JOIN Exercices ON (Exercices.ID = FAQ.Exercice)
+			WHERE ISNULL(Parent)
+			AND Membre <> ' . $this->getMembre()->getFilteredId() . '
+			AND (SELECT COUNT(*) FROM Exercices_FAQ Reponses WHERE Parent = FAQ.ID) = 0
+			GROUP BY Exercices.ID',
+			'Hash'
+		);
 	}
 	
 	/**
