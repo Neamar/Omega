@@ -18,7 +18,7 @@ Version : Pour la deuxième partie - ext
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------- 0. Start ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.edevoir span {	font-style:italic;}
+.edevoir span {	-webkit-transform: rotate(-15deg); -moz-transform: rotate(-15deg); -o-transform: rotate(-15deg);}
 
 #content ul {margin:0; padding:0; list-style-type: circle; list-style-position:inside;}
 #content a { text-decoration: none; color: #424242;}
@@ -28,6 +28,9 @@ h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
 ul {padding-left:15px;}
 ul ul{list-style-type: square!important;}
 #content li {margin-left:15px;}
+
+.exercice-tab > h2 a, #title h1 {word-wrap: break-word; }
+
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------- 1. Content -------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -567,6 +570,8 @@ text-shadow:1px 1px 0px #f8f8f8;
 	padding:7px;
 	border-left:1px solid #d6d6d6;
 	}
+	td a { display:inline-block; max-width:650px; word-wrap: break-word;}
+	
 		td:first-child {
 		border-left:2px solid #dedede;
 		}
