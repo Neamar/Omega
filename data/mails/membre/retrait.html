@@ -1,7 +1,13 @@
 Virement sur compte externe effectué
 
-'mail' => $Membre->Mail,
-'delta' => $_POST['retrait'],
-'type' => $_POST['type'],
-'ordre' => $Ordre,
-'ip' => $_SERVER['REMOTE_ADDR']
+<p>Bonjour __mail__,<br />
+Nous vous informons que le virement que vous nous avez demandé le __date__ d'un montant de __montant__€ a bien été effectué aujourd'hui.</p>
+
+<p>Informations sur le virement :</p>
+<ul>
+	<li>IP ayant effectué la demande : __ip__</li>
+	<li>Montant en € : __montant__</li>
+	<li>Type du virement : __type__</li>
+	<li>Bénéficiaire : __ordre__</li>
+	<li>Identifiant du virement (pour références futures) : <strong>__id__</strong></li>
+</ul>
