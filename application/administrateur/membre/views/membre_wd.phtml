@@ -10,7 +10,7 @@ $Infos = array(
 	'Mail' => $this->Membre->Mail,
 	'Points' => $this->Points($this->Membre->getPoints()),
 	'Création du compte' => date('d/m/Y', strtotime($this->Membre->Creation)),
-	'Dernière connexion' => date('d/m/Y', strtotime($this->Membre->Connexion)),
+	'Dernière connexion' => date('d/m/Y à H:i', strtotime($this->Membre->Connexion)),
 	'Statut du compte' => $Statuts[$this->Membre->Statut],	
 );
 

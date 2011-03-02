@@ -234,6 +234,11 @@ class Administrateur_MembreController extends AbstractController
 				{
 					External::templateMailFast($Membre, '/membre/compte/bloque');
 				}
+				//Correcteur accepté
+				if($Membre->Statut == 'EN_ATTENTE' && $Membre->Type == 'CORRECTEUR' && $_POST['statut'] == 'OK')
+				{
+					External::templateMailFast($Membre, '/correcteur/compte/ok');
+				}
 				
 				$Membre->setAndSave(array('Statut' => $_POST['statut']));
 				$this->View->setMessage('ok', 'Modifications enregistrées');
