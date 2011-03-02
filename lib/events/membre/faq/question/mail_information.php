@@ -7,10 +7,10 @@ $Datas = array(
 
 if($Params['Correcteur']->ID != $Params['Membre']->ID)
 {
-	External::templateMail($Params['Correcteur']->Mail, '/correcteur/faq_question', $Datas);
+	External::templateMailFast($Params['Correcteur'], '/correcteur/exercice/faq/question', array(), $Params['Exercice']);
 }
 
 if($Params['Eleve']->ID != $Params['Membre']->ID)
 {
-	External::templateMail($Params['Eleve']->Mail, '/eleve/faq_question', $Datas);
+	External::templateMailFast($Params['Eleve'], '/eleve/exercice/faq/question', array(), $Params['Exercice']);
 }
