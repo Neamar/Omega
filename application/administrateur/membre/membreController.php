@@ -208,7 +208,7 @@ class Administrateur_MembreController extends AbstractController
 	public function statutActionWd()
 	{
 		$Membre = $this->exists($this->Data['data'], 'Membre');
-		$this->View->Status = array('OK', 'BLOQUE', 'DESINSCRIT');
+		$this->View->Status = array('OK', 'BLOQUE');
 		$this->View->Default = $Membre->Statut;
 		
 		$this->View->setTitle(
@@ -224,6 +224,17 @@ class Administrateur_MembreController extends AbstractController
 			}
 			else 
 			{
+				//Envoyer un mail si débloqué			
+				if($Membre->Statut == 'BLOQUE' && $_POST['statut'] == 'OK')
+				{
+					External::templateMailFast($Membre, '/membre/compte/debloque');
+				}
+				//Envoyer un mail si bloqué
+				if($_POST['statut'] == 'BLOQUE')
+				{
+					External::templateMailFast($Membre, '/membre/compte/bloque');
+				}
+				
 				$Membre->setAndSave(array('Statut' => $_POST['statut']));
 				$this->View->setMessage('ok', 'Modifications enregistrées');
 				$this->redirect('/administrateur/membre/' . strtolower($Membre->Type) . '/' . $Membre->Mail);

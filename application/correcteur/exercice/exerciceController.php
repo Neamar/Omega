@@ -89,6 +89,12 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 */
 	public function reservationActionWd()
 	{
+		if($this->getMembre()->Statut == 'BLOQUE')
+		{
+			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
+			$this->redirect('/correcteur/');
+		}
+		
 		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Vous ne pouvez plus réserver cet exercice !');
 		
 		//Peut-on accéder à l'exo ?

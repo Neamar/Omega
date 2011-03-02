@@ -103,6 +103,12 @@ class Correcteur_IndexController extends IndexAbstractController
 	 */
 	public function listeAction()
 	{
+		if($this->getMembre()->Statut == 'BLOQUE')
+		{
+			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
+			$this->redirect('/correcteur/');
+		}
+		
 		$this->View->setTitle(
 			'Marché aux exercices',
 			"Cette page liste les articles en attente de correcteur... pourquoi pas vous ?"
