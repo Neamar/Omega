@@ -171,6 +171,7 @@ abstract class PointsAbstractController extends AbstractController
 					$Ordre = $_POST['rib-banque'] . '-' . $_POST['rib-guichet'] . '-' . $_POST['rib-compte'] . '-' . $_POST['rib-cle'];
 				}
 
+				//Début de la transaction SQL
 				Sql::start();
 				if(!$this->getMembre()->debit($_POST['retrait'], 'Virement pour ' . $Ordre))
 				{
@@ -197,16 +198,15 @@ abstract class PointsAbstractController extends AbstractController
 					{
 						Sql::commit();
 
-						Event::dispatch(
-							Event::MEMBRE_POINTS_RETRAIT,
-							array(
-								'mail' => $this->getMembre()->Mail,
-								'delta' => $_POST['retrait'],
-								'type' => $_POST['type'],
-								'ordre' => $Ordre,
-								'ip' => $_SERVER['REMOTE_ADDR']
-							)
+						$Datas = array(
+							'montant' => $_POST['retrait'] / EQUIVALENCE_POINT,
+							'type' => $_POST['type'],
+							'ordre' => $Ordre,
+							'ip' => $_SERVER['REMOTE_ADDR']
 						);
+						
+						External::templateMailFast($this->getMembre(), '/membre/virement_demande', $Datas);
+						
 
 						$this->View->setMessage('info', "Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais (usuellement dans la semaine).");
 						$this->redirect('/' . $this->getModule() . '/points/');
