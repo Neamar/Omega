@@ -207,9 +207,9 @@ text-shadow:1px 1px 0px #e0faff;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------- 8. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url("public/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x; color: #333333; }
+.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url("/public/css/ui/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x; color: #333333; }
 .ui-widget-content a { color: #333333; }
-.ui-widget-header { border: 1px solid #088be7; background: #4fa2da url("public/images/ui-bg_gloss-wave_35_f6a828_500x100-cor.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-header { border: 1px solid #088be7; background: #4fa2da url("/public/css/ui/images/ui-bg_gloss-wave_35_f6a828_500x100-cor.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }
 
 #envoi-apercu .pager{text-align:center;}
