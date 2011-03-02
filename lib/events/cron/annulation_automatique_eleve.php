@@ -24,12 +24,14 @@ $Banque = $Params['Membre'];
 //En conséquence, la plupart des fonctions sur Exercice ne sont pas correctes ET NE DOIVENT PAS ÊTRE APPELÉES
 while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 {	
+	$MailEleve = $Exercice->Createur;
 	$Exercice->cancelExercice($Banque, 'Annulation automatique de l\'exercice.');
 	
 	$Datas = array(
 		'titre' => $Exercice->Titre,
 		'hash' => $Exercice->Hash,
-		'mail' => $Exercice->Createur
+		'mail' => $MailEleve
 	);
-	External::templateMail($Exercice->Createur, '/eleve/annulation_automatique', $Datas);
+	
+	External::templateMail($MailEleve, '/eleve/exercice/annulation_automatique', $Datas);
 }

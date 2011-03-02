@@ -165,6 +165,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', "La date de rendu doit être postérieure à la date d'annulation automatique.");
 			}
+			elseif($_POST['annulation_ts'] < time() + 3600)
+			{
+				$this->View->setMessage('error', "Le délai spécifié pour l'annulation est trop court ou dans le passé. Nous ne faisons pas machine à remonter le temps, désolé.");
+			}
 			elseif(!is_numeric($_POST['auto_accept']) || $_POST['auto_accept'] < 0)
 			{
 				$this->View->setMessage('error', "La valeur spécifiée pour l'acceptation automatique doit être numérique positive.");
