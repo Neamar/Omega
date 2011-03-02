@@ -127,7 +127,8 @@ class Administrateur_IndexController extends IndexAbstractController
 			str_replace('__TYPE__', 'PAYPAL', $Query),
 			'ID'
 		);
-			
+		
+		//TODO: Template mail de /membre/virement_effectue.html
 	}
 	
 	/**
@@ -268,7 +269,8 @@ class Administrateur_IndexController extends IndexAbstractController
 		return Sql::singleColumn(
 			'SELECT COUNT(*) AS S
 			FROM Membres
-			WHERE Statut="EN_ATTENTE"',
+			WHERE Statut="EN_ATTENTE"
+			AND Type="CORRECTEUR"',
 			'S'
 		);
 	}
