@@ -27,12 +27,20 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	$Eleve = $Exercice->getEleve();
 	$Correcteur = $Exercice->getCorrecteur();
 	
-	$Remboursement = min(POURCENTAGE_RETARD/100 * $Exercice->pricePaid(), MAX_REMBOURSEMENT * EQUIVALENCE_POINT);
+	$Remboursement = min(POURCENTAGE_RETARD / 100 * $Exercice->pricePaid(), MAX_REMBOURSEMENT * EQUIVALENCE_POINT);
 
 	//Rembourser l'élève
 	Sql::start();
 
-	$Exercice->setStatus('REMBOURSE', $Banque, 'Remboursement à ' . POURCENTAGE_RETARD . '% pour retard', array('Remboursement' => POURCENTAGE_RETARD));
+	$Exercice->setStatus(
+		'REMBOURSE',
+		$Banque,
+		'Remboursement à ' . POURCENTAGE_RETARD . '% pour retard',
+		array(
+			'Remboursement' => POURCENTAGE_RETARD,
+			'Reclamation' => 'RETARD'
+		)
+	);
 	
 	$Banque->debit($Remboursement, 'Remboursement pour dépassement de délai', $Exercice);
 	$Eleve->credit($Remboursement, 'Délai dépassé', $Exercice);
@@ -40,9 +48,10 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	Sql::commit();
 	
 	$Datas = array(
-		'exercice' => $Exercice,
-		'eleve' => $Eleve,
-		'correcteur' => $Exercice->getCorrecteur()
+		'Exercice' => $Exercice,
+		'Eleve' => $Eleve,
+		'Correcteur' => $Correcteur,
+		'Montant' => $Remboursement
 	);
 	
 	Event::dispatch(Event::CORRECTEUR_EXERCICE_RETARD, $Datas);
@@ -50,5 +59,9 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	//Bloquer le correcteur
 	$Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
 	
-	Event::dispatch(Event::CORRECTEUR_BLOQUE, $Datas);
+	$Datas = array(
+		'Membre' => $Correcteur
+	);
+	
+	Event::dispatch(Event::MEMBRE_BLOQUE, $Datas);
 }

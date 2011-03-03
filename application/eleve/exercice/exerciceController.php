@@ -165,6 +165,10 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', "La date de rendu doit être postérieure à la date d'annulation automatique.");
 			}
+			elseif($_POST['annulation_ts'] < time() + 3600)
+			{
+				$this->View->setMessage('error', "Le délai spécifié pour l'annulation est trop court ou dans le passé. Nous ne faisons pas machine à remonter le temps, désolé.");
+			}
 			elseif(!is_numeric($_POST['auto_accept']) || $_POST['auto_accept'] < 0)
 			{
 				$this->View->setMessage('error', "La valeur spécifiée pour l'acceptation automatique doit être numérique positive.");
@@ -582,7 +586,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				
 				$this->Exercice->closeExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
-				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE, array('Exercice' => $this->Exercice));
+				Event::dispatch(
+					Event::ELEVE_EXERCICE_TERMINE,
+					array(
+						'Exercice' => $this->Exercice,
+						'Correcteur' => $this->Exercice->getCorrecteur(),
+						'Message' => 'l\'exercice a été noté par l\'élève, qui accepte donc votre corrigé'
+					)
+				);
 				
 				$this->View->setMessage('ok', 'La note a été enregistrée, l\'exercice est terminé.');
 				$this->redirectExercice();
@@ -699,7 +710,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					Event::dispatch(
 						Event::ELEVE_EXERCICE_RECLAMATION,
 						array(
-							'Exercice' => $this->Exercice
+							'Exercice' => $this->Exercice,
+							'Eleve' => $this->getMembre(),
+							'Correcteur' => $this->Exercice->getCorrecteur()
 						)
 					);
 					

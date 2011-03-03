@@ -1,11 +1,5 @@
 <?php
-//Préparer l'envoi du mail à l'élève.
-$Exercice = $Params['Exercice'];
-
-$Params['Eleve'] = $Params['Exercice']->getEleve();
-$Datas = array(
-	'mail' => $Params['Eleve']->Mail,
-	'titre' => $Params['Exercice']->Titre,
-	'hash' => $Params['Exercice']->Hash,
-);
-External::templateMail($Params['Eleve']->Mail, '/eleve/correction', $Datas);
+/**
+ * Envoyer un mail d'informations à l'élève l'informant que son corrigé est disponible
+ */
+External::templateMailFast($Params['Eleve'], '/eleve/exercice/correction_disponible', array(), $Params['Exercice']);
