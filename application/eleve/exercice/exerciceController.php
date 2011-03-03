@@ -586,7 +586,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				
 				$this->Exercice->closeExercice("Notation de l'exercice", $_SESSION['Eleve'], $ToUpdate);
-				Event::dispatch(Event::ELEVE_EXERCICE_TERMINE, array('Exercice' => $this->Exercice));
+				Event::dispatch(
+					Event::ELEVE_EXERCICE_TERMINE,
+					array(
+						'Exercice' => $this->Exercice,
+						'Correcteur' => $this->Exercice->getCorrecteur(),
+						'Message' => 'l\'exercice a été noté par l\'élève, qui accepte donc votre corrigé'
+					)
+				);
 				
 				$this->View->setMessage('ok', 'La note a été enregistrée, l\'exercice est terminé.');
 				$this->redirectExercice();
@@ -703,7 +710,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					Event::dispatch(
 						Event::ELEVE_EXERCICE_RECLAMATION,
 						array(
-							'Exercice' => $this->Exercice
+							'Exercice' => $this->Exercice,
+							'Eleve' => $this->getMembre(),
+							'Correcteur' => $this->Exercice->getCorrecteur()
 						)
 					);
 					

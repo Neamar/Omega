@@ -28,6 +28,13 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	
 	//Commencer une transaction pour l'échange
 	$Exercice->closeExercice('Cloture automatique (expiration du délai)', $Banque);
-	Event::dispatch(Event::ELEVE_EXERCICE_TERMINE, array('Exercice' => $Exercice));
+	Event::dispatch(
+		Event::ELEVE_EXERCICE_TERMINE,
+		array(
+			'Exercice' => $Exercice,
+			'Correcteur' => $Correcteur,
+			'Message' => 'délai de ' . DELAI_REMBOURSEMENT . ' jours passés sans réclamation de l\'élève'
+		)
+	);
 }
 ?>
