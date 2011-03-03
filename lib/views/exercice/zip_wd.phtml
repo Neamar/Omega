@@ -6,6 +6,13 @@ $ZipURL = tempnam(sys_get_temp_dir(), $this->Exercice->Hash . '.zip');
 $zip = new ZipArchive();
 $zip->open($ZipURL, ZIPARCHIVE::CREATE);
 
+//Infos globales
+$zip->addFromString(
+	'Infos.txt',
+	'Exercice : "' . $this->Exercice->Titre . '"' . PHP_EOL
+	. 'Créé le ' . date('d/m/Y à H:i', strtotime($this->Exercice->Creation))
+);
+
 //Message élève
 if(!empty($this->Exercice->InfosEleve))
 {

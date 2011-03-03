@@ -55,7 +55,7 @@ if($this->NbFiles > 0)
 		<form method="post" enctype="multipart/form-data" action="" id="form_upload-noscript">
 		<?php 
 		echo $SizeLimit . PHP_EOL;
-for($i=0; $i < $this->NbFilesUpload; $i++)
+		for($i = 0; $i < $this->NbFilesUpload; $i++)
 		{
 			echo $this->Form_input(
 				'fichiers[]',
@@ -63,7 +63,13 @@ for($i=0; $i < $this->NbFilesUpload; $i++)
 					'type' => 'file',
 				)
 			) . "<br />\n";
-}
+		}
+		if($this->NbFilesUpload == 0)
+		{
+			?>
+			<p class="important">Vous ne pouvez plus ajouter de fichiers sur cet exercice.</p>
+			<?php
+		}
 		?>
 		
 		<p>Que faire ensuite ?</p>
@@ -90,7 +96,7 @@ if($this->NbFilesUpload > 0)
 else
 		{
 		?>
-			<p>Vous ne pouvez plus ajouter de fichiers sur cet exercice.</p>
+			<p class="important">Vous ne pouvez plus ajouter de fichiers sur cet exercice.</p>
 		<?php 
 }
 		?>	

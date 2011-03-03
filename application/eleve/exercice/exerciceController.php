@@ -404,6 +404,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'Récapitulatif des données envoyées aux correcteurs',
 			"Cette page liste les informations qui seront envoyées au correcteur."
 		);
+		$this->View->addScript();
+		
 		$this->View->Fichiers = $this->Exercice->getFiles(array('SUJET'));
 		
 		if($this->Exercice->getFilesCount(array('SUJET')) == 0 && empty($this->Exercice->InfosEleve))
