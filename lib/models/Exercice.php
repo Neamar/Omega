@@ -117,7 +117,6 @@ WHERE Hash="%ID%"';
 	public $Remboursement;
 	public $Note;
 	public $InfosNote;
-	public $Retard;
 	
 	/**
 	 * Renvoie le titre de l'exercice filtré de tous caractères spéciaux, par exemple pour un nom de fichier

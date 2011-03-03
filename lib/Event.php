@@ -39,11 +39,11 @@ class Event
 
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/index/inscription';
+	const CORRECTEUR_VALIDATION = 'correcteur/index/validation';
 	const CORRECTEUR_EXERCICE_PROPOSITION = 'correcteur/exercice/proposition';
 	const CORRECTEUR_EXERCICE_ENVOI = 'correcteur/exercice/envoi';
 	const CORRECTEUR_EXERCICE_ENVOI_GRATUIT = 'correcteur/exercice/envoi_gratuit';
 	const CORRECTEUR_EXERCICE_RETARD = 'correcteur/exercice/retard';
-	const CORRECTEUR_BLOQUE = 'correcteur/index/bloque';
 	
 	const MEMBRE_POINTS_RETRAIT = 'membre/points/retrait';
 	const MEMBRE_FAQ_QUESTION = 'membre/faq/question';
@@ -51,6 +51,8 @@ class Event
 	const MEMBRE_EXERCICE_COMPENSATION = 'membre/exercice/compensation';
 	const MEMBRE_EXERCICE_REMBOURSEMENT = 'membre/exercice/remboursement';
 	const MEMBRE_EXERCICE_DEDOMMAGEMENT = 'membre/exercice/dedommagement';
+	const MEMBRE_BLOQUE = 'membre/index/bloque';
+	const MEMBRE_DEBLOQUE = 'membre/index/bloque';
 	
 	const CRON = 'cron';
 	const DAILY_CRON = 'cron-daily';

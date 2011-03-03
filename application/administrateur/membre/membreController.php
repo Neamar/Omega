@@ -224,23 +224,35 @@ class Administrateur_MembreController extends AbstractController
 			}
 			else 
 			{
-				//Envoyer un mail si débloqué			
+				//Avant d'appliquer la modification, on regarde si des évènements vons devoir être dispatchés.
+				//Si oui, on les prépare dès maintenant pour les envoyer après.
+				//On ne peut pas le faire après la mise à jour, car la détermination de l'évènement se fait à partir du statut actuel qui est écrasé.
+				
+				//Envoyer un mail si débloqué
 				if($Membre->Statut == 'BLOQUE' && $_POST['statut'] == 'OK')
 				{
-					External::templateMailFast($Membre, '/membre/compte/debloque');
+					$ToDispatch = Event::MEMBRE_DEBLOQUE;
 				}
 				//Envoyer un mail si bloqué
 				if($_POST['statut'] == 'BLOQUE')
 				{
-					External::templateMailFast($Membre, '/membre/compte/bloque');
+					$ToDispatch = Event::MEMBRE_BLOQUE;
 				}
 				//Correcteur accepté
 				if($Membre->Statut == 'EN_ATTENTE' && $Membre->Type == 'CORRECTEUR' && $_POST['statut'] == 'OK')
 				{
-					External::templateMailFast($Membre, '/correcteur/compte/ok');
+					$ToDispatch = Event::CORRECTEUR_VALIDATION;
 				}
 				
+				//Enregistrer la modification
 				$Membre->setAndSave(array('Statut' => $_POST['statut']));
+				
+				//Et enfin dispatcher l'évènement
+				if(isset($ToDispatch))
+				{
+					Event::dispatch($ToDispatch, array('Membre' => $Membre));
+				}
+				
 				$this->View->setMessage('ok', 'Modifications enregistrées');
 				$this->redirect('/administrateur/membre/' . strtolower($Membre->Type) . '/' . $Membre->Mail);
 			}

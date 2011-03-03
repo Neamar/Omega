@@ -351,7 +351,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 						//Envoi gratuit
 						//Modifier le statut vers REMBOURSE
 						Sql::start();
-						$this->Exercice->setStatus('REMBOURSE', $_SESSION['Correcteur'], 'Envoi du fichier corrigé sans frais', array('Reclamation' => 'NON_PAYE', 'Remboursement' => '100'));
+						$this->Exercice->setStatus(
+							'REMBOURSE',
+							$_SESSION['Correcteur'],
+							'Envoi du fichier corrigé sans frais',
+							array(
+								'Reclamation' => 'NON_PAYE',
+								'Remboursement' => '100'
+							)
+						);
 						$Prix = $this->Exercice->pricePaid();
 						$this->Exercice->getEleve()->credit($Prix, 'Remboursement à titre gracieux de l\'exercice.', $this->Exercice);
 						Membre::getBanque()->debit($Prix, 'Remboursement gracieux', $this->Exercice);
