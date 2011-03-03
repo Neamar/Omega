@@ -36,7 +36,6 @@ class Event
 	const ELEVE_EXERCICE_REFUS_AUTOMATIQUE = 'eleve/exercice/refus';
 	const ELEVE_EXERCICE_TERMINE = 'eleve/exercice/termine';
 	const ELEVE_EXERCICE_RECLAMATION = 'eleve/exercice/reclamation';
-
 	
 	const CORRECTEUR_INSCRIPTION = 'correcteur/index/inscription';
 	const CORRECTEUR_VALIDATION = 'correcteur/index/validation';

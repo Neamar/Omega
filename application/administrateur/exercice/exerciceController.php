@@ -94,7 +94,14 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 				{
 					//Rejet de la demande de renseignement
 					$this->Exercice->closeExercice('Rejet de la réclamation', $this->getMembre(), $ToUpdate);
-					//TODO: dispatch Event terminé
+					Event::dispatch(
+						Event::ELEVE_EXERCICE_TERMINE,
+						array(
+							'Exercice' => $this->Exercice,
+							'Correcteur' => $Correcteur,
+							'Message' => 'la réclamation déposée par l\'élève est injustifiée'
+						)
+					);
 					
 					$this->View->setMessage('ok', "Décision correctement enregistrée. Dommage pour l'élève !");
 					$this->redirect('/administrateur/reclamations');
