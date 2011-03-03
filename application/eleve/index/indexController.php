@@ -146,7 +146,7 @@ class Eleve_IndexController extends IndexAbstractController
 						Event::ELEVE_INSCRIPTION, 
 						array(
 							'mail' => $_POST['email'],
-							'lien' => sha1(SALT . $ID . $_POST['email']) . '/mail/' . $_POST['email'],
+							'lien' => sha1(SALT . $ID . $_POST['email']) . '/mail/' . urlencode($_POST['email']),
 						)
 					);
 					
@@ -171,6 +171,7 @@ class Eleve_IndexController extends IndexAbstractController
 			$this->View->setMessage('info', 'Appel incorrect');
 			$this->redirect('/eleve/connexion');
 		}
+		$this->Data['mail'] = str_replace(' ', '+', $this->Data['mail']);
 		
 		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
 		
@@ -186,7 +187,7 @@ class Eleve_IndexController extends IndexAbstractController
 		}
 		else
 		{
-			$this->View->setMessage('error', "Lien de validation invalide.");
+			$this->View->setMessage('error', 'Lien de validation invalide.');
 			$this->redirect("/eleve/inscription");
 		}
 	}

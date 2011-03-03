@@ -85,7 +85,8 @@ $ControllerName = OO2FS::controllerClass($_GET['controller'], $_GET['module']);
 $ViewPath = OO2FS::viewPath($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
 $ViewName = OO2FS::viewFunction($_GET['view'], $_GET['data'], $_GET['controller'], $_GET['module']);
 
-$_GET['data']= AbstractController::buildData($_GET['data']);
+$_GET['data'] = AbstractController::buildData($_GET['data']);
+
 
 //Connecter le serveur SQL
 Sql::connect();

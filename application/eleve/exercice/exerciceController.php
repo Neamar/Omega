@@ -372,7 +372,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 								'warning',
 								"Attention, vous avez validé cet exercice sans aucun fichier.<br />
 								Seul le texte soumis en tant qu'infomation servira aux correcteurs.<br />
-								S'il s'agit d'une erreur, vous pouvez <a href='/eleve/ajout/" . $this->Exercice->Hash . "'>retourner à l'ajout de fichier</a>."
+								S'il s'agit d'une erreur, vous pouvez <a href='/eleve/exercice/ajout/" . $this->Exercice->Hash . "'>retourner à l'ajout de fichier</a>."
 							);
 						}
 					}
