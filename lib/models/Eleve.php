@@ -88,7 +88,8 @@ class Eleve extends Membre
 			'SELECT COUNT(*) AS Nb
 			FROM Exercices
 			WHERE Createur = ' . $this->getFilteredId() . '
-			AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")', $Nb
+			AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")',
+		'Nb'
 		);	
 	}
 }
