@@ -51,10 +51,9 @@ class Event
 	const MEMBRE_EXERCICE_REMBOURSEMENT = 'membre/exercice/remboursement';
 	const MEMBRE_EXERCICE_DEDOMMAGEMENT = 'membre/exercice/dedommagement';
 	const MEMBRE_BLOQUE = 'membre/index/bloque';
-	const MEMBRE_DEBLOQUE = 'membre/index/bloque';
+	const MEMBRE_DEBLOQUE = 'membre/index/debloque';
 	
 	const CRON = 'cron';
-	const DAILY_CRON = 'cron-daily';
 	
 	/**
 	* Transmet un événement aux écouteurs associés.

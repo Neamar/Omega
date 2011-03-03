@@ -83,13 +83,10 @@ echo $this->Form_inputLabel(
 		'pattern' => '^[0-9]{3} ?[0-9]{3} ?[0-9]{3} ?[0-9]{5}$'
 	)
 ) . $this->Doc_inputBr('correcteur', 'pourquoi_autoentreprise');
-?>
-CGU Correcteurs<br />
 
-<?php 
 echo $this->Form_checkbox(
 	'cgu',
-	"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site",
+	"J'ai lu et j'accepte les <a href='/cgu.htm' target='_blank'>Conditions Générales d'Utilisation</a> du site",
 	false,
 	array(
 		'required' => 'required'

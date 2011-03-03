@@ -201,7 +201,7 @@ abstract class IndexAbstractController extends AbstractController
 		}
 		else if(!isset($Datas['cgu']) || $Datas['cgu'] != 'on')
 		{
-			$this->View->setMessage('error', "Vous n'avez pas validé les conditions générales d'utilisation");
+			$this->View->setMessage('error', "Vous n'avez pas validé les Conditions Générales d'Utilisation");
 		}
 		else
 		{

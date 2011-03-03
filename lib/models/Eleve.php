@@ -74,7 +74,7 @@ class Eleve extends Membre
 	 */
 	public function isAbleToCreate()
 	{
-		return ($this->getCreated()<=MAX_EXERCICE_CREES);
+		return ($this->getCreated() <= MAX_EXERCICE_CREES);
 	}
 	
 	/**
@@ -87,8 +87,9 @@ class Eleve extends Membre
 		return SQL::singleColumn(
 			'SELECT COUNT(*) AS Nb
 			FROM Exercices
-			WHERE Createur=' . $this->getFilteredId() . '
-			AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")', $Nb
+			WHERE Createur = ' . $this->getFilteredId() . '
+			AND Statut IN ("ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")',
+		'Nb'
 		);	
 	}
 }
