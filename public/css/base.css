@@ -101,7 +101,7 @@ text-shadow:1px 1px 0px #fff;
 /* - - TITRE H2 - - */
 .content-base h2 {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2.png*/
-background-position:0 -1240px;
+background-position:0 -1560px;
 }
 h2.h2_options {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_actions.png*/
@@ -111,7 +111,7 @@ h2.h2_logs {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-logs.png*/
 background-position:0 -140px;
 }
-h2.membre-exercice-index-actif {
+h2#membre-exercice-index-actif {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-membre-exercice-index-actif.png*/
 background-position:0 -90px;
 }
@@ -123,9 +123,17 @@ h2.h2_exercice {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_exercice.png*/
 background-position:0 -190px;
 }
-h2.correcteur-options-compte, h2.eleve-options-compte {
+h2#correcteur-options-compte, h2#eleve-options-compte {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-options-compte.png*/
 background-position:0 -340px;
+}
+h2#membre-exercice-faq-chat{
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-membre-exercice-faq-chat.png*/
+background-position:0 -1240px;
+}
+h2#membre-exercice-faq-question {
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*membre-exercice-faq-question.png*/
+background-position:0 -1290px;
 }
 
 /* Supression des marges dans les listes */
@@ -161,7 +169,7 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 p.action-detail a {
 color:#a6a6a6;
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*doc-d.png*/
-background-position:-5px -1380px;
+background-position:-5px -1443px;
 padding-left:20px;
 }
 /*p.action-detail {
@@ -489,7 +497,7 @@ width:324px;
 }
 form input[type=number].pts {
 background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pts-input.png*/
-background-position:-1px -1402px;
+background-position:-1px -1465px;
 padding-left:18px;
 }
 form input[type=email]:hover, form input[type=email]:focus {
@@ -504,7 +512,7 @@ width:324px;
 }
 form input[type=text].hasDatepicker { /* les dates youpi*/
 background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pass-d.png*/
-background-position:3px -1427px;
+background-position:3px -1490px;
 padding-left:26px;
 width:324px;
 }
@@ -551,6 +559,10 @@ border-radius: 0;
 padding:6px;
 font:bold 18px "Helvetica", "Arial", sans-serif;
 background: none;
+}
+.ui-datepicker-calendar thead tr th span {
+	width:20px;
+	display:inline-block;
 }
 
 th{
