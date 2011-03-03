@@ -541,6 +541,7 @@ outline:none;
 #content p.see-link {
 text-align:right;
 padding-right:20px;
+float:right;
 }
 	#content p.see-link a{
 	padding:5px;
