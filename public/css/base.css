@@ -646,3 +646,41 @@ line-height: 1em;
 		background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
 		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------- 8 Footer --------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+footer {
+background:#494949 url('/public/css/images/footer-bg.jpg') top left scroll repeat-x; /*image r*/
+height:66px;
+}
+#content-footer {
+width:1000px;
+margin:auto;
+background:url('/public/css/images/footer-content.jpg') top left scroll no-repeat; 
+height:66px;
+position:relative;
+}
+	footer ul {
+	padding-top:20px;
+	padding-left:35px;
+	}
+		footer ul li {
+		display:inline;
+		padding-left:15px;
+		}
+			footer li a {
+			text-shadow:1px 1px 0px #fff;
+			color:#8e8e8e;
+			font:normal 15px "Helvetica", "Arial", sans-serif;
+			}
+			footer li a:hover {
+			color:#565656;
+			}
+			
+footer .copyright {
+color:#989898;
+text-shadow:1px 1px 0px #fff;
+position:absolute;
+top:6px;
+right:51px;
+}
