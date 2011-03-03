@@ -189,7 +189,7 @@ text-shadow:1px 1px 0px #fff;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:0 15px;
+margin:10px 15px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -203,7 +203,16 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 	text-decoration:underline!important;
 	}
 
-
+a.suppression-fichier {
+background:url('/public/css/images/delete.gif') center left scroll no-repeat;
+padding-left:18px;
+font-weight:bold;
+}
+	a.suppression-fichier:hover{
+	text-decoration:none!important;
+	color:#e11616!important;
+	}
+	
 /* - - La classe .important _ rouge - - */
 .important {
 background-color:#f0e8e8;
