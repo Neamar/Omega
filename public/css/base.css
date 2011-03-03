@@ -101,7 +101,7 @@ text-shadow:1px 1px 0px #fff;
 /* - - TITRE H2 - - */
 .content-base h2 {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2.png*/
-background-position:0 -1240px;
+background-position:0 -1560px;
 }
 h2.h2_options {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_actions.png*/
@@ -111,7 +111,7 @@ h2.h2_logs {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-logs.png*/
 background-position:0 -140px;
 }
-h2.membre-exercice-index-actif {
+h2#membre-exercice-index-actif {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-membre-exercice-index-actif.png*/
 background-position:0 -90px;
 }
@@ -123,9 +123,17 @@ h2.h2_exercice {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-h2_exercice.png*/
 background-position:0 -190px;
 }
-h2.correcteur-options-compte, h2.eleve-options-compte {
+h2#correcteur-options-compte, h2#eleve-options-compte {
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-eleve-options-compte.png*/
 background-position:0 -340px;
+}
+h2#membre-exercice-faq-chat{
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*h2-membre-exercice-faq-chat.png*/
+background-position:0 -1240px;
+}
+h2#membre-exercice-faq-question {
+background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*membre-exercice-faq-question.png*/
+background-position:0 -1290px;
 }
 
 /* Supression des marges dans les listes */
@@ -161,7 +169,7 @@ background:url('/public/css/images/separateur.png') bottom scroll no-repeat;
 p.action-detail a {
 color:#a6a6a6;
 background:url('/public/css/images/spr_content.png') top left scroll no-repeat; /*doc-d.png*/
-background-position:-5px -1380px;
+background-position:-5px -1443px;
 padding-left:20px;
 }
 /*p.action-detail {
@@ -181,7 +189,7 @@ text-shadow:1px 1px 0px #fff;
 background: #ededed;
 color:#c13f27;
 border:1px solid #cecece;
-margin:0 15px;
+margin:10px 15px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 		box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -195,7 +203,16 @@ background:#f1f1ef url('/public/css/images/important.png') center left scroll no
 	text-decoration:underline!important;
 	}
 
-
+a.suppression-fichier {
+background:url('/public/css/images/delete.gif') center left scroll no-repeat;
+padding-left:18px;
+font-weight:bold;
+}
+	a.suppression-fichier:hover{
+	text-decoration:none!important;
+	color:#e11616!important;
+	}
+	
 /* - - La classe .important _ rouge - - */
 .important {
 background-color:#f0e8e8;
@@ -489,7 +506,7 @@ width:324px;
 }
 form input[type=number].pts {
 background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pts-input.png*/
-background-position:-1px -1402px;
+background-position:-1px -1465px;
 padding-left:18px;
 }
 form input[type=email]:hover, form input[type=email]:focus {
@@ -504,7 +521,7 @@ width:324px;
 }
 form input[type=text].hasDatepicker { /* les dates youpi*/
 background:#fff url('/public/css/images/spr_content.png') center left scroll no-repeat; /*pass-d.png*/
-background-position:3px -1427px;
+background-position:3px -1490px;
 padding-left:26px;
 width:324px;
 }
@@ -524,6 +541,7 @@ outline:none;
 #content p.see-link {
 text-align:right;
 padding-right:20px;
+float:right;
 }
 	#content p.see-link a{
 	padding:5px;
@@ -551,6 +569,10 @@ border-radius: 0;
 padding:6px;
 font:bold 18px "Helvetica", "Arial", sans-serif;
 background: none;
+}
+.ui-datepicker-calendar thead tr th span {
+	width:20px;
+	display:inline-block;
 }
 
 th{
@@ -624,3 +646,41 @@ line-height: 1em;
 		background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
 		}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------- 8 Footer --------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+footer {
+background:#494949 url('/public/css/images/footer-bg.jpg') top left scroll repeat-x; /*image r*/
+height:66px;
+}
+#content-footer {
+width:1000px;
+margin:auto;
+background:url('/public/css/images/footer-content.jpg') top left scroll no-repeat; 
+height:66px;
+position:relative;
+}
+	footer ul {
+	padding-top:20px;
+	padding-left:35px;
+	}
+		footer ul li {
+		display:inline;
+		padding-left:15px;
+		}
+			footer li a {
+			text-shadow:1px 1px 0px #fff;
+			color:#8e8e8e;
+			font:normal 15px "Helvetica", "Arial", sans-serif;
+			}
+			footer li a:hover {
+			color:#565656;
+			}
+			
+footer .copyright {
+color:#989898;
+text-shadow:1px 1px 0px #fff;
+position:absolute;
+top:6px;
+right:51px;
+}

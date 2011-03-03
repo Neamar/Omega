@@ -167,28 +167,22 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', end
 	}
 	
 .matiere-box label { display:inline-block;}
-.matiere-box legend {
-	font-weight:bold;
-}
+.matiere-box legend {font-weight:bold;}
+
 #membre-exercice-index-actif + p {
 	margin-top:5px;
 	margin-left:5px;
 	}
-#membre-exercice-index-actif ~ ul {
+#ul_exercices-actifs {
 	border:1px dashed #83a8c2;
 	background-color:#f1f1ef;
 	margin-bottom:30px;
 	margin-left:10px;
 outline: 1px solid #fff;
 outline-offset: -2px;
-padding:5px;
 }
-#membre-exercice-index-actif ~ ul li {
-	list-style-image: url("/public/css/images/exercice-actif.png");
-}
-#membre-exercice-index-actif ~ ul li a {
-	font-weight:bold;
-}
+#ul_exercices-actifs li {list-style-image: url("/public/css/images/exercice-actif.png"); padding:5px;}
+#ul_exercices-actifs li a {font-weight:bold;}
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------- 7. Tableau ------------------------------------------------------------------*/
@@ -207,10 +201,7 @@ text-shadow:1px 1px 0px #e0faff;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------- 8. Aperçu / Latex / jQuerry ------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url("public/images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% top repeat-x; color: #333333; }
-.ui-widget-content a { color: #333333; }
-.ui-widget-header { border: 1px solid #088be7; background: #4fa2da url("public/images/ui-bg_gloss-wave_35_f6a828_500x100-cor.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
-.ui-widget-header a { color: #ffffff; }
+.ui-widget-header { border: 1px solid #088be7; background: #4fa2da url("/public/css/ui/images/ui-bg_gloss-wave_35_f6a828_500x100-cor.png") 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 
 #envoi-apercu .pager{text-align:center;}
 #envoi-apercu .pdf-image{text-align:center;}
