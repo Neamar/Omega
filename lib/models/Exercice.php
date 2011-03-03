@@ -251,7 +251,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function isFaq()
 	{
-		$Faq = array('EN_COURS', 'ENVOYE', 'TERMINE', 'REFUSE', 'ANNULE');
+		$Faq = array('EN_COURS', 'ENVOYE', 'TERMINE', 'REFUSE', 'REMBOURSE');
 		
 		return (in_array($this->Statut, $Faq));
 	}

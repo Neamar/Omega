@@ -165,7 +165,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->redirectExercice();
 		}
 		
-		if(strtotime($this->Exercice->Expiration) < time() - DELAI_FAQ * 24 * 3600)
+		if($this->Exercice->Statut == "REMBOURSE" || strtotime($this->Exercice->Expiration) < time() - DELAI_FAQ * 24 * 3600)
 		{
 			$this->View->setMessage('warning', 'La FAQ est fermée, vous ne pouvez plus poster de question.');
 			$this->View->Ouvert = false;

@@ -118,11 +118,12 @@ else
 <!-- Liens "légaux" -->
 <footer>
 <ul>
-	<li><a href="/contact.htm">Nous contacter</a></li>
-	<li><a href="/legal.htm">Mentions légales</a></li>
+	<li><a href="/documentation/">Documentation</a></li>
 	<li><a href="/cgu.htm">CGU</a></li>
 	<li><a href="/cgv.htm">CGV</a></li>
+	<li><a href="/legal.htm">Mentions légales</a></li>
 	<li><a href="/confidentialite.htm">Confidentialité</a></li>
+	<li><a href="/contact.htm">Nous contacter</a></li>
 </ul>
 
 <aside id="social-network">

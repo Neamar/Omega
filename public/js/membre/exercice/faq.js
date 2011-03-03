@@ -31,8 +31,10 @@ $(function(){
 $(function(){
 	$(".faq-ajout-reponse a").click(function()
 	{
-		$(this).replaceWith('<form id=form_faq-reponse-exercice method=post action=""><input type=hidden value=' + $(this).data('question-id') + ' name=question /><label for=reponse>Votre réponse :</label><br /><textarea name=reponse id=reponse required=required></textarea><br /><input type=submit value="Ajouter ma réponse" name=faq-reponse-exercice /></form>');
-		
+		jThis = $(this);
+		qID = jThis.data('question-id');
+		jThis.replaceWith('<form id=form_faq-reponse-exercice method=post action=""><input type=hidden value=' + qID + ' name=question /><label for=reponse-' + qID + '>Votre réponse :</label><br /><textarea name=reponse id=reponse-' + qID + ' required=required></textarea><br /><input type=submit value="Ajouter ma réponse" name=faq-reponse-exercice /></form>');
+		$('#reponse-' + qID).focus();
 		return false;
 	});
 });

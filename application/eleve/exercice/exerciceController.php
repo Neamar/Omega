@@ -83,7 +83,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		}
 		if(!$this->getMembre()->isAbleToCreate())
 		{
-			$this->View->setMessage('warning', 'Désolé, vous ne pouvez plus créer d\'exercices pour l\'instant');
+			$this->View->setMessage('warning', "Désolé, vous ne pouvez plus créer d'exercices pour l\'instant.");
 			$this->redirect('/eleve/');
 		}
 		
@@ -276,7 +276,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		//La taille maximale du formulaire (20Mo) :
 		$this->View->SizeLimit = self::FORM_SIZE_LIMIT;
 
-		if(isset($_POST['upload-noscript']) || isset($_POST['upload']))
+		if((isset($_POST['upload-noscript']) || isset($_POST['upload'])) && isset($_FILES['fichiers']))
 		{
 			$NbFiles = count($_FILES['fichiers']['name']);
 			$Messages = array();
@@ -603,7 +603,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 					)
 				);
 				
-				$this->View->setMessage('ok', 'La note a été enregistrée, l\'exercice est terminé.');
+				$this->View->setMessage('ok', "La note a été enregistrée, l'exercice est terminé.");
 				$this->redirectExercice();
 			}
 		}
@@ -833,23 +833,23 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		if($_FILES['fichiers']['error'][$i] > 0)
 		{
 			//Erreur côté http
-			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload" target="_blank">erreur ' . $_FILES['fichiers']['error'][$i] . '</a>).';
 		}
 		elseif($_FILES['fichiers']['size'][$i] > self::FORM_SIZE_LIMIT)
 		{
 			//Dépassement de la taille maximale
-			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 1</a>).';
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload" target="_blank">erreur 1</a>).';
 		}
 		elseif($NbFichiersPresents >= MAX_FICHIERS_EXERCICE)
 		{
-			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 6</a>).';
+			return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload" target="_blank">erreur 6</a>).';
 		}
 		else
 		{
 			//Vérification de l'extension
 			if (!in_array($ExtensionFichier, $Extensions))
 			{
-				return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload">erreur 5</a>).';
+				return 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['fichiers']['name'][$i] . ' (<a href="/documentation/eleve/erreurs_upload" target="_blank">erreur 5</a>).';
 			}
 			
 			if(!move_uploaded_file($_FILES['fichiers']['tmp_name'][$i], $URL))

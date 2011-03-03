@@ -131,7 +131,7 @@ class Correcteur_IndexController extends IndexAbstractController
 SELECT 
 	Exercices.Hash,
 	Exercices.LongHash,
-	UNIX_TIMESTAMP(Exercices.TimeoutEleve) AS TimeoutEleve,
+	Expiration,
 	Exercices.Titre,
 	Exercices.Matiere,
 	Exercices.Section,
@@ -161,7 +161,7 @@ AND Exercices.ID NOT IN (
 )
 
 GROUP BY Exercices.ID
-ORDER BY Exercices.TimeoutEleve
+ORDER BY Exercices.Expiration
 			',
 			'Hash'
 		);

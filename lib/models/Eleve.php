@@ -74,7 +74,7 @@ class Eleve extends Membre
 	 */
 	public function isAbleToCreate()
 	{
-		return ($this->getCreated() <= MAX_EXERCICE_CREES);
+		return ($this->getCreated() < MAX_EXERCICE_CREES);
 	}
 	
 	/**
