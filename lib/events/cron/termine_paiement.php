@@ -27,7 +27,7 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	$Correcteur = $Exercice->getCorrecteur();
 	
 	//Commencer une transaction pour l'échange
-	$Exercice->closeExercice('Cloture automatique (expiration du délai)', $Banque);
+	$Exercice->closeExercice('Clôture automatique (expiration du délai)', $Banque);
 	Event::dispatch(
 		Event::ELEVE_EXERCICE_TERMINE,
 		array(

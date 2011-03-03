@@ -44,14 +44,10 @@ echo $this->Form_inputLabelBr(
 		'placeholder' => 'S, ES, L...'
 	)
 );
-?>
 
-CGU Élèves<br />
-
-<?php 
 echo $this->Form_checkbox(
 	'cgu',
-	"J'ai lu et j'accepte les Conditions Générales d'Utilisation du site",
+	"J'ai lu et j'accepte les <a href='/cgu.htm' target='_blank'>Conditions Générales d'Utilisation</a> <strong>et</strong> <a href='/cgv.htm' target='_blank'>Conditions Générales de Vente</a> du site",
 	false,
 	array(
 		'required' => 'required'

@@ -75,9 +75,15 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	 */
 	public function creationAction()
 	{
+		//Vérifier qu'on a le droit de créer
 		if($this->getMembre()->Statut == 'BLOQUE')
 		{
 			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas créer de nouvel exercice.', 'eleve/bloque');
+			$this->redirect('/eleve/');
+		}
+		if(!$this->getMembre()->isAbleToCreate())
+		{
+			$this->View->setMessage('warning', 'Désolé, vous ne pouvez plus créer d\'exercices pour l\'instant');
 			$this->redirect('/eleve/');
 		}
 		

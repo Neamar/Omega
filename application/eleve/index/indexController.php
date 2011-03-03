@@ -123,7 +123,7 @@ class Eleve_IndexController extends IndexAbstractController
 		//Le membre vient de s'inscrire mais revient sur cette page.
 		if(isset($_SESSION['Eleve_JusteInscrit']) && !$this->View->issetMeta('message'))
 		{
-			$this->View->setMessage('warning', "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à" . $_SESSION['Eleve_JusteInscrit'] . "pour terminer votre inscription.", 'eleve/validation');
+			$this->View->setMessage('warning', "Vous êtes déjà inscrit ! Veuillez cliquer sur le lien d'enregistrement qui vous a été envoyé par mail  à " . $_SESSION['Eleve_JusteInscrit'] . " pour terminer votre inscription.", 'eleve/validation');
 		}
 		
 		if(isset($_POST['inscription-eleve']))
@@ -166,12 +166,12 @@ class Eleve_IndexController extends IndexAbstractController
 	 */
 	public function validationActionWd()
 	{
-		if(!isset($this->Data['data'],$this->Data['mail']))
+		if(!isset($this->Data['data'], $this->Data['mail']))
 		{
-			exit();
+			$this->View->setMessage('info', 'Appel incorrect');
+			$this->redirect('/eleve/connexion');
 		}
 		
-
 		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
 		
 		if(!is_null($Eleve) && sha1(SALT . $Eleve->ID . $this->Data['mail']) == $this->Data['data'])
@@ -181,7 +181,7 @@ class Eleve_IndexController extends IndexAbstractController
 				$Eleve->setAndSave(array('Statut' => 'OK'));
 			}
 			
-			$this->View->setMessage('info', "Votre compte est validé ! Vous pouvez maintenant vous connecter");
+			$this->View->setMessage('info', "Votre compte est validé ! Vous pouvez maintenant vous connecter.");
 			$this->redirect("/eleve/connexion");
 		}
 		else

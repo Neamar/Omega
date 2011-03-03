@@ -45,7 +45,7 @@ class External
 	 */
 	public static function isTrash($email)
 	{
-		$Jetables = array('yopmail','ephemail','jetable','trash','brefmail','uggsrock','haltospam','kleemail','email-jetable','destroy-spam','justonemail','letmymail','onemoremail','cool.fr','nospam','nomail','mega.zik','speed.1s','courriel.fr','moncourrier','monemail','monmail','filzmail');
+		$Jetables = array('yopmail', 'ephemail', 'jetable', 'trash', 'brefmail', 'uggsrock', 'haltospam', 'kleemail', 'email-jetable', 'destroy-spam', 'justonemail', 'letmymail', 'onemoremail', 'cool.fr', 'nospam', 'nomail', 'mega.zik', 'speed.1s', 'courriel.fr', 'moncourrier', 'monemail', 'monmail', 'filzmail');
 		foreach($Jetables as $Jetable)
 		{
 			if(strpos($_POST['email'], '@' . $Jetable)!==false)
