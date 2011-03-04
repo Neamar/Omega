@@ -244,7 +244,7 @@ class Documentation_IndexController extends AbstractController
 			else
 			{
 				External::mail(
-					'contact@edevoir.com',
+					($_POST['categorie'] == 'Problème technique'?'webmaster@edevoir.com':'contact@edevoir.com'),
 					$_POST['categorie'] . '&nbsp;: ' . $_POST['sujet'],
 					$_POST['message'],
 					$_POST['mail']

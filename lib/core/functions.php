@@ -125,5 +125,11 @@ function redirect($Location, $Code = null)
 	
 	header('Location: ' . URL . $Location);
 	
+	//Forcer l'écriture des données de la session maintenant.
+	//En effet, l'envoi d'un mail via register_shutdown_function peut bloquer l'écriture de la session pendant une durée supérieure à la redirection.
+	//Les sessions n'étant pas concurrentes, les potentiels messages peuvent être perdus.
+	session_write_close();
+	
+	//Terminer l'exécution du script pour éviter de fatiguer le serveur sur une page que personne ne consultera.
 	exit();
 }

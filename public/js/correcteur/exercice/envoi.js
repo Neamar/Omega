@@ -67,7 +67,7 @@ $(function()
 $(function()
 {
 	//Mettre en onglets
-	Tabs = $("#tabs").tabs().css('min-width', '1000px');
+	Tabs = $("#tabs").tabs().css('min-height', '1000px');
 	
 	//Afficher le message "aperçu non à jour" quand nécessaire
 	$("#tabs").bind("tabsselect", function(e, ui){
