@@ -279,6 +279,7 @@ color:#5c5b5b;
 
 /* ------------------------------------- Formulaire élève --*/
 #eleve_form {
+	min-height:210px;
 margin-right:150px;
 margin-left:65px;
 }
