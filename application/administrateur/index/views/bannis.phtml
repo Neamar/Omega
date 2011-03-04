@@ -29,16 +29,15 @@ echo $this->Form_submit('ajout-ban', 'Bannir');
 <h2 id="administrateur-index-bannis-liste">Liste des IPs bannies</h2>
 <p>Un point intéressant : les IP affichant le texte "échéance dépassée" ont été bannies, mais ne le sont actuellement plus (c'est-à-dire que le membre ne s'est pas reconnecté depuis son bannissement).</p>
 
+<table style="width:90%">
 <?php 
-
 echo $this->Html_tableHead(
 	'Liste des IPs bannies',
 	array(
 		'Débannir',
 		'IP',
 		'Durée'
-	),
-	'style="width:90%"'
+	)
 );
 ?>
 <tbody>

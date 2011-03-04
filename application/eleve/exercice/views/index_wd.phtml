@@ -59,6 +59,11 @@ $ListeActions = array(
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
 
+//Ajouter manuellement la possibilité de contestation tardive
+if($this->Exercice->Statut == 'TERMINE' && empty($this->Exercice->Reclamation))
+{
+	$ListeActions['TERMINE']['contestation'] = array('Émettre une réclamation tardive', 'Je ne m\'en rends compte que maintenant, mais ce travail est mal fait ou faux. Le signaler aux administrateurs (sans possibilité de remboursement)', 'contestation_tardive');
+}
 ?>
 
 <?php 
