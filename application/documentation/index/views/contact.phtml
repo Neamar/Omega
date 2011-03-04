@@ -1,4 +1,15 @@
 <div class="documentation-content">
+<?php 
+if(isset($this->MessageEnvoye))
+{
+	?>
+	<p>Merci pour votre message !<br />
+	<a href="/">Retourner à l'accueil <?php echo $this->Html_eDevoir(); ?></a>.</p>
+	<?php
+}
+else
+{
+?>
 <p>Vous souhaitez nous contacter ? Pas de problème.<br />
 Merci d'entrer votre mail suivi de votre message dans ce formulaire.</p>
 
@@ -29,4 +40,6 @@ echo $this->Form_captcha();
 echo $this->Form_submit('contact', 'Envoyer mon message');
 ?>
 </form>
+<?php 
+} //Fin if(isset($_POST['form_contact']))?>
 </div>

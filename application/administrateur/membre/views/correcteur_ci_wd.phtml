@@ -1,0 +1,31 @@
+<?php 
+$Extension = Util::extension($this->File);
+
+if($Extension == 'pdf')
+{
+	header('Content-type: application/pdf');
+}
+else if($Extension == 'png')
+{
+	header('Content-type: image/png');
+}
+else if($Extension == 'jpg')
+{
+	header('Content-type: image/jpg');
+}
+else if($Extension == 'doc')
+{
+	header('Content-type: application/msword');
+}
+else
+{
+	throw new Exception("Impossible de comprendre le type de la carte identité");
+}
+
+$fp = fopen($this->File, "r");
+while(!feof($fp))
+{
+	$file_buffer = fread($fp, 2048);
+	echo $file_buffer;
+}
+?>

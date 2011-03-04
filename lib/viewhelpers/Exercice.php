@@ -36,7 +36,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
 	$Liens = $Exercice->getSortedFiles();
 	//Ajouter l'onglet "Informations"
-	$Liens = array('INFO'=>array(true)) + $Liens;
+	$Liens = array('INFO' => array(true)) + $Liens;
 	
 	$Disabled = array();
 	$Content = array();

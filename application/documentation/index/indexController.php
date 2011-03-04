@@ -42,8 +42,8 @@ class Documentation_IndexController extends AbstractController
 			'parents' => "À l'intention des parents",
 			'eleves' => "À l'intention des élèves",
 			'points' => "Le système de points",
-			'cgu' => "Conditions générales d'utilisation",
-			'cgv' => "Conditions générales de vente",
+			'cgu' => "Conditions Générales d'Utilisation",
+			'cgv' => "Conditions Générales de Vente",
 			'confidentialite' => "Protection de la vie privée",
 			'contact' => "Nous contacter",
 			'legal' => "Mentions légales",
@@ -245,11 +245,11 @@ class Documentation_IndexController extends AbstractController
 			{
 				External::mail(
 					($_POST['categorie'] == 'Problème technique'?'webmaster@edevoir.com':'contact@edevoir.com'),
-					$_POST['categorie'] . '&nbsp;: ' . $_POST['sujet'],
+					$_POST['categorie'] . ' : ' . $_POST['sujet'],
 					$_POST['message'],
 					$_POST['mail']
 				);
-				
+				$this->View->MessageEnvoye = true;
 				$this->View->setMessage('ok', 'Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.');
 			}
 			
