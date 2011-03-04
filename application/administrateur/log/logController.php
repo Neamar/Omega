@@ -27,6 +27,12 @@
  */
 class Administrateur_LogController extends AbstractController
 {
+	public function indexAction()
+	{
+		//TODO : faire un index
+		exit('TODO');
+	}
+	
 	/**
 	 * Dernières actions sur les exercices
 	 */
