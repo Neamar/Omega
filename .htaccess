@@ -34,7 +34,9 @@ RewriteRule ^([^/]+)/([^/]+)$ bootstrap.php?module=$1&controller=index&view=$2&d
 RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=
 
 # /eleve/point/ajout/data
-RewriteRule ^([^/]+)/([^/]+)/([^/]+)/(.+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=$4
+# Option B pour éviter d'échapper les caractères encodés dans l'URL.
+# @see http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html#rewriteflags
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/(.+)$ bootstrap.php?module=$1&controller=$2&view=$3&data=$4 [B]
 
 
 #--------------------------------------------------

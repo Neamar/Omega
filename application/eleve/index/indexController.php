@@ -171,7 +171,6 @@ class Eleve_IndexController extends IndexAbstractController
 			$this->View->setMessage('info', 'Appel incorrect');
 			$this->redirect('/eleve/connexion');
 		}
-		$this->Data['mail'] = str_replace(' ', '+', $this->Data['mail']);
 		
 		$Eleve = Eleve::load('(SELECT ID FROM Membres WHERE Mail = "' . SQL::escape($this->Data['mail']) . '" AND Type="ELEVE")', false);
 		
