@@ -1,3 +1,10 @@
+<?php 
+if($this->getController()->getMembre()->Statut == 'BLOQUE')
+{
+	echo '<p class="important">Votre compte est bloqué. Certaines actions vous seront inaccessibles.</p>';
+}
+?>
+
 <h2 id="correcteur-index-index-marche">Marché aux exercices</h2>
 <?php 
 $Marche = array(

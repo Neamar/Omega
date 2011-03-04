@@ -191,9 +191,18 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 					}
 					
 					$this->View->setMessage('ok', $MessageAdministrateur);
-					$this->redirect('/administrateur/reclamations');
 				}//Fin pourcentage == 0
 			}//Fin isset($_POST['remboursement'][0]) && $this->View->EstRemboursable
+			
+			//Gestion du blocage du correcteur
+			if(isset($_POST['bloquer']))
+			{
+				$Correcteur = $this->Exercice->getCorrecteur();
+				$Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
+				Event::dispatch(Event::MEMBRE_BLOQUE, array('Membre' => $Correcteur));
+			}
+			
+			$this->redirect('/administrateur/reclamations');
 		}//isset($_POST['remboursement-exercice'])
 		
 		$this->View->Sujet = $this->concat('/administrateur/exercice/sujet/' . $this->Exercice->Hash);

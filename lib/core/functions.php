@@ -94,9 +94,9 @@ function lock($Reason)
  * @see Bootstrap.php
  * 
  * @param int $errno contains the level of the error raised, as an integer. 
- * @param unknown_type $errstr contains the error message, as a string.
- * @param unknown_type $errfile contains the filename that the error was raised in, as a string. 
- * @param unknown_type $errline contains the line number the error was raised at, as an integer. 
+ * @param string $errstr contains the error message, as a string.
+ * @param string $errfile contains the filename that the error was raised in, as a string. 
+ * @param int $errline contains the line number the error was raised at, as an integer. 
  */
 function error($errno, $errstr, $errfile, $errline)
 {
@@ -125,5 +125,11 @@ function redirect($Location, $Code = null)
 	
 	header('Location: ' . URL . $Location);
 	
+	//Forcer l'écriture des données de la session maintenant.
+	//En effet, l'envoi d'un mail via register_shutdown_function peut bloquer l'écriture de la session pendant une durée supérieure à la redirection.
+	//Les sessions n'étant pas concurrentes, les potentiels messages peuvent être perdus.
+	session_write_close();
+	
+	//Terminer l'exécution du script pour éviter de fatiguer le serveur sur une page que personne ne consultera.
 	exit();
 }

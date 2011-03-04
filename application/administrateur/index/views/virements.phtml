@@ -20,6 +20,8 @@ $Head = array('Date', 'Membre', 'Montant', 'Bénéficiaire', 'Action');
 <p>En attente : <?php echo $this->NbVirements; ?></p>
 
 <h2 id="administrateur-index-virements-rib">Virements par RIB</h2>
+
+<table>
 <?php 
 echo $this->Html_tableHead('Virements RIB', $Head)
 ?>
@@ -34,6 +36,8 @@ foreach($this->VirementsRib as $Tuple)
 </table>
 
 <h2 id="administrateur-index-virements-paypal">Virements par Paypal</h2>
+
+<table>
 <?php 
 echo $this->Html_tableHead('Virements Paypal', $Head)
 ?>

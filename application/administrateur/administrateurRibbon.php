@@ -34,7 +34,7 @@ else
 		'/administrateur/' => 'Admin',
 		'/administrateur/log/' => 'Logs',
 		'/administrateur/exercice/' => 'Exercices',
-		'/administrateur/membres/' => 'Membres',
+		'/administrateur/membre/' => 'Membres',
 	);
 }
 

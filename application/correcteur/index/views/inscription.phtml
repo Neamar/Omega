@@ -68,6 +68,15 @@ echo $this->Form_inputLabel(
 	)
 ) . $this->Doc_inputBr('correcteur', 'pourquoi_cv');
 
+echo $this->Form_inputLabel(
+	'ci',
+	'Scan de la carte d\'identité (le recto suffit)',
+	array(
+		'type' => 'file',
+		'required' => 'required',
+	)
+) . $this->Doc_inputBr('correcteur', 'pourquoi_carte');
+
 echo $this->Doc_box(
 	'correcteur',
 	'comment_autoentreprise',

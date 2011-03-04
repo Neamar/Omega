@@ -682,3 +682,9 @@ position:absolute;
 top:6px;
 right:51px;
 }
+
+p.crash {
+font-family:sans-serif;
+color:#900;
+font-weight:bold;
+}

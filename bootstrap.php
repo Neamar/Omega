@@ -56,13 +56,13 @@ if(file_exists(DATA_PATH . '/.lock'))
 }
 
 //Vérifier que l'IP n'est pas bannie
-if(file_exists(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']))
+if(file_exists(DATA_PATH . '/ips/ban/' . $_SERVER['REMOTE_ADDR']))
 {
-	$Banni = file_get_contents(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
+	$Banni = file_get_contents(DATA_PATH . '/ips/ban/' . $_SERVER['REMOTE_ADDR']);
 	if($Banni < time())
 	{
 		//Débannir
-		unlink(DATA_PATH . '/ips/bans/' . $_SERVER['REMOTE_ADDR']);
+		unlink(DATA_PATH . '/ips/ban/' . $_SERVER['REMOTE_ADDR']);
 	}
 	else
 	{
@@ -186,6 +186,5 @@ try
 		<pre>' . $DumpServer . '</pre>';
 	
 	External::mail('matthieu@bacconnier.fr', 'Erreur eDevoir : ' . $e->getMessage(), $Dump);
-	//echo $Dump;
-	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...</p>');
+	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...');
 }

@@ -249,6 +249,7 @@ class Debug_IndexController extends AbstractController
 			(
 				'/public/exercices',
 				'/data/CV',
+				'/data/CI',
 				'/data/logs',
 				'/data/ips',
 				'/data/ips/ban',

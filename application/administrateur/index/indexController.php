@@ -176,7 +176,7 @@ class Administrateur_IndexController extends IndexAbstractController
 		$this->View->NbValidations = $this->validationsCount();
 		
 		$this->View->Validations = Sql::queryAssoc(
-			'SELECT Membres.Mail, Membres.Creation, CONCAT(Prenom, " ", UPPER(Nom)) AS Identite, Membres.Mail AS CV
+			'SELECT Membres.Mail, Membres.Creation, CONCAT(Prenom, " ", UPPER(Nom)) AS Identite, Membres.Mail AS CV, Membres.Mail AS CI
 			FROM Membres
 			JOIN Correcteurs ON(Correcteurs.ID = Membres.ID)
 			WHERE Membres.Statut = "EN_ATTENTE"',

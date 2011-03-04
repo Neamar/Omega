@@ -455,8 +455,28 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		);
 		
 		if(isset($_POST['annulation']))
-		{		
+		{
+			//Si un correcteur est associé, dire qu'on le refuse.
+			if(!empty($this->Exercice->Correcteur))
+			{
+				$ToDispatch = Event::ELEVE_EXERCICE_REFUS;
+				$Datas = array(
+					'Exercice' => $this->Exercice,
+					'Correcteur' => $this->Exercice->getCorrecteur(),
+					'Eleve' => $this->getMembre(),
+					'prix_correcteur' => $this->Exercice->priceAsked()
+				);
+			}
 			$this->Exercice->cancelExercice($_SESSION['Eleve'], 'Annulation de l\'exercice.');
+			
+			if(isset($ToDispatch))
+			{
+				//Dispatch de l'évènement REFUS
+				Event::dispatch(
+					$ToDispatch,
+					$Datas
+				);
+			}
 			
 			$this->View->setMessage('info', "Votre exercice a été annulé.");
 			$this->redirect("/eleve/exercice/");
@@ -515,7 +535,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 
 				if($this->Exercice->Statut == 'ANNULE')
 				{
-					$this->View->setMessage('info', "L'offre a bien été refusée. L'exercice est maintenant annulé.");
+					$this->View->setMessage('info', "L'offre a bien été refusée pour la " . MAX_REFUS . "<sup>e</sup> fois. L'exercice est maintenant annulé.");
 				}
 				else
 				{
@@ -768,7 +788,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->ajax(
 			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), Action
 			FROM Exercices_Logs
-			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -781,7 +802,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
-			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()
+			WHERE Exercices.Createur = ' . $_SESSION['Eleve']->getFilteredId(),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -889,7 +911,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'ANNULE' => 'Cet exercice a été annulé. Vous ne pouvez plus rien faire dessus, <a href="/eleve/exercice/creation">pourquoi ne pas en créer un nouveau</a> ?', 
 			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
 			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
-			'REMBOURSE' => is_null($this->Exercice)?'WTF?':'Vous avez été remboursé à hauteur de <strong>' . $this->Exercice->Remboursement . '%</strong>. Avec toute nos excuses pour le préjudice subi !', 
+			'REMBOURSE' => is_null($this->Exercice)?'Vous avez été remboursé.':'Vous avez été remboursé à hauteur de <strong>' . $this->Exercice->Remboursement . '%</strong>. Avec toute nos excuses pour le préjudice subi !', 
 		);
 	}
 }

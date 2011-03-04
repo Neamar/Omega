@@ -59,6 +59,20 @@ $ListeActions = array(
 	'ANNULE' => 'Cet exercice a été annulé. <a href="/eleve/exercice/creation">Créer un nouvel exercice</a>.',
 );
 
+//Ajouter manuellement la possibilité de contestation tardive
+if($this->Exercice->Statut == 'TERMINE' && empty($this->Exercice->Reclamation))
+{
+	$ListeActions['TERMINE']['contestation'] = array('Émettre une réclamation tardive', 'Je ne m\'en rends compte que maintenant, mais ce travail est mal fait ou faux. Le signaler aux administrateurs (sans possibilité de remboursement)', 'contestation_tardive');
+}
+?>
+
+<?php 
+if(in_array($this->Exercice->Statut, array('VIERGE', 'ATTENTE_CORRECTEUR')) && !empty($this->Exercice->AutoAccept))
+{
+	?>
+	<p>Vous avez placé sur cet exercice une valeur d'auto-acceptation de <?php echo $this->Points($this->Exercice->AutoAccept) ?>.</p>
+	<?php 
+}
 ?>
 
 <h2 class="h2_actions" id="eleve-exercice-index-options">Options de l'exercice</h2>

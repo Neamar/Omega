@@ -13,11 +13,12 @@ function formatTuple(array $Tuple)
 	return $Tuple;
 }
 
-$Head = array('Date', 'Titre', 'Élève', 'Correcteur');
+$Head = array('Date', 'Titre', 'Élève', 'Correcteur', 'Action');
 ?>
 
 <p>En attente : <?php echo $this->NbReclamations; ?></p>
 
+<table>
 <?php 
 echo $this->Html_tableHead('Réclamations en attente', $Head)
 ?>

@@ -33,7 +33,7 @@ class Event
 	const ELEVE_EXERCICE_ACCEPTATION = 'eleve/exercice/acceptation';
 	const ELEVE_EXERCICE_ACCEPTATION_AUTOMATIQUE = 'eleve/exercice/acceptation_automatique';
 	const ELEVE_EXERCICE_REFUS = 'eleve/exercice/refus';
-	const ELEVE_EXERCICE_REFUS_AUTOMATIQUE = 'eleve/exercice/refus';
+	const ELEVE_EXERCICE_REFUS_AUTOMATIQUE = 'eleve/exercice/refus_automatique';
 	const ELEVE_EXERCICE_TERMINE = 'eleve/exercice/termine';
 	const ELEVE_EXERCICE_RECLAMATION = 'eleve/exercice/reclamation';
 	

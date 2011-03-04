@@ -23,7 +23,7 @@ if($_SESSION['Eleve']->getPoints() >= $this->Exercice->pricePaid())
 }
 else
 {
-	$Oui .= '<span class="problem">Il vous manque ' . $this->Points($this->Exercice->pricePaid() - $_SESSION['Eleve']->getPoints()) . ' ! <a href="/eleve/points/ajout">Ajouter des points</a>.</span>'; 
+	$Oui .= '<span class="problem">Il vous manque ' . $this->Points($this->Exercice->pricePaid() - $_SESSION['Eleve']->getPoints()) . ' ! <a href="/eleve/points/ajout" target="_blank">Ajouter des points</a>.</span>'; 
 }
 
 $Non = "Refuser l'offre<br />";

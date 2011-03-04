@@ -26,7 +26,7 @@ $ListeActions = array(
 ?>
 
 <?php 
-if(!in_array($this->Exercice->Statut, array('TERMINE', 'REFUSE', 'REMBOURSE')))
+if(!in_array($this->Exercice->Statut, array('ATTENTE_CORRECTEUR', 'TERMINE', 'REFUSE', 'REMBOURSE')))
 {
 	?>
 	<p>Une fois cet exercice réalisé et validé, vous serez payé <?php echo $this->Points($this->Exercice->priceAsked()) ?>.</p>

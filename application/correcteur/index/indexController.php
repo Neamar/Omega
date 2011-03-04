@@ -88,9 +88,17 @@ class Correcteur_IndexController extends IndexAbstractController
 					{
 						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Correcteur->getPoints() . ' points.');
 						
-						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion.
-						$URL = isset($_SESSION['CorrecteurComingFrom'])?$_SESSION['CorrecteurComingFrom']:'/correcteur/';
-						unset($_SESSION['CorrecteurComingFrom']);
+						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion si ce n'est pas une page Ajax.
+						if(isset($_SESSION['CorrecteurComingFrom']) && strpos($_SESSION['CorrecteurComingFrom'], '_') === false)
+						{
+							$URL = $_SESSION['CorrecteurComingFrom'];
+							unset($_SESSION['CorrecteurComingFrom']);
+						}
+						else
+						{
+							$URL = '/correcteur/';	
+						}
+						
 						$this->redirect($URL);
 					}
 				}
@@ -226,6 +234,22 @@ ORDER BY Exercices.Expiration
 			{
 				$this->View->setMessage('error', 'Votre CV ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_cv');
 			}
+			elseif($_FILES['ci']['name'] == '')
+			{
+				$this->View->setMessage('error', "Vous n'avez pas fourni votre scan de carte d\'identité.", 'correcteur/pourquoi_carte');
+			}
+			elseif($_FILES['ci']['error'] > 0)
+			{
+				$this->View->setMessage('error', 'Une erreur est survenue lors de l\'envoi du fichier ' .  $_FILES['ci']['name'] . ' (erreur ' . $_FILES['ci']['error'] . ')', '/eleve/erreurs_upload');
+			}
+			elseif(!in_array(Util::extension($_FILES['ci']['name']), array('pdf', 'png', 'jpg', 'doc')))
+			{
+				$this->View->setMessage('error', 'Votre scan doit-être au format PDF, PNG ou JPG.', 'correcteur/pourquoi_carte');
+			}
+			elseif($_FILES['ci']['size'] > 3*1048576)
+			{
+				$this->View->setMessage('error', 'Le scan de votre carte d\'identité ne doit pas dépasser 3Mo.', 'correcteur/pourquoi_carte');
+			}
 			elseif(!Validator::captcha())
 			{
 				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
@@ -237,6 +261,8 @@ ORDER BY Exercices.Expiration
 				{
 					//Enregistrer le CV :	
 					move_uploaded_file($_FILES['cv']['tmp_name'], PATH . '/data/CV/' . $ID . '.pdf');
+					//Enregistrer la CI
+					move_uploaded_file($_FILES['ci']['tmp_name'], PATH . '/data/CI/' . $ID . '.' . Util::extension($_FILES['ci']['name']));
 					
 					//Mission accomplie ! Dispatcher l'évènement :
 					Event::dispatch(

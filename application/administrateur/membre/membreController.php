@@ -148,6 +148,17 @@ class Administrateur_MembreController extends AbstractController
 		$this->View->File = DATA_PATH . '/CV/' . $Correcteur->getFilteredId() . '.pdf';
 	}
 	
+	public function correcteur_ciActionWd()
+	{
+		$this->UseTemplate = false;
+		
+		$Correcteur = $this->exists($this->Data['data'], 'Correcteur');
+		
+		$Fichier = glob(DATA_PATH . '/CI/' . $Correcteur->getFilteredId() . '.*');
+		
+		$this->View->File = $Fichier[0];
+	}
+	
 	/**
 	 * Fonction spéciale, qui n'est théoriquement jamais appelée directement.
 	 */

@@ -83,9 +83,17 @@ class Eleve_IndexController extends IndexAbstractController
 					{
 						$this->View->setMessage('info', "Bienvenue sur votre compte ! Solde : " . $Eleve->getPoints() . ' points.');
 						
-						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion.
-						$URL = isset($_SESSION['EleveComingFrom'])?$_SESSION['EleveComingFrom']:'/eleve/';
-						unset($_SESSION['EleveComingFrom']);
+						//Rediriger vers la page d'accueil du module, ou vers la page demandée avant la connexion si ce n'est pas une page Ajax.
+						if(isset($_SESSION['EleveComingFrom']) && strpos($_SESSION['EleveComingFrom'], '_') === false)
+						{
+							$URL = $_SESSION['EleveComingFrom'];
+							unset($_SESSION['EleveComingFrom']);
+						}
+						else
+						{
+							$URL = '/eleve/';	
+						}
+
 						$this->redirect($URL);
 					}
 				}

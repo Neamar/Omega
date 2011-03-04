@@ -15,6 +15,8 @@ if(!$this->EstRemboursable)
 }
 else
 {
+	echo '<div style="clear:both;">&nbsp;</div>' . PHP_EOL;
+	
 	echo $this->Form_inputLabel(
 		'remboursement',
 		"Rembourser l'élève à hauteur de",
@@ -28,8 +30,7 @@ else
 	) . '%<br />' . PHP_EOL;
 }
 
-
-
+echo '<div style="clear:both;">&nbsp;</div>' . PHP_EOL;
 echo $this->Form_checkbox('bloquer', 'Bloquer le correcteur');
 
 echo $this->Form_submit('remboursement-exercice', 'Entériner ma décision');

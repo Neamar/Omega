@@ -309,4 +309,4 @@ $(function() {
 			jThis.find('a.a_h2-anchor').hide();
 		}); 
 	});
-})
+});

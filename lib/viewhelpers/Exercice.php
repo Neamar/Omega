@@ -36,7 +36,7 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	$Tabs = array('Sujet', 'Corrige', 'Réclamation');
 	$Liens = $Exercice->getSortedFiles();
 	//Ajouter l'onglet "Informations"
-	$Liens = array('INFO'=>array(true)) + $Liens;
+	$Liens = array('INFO' => array(true)) + $Liens;
 	
 	$Disabled = array();
 	$Content = array();
@@ -72,10 +72,10 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	}
 	//Mettre en forme les remarques :
 	$Remarques = '';
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Note');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Eleve');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Correcteur');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Reclamation');
-	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Note');
 	
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);
@@ -152,7 +152,7 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 		$Infos[] = $Dates[0];
 	}
 
-	if($Exercice->Note !== NULL)
+	if($Exercice->Note !== null)
 	{
 		$Infos[] = "Note : " . ($Exercice->Note == 0?'<span style="color:red">&empty;</span>':str_repeat('✭', $Exercice->Note));
 	}
@@ -172,7 +172,7 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 	$Dates = array();
 	
 	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
-	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== NULL)
+	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== null)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}

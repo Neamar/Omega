@@ -169,7 +169,8 @@ function ViewHelper_Html_listAction(array $Actions, $BaseURL, $BaseDoc = '')
  */
 function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = null)
 {
-	$R = ViewHelper_Html_tableHead($Titre, $Colonnes, 'class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '"') . '
+	$R = '<table class="ajax-table" data-source="' . $URL . '" data-callback="' . $JSCallback . '"> 
+	' . ViewHelper_Html_tableHead($Titre, $Colonnes) . '
 <tbody>
 <tr>
 	<td colspan="' . count($Colonnes) . '" style="text-align:center;">
@@ -192,10 +193,9 @@ function ViewHelper_Html_ajaxTable($URL, $Titre, array $Colonnes, $JSCallback = 
  * 
  * @return string l'en-tête correspondant.
  */
-function ViewHelper_Html_tableHead($Caption, array $Row, $Attrs = '')
+function ViewHelper_Html_tableHead($Caption, array $Row)
 {
 	$R='
-<table ' . $Attrs . '>
 	<caption>' . $Caption . '</caption>
 	<thead>
 		' . ViewHelper_Html_tableRow($Row, 'th') . '
