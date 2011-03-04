@@ -89,7 +89,7 @@ class Eleve extends Membre
 			FROM Exercices
 			WHERE Createur = ' . $this->getFilteredId() . '
 			AND Statut IN ("VIERGE", "ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")',
-		'Nb'
+			'Nb'
 		);	
 	}
 }

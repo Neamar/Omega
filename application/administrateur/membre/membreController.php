@@ -154,7 +154,7 @@ class Administrateur_MembreController extends AbstractController
 		
 		$Correcteur = $this->exists($this->Data['data'], 'Correcteur');
 		
-		$Fichier = glob( DATA_PATH . '/CI/' . $Correcteur->getFilteredId() . '.*');
+		$Fichier = glob(DATA_PATH . '/CI/' . $Correcteur->getFilteredId() . '.*');
 		
 		$this->View->File = $Fichier[0];
 	}

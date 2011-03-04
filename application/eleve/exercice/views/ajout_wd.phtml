@@ -43,12 +43,12 @@ if($this->NbFiles > 0)
 		Si vous le pouvez, préférez utiliser l'<a href="#ajout-complet" onclick="$('#tabs').tabs('select', 2);">ajout complet</a>.</p>
 		
 		<?php
-			echo $this->Doc_box(
-				'eleve',
-				'fichiers',
-				"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
-				Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
-			);
+		echo $this->Doc_box(
+			'eleve',
+			'fichiers',
+			"Attention ! Tous les types de fichiers ne sont pas autorisés.<br />
+			Extensions autorisées : " . str_replace('|', ', ', EXTENSIONS) . '.'
+		);
 		?>
 		
 		<p>Ne remplissez que les champs nécessaires, puis cliquez sur envoyer.</p>

@@ -152,7 +152,7 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 		$Infos[] = $Dates[0];
 	}
 
-	if($Exercice->Note !== NULL)
+	if($Exercice->Note !== null)
 	{
 		$Infos[] = "Note : " . ($Exercice->Note == 0?'<span style="color:red">&empty;</span>':str_repeat('✭', $Exercice->Note));
 	}
@@ -172,7 +172,7 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 	$Dates = array();
 	
 	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
-	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== NULL)
+	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== null)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}
