@@ -198,7 +198,7 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 			//Gestion du blocage du correcteur
 			if(isset($_POST['bloquer']))
 			{
-				$this->Exercice->Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
+				$this->Exercice->getCorrecteur()->setAndSave(array('Statut' => 'BLOQUE'));
 				Event::dispatch(Event::MEMBRE_BLOQUE, array('Membre' => $Membre));
 			}
 		}//isset($_POST['remboursement-exercice'])
