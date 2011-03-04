@@ -303,11 +303,13 @@ CREATE TABLE IF NOT EXISTS `Exercices_Logs` (
   `Action` varchar(70) NOT NULL,
   `AncienStatut` varchar(20) DEFAULT NULL,
   `NouveauStatut` varchar(20) NOT NULL,
+  `Correcteur` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `Exercice` (`Exercice`),
   KEY `Membre` (`Membre`),
   KEY `AncienStatut` (`AncienStatut`),
-  KEY `NouveauStatut` (`NouveauStatut`)
+  KEY `NouveauStatut` (`NouveauStatut`),
+  KEY `Correcteur` (`Correcteur`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Toutes les actions ayant un impact sur un exercice' AUTO_INCREMENT=1 ;
 --
 -- Contenu de la table `Exercices_Logs`
@@ -641,6 +643,7 @@ ALTER TABLE `Exercices_Corriges`
 -- Contraintes pour la table `Exercices_Logs`
 --
 ALTER TABLE `Exercices_Logs`
+  ADD CONSTRAINT `Exercices_Logs_ibfk_5` FOREIGN KEY (`Correcteur`) REFERENCES `Correcteurs` (`ID`),
   ADD CONSTRAINT `Exercices_Logs_ibfk_4` FOREIGN KEY (`AncienStatut`) REFERENCES `Statuts` (`Statut`),
   ADD CONSTRAINT `Exercices_Logs_ibfk_1` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`),
   ADD CONSTRAINT `Exercices_Logs_ibfk_2` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`),

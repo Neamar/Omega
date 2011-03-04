@@ -153,7 +153,7 @@ abstract class DbObject
 	/**
 	 * Récupère l'objet associé à la colonne étrangère.
 	 * 
-	 * @param string Column la colonne à prendre en compte
+	 * @param string $Column la colonne à prendre en compte
 	 * 
 	 * @return DbObject l'objet étranger
 	 */
@@ -172,11 +172,11 @@ abstract class DbObject
 	/**
 	 * Enregistre un message de log.
 	 * 
-	 * @param string Table la table d'enregistrement
-	 * @param string Action l'action effectuée entraînant le log
-	 * @param Membre Membre le membre ayant effectué l'action
-	 * @param Exercice Exercice l'exercice sur lequel s'applique l'action
-	 * @param array Values les autres valeurs à insérer (échappées)
+	 * @param string $Table la table d'enregistrement
+	 * @param string $Action l'action effectuée entraînant le log
+	 * @param Membre $Membre le membre ayant effectué l'action
+	 * @param Exercice $Exercice l'exercice sur lequel s'applique l'action
+	 * @param array $Values les autres valeurs à insérer (échappées)
 	 */
 	public function log($Table, $Action, Membre $Membre, Exercice $Exercice = null, array $Values = array())
 	{

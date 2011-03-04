@@ -598,17 +598,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
-			WHERE 
-			(
-				Exercices.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
-				AND NouveauStatut NOT IN("VIERGE", "ATTENTE_CORRECTEUR")
-				AND
-				(
-					Membres.Type = "ELEVE"
-					OR
-					Membres.ID = ' . $_SESSION['Correcteur']->getFilteredId() . '
-				)
-			)'
+			WHERE Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId()
 		);
 	}
 	
@@ -623,9 +613,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			WHERE 
 			(
-				Exercices_Logs.Membre = ' . $_SESSION['Correcteur']->getFilteredId() . '
-				OR
-				Exercices_Logs.Membre = Exercices.Createur
+				Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
+				AND
+				Exercices.Hash = "' . $this->Exercice->Hash . '"
 			)'
 		);
 	}

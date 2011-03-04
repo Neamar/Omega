@@ -135,6 +135,7 @@ WHERE Hash="%ID%"';
 			)
 		);
 	}
+	
 	/**
 	 * Modifie le statut de l'exercice
 	 * 
@@ -153,17 +154,34 @@ WHERE Hash="%ID%"';
 		$AncienStatut = $this->Statut;
 		$Changes['Statut'] = $Status;
 		
+		if(isset($Changes['Correcteur']))
+		{
+			$AncienCorrecteur = $Changes['Correcteur'];
+		}
+		if(!empty($this->Correcteur))
+		{
+			$AncienCorrecteur = $this->Correcteur;
+		}
+
+		
 		$this->setAndSave($Changes);
+		
+		$ToLog = array(
+			'NouveauStatut' => $Status,
+			'AncienStatut' => $AncienStatut
+		);
+		
+		if(isset($AncienCorrecteur))
+		{
+			$ToLog['Correcteur'] = $AncienCorrecteur;
+		}
 		
 		$this->log(
 			'Exercices_Logs',
 			$ChangeMessage,
 			$ChangeAuthor,
 			$this,
-			array(
-				'NouveauStatut' => $Status,
-				'AncienStatut' => $AncienStatut
-			)
+			$ToLog
 		);
 	}
 	
