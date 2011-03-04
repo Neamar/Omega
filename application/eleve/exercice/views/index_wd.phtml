@@ -61,6 +61,15 @@ $ListeActions = array(
 
 ?>
 
+<?php 
+if(in_array($this->Exercice->Statut, array('VIERGE', 'ATTENTE_CORRECTEUR')) && !empty($this->Exercice->AutoAccept))
+{
+	?>
+	<p>Vous avez placé sur cet exercice une valeur d'auto-acceptation de <?php echo $this->Points($this->Exercice->AutoAccept) ?>.</p>
+	<?php 
+}
+?>
+
 <h2 class="h2_actions" id="eleve-exercice-index-options">Options de l'exercice</h2>
 
 <?php

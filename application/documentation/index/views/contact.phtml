@@ -15,12 +15,26 @@ Merci d'entrer votre mail suivi de votre message dans ce formulaire.</p>
 
 <form id="form_contact" method="post" action="">
 <?php
+if(isset($_SESSION['Eleve']))
+{
+	$Mail = $_SESSION['Eleve']->Mail;
+}
+else if(isset($_SESSION['Correcteur']))
+{
+	$Mail = $_SESSION['Correcteur']->Mail;
+}
+else
+{
+	$Mail = '';
+}
+
 echo $this->Form_inputLabelBr(
 	'mail',
 	'Votre adresse mail',
 	array(
 		'type' => 'email',
-		'placeholder' => 'nom@domaine.fr'
+		'placeholder' => 'nom@domaine.fr',
+		'value' => $Mail,
 	)
 );
 
