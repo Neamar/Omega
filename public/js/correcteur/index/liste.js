@@ -20,7 +20,7 @@ function updateTex()
 	
 	if(jThis.find('td[colspan]').length == 1)
 	{
-		jThis.find('td[colspan]').html('Aucun exercice à afficher.<br /><a href="/correcteur/options/matieres">Définir mes compétences</a>.')
+		jThis.find('td[colspan]').html('<p style="margin:auto; width:210px">Aucun exercice à afficher.<br /><a href="/correcteur/options/matieres">Définir mes compétences</a>.</p>')
 	}
 }
 

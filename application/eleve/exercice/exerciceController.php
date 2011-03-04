@@ -528,7 +528,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 
 				if($this->Exercice->Statut == 'ANNULE')
 				{
-					$this->View->setMessage('info', "L'offre a bien été refusée. L'exercice est maintenant annulé.");
+					$this->View->setMessage('info', "L'offre a bien été refusée pour la " . MAX_REFUS . "<sup>e</sup> fois. L'exercice est maintenant annulé.");
 				}
 				else
 				{
@@ -781,7 +781,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 		$this->ajax(
 			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), Action
 			FROM Exercices_Logs
-			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -794,7 +795,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), CONCAT(Matiere, \' : <a href="/eleve/exercice/index/\', Hash, \'">\', Titre, \'</a>\'), Action
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
-			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId()
+			WHERE Exercices.Createur = ' . $_SESSION['Eleve']->getFilteredId(),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
