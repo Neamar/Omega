@@ -459,17 +459,24 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			//Si un correcteur est associé, dire qu'on le refuse.
 			if(!empty($this->Exercice->Correcteur))
 			{
-				//Dispatch de l'évènement REFUS
-				Event::dispatch(
-					Event::ELEVE_EXERCICE_REFUS,
-					array(
-						'Exercice' => $this->Exercice,
-						'Correcteur' => $this->Exercice->getCorrecteur(),
-						'Eleve' => $this->getMembre(),
-					)
+				$ToDispatch = Event::ELEVE_EXERCICE_REFUS;
+				$Datas = array(
+					'Exercice' => $this->Exercice,
+					'Correcteur' => $this->Exercice->getCorrecteur(),
+					'Eleve' => $this->getMembre(),
+					'prix_correcteur' => $this->Exercice->priceAsked()
 				);
 			}
 			$this->Exercice->cancelExercice($_SESSION['Eleve'], 'Annulation de l\'exercice.');
+			
+			if(isset($ToDispatch))
+			{
+				//Dispatch de l'évènement REFUS
+				Event::dispatch(
+					$ToDispatch,
+					$Datas
+				);
+			}
 			
 			$this->View->setMessage('info', "Votre exercice a été annulé.");
 			$this->redirect("/eleve/exercice/");
