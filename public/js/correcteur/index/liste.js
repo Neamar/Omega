@@ -47,3 +47,8 @@ $(function()
 		e.preventDefault();
 	});
 });
+
+$(function()
+{
+	$('table.ajax-table').css('width', '98%');
+});

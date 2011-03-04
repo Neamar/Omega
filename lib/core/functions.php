@@ -94,9 +94,9 @@ function lock($Reason)
  * @see Bootstrap.php
  * 
  * @param int $errno contains the level of the error raised, as an integer. 
- * @param unknown_type $errstr contains the error message, as a string.
- * @param unknown_type $errfile contains the filename that the error was raised in, as a string. 
- * @param unknown_type $errline contains the line number the error was raised at, as an integer. 
+ * @param string $errstr contains the error message, as a string.
+ * @param string $errfile contains the filename that the error was raised in, as a string. 
+ * @param int $errline contains the line number the error was raised at, as an integer. 
  */
 function error($errno, $errstr, $errfile, $errline)
 {
