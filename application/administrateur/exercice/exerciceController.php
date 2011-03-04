@@ -190,6 +190,14 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 						Event::dispatch($Event, $Params);
 					}
 					
+					//Gestion du blocage du correcteur
+					if(isset($_POST['bloquer']))
+					{
+						$Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
+						Event::dispatch(Event::MEMBRE_BLOQUE, array('Membre' => $Membre));
+						$MessageAdministrateur .= '<br />Le correcteur a été bloqué.';
+					}
+					
 					$this->View->setMessage('ok', $MessageAdministrateur);
 					$this->redirect('/administrateur/reclamations');
 				}//Fin pourcentage == 0
