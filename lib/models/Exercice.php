@@ -51,7 +51,7 @@ WHERE Hash="%ID%"';
 		'EN_COURS'				=> array('ENVOYE', 'ANNULE', 'REMBOURSE'),
 		'ENVOYE'				=> array('TERMINE', 'REFUSE'),
 		'REFUSE'				=> array('TERMINE', 'REMBOURSE'),
-		'TERMINE'				=> array(),
+		'TERMINE'				=> array('REFUSE'),
 		'ANNULE'				=> array(),
 		'REMBOURSE'				=> array(),
 	);
