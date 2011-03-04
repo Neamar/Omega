@@ -190,18 +190,17 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 						Event::dispatch($Event, $Params);
 					}
 					
-					//Gestion du blocage du correcteur
-					if(isset($_POST['bloquer']))
-					{
-						$Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
-						Event::dispatch(Event::MEMBRE_BLOQUE, array('Membre' => $Membre));
-						$MessageAdministrateur .= '<br />Le correcteur a été bloqué.';
-					}
-					
 					$this->View->setMessage('ok', $MessageAdministrateur);
 					$this->redirect('/administrateur/reclamations');
 				}//Fin pourcentage == 0
 			}//Fin isset($_POST['remboursement'][0]) && $this->View->EstRemboursable
+			
+			//Gestion du blocage du correcteur
+			if(isset($_POST['bloquer']))
+			{
+				$this->Exercice->Correcteur->setAndSave(array('Statut' => 'BLOQUE'));
+				Event::dispatch(Event::MEMBRE_BLOQUE, array('Membre' => $Membre));
+			}
 		}//isset($_POST['remboursement-exercice'])
 		
 		$this->View->Sujet = $this->concat('/administrateur/exercice/sujet/' . $this->Exercice->Hash);
