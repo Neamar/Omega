@@ -102,7 +102,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$Deja = Sql::singleQuery(
 			'SELECT COUNT(*) AS Vu
 			FROM Exercices_Correcteurs
-			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID)
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID) . '
+			AND Correcteur = ' . $this->getMembre()->getFilteredId()
 		);
 		if($Deja['Vu'] > 0)
 		{
