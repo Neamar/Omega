@@ -186,6 +186,5 @@ try
 		<pre>' . $DumpServer . '</pre>';
 	
 	External::mail('matthieu@bacconnier.fr', 'Erreur eDevoir : ' . $e->getMessage(), $Dump);
-	//echo $Dump;
-	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...</p>');
+	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...');
 }

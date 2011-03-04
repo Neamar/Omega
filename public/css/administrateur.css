@@ -70,9 +70,3 @@ color:#f16c7c;
 #logo #section_logo a#a_logo {
 	background:url('/public/css/images/logo-adm.png') top left scroll no-repeat; /*image*/
 }
-
-p.crash {
-font-family:sans-serif;
-color:#900;
-font-weight:bold;
-}
