@@ -156,7 +156,7 @@ class Administrateur_MembreController extends AbstractController
 		
 		$Fichier = glob( DATA_PATH . '/CI/' . $Correcteur->getFilteredId() . '.*');
 		
-		$this->View->File = DATA_PATH . '/CI/' . $Correcteur->getFilteredId() . '.pdf';
+		$this->View->File = $Fichier[0];
 	}
 	
 	/**

@@ -11,10 +11,11 @@ function formatTuple(array $Tuple)
 {
 	$Tuple['Creation'] = date('d/m/Y à H\h', strtotime($Tuple['Creation']));
 	$Tuple['CV'] = '<a href="/administrateur/membre/correcteur_cv/' . $Tuple['CV'] . '">PDF</a>';
+	$Tuple['CI'] = '<a href="/administrateur/membre/correcteur_ci/' . $Tuple['CI'] . '">Voir</a>';
 	return $Tuple;
 }
 
-$Head = array('Date', 'Identité', 'CV', 'Valider');
+$Head = array('Date', 'Identité', 'CV', 'CI', 'Valider');
 ?>
 
 <p>En attente : <?php echo $this->NbValidations; ?></p>

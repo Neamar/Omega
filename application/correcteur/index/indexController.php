@@ -262,7 +262,7 @@ ORDER BY Exercices.Expiration
 					//Enregistrer le CV :	
 					move_uploaded_file($_FILES['cv']['tmp_name'], PATH . '/data/CV/' . $ID . '.pdf');
 					//Enregistrer la CI
-					move_uploaded_file($_FILES['cv']['tmp_name'], PATH . '/data/CI/' . $ID . Util::extension($_FILES['ci']['name']));
+					move_uploaded_file($_FILES['ci']['tmp_name'], PATH . '/data/CI/' . $ID . '.' . Util::extension($_FILES['ci']['name']));
 					
 					//Mission accomplie ! Dispatcher l'évènement :
 					Event::dispatch(

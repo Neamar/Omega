@@ -72,10 +72,10 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 	}
 	//Mettre en forme les remarques :
 	$Remarques = '';
+	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Note');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Eleve');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Correcteur');
 	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Reclamation');
-	$Remarques .= ViewHelper_Exercice_infos($Exercice, 'Note');
 	
 	//Récupérer les infos intéressantes.
 	$Infos = ViewHeper_Exercice_props($Exercice);
