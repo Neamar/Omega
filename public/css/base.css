@@ -216,10 +216,8 @@ font-weight:bold;
 /* - - La classe .important _ rouge - - */
 .important {
 background-color:#f0e8e8;
+font-weight:bold;
 }
-	.important:first-line {
-	font-weight:bold;
-	}
 		.important:hover {
 		background:url('/public/css/images/important-h.png') center left scroll no-repeat;
 		color:#931414;
@@ -592,18 +590,18 @@ text-shadow:1px 1px 0px #f8f8f8;
 	padding:7px;
 	border-left:1px solid #d6d6d6;
 	}
-	td a { display:inline-block; max-width:650px; word-wrap: break-word;}
+	table.ajax-table td a { display:inline-block; max-width:650px; word-wrap: break-word;}
 	
 		td:first-child {
 		border-left:2px solid #dedede;
 		}
-		td:last-child {
-		-moz-border-radius-topright: 10px;
-		-moz-border-radius-bottomright:10px;
-		-webkit-border-top-right-radius:10px;
-		-webkit-border-bottom-right-radius:10px;
-		border-bottom-right-radius:10px;
-		border-top-right-radius:10px;
+		table.ajax-table td:last-child {
+		-moz-border-radius-topright: 11px;
+		-moz-border-radius-bottomright:11px;
+		-webkit-border-top-right-radius:11px;
+		-webkit-border-bottom-right-radius:11px;
+		border-bottom-right-radius:11px;
+		border-top-right-radius:11px;
 		}
 			td.ajax-more a{
 				padding-left:20px;
