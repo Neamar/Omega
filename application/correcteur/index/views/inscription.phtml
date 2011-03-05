@@ -48,7 +48,7 @@ echo $this->Form_inputLabelBr(
 	)
 );
 
-echo $this->Form_inputLabelBr(
+echo $this->Form_inputLabel(
 	'telephone',
 	'Votre numéro de téléphone',
 	array(
@@ -57,7 +57,7 @@ echo $this->Form_inputLabelBr(
 		'required' => 'required',
 		'pattern' => '^0[1-8]([-. ]?[0-9]{2}){4}$'
 	)
-);
+) . $this->Doc_inputBr('correcteur', 'champ_telephone');
 
 echo $this->Form_inputLabel(
 	'cv',
@@ -75,7 +75,7 @@ echo $this->Form_inputLabel(
 		'type' => 'file',
 		'required' => 'required',
 	)
-) . $this->Doc_inputBr('correcteur', 'pourquoi_carte');
+) . $this->Doc_inputBr('correcteur', 'pourquoi_ci');
 
 echo $this->Doc_box(
 	'correcteur',

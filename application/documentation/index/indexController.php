@@ -26,6 +26,17 @@
  */
 class Documentation_IndexController extends DocumentationAbstractController
 {
+	public function __construct($Module, $Controller, $View)
+	{
+		//Forcer l'utilisation d'une page en .htm
+		if($View != 'index' && strpos($_SERVER['REQUEST_URI'], 'documentation') !== false)
+		{
+			redirect('/' . $View . '.htm', 301);
+		}
+		
+		parent::__construct($Module, $Controller, $View);
+	}
+	
 	/**
 	 * Accueil de la documentation.
 	 */
@@ -123,63 +134,5 @@ class Documentation_IndexController extends DocumentationAbstractController
 	public function cgvAction()
 	{
 		$this->fromLatex('cgv');
-	}
-	
-	/**
-	 * Gère la documentation au format TeX
-	 * 
-	 * @param string $methodName le nom à utiliser, e.g. confidentialiteAction
-	 * @param array $args les arguments (vides)
-	 * @throws Exception si la méthode ou le fichier n'existe pas
-	 */
-	public function __call($methodName, array $args)
-	{
-		//Si on arrive du site, mettre une option pour fermer la page.
-		if(isset($_SERVER['HTTP_REFERER']) && preg_match('`^' . preg_quote(URL) . '/(eleve|correcteur)/`', $_SERVER['HTTP_REFERER']))
-		{
-			$this->View->setMessage('info', 'Vous avez fini de lire ? <a href=# onclick=window.close() >Fermer cette page</a>.');
-		}
-		
-		if(!substr($methodName, -6) == 'Action')
-		{
-			throw new Exception("Méthode " . $methodName . " inconnue.", 1);
-			return;
-		}
-		
-		$Action = substr($methodName, 0, -6);
-		$TexPath = APPLICATION_PATH . '/documentation/' . $this->Controller . '/views/' . $Action . '.tex';
-		
-		if(!isset(self::$Pages[$this->Controller][$Action]))
-		{
-			throw new Exception("Page " . $methodName . " inconnue.", 1);
-		}
-		elseif(!file_exists($TexPath))
-		{
-			throw new Exception("Méthode " . $methodName . " inconnue (aucun fichier).", 1);
-		}
-		else
-		{
-			//Dévier la vue vers la vue générique pour les fichiers TeX
-			$this->View->setFile(OO2FS::viewPath('generic', null, 'index', 'documentation'));
-			$this->View->texPath = $TexPath;
-			
-			//Renseigner le titre :
-			$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
-		}
-	}
-	
-	/**
-	 * Transforme un document pur LaTeX en texte utilisable par le Typographe.
-	 */
-	private function fromLatex($Action)
-	{
-		//Renseigner le titre :
-		$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
-		
-		//Charger le contenu
-		$this->View->Content = file_get_contents(APPLICATION_PATH . '/documentation/index/views/' . $this->View->getMeta('name') . '.tex');
-		
-		//Dévier vers la vue LaTeX
-		$this->View->setFile(OO2FS::viewPath('generic_latex', null, 'index', 'documentation'));
 	}
 }

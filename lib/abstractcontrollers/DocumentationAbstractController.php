@@ -65,6 +65,8 @@ class DocumentationAbstractController extends AbstractController
 			'demande_aide' => "À quoi correspond une demande «&nbsp;Piste de résolution&nbsp;» ?",
 			'champ_rendu' => "À quoi correspond la date d'expiration ?",
 			'champ_annulation' => "À quoi correspond la date d'annulation ?",
+			'demande_aide' => 'À quoi correspond une demande de type «&nbsp;aide&nbsp;» ?',
+			'demande_complet' => 'À quoi correspond une demande de type «&nbsp;complet&nbsp;» ?',
 			'champ_info' => "À quoi sert le cadre «&nbsp;Informations complémentaires&nbsp;» ?",
 			'auto_accept' => "Comment fonctionne l'acceptation automatique ?",
 			'ajout' => "Comment ajouter des fichiers à mon exercice ?",
@@ -95,6 +97,8 @@ class DocumentationAbstractController extends AbstractController
 			'inscription' => "Comment m'inscrire en tant que correcteur ?",
 			'pourquoi_autoentreprise' => "Pourquoi ouvrir mon auto-entreprise ?",
 			'pourquoi_cv' => "Pourquoi fournir mon CV à l'inscription ?",
+			'pourquoi_ci' => "Pourquoi envoyer ma carte d'identité à l'inscription ?",
+			'champ_telephone' => "Quels numéros de téléphones sont acceptés ?",
 			'comment_autoentreprise' => "Comment ouvrir mon auto-entreprise ?",
 			'fermer_autoentreprise' => "Comment fermer mon auto-entreprise ?",
 			'validation' => "Pourquoi mon compte n'est-il pas automatiquement validé ?",
@@ -105,6 +109,8 @@ class DocumentationAbstractController extends AbstractController
 			'marche' => "Comment choisir un devoir pour le corriger ?",
 			'reservation' => "Comment réserver un exercice ?",
 			'prix' => 'Quelle somme demander ?',
+			'demande_aide' => 'À quoi correspond une demande de type «&nbsp;aide&nbsp;» ?',
+			'demande_complet' => 'À quoi correspond une demande de type «&nbsp;complet&nbsp;» ?',
 			'champ_annulation' => "À quoi correspond la date d'annulation ?",
 			'demande_complet' => "À quoi correspond une demande «&nbsp;Corrigé complet&nbsp;» ?",
 			'demande_aide' => "À quoi correspond une demande «&nbsp;Piste de résolution&nbsp;» ?",
@@ -114,6 +120,7 @@ class DocumentationAbstractController extends AbstractController
 			'faq' => "Qu'est ce que la FAQ exercice ? Comment s'en servir ? Quelles sont mes contraintes ?",
 			'tex' => "Qu'est ce que le LaTeX ? Je ne peux pas envoyer un document Word ?",
 			'aide_tex' => "Comment utiliser LaTeX ?",
+			'aide_ressource' => 'Comment ajouter des images à mon corrigé ?',
 			'alerte' => "J'ai eu une alerte, à quoi cela correspond-il ?",
 			'envoi' => "Comment envoyer mon corrigé ?",
 			'envoi_gratuit' => "Pourquoi puis-je envoyer mon corrigé gratuitement ?",
@@ -150,7 +157,7 @@ class DocumentationAbstractController extends AbstractController
 		}
 		else
 		{
-			return 'Page inconnue.';
+			throw new Exception('Page de documentation inconnue');
 		}
 	}
 	
@@ -164,7 +171,7 @@ class DocumentationAbstractController extends AbstractController
 	{
 		$Ariane = parent::computeBreadcrumbs();
 		
-		if($this->Action != 'index')
+		if($this->Action != 'index' && isset(self::$Pages[$this->Controller][$this->Action]))
 		{
 			$Ariane[self::build($this->Action, null, $this->Controller, $this->Module)] = self::$Pages[$this->Controller][$this->Action];
 		}
@@ -198,7 +205,7 @@ class DocumentationAbstractController extends AbstractController
 		
 		if(!isset(self::$Pages[$this->Controller][$Action]))
 		{
-			throw new Exception("Page " . $methodName . " inconnue.", 1);
+			go404('Cette page de documentation n\'existe pas.');
 		}
 		elseif(!file_exists($TexPath))
 		{
@@ -218,7 +225,7 @@ class DocumentationAbstractController extends AbstractController
 	/**
 	 * Transforme un document pur LaTeX en texte utilisable par le Typographe.
 	 */
-	private function fromLatex($Action)
+	protected function fromLatex($Action)
 	{
 		//Renseigner le titre :
 		$this->View->setTitle(self::$Pages[$this->Controller][$Action]);

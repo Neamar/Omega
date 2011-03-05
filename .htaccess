@@ -2,6 +2,12 @@ Options +FollowSymlinks
 RewriteEngine on
 
 #--------------------------------------------------
+# Pas d'accès depuis www
+#--------------------------------------------------
+RewriteCond %{HTTP_HOST} ^www\.edevoir.com
+RewriteRule (.*) http://edevoir.com/$1 [R=301,L]
+
+#--------------------------------------------------
 # Fichiers et répertoires directement accessibles
 #--------------------------------------------------
 RewriteRule ^public/.+ - [L]
