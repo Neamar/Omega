@@ -1,0 +1,11 @@
+<?php 
+foreach($this->Articles as $ID => $Article)
+{
+	$Article['Creation'] = date('d/m/Y à H\h', strtotime($Article['Creation']))
+	?>
+	<h2 id="blog-index-article-<?php echo $ID; ?>" data-anchor="<?php echo $Article['Creation'] ?>"><?php echo $Article['Titre'] ?></h2>
+	<p><?php echo $this->Html_fromTex($Article['Abstract']) ?></p>
+	<p class="read-more"><a href="/blog/article/consulter/<?php echo $ID ?>">En lire plus…</a></p>
+	<?php
+}
+?>

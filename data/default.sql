@@ -54,6 +54,25 @@ CREATE TABLE IF NOT EXISTS `Alertes` (
 -- Contenu de la table `Alertes`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Blog_Articles`
+--
+
+CREATE TABLE `work`.`Blog_Articles` (
+`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Auteur` INT NOT NULL ,
+`Creation` DATETIME NOT NULL ,
+`Titre` TINYTEXT NOT NULL ,
+`Abstract` MEDIUMTEXT NOT NULL ,
+`Article` TEXT NOT NULL ,
+INDEX ( `Auteur` )
+) ENGINE = InnoDB COMMENT = 'Articles du blog';
+
+--
+-- Contenu de la table `Blog_Articles`
+--
 
 -- --------------------------------------------------------
 
@@ -577,6 +596,13 @@ ALTER TABLE `Alertes`
   ADD CONSTRAINT `Alertes_ibfk_1` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`),
   ADD CONSTRAINT `Alertes_ibfk_2` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`),
   ADD CONSTRAINT `Alertes_ibfk_3` FOREIGN KEY (`FAQ`) REFERENCES `Exercices_FAQ` (`ID`);
+
+--
+-- Contraintes pour la table `Blog_Articles`
+--
+ALTER TABLE `Blog_Articles` ADD FOREIGN KEY ( `Auteur` ) REFERENCES `work`.`Administrateurs` (
+`ID`
+);
 
 --
 -- Contraintes pour la table `Correcteurs`

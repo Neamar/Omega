@@ -268,20 +268,20 @@ function initTypo()
 }
 
 /**
- * Renvoie le contenu d'un fichier TeX mis en forme HTML.
+ * Renvoie le contenu TeX passé en paramètre mis en forme HTML par le Typographe.
  *
- * @param string $URL
+ * @param string $Content le texte
  *
  * @return string du HMTL.
  */
-function ViewHelper_Html_fromTex($URL)
+function ViewHelper_Html_fromTex($Content)
 {
 	if(!class_exists('Typo', false))
 	{
 		initTypo();
 	}
 
-	Typo::setTexteFromFile($URL);
+	Typo::setTexte($Content);
 	$HTML = Typo::Parse();
 
 	$HTML = preg_replace_callback(
@@ -293,4 +293,17 @@ function ViewHelper_Html_fromTex($URL)
 		$HTML
 	);
 	return $HTML;
+}
+
+/**
+ * Renvoie le contenu d'un fichier TeX mis en forme HTML par le Typographe.
+ * @see http://neamar.fr/Res/Typographe/
+ * 
+ * @param string $URL le fichier à parser
+ *
+ * @return string du HMTL.
+ */
+function ViewHelper_Html_fromTexFile($URL)
+{
+	return ViewHelper_Html_fromTex(file_get_contents($URL));
 }
