@@ -140,7 +140,6 @@ class Debug_IndexController extends AbstractController
 	 */
 	public function cleanAction()
 	{
-		exit('Protégé.');
 		$this->View->setTitle('Reset des données');
 		
 		

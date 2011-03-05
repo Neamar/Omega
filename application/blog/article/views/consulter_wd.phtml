@@ -1,3 +1,7 @@
+<div class="article">
 <?php 
 echo $this->Html_fromTex($this->Article['Article']);
 ?>
+</div>
+
+<p class="infos">Article publié le <?php echo date('d/m/Y à H\h', strtotime($this->Article['Creation'])) ?>.</p>
