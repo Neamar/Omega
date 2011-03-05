@@ -282,11 +282,15 @@ abstract class IndexAbstractController extends AbstractController
 		$_SESSION[$Type] = $Membre;
 		if(!is_null($Membre))
 		{
-			if(file_exists(DATA_PATH . '/.no-connect') && file_get_contents(DATA_PATH . '/.no-connect') > time() && $Type != 'Administrateur')
+			if(file_exists(DATA_PATH . '/.no-connect') && $Type != 'Administrateur')
 			{
-				unset($_SESSION[$Type]);
-				$this->View->setMessage('error', 'Désolé, impossible de se connecter au site avant le ' . date('d/m/Y à H\h.', file_get_contents(DATA_PATH . '/.no-connect')));
-				$this->redirect('/blog/article/consulter/2');
+				$Date = trim(file_get_contents(DATA_PATH . '/.no-connect'));
+				if($Date > time())
+				{
+					unset($_SESSION[$Type]);
+					$this->View->setMessage('error', 'Désolé, impossible de se connecter au site avant le ' . date('d/m/Y à H\h.', $Date));
+					$this->redirect('/blog/article/consulter/2');
+				}
 			}
 			else
 			{

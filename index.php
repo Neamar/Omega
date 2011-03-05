@@ -44,7 +44,7 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
     <ul>
 		<li><a class="active" href="/"><span>Accueil</span></a></li>
         <li><a href="/fonctionnement.htm"><span>Fonctionnement du site</span></a></li>
-        <li><a href="/faq.htm"><span>FAQ</span></a></li>
+        <li><a href="/blog/"><span>Blog</span></a></li>
         <li><a href="/exemples.htm"><span>Exemples de corrigé</span></a></li>
     </ul>
     </nav>
@@ -114,6 +114,9 @@ else
 </section>
 </div><!-- /content-form -->
 
+<section id="ouverture">
+<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 14 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
+</section>
 <!-- Liens "légaux" -->
 <footer>
 <ul>
