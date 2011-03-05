@@ -1,6 +1,6 @@
 <?php
 /**
- * indexController.php - 12 févr. 2011
+ * indexController.php - 5 mar. 2011
  * 
  * Actions de base du blog
  * 

@@ -46,8 +46,13 @@ abstract class ExerciceAbstractController extends AbstractController
 		parent::__construct($Module, $Controller, $View, $Data);
 
 		//La page porte sur un exercice en particulier
-		if(is_array($Data) && isset($Data['data']))
+		if(is_array($Data))
 		{
+			if(!isset($Data['data']))
+			{
+				go404('Ces paramètres ne correspondent à rien de connu.');
+			}
+			
 			//Récupérer l'exercice :
 			$this->Exercice = Exercice::load($Data['data']);
 
