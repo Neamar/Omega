@@ -125,7 +125,7 @@ if(window.__noconflict){ jQuery.noConflict();}
         'font': 'Bitstream Vera Sans,verdana,sans-serif',
         'fontColor': 'InfoText',
         'fontSize': '11px',
-        'icons_path' : '/public/js/ie6update/images/',
+        'icons_path' : 'images/',
         'url': 'http://www.microsoft.com/windows/internet-explorer/default.aspx',
         'preload': true
     };
@@ -316,7 +316,7 @@ if(window.__noconflict){ jQuery.noConflict();}
 
 
 jQuery(document).ready(function($) {
-  $('<div></div>').html(IE6UPDATE_OPTIONS.message || 'Votre version d\'Internet Explorer n\'est pas à jour et ne peut pas afficher ce site correctement. Cliquez pour lancer la mise à jour... ')
+	$('<div></div>').html(IE6UPDATE_OPTIONS.message || 'Votre version d\'Internet Explorer n\'est pas à jour et ne peut pas afficher ce site correctement. Cliquez pour lancer la mise à jour... ')
   .activebar(window.IE6UPDATE_OPTIONS);
 });
 

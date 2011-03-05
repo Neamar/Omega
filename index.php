@@ -10,7 +10,6 @@ session_start();
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 	<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-			<script src="/public/js/ie6update.js"></script>
 	<![endif]-->
 </head>
 <body>
@@ -137,5 +136,14 @@ else
 </footer>
     </div><!-- /content-top -->
 </div><!-- /main-top-r -->
+
+<!--[if IE 6]>
+	<script type="text/javascript">
+		var IE6UPDATE_OPTIONS = {
+			icons_path: "public/js/e6update/images/"
+		}
+	</script>
+	<script type="text/javascript" src="ie6update/ie6update.js"></script>
+<![endif]-->
 </body>
 </html>
