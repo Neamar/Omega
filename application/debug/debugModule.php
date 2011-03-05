@@ -14,5 +14,5 @@
  * @link      http://edevoir.com
  */
 
-return true; //TODO : isset($_SESSION['Administrateur']);
+return isset($_SESSION['Administrateur']);
 ?>

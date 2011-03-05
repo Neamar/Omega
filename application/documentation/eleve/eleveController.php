@@ -33,8 +33,8 @@ class Documentation_EleveController extends DocumentationAbstractController
 	 */
 	public function indexAction()
 	{
-		parent::indexAction();
-		
+		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
+		$this->View->addScript('/public/js/documentation/index.js');
 		$this->View->Pages = self::$Pages[$this->Controller];
 	}
 }
