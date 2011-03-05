@@ -75,6 +75,30 @@ class Documentation_IndexController extends DocumentationAbstractController
 		$this->View->setTitle(self::$Pages[$this->Controller]['tex'], 'Petit aide mémoire à l\'intention de ceux qui souhaient utiliser LaTeX');
 	}
 	
+	public function exemplesAction()
+	{
+		$this->View->setTitle(self::$Pages[$this->Controller]['exemples'], 'Quelques exemples de corrigés réalisés par eDevoir.');
+		
+		$Exemples = array();
+		$ExemplesFiles = glob(PATH . '/public/exemples/*');
+		foreach($ExemplesFiles as $Fichier)
+		{
+			$Infos = explode("\n", file_get_contents($Fichier . '/sujet.tex'), 2);
+			
+			$Titre = $Infos[0];
+			$Sujet = $Infos[1];
+			$Corrige = str_replace(PATH, '', $Fichier . '/corrige.pdf');
+			
+			$Exemples[str_replace(PATH . '/public/exemples/', '', $Fichier)] = array(
+				'Titre' => $Titre,
+				'Sujet' => $Sujet,
+				'Corrige' => $Corrige
+			);
+		}
+		
+		$this->View->Exemples = $Exemples;
+	}
+	
 	public function contactAction()
 	{
 		$this->View->setTitle(self::$Pages[$this->Controller]['contact'], 'Formulaire de contact pour communiquer avec l\'équipe du site');
