@@ -1,25 +1,13 @@
-En production :
-- ajouter captcha à l'inscription élève
-- ajouter captcha à l'inscription correcteur
-- ajouter captcha à la récupération mdp
-- ajouter captcha à la désinscription
-- ajouter captcha à la connexion administrateur ?
-- virer le dump de la requête dans Sql::query
-- véritables mails
-- supprimer les tuples SQL par défaut
-- mettre de l'argent sur la banque (un minimum en tout cas)
-- supprimer dataset
-
 Idées cool pour les après midi pluvieuses :
-Ajouter un graphique pour les deltas de points
-Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
-Ajouter un onglet outils à correcteur/exercice/envoi pour un wolfram alpha widget et detexify.
-Une section /documentation/aide-memoire avec des formules de base
-Gestion des alertes
-Faire un mini-tuto vidéo à la première connexion
-Basculer sur Ace pour la coloration syntaxique
-Réservation d'un exercice en indiquant simplement le temps que l'on souhaite y passer
-Ajouter l'upload flash pour l'ajout de fichiers côté élève
-Displaystyle sur Mathjax
-Le téléchargement d'un zip vide
-Possibilité d'envoyer plusieurs fichiers d'un coup depuis l'interface d'envoi correcteur
+- Ajouter un graphique pour les deltas de points
+- Donner au correcteur la possibilité de renommer un exercice qu'il a accepté
+- Ajouter un onglet outils à correcteur/exercice/envoi pour un wolfram alpha widget et detexify.
+- Une section /documentation/aide-memoire avec des formules de base
+- Gestion des alertes
+- Faire un mini-tuto vidéo à la première connexion
+- Basculer sur Ace pour la coloration syntaxique
+- Réservation d'un exercice en indiquant simplement le temps que l'on souhaite y passer
+- Ajouter l'upload flash pour l'ajout de fichiers côté élève
+- Displaystyle sur Mathjax
+- Le téléchargement d'un zip vide
+- Possibilité d'envoyer plusieurs fichiers d'un coup depuis l'interface d'envoi correcteur

@@ -10,8 +10,11 @@ echo $this->Form_inputLabelBr(
 	array(
 		'type' => 'email',
 		'placeholder' => 'nom@domaine.fr',
+		'required' => 'required',
 	)
 );
+echo $this->Form_captcha();
+
 echo $this->Form_submit('recuperation-membre', 'Générer un nouveau mot de passe pour mon compte');
 ?>
 </form>

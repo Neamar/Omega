@@ -113,6 +113,10 @@ abstract class IndexAbstractController extends AbstractController
 			{
 				$this->View->setMessage('error', "Entrez une adresse mail correcte !");
 			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', "Le captcha rentré est incorrect. Merci de réessayer.");
+			}
 			else
 			{
 				//Générer un nouveau mot de passe :

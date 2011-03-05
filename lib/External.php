@@ -73,8 +73,15 @@ class External
 		// En-têtes additionnels
 		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
 
-		//register_shutdown_function("mail", $to, $subject, $message, $headers);
-		file_put_contents(DATA_PATH . '/logs/last_mail', $to . PHP_EOL . $subject . PHP_EOL . $message);
+		if(URL == 'http://omega.localhost')
+		{
+			file_put_contents(DATA_PATH . '/logs/last_mail', $to . PHP_EOL . $subject . PHP_EOL . $message);
+		}
+		else
+		{
+			register_shutdown_function("mail", $to, $subject, $message, $headers);
+		}
+		
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
 	}
 	
