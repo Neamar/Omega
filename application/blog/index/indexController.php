@@ -42,7 +42,7 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>'
 		$this->View->Articles = Sql::queryAssoc(
 			'SELECT ID, Titre, Creation, Abstract
 			FROM Blog_Articles
-			ORDER BY Creation DESC',
+			ORDER BY Creation DESC, ID DESC',
 			'ID'
 		);
 	}

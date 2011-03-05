@@ -277,19 +277,28 @@ abstract class IndexAbstractController extends AbstractController
 			AND Type="' . Sql::escape($Type) . '"
 		)';
 		
-		//Fichier gardant en mémoire le nombre d'essais de connexion
-		$IPTryURL = DATA_PATH . '/ips/try/' . $_SERVER['REMOTE_ADDR'];
-		
 		$Membre = $Type::load($ID, false); // Récupérer sans filtrer.
 	
 		$_SESSION[$Type] = $Membre;
 		if(!is_null($Membre))
 		{
-			$Membre->setAndSave(array('Connexion' => SQL::getDate()));
-			$_SESSION['Membre']['Mail'] = $Membre->Mail;
+			if(file_exists(DATA_PATH . '/.no-connect') && file_get_contents(DATA_PATH . '/.no-connect') > time() && $Type != 'Administrateur')
+			{
+				unset($_SESSION[$Type]);
+				$this->View->setMessage('error', 'Désolé, impossible de se connecter au site avant le ' . date('d/m/Y à H\h.', file_get_contents(DATA_PATH . '/.no-connect')));
+				$this->redirect('/blog/article/consulter/2');
+			}
+			else
+			{
+				$Membre->setAndSave(array('Connexion' => SQL::getDate()));
+				$_SESSION['Membre']['Mail'] = $Membre->Mail;
+			}
 		}
 		else
 		{
+			//Fichier gardant en mémoire le nombre d'essais de connexion
+			$IPTryURL = DATA_PATH . '/ips/try/' . $_SERVER['REMOTE_ADDR'];
+			
 			//Gestion du bannissement si trop d'essais
 			if(file_exists($IPTryURL))
 			{
