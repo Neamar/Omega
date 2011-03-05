@@ -115,7 +115,7 @@ Merci de cliquer sur le lien suivant pour valider votre adresse mail et commence
 			),
 			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
 		);
-		External::mail('neamar@neamar.fr', 'Essai mail', $Mail);
+		External::mail('licoti5@hotmail.com', 'Essai mail', $Mail);
 		exit();
 	}
 	
