@@ -1,0 +1,33 @@
+<div class="documentation-content">
+<?php 
+/*
+ * Fichier utilisé pour toutes les requêtes en pur LaTeX, qui doivent être converties en LaTeX-typographe.
+ */
+$Contenu = $this->Content;
+
+$Remplacements = array(
+//Sauts de ligne
+	"\n\n" => '\\\\\\\\',
+	"\n\\begin{" => '\\\\\\begin{',
+	"\n\\end{" => '\\\\\\end{',
+	"\n" => ' ',
+	'\\\\' => "\n",
+//Espace insécable
+	'~' => '&nbsp;',
+//Balise §
+	'\\paragraph{' => '\\textbf{',
+	'\\paragraph*{' => '\\textbf{',
+//Balise €
+	'\\euro' => '€',
+//Listes
+	'\\item' => '\\li',
+//edevoir.com
+	'edevoir.com' => 'edevoir\.com',
+);
+
+//Effectuer la conversion
+$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Contenu);
+
+echo $this->Html_fromTex($Contenu);
+?>
+</div>
