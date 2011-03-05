@@ -4,13 +4,13 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<title>Bienvenue sur eDevoir !</title>
-<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<meta charset=utf-8 />
+	<title>Bienvenue sur eDevoir !</title>
+	<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="/public/js/ie6update.js"></script>
 	<![endif]-->
 </head>
 <body>
