@@ -14,10 +14,6 @@
  * @link      http://edevoir.com
  */
 
-//Ces fonctions nécessitent le chargement du contrôleur de documentation.
-//S'agissant d'un contrôleur, l'autoload ne suffit pas : il faut le récupérer manuellement.
-include OO2FS::controllerPath('index', 'documentation');
-
 /**
  * Récupérer l'URL vers une page de la documentation
  * 
@@ -48,7 +44,7 @@ function ViewHelper_Doc_link($section, $page)
  */
 function ViewHelper_Doc_anchor($section, $page, $caption = null)
 {
-	$title = Documentation_IndexController::getTitle($section, $page);
+	$title = DocumentationAbstractController::getTitle($section, $page);
 	if(is_null($caption))
 	{
 		$caption = $title;

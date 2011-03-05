@@ -73,8 +73,15 @@ class External
 		// En-têtes additionnels
 		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
 
-		//register_shutdown_function("mail", $to, $subject, $message, $headers);
-		file_put_contents(DATA_PATH . '/logs/last_mail', $to . PHP_EOL . $subject . PHP_EOL . $message);
+		if(URL == 'http://omega.localhost')
+		{
+			file_put_contents(DATA_PATH . '/logs/last_mail', $to . PHP_EOL . $subject . PHP_EOL . $message);
+		}
+		else
+		{
+			register_shutdown_function("mail", $to, $subject, $message, $headers);
+		}
+		
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
 	}
 	
@@ -97,12 +104,26 @@ class External
 		$File = preg_replace_callback("`__([a-zA-Z0-9_]+)__`", 'External::_templateReplace', $File);
 		
 		//Récupérer ses composantes
-		$Items = explode(PHP_EOL, $File, 2);
+		$Items = explode(PHP_EOL, $File, 3);
 		$subject = $Items[0];
-		$message = $Items[1];
+		$bonjour = $Items[1];
+		$message = $Items[2];
+		
+		//Injecter le tout dans le template
+		$Mail = str_replace(
+			array(
+				'__BONJOUR__',
+				'__CONTENU__',
+			),
+			array(
+				$bonjour,
+				$message,
+			),
+			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
+		);
 		
 		//L'envoyer :
-		self::mail($to, $subject, $message);
+		self::mail($to, $subject, $Mail);
 	}
 	
 	/**

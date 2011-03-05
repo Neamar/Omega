@@ -4,13 +4,12 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<title>Bienvenue sur eDevoir !</title>
-<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<meta charset=utf-8 />
+	<title>Bienvenue sur eDevoir !</title>
+	<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
 <body>
@@ -45,7 +44,7 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
     <ul>
 		<li><a class="active" href="/"><span>Accueil</span></a></li>
         <li><a href="/fonctionnement.htm"><span>Fonctionnement du site</span></a></li>
-        <li><a href="/faq.htm"><span>FAQ</span></a></li>
+        <li><a href="/blog/"><span>Blog</span></a></li>
         <li><a href="/exemples.htm"><span>Exemples de corrigé</span></a></li>
     </ul>
     </nav>
@@ -115,6 +114,9 @@ else
 </section>
 </div><!-- /content-form -->
 
+<section id="ouverture">
+<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 14 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
+</section>
 <!-- Liens "légaux" -->
 <footer>
 <ul>
@@ -137,5 +139,14 @@ else
 </footer>
     </div><!-- /content-top -->
 </div><!-- /main-top-r -->
+
+<!--[if IE 6]>
+	<script type="text/javascript">
+		var IE6UPDATE_OPTIONS = {
+			icons_path: "public/js/ie6update/images/"
+		}
+	</script>
+	<script type="text/javascript" src="/public/js/ie6update/ie6update.js"></script>
+<![endif]-->
 </body>
 </html>

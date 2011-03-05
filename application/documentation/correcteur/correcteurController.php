@@ -14,9 +14,6 @@
  * @link      http://edevoir.com
  */
 
-//Charger la base.
-include APPLICATION_PATH . '/documentation/index/indexController.php';
-
 /**
  * Contrôleur de documentation générique.
  * 
@@ -27,7 +24,7 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
  * @link     http://edevoir.com
  *
  */
-class Documentation_CorrecteurController extends Documentation_IndexController
+class Documentation_CorrecteurController extends DocumentationAbstractController
 {
 	/**
 	 * Accueil du module correcteur.
@@ -35,26 +32,8 @@ class Documentation_CorrecteurController extends Documentation_IndexController
 	 */
 	public function indexAction()
 	{
-		parent::indexAction();
-		
+		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
+		$this->View->addScript('/public/js/documentation/index.js');
 		$this->View->Pages = self::$Pages[$this->Controller];
-	}
-	
-	/**
-	 * Overrider le index/matieres
-	 * @see Documentation_IndexController::matieresAction()
-	 */
-	public function matieresAction()
-	{
-		$this->__call('matieresAction', array());
-	}
-	
-	/**
-	 * Overrider le guide tex de l'index
-	 * @see Documentation_IndexController::texAction()
-	 */
-	public function texAction()
-	{
-		$this->__call('texAction', array());
 	}
 }

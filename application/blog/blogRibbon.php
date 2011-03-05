@@ -21,6 +21,7 @@ $Retour['left'] = '<a href="/blog/">Derniers articles</a>';
 $Retour['right'] = '';
 $Retour['links'] = array(
 	'/' => 'Accueil eDevoir',
+	'/documentation/' => 'Documentation',
 );
 
 return $Retour;

@@ -14,9 +14,6 @@
  * @link      http://edevoir.com
  */
 
-//Charger la base.
-include APPLICATION_PATH . '/documentation/index/indexController.php';
-
 /**
  * Contrôleur de documentation générique.
  * 
@@ -27,7 +24,7 @@ include APPLICATION_PATH . '/documentation/index/indexController.php';
  * @link     http://edevoir.com
  *
  */
-class Documentation_EleveController extends Documentation_IndexController
+class Documentation_EleveController extends DocumentationAbstractController
 {
 	
 	/**
@@ -36,8 +33,8 @@ class Documentation_EleveController extends Documentation_IndexController
 	 */
 	public function indexAction()
 	{
-		parent::indexAction();
-		
+		$this->View->setTitle(self::$Pages[$this->Controller]['index']);
+		$this->View->addScript('/public/js/documentation/index.js');
 		$this->View->Pages = self::$Pages[$this->Controller];
 	}
 }

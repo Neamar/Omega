@@ -1,0 +1,12 @@
+<?php
+foreach($this->Exemples as $ID => $Exemple)
+{
+	?>
+	<h2 id="documentation-index-exemples-<?php echo $ID ?>"><?php echo $Exemple['Titre']?></h2>
+	<h3>Énoncé de l'exercice</h3>
+	<?php echo $this->Html_fromTex($Exemple['Sujet']) ?>
+	
+	<h3>Corrigé de l'exercice</h3>
+	<a href="<?php echo $Exemple['Corrige'] ?>">Consulter le corrigé (au format PDF)</a>
+	<?php
+}

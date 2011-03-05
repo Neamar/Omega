@@ -66,6 +66,9 @@ echo $this->Exercice($this->Exercice);
 		</pre>
 	</div>
 	<div id="envoi-ressources">
+		<?php 
+		echo $this->Doc_box('correcteur', 'aide_ressource', 'À quoi sert cet onglet ?');
+		?>
 		<form method="post" action="">
       		<?php 
       		echo $this->Form_input('ressource-upload', array('type' => 'file'));

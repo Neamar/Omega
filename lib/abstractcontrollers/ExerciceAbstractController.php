@@ -46,7 +46,7 @@ abstract class ExerciceAbstractController extends AbstractController
 		parent::__construct($Module, $Controller, $View, $Data);
 
 		//La page porte sur un exercice en particulier
-		if(is_array($Data))
+		if(is_array($Data) && !empty($Data))
 		{
 			if(!isset($Data['data']))
 			{
