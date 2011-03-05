@@ -75,6 +75,51 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
+	 * Prévisualisation des templates
+	 */
+	public function seeMailAction()
+	{
+		echo '<meta charset=utf-8 />';
+		echo str_replace(
+			array(
+				'__BONJOUR__',
+				'__CONTENU__',
+			),
+			array(
+				'Bonjour licoti5@hotmail.com',
+				'<p>Vous avez demandé à être inscrit sur <strong>eDevoir</strong>.<br />
+Merci de cliquer sur le lien suivant pour valider votre adresse mail et commencer à utiliser le site :<br />
+<a href="http://edevoir.com/eleve/index/validation/xxxx">http://edevoir.com/eleve/index/validation/xxxx</a></p>
+<p>Une fois cette formalité accomplie, vous pourrez créer un <a href="http://edevoir.com/eleve/exercice/creation">nouvel exercice</a>.
+'
+			),
+			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
+		);
+		exit();
+	}
+	
+	public function sendMailAction()
+	{
+		$Mail = str_replace(
+			array(
+				'__BONJOUR__',
+				'__CONTENU__',
+			),
+			array(
+				'Bonjour licoti5@hotmail.com',
+				'<p>Vous avez demandé à être inscrit sur <strong>eDevoir</strong>.<br />
+Merci de cliquer sur le lien suivant pour valider votre adresse mail et commencer à utiliser le site :<br />
+<a href="http://edevoir.com/eleve/index/validation/xxxx">http://edevoir.com/eleve/index/validation/xxxx</a></p>
+<p>Une fois cette formalité accomplie, vous pourrez créer un <a href="http://edevoir.com/eleve/exercice/creation">nouvel exercice</a>.
+'
+			),
+			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
+		);
+		External::mail('neamar@neamar.fr', 'Essai mail', $Mail);
+		exit();
+	}
+	
+	/**
 	 * Page par défaut, pour les tests de CSS
 	 * 
 	 */
