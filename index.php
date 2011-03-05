@@ -140,10 +140,10 @@ else
 <!--[if IE 6]>
 	<script type="text/javascript">
 		var IE6UPDATE_OPTIONS = {
-			icons_path: "public/js/e6update/images/"
+			icons_path: "public/js/ie6update/images/"
 		}
 	</script>
-	<script type="text/javascript" src="ie6update/ie6update.js"></script>
+	<script type="text/javascript" src="/public/js/ie6update/ie6update.js"></script>
 <![endif]-->
 </body>
 </html>
