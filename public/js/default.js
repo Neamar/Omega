@@ -296,7 +296,14 @@ $(function() {
 	{
 		var jThis = $(this);
 		var jThisA;
-		jThis.append(' <a href="#' + jThis.attr('id') + '" title="Permalink vers «&nbsp;' + jThis.text() + '&nbsp;»" class="a_h2-anchor">#</a>');
+		
+		var AnchorText = '#';
+		if(jThis.data('anchor'))
+		{
+			AnchorText = '<small>' + jThis.data('anchor') + '</small>';
+		}
+		
+		jThis.append(' <a href="#' + jThis.attr('id') + '" title="Permalink vers «&nbsp;' + jThis.text() + '&nbsp;»" class="a_h2-anchor">' + AnchorText + '</a>');
 		
 		jThisA = jThis.find('a.a_h2-anchor');
 		jThisA.hide();

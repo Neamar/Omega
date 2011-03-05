@@ -49,55 +49,12 @@ class Debug_IndexController extends AbstractController
 	}
 	
 	/**
-	 * Page de test pour les transactions.
-	 * 
-	 */
-	public function transactionAction()
-	{
-		$this->View->setTitle('Transactions.');
-		
-		Sql::start();
-		$Eleve = Eleve::load(1);
-		echo 'OK';
-		var_dump($Eleve->credit(50, "Essai transaction"));
-		Sql::commit();
-		exit();
-	}
-	
-	/**
 	 * Dumping de la session
 	 * 
 	 */
 	public function sessionAction()
 	{
 		$this->View->setTitle('Dump de la session.');
-	}
-	
-	/**
-	 * Structure d'une session.
-	 * 
-	 */
-	public function sessionStructAction()
-	{
-		$this->View->setTitle('Dump de la structure session.');
-	}
-	
-	/**
-	 * Dumping des données serveur
-	 * 
-	 */
-	public function serverAction()
-	{
-		$this->View->setTitle('Dump des données serveur.');
-	}
-	
-	/**
-	 * Exemples de dates
-	 * 
-	 */
-	public function dateAction()
-	{
-		$this->View->setTitle('Exemple de dates');
 	}
 	
 	/**
@@ -115,6 +72,51 @@ class Debug_IndexController extends AbstractController
 		
 		$this->View->Titre = $Contenu[1];
 		$this->View->Mail = $Contenu[2];
+	}
+	
+	/**
+	 * Prévisualisation des templates
+	 */
+	public function seeMailAction()
+	{
+		echo '<meta charset=utf-8 />';
+		echo str_replace(
+			array(
+				'__BONJOUR__',
+				'__CONTENU__',
+			),
+			array(
+				'Bonjour licoti5@hotmail.com',
+				'<p>Vous avez demandé à être inscrit sur <strong>eDevoir</strong>.<br />
+Merci de cliquer sur le lien suivant pour valider votre adresse mail et commencer à utiliser le site :<br />
+<a href="http://edevoir.com/eleve/index/validation/xxxx">http://edevoir.com/eleve/index/validation/xxxx</a></p>
+<p>Une fois cette formalité accomplie, vous pourrez créer un <a href="http://edevoir.com/eleve/exercice/creation">nouvel exercice</a>.
+'
+			),
+			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
+		);
+		exit();
+	}
+	
+	public function sendMailAction()
+	{
+		$Mail = str_replace(
+			array(
+				'__BONJOUR__',
+				'__CONTENU__',
+			),
+			array(
+				'Bonjour licoti5@hotmail.com',
+				'<p>Vous avez demandé à être inscrit sur <strong>eDevoir</strong>.<br />
+Merci de cliquer sur le lien suivant pour valider votre adresse mail et commencer à utiliser le site :<br />
+<a href="http://edevoir.com/eleve/index/validation/xxxx">http://edevoir.com/eleve/index/validation/xxxx</a></p>
+<p>Une fois cette formalité accomplie, vous pourrez créer un <a href="http://edevoir.com/eleve/exercice/creation">nouvel exercice</a>.
+'
+			),
+			file_get_contents(DATA_PATH . '/layouts/mail.phtml')
+		);
+		External::mail('neamar@neamar.fr', 'Essai mail', $Mail);
+		exit();
 	}
 	
 	/**
@@ -144,10 +146,6 @@ class Debug_IndexController extends AbstractController
 	{
 		echo '<pre>';
 		Event::dispatch(Event::CRON, array('Membre' => Membre::getBanque()));
-		
-		$this->View->setTitle(
-			'Dispatch Cron'
-		);
 		
 		exit();
 	}

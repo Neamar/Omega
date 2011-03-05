@@ -54,6 +54,28 @@ CREATE TABLE IF NOT EXISTS `Alertes` (
 -- Contenu de la table `Alertes`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Blog_Articles`
+--
+
+CREATE TABLE `work`.`Blog_Articles` (
+`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Auteur` INT NOT NULL ,
+`Creation` DATETIME NOT NULL ,
+`Titre` TINYTEXT NOT NULL ,
+`Abstract` MEDIUMTEXT NOT NULL ,
+`Article` TEXT NOT NULL ,
+INDEX ( `Auteur` )
+) ENGINE = InnoDB COMMENT = 'Articles du blog';
+
+--
+-- Contenu de la table `Blog_Articles`
+--
+
+INSERT INTO `Blog_Articles` (`ID`, `Auteur`, `Creation`, `Titre`, `Abstract`, `Article`) VALUES
+(1, 4, '2011-03-07 00:00:00', 'eDevoir ?', 'Présentation de la société \\eDevoir et du site associé, \\l[http://edevoir.com]{edevoir.com}.', '\\eDevoir est une société française créée en 2011 et ayant pour but l''aide aux devoirs et la réalisation d''écrits à destination d''élèves et d''étudiants, quel que soit leur niveau. Notre site internet met en relation des élèves, étudiants et parents désireux d''être épaulés dans la réalisation de devoirs scolaires ou projets, avec des personnes compétentes susceptibles de répondre à ce besoin.\r\n\r\nIl incombe à chaque élève de doser sa charge de travail pour équilibrer "temps passé" et "compréhension du sujet". Et dans certains cas, il faut reconnaître que les exigences professorales sont entièrement déconnectées de la réalité ; que ce soit une surcharge de travail permanente ou uniquement à l''approche des vacances. En conséquence, nous nous proposons de décharger l''élève des tâches qu''il juge inutiles afin de lui permettre de se focaliser sur les matières ou exercices qu''il juge plus importants.\r\nMais \\eDevoir, ce n''est pas uniquement cela. À l''approche d''un devoir sur table ou du BAC, les rendus proposées par notre équipe compétentes peuvent également supplanter des corrections parfois douteuses fournies par certains professeurs et permettre aux élèves d''avoir un support solide sur lequel travailler.\r\nCes corrections s''adressent également aux parents qui se trouve en demeure devant l''exercice d''un enfant. En effet, le parent d''un lycéen de terminale S n''aura pas toujours eu une formation scientifique permettant d''aider son enfant pour la réalisation d''un devoir maison ou autre, et pourra demander sur notre site à ce que ce travail soit réalisé rapidement et proprement.\r\n\r\nNous nous plaçons ainsi en "complément" du système scolaire (niveaux collège et lycée), pour permettre à chacun d''adapter sa charge de travail à son potentiel. Cette société se veut à la fois être une alternative rapide et efficace à des obligations scolaires et une aide précieuse pour des parents désireux d''aider leur(s) enfant(s),et qui ne sont pas toujours aptes à le faire.\r\n\r\nLe principe se veut le plus novateur et égalitaire possible. En effet, ce n''est pas le site internet qui fixe les prix, ni les élèves. C''est le correcteur, qui, en toute connaissance du sujet qui lui est soumis, évalue la quantité de travail à fournir et donc le prix pour ce travail. Lorsque celui-ci a statué sur la somme qu''il souhaite pour ce travail, il soumet -- via notre site internet -- sa proposition à l''élève (étudiant). Si celui-ci accepte, la procédure est lancée.\r\n\r\n\\textbf{Cette société n''est pas une alternative à l''éducation professorale ou parentale}, mais véritablement une aide pour les élèves, étudiants et parents en demeure devant un problème de mathématiques incompréhensible. Elle ne se substitue ni au travail personnel des élèves, ni au devoir parental mais est, dans des proportions raisonnables d''utilisation, une alternative plus pédagogique que les divers processus de "triche" (plagiat sur internet, chez un camarade etc.) auxquels s''adonnent les élèves lorsqu''ils ne veulent pas se soumettre à un devoir. \\textbf{Ce que nous proposons à nos interlocuteurs, c''est un rendu professionnel et un contenu de qualité, réalisé par des gens compétents dans leurs domaines}.');
 
 -- --------------------------------------------------------
 
@@ -577,6 +599,13 @@ ALTER TABLE `Alertes`
   ADD CONSTRAINT `Alertes_ibfk_1` FOREIGN KEY (`Membre`) REFERENCES `Membres` (`ID`),
   ADD CONSTRAINT `Alertes_ibfk_2` FOREIGN KEY (`Exercice`) REFERENCES `Exercices` (`ID`),
   ADD CONSTRAINT `Alertes_ibfk_3` FOREIGN KEY (`FAQ`) REFERENCES `Exercices_FAQ` (`ID`);
+
+--
+-- Contraintes pour la table `Blog_Articles`
+--
+ALTER TABLE `Blog_Articles` ADD FOREIGN KEY ( `Auteur` ) REFERENCES `work`.`Administrateurs` (
+`ID`
+);
 
 --
 -- Contraintes pour la table `Correcteurs`

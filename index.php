@@ -4,13 +4,12 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<title>Bienvenue sur eDevoir !</title>
-<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<meta charset=utf-8 />
+	<title>Bienvenue sur eDevoir !</title>
+	<link rel="stylesheet" media="all" href="/public/css/index/base.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
 <body>
@@ -137,5 +136,14 @@ else
 </footer>
     </div><!-- /content-top -->
 </div><!-- /main-top-r -->
+
+<!--[if IE 6]>
+	<script type="text/javascript">
+		var IE6UPDATE_OPTIONS = {
+			icons_path: "public/js/ie6update/images/"
+		}
+	</script>
+	<script type="text/javascript" src="/public/js/ie6update/ie6update.js"></script>
+<![endif]-->
 </body>
 </html>
