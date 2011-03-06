@@ -65,6 +65,23 @@ class Event
 		//Sécuriser :
 		$Event = str_replace('.', '', $Event);
 		
+		//Logger le dispatch de l'évènement.
+        if($_GET['module'] == 'correcteur' && isset($_SESSION['Correcteur']))
+        {
+        	$Membre = $_SESSION['Correcteur'];
+        }
+	    else if($_GET['module'] == 'eleve' && isset($_SESSION['Eleve']))
+        {
+        	$Membre = $_SESSION['Eleve'];
+        }
+        else
+        {
+        	$Membre = null;
+        }
+        
+        self::log('Dispatch : ' . $Event, $Membre);
+        
+		
 		//Récupérer le chemin complet.
 		$EventPath = OO2FS::eventPath($Event);
 
@@ -83,22 +100,6 @@ class Event
 			}
 			closedir($handle);
         }
-
-        //Logger le dispatch de l'évènement.
-        if($_GET['module'] == 'correcteur' && isset($_SESSION['Correcteur']))
-        {
-        	$Membre = $_SESSION['Correcteur'];
-        }
-	    else if($_GET['module'] == 'eleve' && isset($_SESSION['Eleve']))
-        {
-        	$Membre = $_SESSION['Eleve'];
-        }
-        else
-        {
-        	$Membre = null;
-        }
-        
-        self::log('Dispatch : ' . $Event, $Membre);
 	}
 
 	/**
