@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Alertes` (
 -- Structure de la table `Blog_Articles`
 --
 
-CREATE TABLE `work`.`Blog_Articles` (
+CREATE TABLE IF NOT EXISTS `Blog_Articles` (
 `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `Auteur` INT NOT NULL ,
 `Creation` DATETIME NOT NULL ,
@@ -600,7 +600,7 @@ ALTER TABLE `Alertes`
 --
 -- Contraintes pour la table `Blog_Articles`
 --
-ALTER TABLE `Blog_Articles` ADD FOREIGN KEY ( `Auteur` ) REFERENCES `work`.`Administrateurs` (
+ALTER TABLE `Blog_Articles` ADD FOREIGN KEY ( `Auteur` ) REFERENCES `Administrateurs` (
 `ID`
 );
 
