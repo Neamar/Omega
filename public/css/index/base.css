@@ -228,14 +228,14 @@ background: url('/public/images/index/sep02.png') top left scroll no-repeat;
 	}
 
 #content-form input {
-background: url('/public/images/index/input-sp.png') no-repeat; /*input*/
+background: url('/public/images/index/input-sp.png') no-repeat;
 background-position: 0px -1px;
 border:0;
 height:27px;
 margin-bottom:9px;
 width:200px;
 padding-left:5px;
-line-height:24px;/*ie*/
+line-height:24px;
 }
 	#content-form input:hover {
 	background: url('/public/images/index/input-sp.png') no-repeat; /*input-h*/
@@ -397,7 +397,8 @@ outline-offset: -2px;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 footer {
 clear:both;
-margin-left:194px;
+text-align:center;
+margin-right:20px;
 }
 	footer ul {
 	padding-top:45px;
@@ -416,8 +417,8 @@ margin-left:194px;
 			}
 /* Social Network */
 #social-network {
+	margin-left:26px;
 	margin-top:20px;
-	margin-left:200px;
 	opacity:0.75;
 	display:inline-block;
 }
