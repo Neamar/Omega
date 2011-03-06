@@ -5,3 +5,41 @@ echo $this->Html_fromTex($this->Article['Article']);
 </div>
 
 <p class="infos">Article publié le <?php echo date('d/m/Y à H\h', strtotime($this->Article['Creation'])) ?>.</p>
+
+<h2 id="blog-article-consulter-commentaires">Réactions sur cet article</h2>
+<?php 
+$i = 0;
+foreach($this->Commentaires as $Commentaire)
+{
+	$i++;
+	$Commentaire['Date'] = date('d/m/Y à H\h', strtotime($Commentaire['Date']));
+	
+	?>
+	<h3 id="blog-article-consulter-commentaire-<?php echo $i ?>" data-anchor="<?php echo $Commentaire['Date'] ?>">Commentaire #<?php echo $i ?></h3>
+	<p><?php echo nl2br($Commentaire['Message']) ?></p>
+	<?php
+}
+?>
+<h2 id="blog-article-consulter-ajouter">Ajouter un commentaire</h2>
+<form id="form_ajout-commentaire" action="" method="post">
+<?php 
+echo $this->Form_inputLabelBr(
+	'auteur',
+	'Votre adresse mail',
+	array(
+		'type' => 'email',
+		'placeholder' => 'nom@domaine.fr',
+		'required' => 'required'
+	)
+);
+
+echo $this->Form_textareaLabelBr(
+	'commentaire',
+	'Votre commentaire'
+);
+
+echo $this->Form_captcha();
+
+echo $this->Form_submit('ajout-commentaire', 'Envoyer mon commentaire');
+?>
+</form>

@@ -77,6 +77,25 @@ INDEX ( `Auteur` )
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `Blog_Commentaires`
+--
+
+CREATE TABLE IF NOT EXISTS `Blog_Commentaires` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Article` int(11) NOT NULL,
+  `Auteur` varchar(50) NOT NULL,
+  `Date` datetime NOT NULL,
+  `Message` text NOT NULL,
+  `Statut` enum('ATTENTE','REFUSE','VALIDE') NOT NULL DEFAULT 'ATTENTE',
+  PRIMARY KEY (`ID`),
+  KEY `Article` (`Article`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Commentaires sur les articles du Blog' AUTO_INCREMENT=1 ;
+
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `Classes`
 --
 
@@ -604,6 +623,12 @@ ALTER TABLE `Blog_Articles` ADD FOREIGN KEY ( `Auteur` ) REFERENCES `Administrat
 `ID`
 );
 
+--
+-- Contraintes pour la table `Blog_Commentaires`
+--
+ALTER TABLE `Blog_Commentaires`
+  ADD CONSTRAINT `Blog_Commentaires_ibfk_1` FOREIGN KEY (`Article`) REFERENCES `Blog_Articles` (`ID`);
+  
 --
 -- Contraintes pour la table `Correcteurs`
 --
