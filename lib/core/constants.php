@@ -208,3 +208,28 @@ define('BANQUE_ID', 1);
  * @var int
  */
 define('AJAX_LIMITE', 10);
+
+
+/**
+ * Cas particuliers déterminés en fonction de l'hote
+ */
+if(URL == 'http://omega.localhost')
+{
+	/**
+	 * Indique de ne pas véritablement envoyer les mails, mais de les enregistrer dans un fichier pour consultation ultérieure
+	 * @see External::mail
+	 * 
+	 * @var bool
+	 */
+	define('FAKE_MAIL', true);
+}
+
+if(URL == 'http://edevoir')
+{
+	/**
+	 * Indique que la connexion est interdite sur le site jusqu'au timestamp indiqué.
+	 * @see IndexAbstractController::logMe()
+	 * @var int
+	 */
+	define('NO_CONNECT', 1300105600);
+}
