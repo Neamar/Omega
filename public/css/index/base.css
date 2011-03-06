@@ -199,12 +199,12 @@ z-index:10;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Contenu global --*/
 #content-form {
-margin-top:20px;
+margin-top:20px; /*20*/
 position:relative;
 }
 #content-form:before {
 position:absolute;
-top:2px;
+top:2px; /*2*/
 left:430px;
 margin:auto;
 content: "";
@@ -263,6 +263,7 @@ line-height:24px;/*ie*/
 
 /* ------------------------------------- Formulaire élève / correcteur --*/
 #eleve_form, #correcteur_form {
+	min-height:205px;
 position:relative;
 float:left;
 }
@@ -279,7 +280,6 @@ color:#5c5b5b;
 
 /* ------------------------------------- Formulaire élève --*/
 #eleve_form {
-	min-height:210px;
 margin-right:150px;
 margin-left:65px;
 }
@@ -365,6 +365,33 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/i
 		background: -webkit-gradient(linear, left top, left bottom, from(#fbb93e), to(#fca70c));
 		background: -moz-linear-gradient(top,  #fbb93e,  #fca70c);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fbb93e', endColorstr='#fca70c');}
+		
+/* ------------------------------------- message d'annonces --*/
+#ouverture {
+position:relative;
+top:35px;
+z-index:90;
+text-align:center;
+clear:both;
+border:1px dashed #ccc;
+outline: 1px solid #fff;
+outline-offset: -2px;
+	padding:3px;
+	background-color:#faffbd;
+	text-shadow: 1px 1px 0px #fff;
+}
+	#ouverture p{
+	font-weight:bold;
+	letter-spacing:0.3px;
+	word-spacing:2px;
+	}
+	#ouverture a{
+	color: #069;
+	}
+		#ouverture a:hover{
+		color: #069;
+		text-decoration:underline;
+		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -373,7 +400,7 @@ clear:both;
 margin-left:194px;
 }
 	footer ul {
-	padding-top:40px;
+	padding-top:45px;
 	}
 		footer ul li {
 		display:inline;
@@ -389,7 +416,7 @@ margin-left:194px;
 			}
 /* Social Network */
 #social-network {
-	margin-top:25px;
+	margin-top:20px;
 	margin-left:200px;
 	opacity:0.75;
 	display:inline-block;
