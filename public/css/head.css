@@ -120,6 +120,7 @@ height:103px; /*taille du bloc*/
 	left:31px;
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*logo-fond.png*/
 	background-position:0 -271px;
+	_background:none;
 	width:376px;
 	height:103px;
 	z-index:5;
@@ -151,6 +152,7 @@ height:103px; /*taille du bloc*/
 				#logo-liens ul li a {
 				height:33px;
 				display:block;
+				_display:inline;
 				text-transform:uppercase;
 				color:#777;
 				line-height:34px;
@@ -180,6 +182,7 @@ height:103px; /*taille du bloc*/
 clear:both;
 background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*CONTENT - ariane.jpg*/
 background-position:0 -230px;
+_background:none;
 height:40px;
 width:930px; /*débordement 1000*/
 }
@@ -190,8 +193,11 @@ float:right;
 	#ariane .see-link a{
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*image see-link2.png*/
 	background-position:-653px -339px;
+	line-height:44px;
+	_background:none;
 	height:18px;
 	display:block;
+	_display: inline;
 	padding-left:22px;
 	margin-top:12px;
 	font-weight:bold;
@@ -204,6 +210,7 @@ float:right;
 
 #ariane ul {
 display:block;
+_display: inline;
 height:40px;
 }
 	#ariane ul li {
@@ -212,6 +219,7 @@ height:40px;
 	display:block;
 	padding-top:15px;
 	background:url('/public/css/images/ariane-sep.png') right bottom scroll no-repeat; /*ariane-sep.png*/
+	_background:none;
 	}
 		#ariane ul li a {
 		color:#484848;

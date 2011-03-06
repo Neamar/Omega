@@ -37,7 +37,7 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
-background:#2a2a2a url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
+background: url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
 height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
@@ -159,16 +159,21 @@ z-index:10;
 				#content nav ul li a:hover{
 				color:#898989;
 				background: url('/public/images/index/link-right-h.png') bottom center no-repeat;
+				_background: none;
 				}
 				#content nav ul li a span:hover{
 				background: url('/public/images/index/link-left-h.png') bottom center no-repeat;
+				_background: none;
 				}
 			#content nav ul li a.active{
 			display:block;
+			_display:inline;
 			height:29px;
 			color:#fff;
+			_color:inherit;
 			text-shadow: #fd6b0e 1px 1px 1px;
 			background: url('/public/images/index/menu-left.png') top left no-repeat;
+			_background: none;
 			text-decoration:none;
 			padding-left:8px;
 			}
@@ -182,16 +187,20 @@ z-index:10;
 				}
 				#content nav ul li a.active:hover{
 				background: url('/public/images/index/menu-left-h.png') top left no-repeat;
+				_background: none;
 				}
 				
 			#content nav ul li a.active span{
 			display:block;
+			_display:inline;
 			height:29px;
 			padding-right:8px;
 			background: url('/public/images/index/menu-right.png') top right no-repeat;
+			_background: none;
 			}
 				#content nav ul li a.active span:hover {
 				background: url('/public/images/index/menu-right-h.png') top right no-repeat;
+				_background: none;
 				}
 				
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -201,6 +210,7 @@ z-index:10;
 #content-form {
 margin-top:20px; /*20*/
 position:relative;
+*position:inherit;
 }
 #content-form:before {
 position:absolute;
@@ -225,6 +235,7 @@ background: url('/public/images/index/sep02.png') top left scroll no-repeat;
 	display:block;
 	line-height:26px;
 	width:107px;
+	_width:100px;
 	}
 
 #content-form input {
@@ -271,6 +282,7 @@ float:left;
 font:normal 13px "Georgia", Times, serif;
 position:absolute;
 bottom:18px;
+_bottom:0;
 left:53px;
 color:#5c5b5b;
 }
@@ -294,6 +306,7 @@ margin-left:65px;
 /* ------------------------------------- Formulaire correcteur --*/
 #correcteur_form h1 {
 font-size:29px;
+_font-size:28px;
 background: url('/public/css/images/spr_blue.png') left no-repeat; /*correct.png*/
 background-position:0 0;
 padding-left:22px;
@@ -370,6 +383,8 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/i
 #ouverture {
 position:relative;
 top:35px;
+*top:-5px;
+_top:10px;
 z-index:90;
 text-align:center;
 clear:both;
@@ -402,6 +417,8 @@ margin-right:20px;
 }
 	footer ul {
 	padding-top:45px;
+	*padding-top:0px;
+	_padding-top:15px;
 	}
 		footer ul li {
 		display:inline;
