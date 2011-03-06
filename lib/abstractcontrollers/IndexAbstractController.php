@@ -287,7 +287,7 @@ abstract class IndexAbstractController extends AbstractController
 				if(NO_CONNECT > time())
 				{
 					unset($_SESSION[$Type]);
-					$this->View->setMessage('error', 'Désolé, impossible de se connecter au site avant le ' . date('d/m/Y à H\h.', NO_CONNECT));
+					$this->View->setMessage('error', 'Désolé, impossible de se connecter au site avant le ' . date('d/m/Y à H\h.', NO_CONNECT + 3600));
 					$this->redirect('/blog/article/consulter/2');
 				}
 			}

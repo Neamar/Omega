@@ -250,7 +250,7 @@ if(URL == PROD)
 	 * @see IndexAbstractController::logMe()
 	 * @var int
 	 */
-	define('NO_CONNECT', 1300105600);
+	define('NO_CONNECT', 1300273200);
 }
 
 if(URL == TEST)

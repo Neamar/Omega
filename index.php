@@ -126,7 +126,7 @@ else
 </div><!-- /content-form -->
 
 <section id="ouverture">
-<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 14 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
+<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 16 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
 </section>
 <!-- Liens "légaux" -->
 <footer>
