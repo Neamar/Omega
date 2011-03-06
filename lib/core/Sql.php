@@ -34,7 +34,7 @@ class Sql
 	public static function connect()
 	{
 		mysql_connect('localhost', 'eDevoir', 'sarl_omega');
-		mysql_select_db('work');
+		mysql_select_db(SQL_DB);
 		mysql_set_charset('utf8');
 	}
 
