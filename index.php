@@ -11,6 +11,17 @@ session_start();
 	<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-21852845-1']);
+		_gaq.push(['_trackPageview']);
+	
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 </head>
 <body>
 <div id="main-top-r">
@@ -44,7 +55,7 @@ rendu de qualité et un suivi personnalisé adapté à <span>vos besoins</span>.
     <ul>
 		<li><a class="active" href="/"><span>Accueil</span></a></li>
         <li><a href="/fonctionnement.htm"><span>Fonctionnement du site</span></a></li>
-        <li><a href="/faq.htm"><span>FAQ</span></a></li>
+        <li><a href="/blog/"><span>Blog</span></a></li>
         <li><a href="/exemples.htm"><span>Exemples de corrigé</span></a></li>
     </ul>
     </nav>
@@ -114,6 +125,9 @@ else
 </section>
 </div><!-- /content-form -->
 
+<section id="ouverture">
+<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 16 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
+</section>
 <!-- Liens "légaux" -->
 <footer>
 <ul>

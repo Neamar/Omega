@@ -73,7 +73,7 @@ class External
 		// En-têtes additionnels
 		$headers .= 'From: eDevoir <' . $from . '>' . "\r\n";
 
-		if(URL == 'http://omega.localhost')
+		if(defined('FAKE_MAIL'))
 		{
 			file_put_contents(DATA_PATH . '/logs/last_mail', $to . PHP_EOL . $subject . PHP_EOL . $message);
 		}

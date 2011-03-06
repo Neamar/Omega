@@ -201,8 +201,8 @@ class DocumentationAbstractController extends AbstractController
 		}
 		
 		$Action = substr($methodName, 0, -6);
-		$TexPath = APPLICATION_PATH . '/documentation/' . $this->Controller . '/views/' . $Action . '.tex';
-		
+		$TexPath = APPLICATION_PATH . '/documentation/' . $this->Controller . '/views/' . strtolower($Action) . '.tex';
+
 		if(!isset(self::$Pages[$this->Controller][$Action]))
 		{
 			go404('Cette page de documentation n\'existe pas.');
@@ -231,7 +231,7 @@ class DocumentationAbstractController extends AbstractController
 		$this->View->setTitle(self::$Pages[$this->Controller][$Action]);
 		
 		//Charger le contenu
-		$this->View->Content = file_get_contents(APPLICATION_PATH . '/documentation/index/views/' . $this->View->getMeta('name') . '.tex');
+		$this->View->Content = file_get_contents(APPLICATION_PATH . '/documentation/index/views/' . strtolower($this->View->getMeta('name')) . '.tex');
 		
 		//Dévier vers la vue LaTeX
 		$this->View->setFile(OO2FS::viewPath('generic_latex', null, 'index', 'documentation'));

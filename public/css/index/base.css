@@ -37,7 +37,7 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
-background:#2a2a2a url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
+background: url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
 height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/
@@ -137,7 +137,7 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:385px;
+left:375px;
 z-index:10;
 }
 	#content nav ul{
@@ -159,16 +159,21 @@ z-index:10;
 				#content nav ul li a:hover{
 				color:#898989;
 				background: url('/public/images/index/link-right-h.png') bottom center no-repeat;
+				_background: none;
 				}
 				#content nav ul li a span:hover{
-				background: url('/public/images/index/link-lefts-h.png') bottom center no-repeat;
+				background: url('/public/images/index/link-left-h.png') bottom center no-repeat;
+				_background: none;
 				}
 			#content nav ul li a.active{
 			display:block;
+			_display:inline;
 			height:29px;
 			color:#fff;
+			_color:inherit;
 			text-shadow: #fd6b0e 1px 1px 1px;
 			background: url('/public/images/index/menu-left.png') top left no-repeat;
+			_background: none;
 			text-decoration:none;
 			padding-left:8px;
 			}
@@ -182,16 +187,20 @@ z-index:10;
 				}
 				#content nav ul li a.active:hover{
 				background: url('/public/images/index/menu-left-h.png') top left no-repeat;
+				_background: none;
 				}
 				
 			#content nav ul li a.active span{
 			display:block;
+			_display:inline;
 			height:29px;
 			padding-right:8px;
 			background: url('/public/images/index/menu-right.png') top right no-repeat;
+			_background: none;
 			}
 				#content nav ul li a.active span:hover {
 				background: url('/public/images/index/menu-right-h.png') top right no-repeat;
+				_background: none;
 				}
 				
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -199,12 +208,13 @@ z-index:10;
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Contenu global --*/
 #content-form {
-margin-top:20px;
+margin-top:20px; /*20*/
 position:relative;
+*position:inherit;
 }
 #content-form:before {
 position:absolute;
-top:2px;
+top:2px; /*2*/
 left:430px;
 margin:auto;
 content: "";
@@ -225,17 +235,18 @@ background: url('/public/images/index/sep02.png') top left scroll no-repeat;
 	display:block;
 	line-height:26px;
 	width:107px;
+	_width:100px;
 	}
 
 #content-form input {
-background: url('/public/images/index/input-sp.png') no-repeat; /*input*/
+background: url('/public/images/index/input-sp.png') no-repeat;
 background-position: 0px -1px;
 border:0;
 height:27px;
 margin-bottom:9px;
 width:200px;
 padding-left:5px;
-line-height:24px;/*ie*/
+line-height:24px;
 }
 	#content-form input:hover {
 	background: url('/public/images/index/input-sp.png') no-repeat; /*input-h*/
@@ -263,6 +274,7 @@ line-height:24px;/*ie*/
 
 /* ------------------------------------- Formulaire élève / correcteur --*/
 #eleve_form, #correcteur_form {
+	min-height:205px;
 position:relative;
 float:left;
 }
@@ -270,6 +282,7 @@ float:left;
 font:normal 13px "Georgia", Times, serif;
 position:absolute;
 bottom:18px;
+_bottom:0;
 left:53px;
 color:#5c5b5b;
 }
@@ -279,7 +292,6 @@ color:#5c5b5b;
 
 /* ------------------------------------- Formulaire élève --*/
 #eleve_form {
-	min-height:210px;
 margin-right:150px;
 margin-left:65px;
 }
@@ -294,6 +306,7 @@ margin-left:65px;
 /* ------------------------------------- Formulaire correcteur --*/
 #correcteur_form h1 {
 font-size:29px;
+_font-size:28px;
 background: url('/public/css/images/spr_blue.png') left no-repeat; /*correct.png*/
 background-position:0 0;
 padding-left:22px;
@@ -365,15 +378,47 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/public/images/i
 		background: -webkit-gradient(linear, left top, left bottom, from(#fbb93e), to(#fca70c));
 		background: -moz-linear-gradient(top,  #fbb93e,  #fca70c);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fbb93e', endColorstr='#fca70c');}
+		
+/* ------------------------------------- message d'annonces --*/
+#ouverture {
+position:relative;
+top:35px;
+*top:-5px;
+_top:10px;
+z-index:90;
+text-align:center;
+clear:both;
+border:1px dashed #ccc;
+outline: 1px solid #fff;
+outline-offset: -2px;
+	padding:3px;
+	background-color:#faffbd;
+	text-shadow: 1px 1px 0px #fff;
+}
+	#ouverture p{
+	font-weight:bold;
+	letter-spacing:0.3px;
+	word-spacing:2px;
+	}
+	#ouverture a{
+	color: #069;
+	}
+		#ouverture a:hover{
+		color: #069;
+		text-decoration:underline;
+		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*----------------------------------------------- 5. Footer -----------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 footer {
 clear:both;
-margin-left:194px;
+text-align:center;
+margin-right:20px;
 }
 	footer ul {
-	padding-top:40px;
+	padding-top:45px;
+	*padding-top:0px;
+	_padding-top:15px;
 	}
 		footer ul li {
 		display:inline;
@@ -389,8 +434,8 @@ margin-left:194px;
 			}
 /* Social Network */
 #social-network {
-	margin-top:25px;
-	margin-left:200px;
+	margin-left:26px;
+	margin-top:20px;
 	opacity:0.75;
 	display:inline-block;
 }

@@ -44,15 +44,19 @@ color:#d29d1e;
 
 	#logo-liens ul li a:hover {
 	color:#fff;
+	_color:#e06c0e;
 	text-shadow:1px 1px 0px #ff8812;
 	background:url('/public/css/images/spr_oran.png') top left scroll no-repeat; /*menu_top-e-l.png*/
 	background-position:0 -135px;
+	_background:none;
 	}/* Couleur externe pour l'élève et le correcteur sur HOVER*/
 			
 		#logo-liens ul li a:hover span {
 		height:33px;
 		display:block;
+		_display:inline;
 		background:url('/public/css/images/menu_top-e-r.png') top right scroll no-repeat;
+		_background:none;
 		cursor:pointer;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -64,6 +68,7 @@ color:#996600;
 	#ariane .see-link a:hover{
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*see-link2.png*/
 	background-position:-653px -357px;
+	_background:none;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/

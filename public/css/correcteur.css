@@ -41,14 +41,18 @@ color:#1eaed2;
 }
 	#logo-liens ul li a:hover {
 	color:#fff;
+	_color:#006699;
 	text-shadow:1px 1px 0px #1389ff;
 	background:url('/public/css/images/spr_blue.png') top left scroll no-repeat; /*menu_top-c-l.png*/
+	_background:none;
 	background-position:0 -129px;
 	}			
 		#logo-liens ul li a:hover span {
 		height:33px;
 		display:block;
+		_display:inline;
 		background:url('/public/css/images/menu_top-c-r.png') top right scroll no-repeat;
+		_background:none;
 		cursor:pointer;
 		}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -60,6 +64,7 @@ color:#057cff;
 	#ariane .see-link a:hover{
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*see-link2.png*/
 	background-position:-653px -375px;
+	_background:none;
 	}
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------- 4. Classes sur content ------------------------------------------------------------------*/
