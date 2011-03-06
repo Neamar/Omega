@@ -188,8 +188,14 @@ Merci de cliquer sur le lien suivant pour valider votre adresse mail et commence
 		$this->View->setTitle('Reset des données');
 		
 		
-		if(isset($_POST['delete']))
+		if(isset($_POST['clean-all']))
 		{
+			//Fermer la connexion eDevoir
+			Sql::disconnect();
+			//Ouvrir la connexion root
+			mysql_connect('localhost', 'root', $_POST['root-pw']);
+			mysql_select_db(SQL_DB);
+			mysql_set_charset('utf8');
 			$Actions = array();
 			
 			/*
@@ -201,14 +207,14 @@ Merci de cliquer sur le lien suivant pour valider votre adresse mail et commence
 			{
 				$MaxIterations--;
 				$TablesRestantes = array();
-				$Tables = SQL::query('SHOW TABLES');
+				$Tables = mysql_query('SHOW TABLES');
 				while($Table = mysql_fetch_row($Tables))
 				{
 					$TablesRestantes[] = $Table[0];
 				}
-				SQL::queryNoFail('DROP TABLE ' . implode(', ', $TablesRestantes));
+				mysql_query('DROP TABLE ' . implode(', ', $TablesRestantes));
 				
-				if(count($TablesRestantes)==0)
+				if(count($TablesRestantes) == 0)
 				{
 					break;
 				}

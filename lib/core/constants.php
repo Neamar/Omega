@@ -252,3 +252,12 @@ if(URL == PROD)
 	 */
 	define('NO_CONNECT', 1300105600);
 }
+
+if(URL == TEST)
+{
+	define('SQL_DB', 'dev-work');
+}
+else
+{
+	define('SQL_DB', 'work');
+}
