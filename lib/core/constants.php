@@ -17,6 +17,10 @@
 
 date_default_timezone_set("Europe/Paris");
 
+//____________________________________________________________________________
+//DONNÉES TECHNIQUES
+//____________________________________________________________________________
+
 /**
  * Chemin vers les librairies
  * @var string
@@ -42,6 +46,13 @@ define('DATA_PATH', PATH . '/data');
 define('URL', 'http://' . $_SERVER['SERVER_NAME']);
 
 /**
+ * Les différents hôtes disponibles
+ */
+define('LOCAL', 'http://omega.localhost');
+define('TEST', 'http://test.edevoir.com');
+define('PROD', 'http://edevoir.com');
+
+/**
  * Le sel utilisé sur le site pour tous les hashages
  * @var string
  */
@@ -65,6 +76,11 @@ define('CAPTCHA_PUBLIC', '6LdI48ESAAAAAPyHPYB19hXs7mWxFUtnW4uTEHBp');
  */
 define('CAPTCHA_PRIVATE', '6LdI48ESAAAAAPr31W2_tpx7J3ZTCm5rVwL-pRU3');
 
+
+
+//____________________________________________________________________________
+//DONNÉES DITES MÉTIER
+//____________________________________________________________________________
 /**
  * Nombre de points correspondant à 1€
  * @var int
@@ -210,10 +226,13 @@ define('BANQUE_ID', 1);
 define('AJAX_LIMITE', 10);
 
 
-/**
- * Cas particuliers déterminés en fonction de l'hote
- */
-if(URL == 'http://omega.localhost')
+
+
+
+//____________________________________________________________________________
+// CAS PARTICULIERS
+//____________________________________________________________________________
+if(URL == LOCAL)
 {
 	/**
 	 * Indique de ne pas véritablement envoyer les mails, mais de les enregistrer dans un fichier pour consultation ultérieure
@@ -224,7 +243,7 @@ if(URL == 'http://omega.localhost')
 	define('FAKE_MAIL', true);
 }
 
-if(URL == 'http://edevoir')
+if(URL == PROD)
 {
 	/**
 	 * Indique que la connexion est interdite sur le site jusqu'au timestamp indiqué.
