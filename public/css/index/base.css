@@ -161,7 +161,7 @@ z-index:10;
 				background: url('/public/images/index/link-right-h.png') bottom center no-repeat;
 				}
 				#content nav ul li a span:hover{
-				background: url('/public/images/index/link-lefts-h.png') bottom center no-repeat;
+				background: url('/public/images/index/link-left-h.png') bottom center no-repeat;
 				}
 			#content nav ul li a.active{
 			display:block;
