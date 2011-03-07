@@ -154,7 +154,12 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 
 	if($Exercice->Note !== null)
 	{
-		$Infos[] = "Note : " . ($Exercice->Note == 0?'<span style="color:red">&empty;</span>':str_repeat('✭', $Exercice->Note));
+		$IntensiteHexa = 255 * $Exercice->Note / 5; // Renvoie une valeur entre 0 et 255 en fonction de la note
+		$CouleurR = strtoupper(str_pad(dechex(255 - $IntensiteHexa), 2, '0', STR_PAD_LEFT));
+		$CouleurG = strtoupper(str_pad(dechex($IntensiteHexa), 2, '0', STR_PAD_LEFT));
+		$CouleurB = '00';
+		$Couleur = $CouleurR . $CouleurG . $CouleurB;
+		$Infos[] = 'Note : <span style="color:#' . $Couleur . '">' . str_repeat('✭', $Exercice->Note) . str_repeat('✩', 5 - $Exercice->Note) . '</span>';
 	}
 	return $Infos;
 }

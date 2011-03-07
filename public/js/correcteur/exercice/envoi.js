@@ -56,7 +56,10 @@ $(function()
 		  lineNumbers: true,
 		  //lineNumberDelay: 2000,
 		  indentUnit: 4,
-		  tabMode: 'shift'
+		  tabMode: 'shift',
+		  indent: 'flat',
+		  electricChars: false,
+		  
 	});
 });
 
