@@ -142,6 +142,10 @@ Merci de cliquer sur le lien suivant pour valider votre adresse mail et commence
 		);		
 	}
 	
+	/**
+	 * Lance manuellement le cron.
+	 * À utiliser avec précaution ! Peut déclencher en double certaines actions :\
+	 */
 	public function cronAction()
 	{
 		echo '<pre>';
