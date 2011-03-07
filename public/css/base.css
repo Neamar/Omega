@@ -11,7 +11,8 @@ Version : Pour la deuxième partie - ext
 4. chat             --------------------------------  Le module de chat : questions / réponses
 5. Form             --------------------------------  Les formulaires / label, input, texarea etc.
 6. Tableau          --------------------------------  Toutes structures en tableau tr td th thead ...
-7. jQuery           --------------------------------  A venir...
+7. jQuery           --------------------------------  Structure global ajax
+8. F00ter           --------------------------------  pied de page
 
 **********************************************************************************************/
 
@@ -534,8 +535,13 @@ outline:none;
 	select {
 	width:auto;
 	}
+	
+label.label_required:before {
+color: #FF0000;
+content: "* ";
+}
 
-/* see link à terminer */
+/* see link */
 #content p.see-link {
 text-align:right;
 padding-right:20px;
