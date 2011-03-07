@@ -317,3 +317,13 @@ $(function() {
 		}); 
 	});
 });
+
+
+/**
+ * Étoiles rouges sur les contenus obligatoires dans les formulaires
+ */
+$(function(){
+	$('form input[required="required"]').each(function(){
+		$('label[for="' + this.id + '"]').addClass('label_required');
+	});
+});

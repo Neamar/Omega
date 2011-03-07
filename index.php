@@ -71,9 +71,9 @@ if(!isset($_SESSION['Eleve']))
 	<h1>Connexion élève</h1>
 	<form method="post" action="/eleve/connexion" id="connexion-eleve">
 		<label for="eleve_email">E-mail :</label>
-		<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
+		<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" required="required" /><br />
 		<label for="eleve_password">Mot de passe :</label>
-		<input type="password" name="password" id="eleve_password" /><br />
+		<input type="password" name="password" id="eleve_password" required="required" /><br />
 		<input type="submit" name="connexion-eleve" value="Connexion" />
 	</form>
 	<p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
@@ -102,9 +102,9 @@ if(!isset($_SESSION['Correcteur']))
 	<h1>Connexion correcteur</h1>
 	<form method="post" action="/correcteur/connexion" id="connexion-correcteur">
 		<label for="correcteur_email">E-mail :</label>
-		<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
+		<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" required="required" /><br />
 		<label for="correcteur_password">Mot de passe :</label>
-		<input type="password" name="password" id="correcteur_password" /><br />
+		<input type="password" name="password" id="correcteur_password" required="required" /><br />
 		<input type="submit" name="connexion-correcteur" value="Connexion" />
 	</form>
 	<p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
