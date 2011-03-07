@@ -539,7 +539,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 				}
 				else
 				{
-					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez avertis par mail si un autre correcteur se déclare interessé.");
+					$this->View->setMessage('info', "L'offre a bien été refusée. Vous serez averti par mail si un autre correcteur se déclare interessé.");
 				}
 				
 				$this->redirectExercice();

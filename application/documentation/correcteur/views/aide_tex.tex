@@ -1,2 +1,149 @@
-Guide du LaTeX, à faire !
-Présenter le LaTeX, mais sans parler de document et autres.
+Petit guide du LaTeX pour néophytes !
+
+\section{Structurer son document}
+Anfin de structurer votre devoir, il vous est recommandé d'utiliser les commandes suivantes :
+\begin{verbatim}
+\section{}
+\subsection{}
+\subsubsection{}
+\paragraph{}
+\subparagraph{}
+\end{verbatim}
+Les titres de parties ainsi obtenus sont numérotés automatiquement. Si donc vous bouleversez toute l'organisation de votre texte, la numérotation se refera d'elle-même à la compilation suivante. Ainsi, il ne faut pas taper \verbatim{\section{1. MaPremièreSection}} mais \verbatim{\section{MaPremièreSection}}.
+
+\section{Polices}
+Pour définir un bloc, on procède de la manière suivante :
+\begin{verbatim}
+{ \commande Texte... }
+\end{verbatim}
+Dans cet exemple, la commande s'applique à tout le bloc.
+
+Voici les tailles de polices standards, de la plus petite à la plus grande :
+\begin{verbatim}
+\tiny,
+\scriptsize,
+\footnotesize,
+\small,
+\normalsize,
+\large,
+\Large,
+\LARGE,
+\huge,
+\Huge.
+\end{verbatim}
+
+Les styles les plus utiles que vous aurez à utiliser sont les suivants :
+\begin{verbatim}
+\bf %Gras
+\it %Italique
+\texttt %Machine à écrire
+\rm %Roman (texte normal)
+\end{verbatim}
+
+Pour note vous pouvez aussi utiliser les commandes sans bloc telles que :
+\begin{verbatim}
+\textbf{Texte...} %Gras
+\textit{Texte...} %Italique
+% etc.
+\end{verbatim}
+
+Ainsi, les deux commandes suivantes seront équivalentes :
+\begin{verbatim}
+\textbf{Lorem Ipsum}
+% et
+{\bf Lorem Ipsum}
+\end{verbatim}
+
+Pour aller à la ligne, il sera nécessaire d'utiliser la commande \verbatim{double back-slash \\}.
+
+\section{Les listes}
+On peut faire une liste d'objets avec les environnements itemize (liste simple) ou enumerate (liste numérotée), de la façon suivante :
+\begin{verbatim}
+Le correcteur eDevoir est :
+\begin{itemize}
+	\item sérieux ;
+	\item rapide ;
+	\item efficace.
+\end{itemize}
+\end{verbatim}
+
+Ou bien encore :
+\begin{verbatim}
+Les formules de trigo sont :
+\begin{enumerate}
+	\item $\sin (A - B) = \sin A \cos B - \cos A \sin B$ ;
+	\item $\sin (A + B) = \sin A \cos B + \cos A \sin B$ ;
+	\item $\cos (A - B) = \cos A \cos B + \sin A \sin B$ ;
+	\item $\cos (A + B) = \cos A \cos B - \sin A \sin B$.
+\end{enumerate}
+\end{verbatim}
+
+Les deux environnements ci-dessus peuvent être encapsulés pour créer des listes à plusieurs niveaux.
+\begin{verbatim}
+\begin{enumerate}
+   \begin{enumerate}
+      \item Texte
+      \item Texte
+      \item etc...
+   \end{enumerate}
+   ...
+\end{enumerate}
+\end{verbatim}
+Dans le cas de l'enumerate, il pourra changer (suivant le style) de type de compteur (1 2 3, a b c, i ii iii ...) suivant la profondeur.
+
+\section{Environnements modifiant la justification des paragraphes}
+Les environnements s'ouvrent avec \verbatim{\begin{***}} et se referment avec \verbatim{\end{***}}, en faisant figurer le nom de l'environnement entre les accolades. Si vous utilisez plusieurs environnements emboîtés (listes imbriquées, citations centrées, etc), veillez à bien les refermer dans l'ordre de l'imbrication : dernier ouvert, premier refermé, comme les parenthèses en mathématiques.
+\item \texttt{flushleft} : aligner le texte sur la marge de gauche ;
+\item \texttt{flushright} : aligner le texte sur la marge de droite ;
+\item \texttt{center} : centrer le texte ;
+\item \texttt{quote} : faire une citation ;
+\item \texttt{quotation} : faire une longue citation.
+
+Exemple :
+\begin{verbatim}
+\begin{center}
+   Bloc centré
+\end{center}
+\end{verbatim}
+
+\section{Environnement tabular pour faire des tableaux}
+\begin{verbatim}
+\begin{tabular}{format colonnes}
+case(1,1) & case(2,1) \\
+case(2,1) & case(2,2) \\
+\end{tabular}
+\end{verbatim}
+avec \texttt{r}, \texttt{l} ou \texttt{c} pour aligner à droite, gauche et centrer respectivement. Une barre verticale "|" permet de tracer une droite verticale dans le tableau, par exemple :
+\begin{verbatim}
+\begin{tabular}{|c|c|}
+case(1,1) & case(2,1) \\
+\hline
+case(2,1) & case(2,2) \\
+\end{tabular}
+\end{verbatim}
+mettra trois lignes verticales, autour du tableau et entre les deux colonnes. La commande \texttt{\verbatim{\hline}} permet de tracer un trait horizontal.
+
+\section{Inclusion de figures}
+La commande suivante permet d'inclure une image dans un document tex :
+\begin{verbatim}
+\includegraphics[options]{Fichier}
+\end{verbatim}
+Où l'option peut être :
+\begin{verbatim}
+width=\linewidth
+% ou bien
+width=0.5\linewidth
+\end{verbatim}
+Afin que la largeur de l'image soir de la largeur de la zone de texte, ou deux fois plus petite respectivement.
+
+Il est important de préciser la chose suivante : "fichier" soit être sous la forme graph\.jpg ou graph\.png, donc avec extension, sauf pour le format pdf. Dans ce cas, le "\.pdf" ne doit pas être renseigné. Vous écrirez alors :
+\begin{verbatim}
+\includegraphics[width=\linewidth]{graph} % inclut le fichier graph.pdf
+\end{verbatim}
+
+Pour savoir comment ajouter des ressources à votre correction, merci de \doc[correcteur/aide_ressource]{visiter cette page}.
+
+\section{Environnements mathématiques}
+Pour une expression mathématique intégrée à un paragraphe, on utilise la commande \texttt{\verbatim{$...$}}. L'expression mathématique est donc incluse entre deux signes dollars. Pour un expression mathématique isolée - c'est-à-dire qui sera automatiquement mise à la ligne et centrée - il convient d'utiliser la commande \texttt{\verbatim{$$…$$}}. Cette formulation sera préférée pour les formules importantes par exemple.
+
+Pour voir des exemples de constructions mathématiques, merci de \doc[tex]{visiter cette page}.

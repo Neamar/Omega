@@ -7,6 +7,6 @@ foreach($this->Exemples as $ID => $Exemple)
 	<?php echo $this->Html_fromTex($Exemple['Sujet']) ?>
 	
 	<h3>Corrigé de l'exercice</h3>
-	<a href="<?php echo $Exemple['Corrige'] ?>">Consulter le corrigé (au format PDF)</a>
+	<p><a href="<?php echo $Exemple['Corrige'] ?>">Consulter le corrigé (au format PDF)</a>.</p>
 	<?php
 }

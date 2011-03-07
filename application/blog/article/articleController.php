@@ -47,21 +47,19 @@ class Blog_ArticleController extends AbstractController
 		}
 		
 		//Récupération de l'article
-		$Article = Sql::singleQuery('SELECT Auteur, Creation, Titre, Abstract, Article FROM Blog_Articles WHERE ID = ' . intval($this->Data['data']));
+		$ArticleID = intval($this->Data['data']);
+		$Article = Sql::singleQuery('SELECT Auteur, Creation, Titre, Abstract, Article FROM Blog_Articles WHERE ID = ' . $ArticleID);
 		
 		if(is_null($Article))
 		{
 			go404('Cet article n\'existe pas.');
 		}
 		
-		//Tout semble OK, construire un fil d'Arian cohérent
+		//Tout semble OK, construire un fil d'Ariane cohérent
 		$Ariane = array();
-		
 		$Ariane['/blog/'] = 'Blog';
 		$Ariane['/blog/article/'] = 'Article';
 		$Ariane['/blog/article/consulter/' . $this->Data['data']] = $Article['Titre'];
-		
-		
 		$this->View->setBreadcrumbs($Ariane);
 		
 		//Charger l'aide de vue HTML dont on aura besoin pour la mise en forme d'Abstract
@@ -80,5 +78,53 @@ class Blog_ArticleController extends AbstractController
 		);
 		
 		$this->View->Article = $Article;
+		
+		//Enregistrement du commentaire si nécessaire
+		if(isset($_POST['ajout-commentaire']))
+		{
+			if(empty($_POST['auteur']) || !Validator::mail($_POST['auteur']))
+			{
+				$this->View->setMessage('error', 'Merci d\'indiquer une adresse mail valide.');
+			}
+			elseif(empty($_POST['commentaire']))
+			{
+				$this->View->setMessage('warning', 'Aucun commentaire entré.');
+			}
+			elseif(strpos($_POST['commentaire'], '<') !== false || strpos($_POST['commentaire'], '>') !== false)
+			{
+				$this->View->setMessage('error', 'Le HTML n\'est pas autorisé dans les commentaires.');
+			}
+			elseif(!Validator::captcha())
+			{
+				$this->View->setMessage('error', 'Captcha incorrect.');
+			}
+			else
+			{
+				$ToInsert = array(
+					'Article' => $ArticleID,
+					'Auteur' => $_POST['auteur'],
+					'_Date' => 'NOW()',
+					'Message' => $_POST['commentaire']
+				);
+				
+				if(Sql::insert('Blog_Commentaires', $ToInsert))
+				{
+					$this->View->setMessage('ok', 'Votre message a été enregistré !');
+				}
+				else
+				{
+					$this->View->setMessage('error', 'Impossible d\'enregistrer ce commentaire, merci de réessayer ultérieurement.');
+				}
+			}
+		}
+		
+		//Récupération des commentaires
+		$this->View->Commentaires = Sql::queryAssoc(
+			'SELECT ID, Auteur, Date, Message, Statut
+			FROM Blog_Commentaires
+			WHERE Article = ' . $ArticleID . '
+			AND Statut IN ("ATTENTE", "VALIDE")',
+			'ID'
+		);
 	}
 }
