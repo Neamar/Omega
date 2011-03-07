@@ -193,7 +193,7 @@ float:right;
 	#ariane .see-link a{
 	background:url('/public/css/images/spr_head.png') top left scroll no-repeat; /*image see-link2.png*/
 	background-position:-653px -339px;
-	line-height:44px;
+	_line-height:44px;
 	_background:none;
 	height:18px;
 	display:block;
