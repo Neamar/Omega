@@ -7,7 +7,7 @@
  * 
  * PHP Version 5
  * 
- * @category  Default
+ * @category  Internal
  * @package   Root
  * @author    Matthieu Bacconnier <matthieu@bacconnier.fr>
  * @copyright 2010 Matthieu Bacconnier
@@ -19,13 +19,29 @@
 
 if(!defined('STDIN'))
 {
-	exit('CLI uniquement');
+        exit('CLI uniquement');
 }
 
-define('PATH', substr($File, 0, strrpos($File, '/')));
+//Émulation du fonctionnement normal
+$_SERVER['SERVER_NAME'] = 'edevoir.com';
+$_SERVER['REQUEST_URI'] = '--';
+$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+$_GET = array(
+	'module' => 'debug',
+	'controller' => 'index',
+	'view' => 'realcron',
+	'data' => array()
+);
+
+//Chargement du cœur de métier
+define('PATH', str_replace('/lib', '', substr(__FILE__, 0, strrpos(__FILE__, '/'))));
 include PATH . '/lib/core/constants.php';
 include PATH . '/lib/core/functions.php';
 include PATH . '/lib/core/OO2FS.php';
 include PATH . '/lib/core/Sql.php';
 
+//Connexion à SQL
+Sql::connect();
+
+//Envoi de l'évènement
 Event::dispatch(Event::CRON, array('Membre' => Membre::getBanque()));
