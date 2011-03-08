@@ -23,9 +23,9 @@ $Module = $this->getController()->getModule();
 	<input name="currency_code" type="hidden" value="EUR" />
 	<input name="shipping" type="hidden" value="0.00" />
 	<input name="tax" type="hidden" value="0.00" />
-	<input name="return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/ok" />
-	<input name="cancel_return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/refus" />
-	<input name="notify_url" type="hidden" value="http://edevoir.com/special/from_paypal" />
+	<input name="return" type="hidden" value="<?php echo URL ?>/eleve/points/ajout_paypal/ok" />
+	<input name="cancel_return" type="hidden" value="<?php echo URL ?>/eleve/points/ajout_paypal/refus" />
+	<input name="notify_url" type="hidden" value="<?php echo URL ?>/special/from_paypal" />
 	<input name="cmd" type="hidden" value="_xclick" />
 	<input name="business" type="hidden" value="<?php echo PAYPAL_ACCOUNT ?>" />
 	<input name="item_name" type="hidden" value="Achat de points" />
