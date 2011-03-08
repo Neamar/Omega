@@ -193,8 +193,10 @@ CREATE TABLE IF NOT EXISTS `Eleves` (
   `ID` int(11) NOT NULL,
   `Classe` int(11) NOT NULL,
   `Section` varchar(20) DEFAULT NULL,
+  `Parrain` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `Classe` (`Classe`)
+  KEY `Classe` (`Classe`),
+  KEY `Parrain` (`Parrain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des élèves inscrits';
 
 --
@@ -648,6 +650,7 @@ ALTER TABLE `Correcteurs_Capacites`
 -- Contraintes pour la table `Eleves`
 --
 ALTER TABLE `Eleves`
+  ADD CONSTRAINT `Eleves_ibfk_5` FOREIGN KEY (`Parrain`) REFERENCES `Membres` (`ID`),
   ADD CONSTRAINT `Eleves_ibfk_4` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`Classe`),
   ADD CONSTRAINT `Eleves_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `Membres` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 

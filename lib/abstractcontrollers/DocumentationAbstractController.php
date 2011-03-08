@@ -56,6 +56,7 @@ class DocumentationAbstractController extends AbstractController
 			'index' => "Aide des élèves",
 			'fonctionnement' => "Comment faire corriger mon devoir ?",
 			'inscription' => "Comment m'inscrire en tant qu'élève ?",
+			'parrain' => "Qu'est-ce qu'un compte parrain ?",
 			'validation' => "Comment valider mon compte ?",
 			'probleme_connexion' => "Pourquoi ne puis-je pas me connecter ?",
 			'deconnexion' => "Pourquoi ai-je été déconnecté ?",

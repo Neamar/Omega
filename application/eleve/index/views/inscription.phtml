@@ -45,6 +45,15 @@ echo $this->Form_inputLabelBr(
 	)
 );
 
+echo $this->Form_inputLabel(
+	'parrain',
+	'Votre parrain (laissez vide si vous n\'en avez pas)',
+	array(
+		'type' => 'email',
+		'placeholder' => 'parrain@domaine.fr'
+	)
+) . $this->Doc_inputBr('eleve', 'parrain');
+
 echo $this->Form_checkbox(
 	'cgu',
 	"J'ai lu et j'accepte les <a href='/cgu.htm' target='_blank'>Conditions Générales d'Utilisation</a> <strong>et</strong> <a href='/cgv.htm' target='_blank'>Conditions Générales de Vente</a> du site",
