@@ -213,7 +213,7 @@ class Sql
 		$R = mysql_query($Query);
 		if($R===false)
 		{
-			throw new Exception("Erreur SQL : <pre>" . $Query . '</pre><br />, ' . mysql_error());
+			throw new Exception('Erreur SQL : ' . mysql_error());
 		}
 		return $R;
 	}
