@@ -1,4 +1,4 @@
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" id="form_ajout-points-paypal">
+<form action="https://<?php echo PAYPAL_URL ?>/cgi-bin/webscr" method="post" id="form_ajout-points-paypal">
 	<?php
 	$Default = 100;
 	$DefaultE = $Default / EQUIVALENCE_POINT;
@@ -23,7 +23,7 @@
 	<input name="cancel_return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/refuse" />
 	<input name="notify_url" type="hidden" value="http://edevoir.com/special/from_paypal" />
 	<input name="cmd" type="hidden" value="_xclick" />
-	<input name="business" type="hidden" value="vendeu_1299600229_biz@edevoir.com" />
+	<input name="business" type="hidden" value="<?php echo PAYPAL_ACCOUNT ?>" />
 	<input name="item_name" type="hidden" value="Achat de points" />
 	<input name="no_note" type="hidden" value="1" />
 	<input name="lc" type="hidden" value="FR" />

@@ -590,7 +590,10 @@ CREATE TABLE IF NOT EXISTS `Entrees` (
   `Membre` int(11) NOT NULL,
   `Montant` int(11) NOT NULL,
   `Date` datetime NOT NULL,
+  `Hash` varchar(20) NOT NULL COMMENT 'Identifiant unique de la transaction',
+  `Data` mediumtext NOT NULL,
   PRIMARY KEY (`ID`),
+  UNIQUE KEY `Hash` (`Hash`),
   KEY `Membre` (`Membre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des entrées d''argent' AUTO_INCREMENT=1 ;
 
@@ -751,6 +754,7 @@ INSERT INTO `Administrateurs` (`ID`) VALUES (5);
 -- Remplir la banque
 INSERT INTO `Logs` (`ID`, `Date`, `Membre`, `Exercice`, `Action`, `Delta`) VALUES
 (1, '2011-03-05 14:57:55', 1, NULL, 'Pré-remplissage de la banque.', 10000);
+INSERT INTO `work`.`Entrees` (`ID` ,`Membre` ,`Montant` ,`Date` ,`Hash` ,`Data`) VALUES (NULL , '1', '10000', NOW( ) , '', 'Pré-remplissage de la banque');
 
 -- Articles de blog
 INSERT INTO `Blog_Articles` (`ID`, `Auteur`, `Creation`, `Titre`, `Abstract`, `Article`) VALUES

@@ -157,7 +157,7 @@ class Sql
 			'Montant'
 		);
 		
-		return true;//($Points == 0 && $Argent == 0);
+		return ($Points == 0 && $Argent == 0);
 	}
 	
 	/**
@@ -314,10 +314,10 @@ class Sql
 	public static function insert($Table, array $Valeurs)
 	{
 		//On ne peut pas simplement utiliser array_keys, car on peut avoir à modifier les clés (règle de l'underscore)
-		$Keys=array();
-		foreach($Valeurs as $K=>&$V)
+		$Keys = array();
+		foreach($Valeurs as $K => &$V)
 		{
-			if($K[0]=='_')
+			if($K[0] == '_')
 			{
 				$Keys[] = substr($K, 1);
 			}

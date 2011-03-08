@@ -164,6 +164,6 @@ try
 	$Controller->renderView();
 } catch (Exception $e) //Gestion des problèmes
 {
-	External::report($e->getMessage, $e->getTrace());
+	External::report($e->getMessage(), $e->getTrace());
 	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...');
 }
