@@ -81,9 +81,9 @@ abstract class PointsAbstractController extends AbstractController
 	
 	public function ajout_paypalActionWd()
 	{
-		if($this->Data['data'] == 'ok')
+		if($this->Data['data'] == 'ok' && isset($_POST['txn_id']))
 		{
-			$Montant = Sql::singleColumn('SELECT Montant FROM Entrees WHERE Membre = ' . $this->getMembre()->getFilteredId() . ' AND Date > CURDATE()', 'Montant');
+			$Montant = Sql::singleColumn('SELECT Montant FROM Entrees WHERE Membre = ' . $this->getMembre()->getFilteredId() . ' AND Hash = "' . Sql::escape($_POST['txn_id']) . '"', 'Montant');
 			
 			if(!is_null($Montant))
 			{
