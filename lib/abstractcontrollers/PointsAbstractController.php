@@ -93,6 +93,9 @@ abstract class PointsAbstractController extends AbstractController
 			'Ajout de points par Paypal',
 			'Vous allez ajouter des points sur votre compte eDevoir à partir d\'un compte Paypal.'
 		);
+		$this->View->addScript('/public/js/membre/points/ajout_paypal.js');
+		
+		$this->View->Membre = $this->getMembre();
 	}
 	/**
 	 * Opération de retrait de points

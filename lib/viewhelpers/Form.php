@@ -183,13 +183,14 @@ function ViewHelper_Form_rib($name)
  */
 function ViewHelper_Form_points($name, $max = MAX_SOMME, $args = array())
 {
-	$args['type'] = 'number';
-	$args['min'] = 0;
-	$args['value'] = 0;
-	$args['max'] = $max;
-	$args['step'] = 25;
-	$args['class'] = (isset($args['class'])?$args['class'] . ' ':'') . 'pts';
-	
+	$_args = array();
+	$_args['type'] = 'number';
+	$_args['min'] = 0;
+	$_args['value'] = 0;
+	$_args['max'] = $max;
+	$_args['step'] = 25;
+	$_args['class'] = (isset($args['class'])?$args['class'] . ' ':'') . 'pts';
+	$args = array_merge($_args, $args);
 	return ViewHelper_Form_input($name, $args);
 }
 
