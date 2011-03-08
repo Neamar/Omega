@@ -66,25 +66,6 @@ abstract class PointsAbstractController extends AbstractController
 			'Ajout de points',
 			'Sélectionnez la méthode avec laquelle vous souhaitez procéder à l\'ajout de points.'
 		);
-
-		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
-		{
-			$_POST['ajout'] = intval($_POST['ajout']);
-			
-			Sql::start();
-			$this->getMembre()->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
-			Sql::insert(
-				'Entrees',
-				array(
-					'Membre' => $this->getMembre()->getFilteredId(),
-					'Montant' => $_POST['ajout'],
-					'_Date' => 'NOW()'
-				)
-			);
-			
-			Sql::commit();
-			$this->View->setMessage('ok', 'Argent ajouté !');
-		}
 	}
 	
 	public function ajout_paypalAction()
@@ -96,6 +77,29 @@ abstract class PointsAbstractController extends AbstractController
 		$this->View->addScript('/public/js/membre/points/ajout_paypal.js');
 		
 		$this->View->Membre = $this->getMembre();
+	}
+	
+	public function ajout_paypalActionWd()
+	{
+		if($this->Data['data'] == 'ok')
+		{
+			$Montant = Sql::singleColumn('SELECT Montant FROM Entrees WHERE Membre = ' . $this->getMembre()->getFilteredId() . ' AND Date > CURDATE()', 'Montant');
+			
+			if(!is_null($Montant))
+			{
+				$this->View->setMessage('ok', "La transaction s'est correctement déroulée ! " . $Montant . ' points ont été ajoutés sur votre compte.');
+			}
+			else
+			{
+				$this->View->setMessage('warning', "La transaction semble s'être correctement terminée, mais nous n'avons pas encore reçu la confirmation de Paypal. Surveillez votre compte !", 'index/contact');
+			}
+		}
+		else
+		{
+			$this->View->setMessage('error', 'La transaction n\'a pas été effectuée.', 'index/contact');
+		}
+		
+		$this->redirect('/' . $this->getModule() . '/points/');
 	}
 	/**
 	 * Opération de retrait de points

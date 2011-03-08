@@ -167,13 +167,12 @@ class External
 	 * @param array $ToLog informations à logger
 	 */
 	public static function report($Message, array $ToLog = array())
-	{
-	    $arg_list = func_get_args();
-	    
+	{    
 		ob_start();
 		print_r($ToLog);
 		$DumpLog = ob_get_clean();
 		
+		ob_start();
 		print_r($_SESSION);
 		$DumpSession = ob_get_clean();
 		

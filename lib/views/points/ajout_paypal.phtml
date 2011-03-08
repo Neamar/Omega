@@ -1,6 +1,10 @@
+<?php 
+$Module = $this->getController()->getModule();
+?>
+<p class="infos">Vous allez ajouter des points par Paypal. <a href="/<?php echo $Module ?>/points/ajout">Retourner au formulaire du choix de la méthode</a>.
 <form action="https://<?php echo PAYPAL_URL ?>/cgi-bin/webscr" method="post" id="form_ajout-points-paypal">
 	<?php
-	$Default = 100;
+	$Default = 200;
 	$DefaultE = $Default / EQUIVALENCE_POINT;
 	
 	echo $this->Form_pointsLabelBr(
@@ -20,7 +24,7 @@
 	<input name="shipping" type="hidden" value="0.00" />
 	<input name="tax" type="hidden" value="0.00" />
 	<input name="return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/ok" />
-	<input name="cancel_return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/refuse" />
+	<input name="cancel_return" type="hidden" value="http://edevoir.com/eleve/points/ajout_paypal/refus" />
 	<input name="notify_url" type="hidden" value="http://edevoir.com/special/from_paypal" />
 	<input name="cmd" type="hidden" value="_xclick" />
 	<input name="business" type="hidden" value="<?php echo PAYPAL_ACCOUNT ?>" />
@@ -31,3 +35,6 @@
 	<input name="custom" type="hidden" value="<?php echo $this->Membre->Mail; ?>" />
 	<input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" id="ajout-points-paypal" />
 </form>
+
+<p>En cliquant sur le bouton acheter, vous allez être redirigé vers Paypal. N'oubliez pas de vérifier la présence du cadenas dans la barre d'adresse confirmant la sécurité de l'échange !<br />
+Une fois la transaction terminée, un bouton vous permettra de revenir sur le site.</p>
