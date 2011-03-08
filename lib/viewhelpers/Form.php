@@ -232,7 +232,7 @@ function ViewHelper_Form_select($name, array $values, $selected=null, array $arg
  * Génère un radio avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
- * @param array $values Un tableau associatif : la valeur, l'étiquette.Si l'étiquette est un tableau, la première valeur est considérée comme le label, la seconde comme la suite.
+ * @param array $values Un tableau associatif : la valeur, l'étiquette. Si l'étiquette est un tableau, la première valeur est considérée comme le label, la seconde comme la suite.
  * @param string selected la valeur sélectionnée par défaut
  * 
  * @return string le code HTML demandé.
