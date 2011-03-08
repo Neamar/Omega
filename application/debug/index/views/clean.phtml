@@ -3,7 +3,7 @@ if(isset($this->Actions))
 {
 	echo $this->Html_list($this->Actions);
 }
-else 
+elseif(URL != PROD)
 {
 	?>
 	<form id="form_clean-all" action="" method="post">
@@ -22,4 +22,8 @@ else
 	</form>
 	<p>Une fois ce bouton pressé, la suppression aura lieu. Elle peut prendre du temps, pas besoin de recliquer.</p>
 	<?php 
+}
+else
+{
+	exit('On ne joue pas à ça en prod crétin !');
 }?>

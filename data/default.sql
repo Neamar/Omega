@@ -9,10 +9,6 @@
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
---
--- Base de données: `work`
---
-
 -- --------------------------------------------------------
 
 --
@@ -754,7 +750,7 @@ INSERT INTO `Administrateurs` (`ID`) VALUES (5);
 -- Remplir la banque
 INSERT INTO `Logs` (`ID`, `Date`, `Membre`, `Exercice`, `Action`, `Delta`) VALUES
 (1, '2011-03-05 14:57:55', 1, NULL, 'Pré-remplissage de la banque.', 10000);
-INSERT INTO `work`.`Entrees` (`ID` ,`Membre` ,`Montant` ,`Date` ,`Hash` ,`Data`) VALUES (NULL , '1', '10000', NOW( ) , '', 'Pré-remplissage de la banque');
+INSERT INTO `Entrees` (`ID` ,`Membre` ,`Montant` ,`Date` ,`Hash` ,`Data`) VALUES (NULL , '1', '10000', NOW( ) , '', 'Pré-remplissage de la banque');
 
 -- Articles de blog
 INSERT INTO `Blog_Articles` (`ID`, `Auteur`, `Creation`, `Titre`, `Abstract`, `Article`) VALUES
