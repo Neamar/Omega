@@ -91,7 +91,7 @@ abstract class PointsAbstractController extends AbstractController
 			}
 			else
 			{
-				$this->View->setMessage('warning', "La transaction semble s'être correctement terminée, mais nous n'avons pas encore reçu la confirmation de Paypal. Surveillez votre compte !", 'index/contact');
+				$this->View->setMessage('warning', "La transaction semble s'être correctement terminée, mais nous n'avons pas encore reçu la confirmation de Paypal. Pas de panique, les points arrivent probablement sous peu ; surveillez votre compte !", 'index/contact');
 			}
 		}
 		else
