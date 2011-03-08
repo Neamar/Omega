@@ -86,6 +86,14 @@ abstract class PointsAbstractController extends AbstractController
 			$this->View->setMessage('ok', 'Argent ajouté !');
 		}
 	}
+	
+	public function ajout_paypalAction()
+	{
+		$this->View->setTitle(
+			'Ajout de points par Paypal',
+			'Vous allez ajouter des points sur votre compte eDevoir à partir d\'un compte Paypal.'
+		);
+	}
 	/**
 	 * Opération de retrait de points
 	 */
