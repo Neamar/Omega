@@ -141,11 +141,12 @@ else
 
 <aside id="social-network">
 <!-- Twitter -->
-<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="#eDevoir, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
+<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="RT @eDevoircom : http://edevoir.com, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
 <!-- Facebook -->
-<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2FeDevoir.com&amp;layout=box_count&amp;show_faces=false&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" style="border:none; overflow:hidden; width:65px; height:65px;"></iframe>
+<!--<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2FeDevoir.com&amp;layout=box_count&amp;show_faces=false&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" style="border:none; overflow:hidden; width:65px; height:65px;"></iframe>-->
+<iframe src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FEDevoir%2F194459280586020&amp;layout=box_count&amp;show_faces=true&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:65px; height:65px;" allowTransparency="true"></iframe>
 </aside>
 </footer>
     </div><!-- /content-top -->

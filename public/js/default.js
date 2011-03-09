@@ -223,13 +223,15 @@ $(function()
 		}
 	};
 	
-	$('input[type=number]').change(Number);
-	$('input[type=number]').keyup(Number);
-	$('input[type=number]').keydown(Number);
+	$('input[type=number]')
+		.change(Number)
+		.keyup(Number)
+		.keydown(Number);
 	
-	$('input[type=numeric]').change(Numeric);
-	$('input[type=numeric]').keyup(Numeric);
-	$('input[type=numeric]').keydown(Numeric);
+	$('input[type=numeric]')
+		.change(Numeric)
+		.keyup(Numeric)
+		.keydown(Numeric);
 });
 
 /**

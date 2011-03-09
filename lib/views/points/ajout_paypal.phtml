@@ -1,0 +1,40 @@
+<?php 
+$Module = $this->getController()->getModule();
+?>
+<p class="infos">Vous allez ajouter des points par Paypal. <a href="/<?php echo $Module ?>/points/ajout">Retourner au formulaire du choix de la méthode</a>.
+<form action="https://<?php echo PAYPAL_URL ?>/cgi-bin/webscr" method="post" id="form_ajout-points-paypal">
+	<?php
+	$Default = 200;
+	$DefaultE = $Default / EQUIVALENCE_POINT;
+	
+	echo $this->Form_pointsLabelBr(
+		'ajout',
+		'Combien de points souhaitez-vous ajouter ?',
+		MAX_SOMME,
+		array(
+			'value' => $Default,
+			'required' => 'required',
+		)
+	);
+	?>
+	<p>Prix à payer : <span id="points-euro"><?php echo $DefaultE ?></span>€</p>
+	<input type='hidden' value="<?php echo EQUIVALENCE_POINT ?>" name="equivalence" id="equivalence" />
+	<input type='hidden' value="<?php echo $DefaultE ?>" name="amount" id="amount" />
+	<input name="currency_code" type="hidden" value="EUR" />
+	<input name="shipping" type="hidden" value="0.00" />
+	<input name="tax" type="hidden" value="0.00" />
+	<input name="return" type="hidden" value="<?php echo URL ?>/eleve/points/ajout_paypal/ok" />
+	<input name="cancel_return" type="hidden" value="<?php echo URL ?>/eleve/points/ajout_paypal/refus" />
+	<input name="notify_url" type="hidden" value="<?php echo URL ?>/special/from_paypal" />
+	<input name="cmd" type="hidden" value="_xclick" />
+	<input name="business" type="hidden" value="<?php echo PAYPAL_ACCOUNT ?>" />
+	<input name="item_name" type="hidden" value="Achat de points" />
+	<input name="no_note" type="hidden" value="1" />
+	<input name="lc" type="hidden" value="FR" />
+	<input name="bn" type="hidden" value="PP-BuyNowBF" />
+	<input name="custom" type="hidden" value="<?php echo $this->Membre->Mail; ?>" />
+	<input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" id="ajout-points-paypal" />
+</form>
+
+<p>En cliquant sur le bouton acheter, vous allez être redirigé vers Paypal. N'oubliez pas de vérifier la présence du cadenas dans la barre d'adresse confirmant la sécurité de l'échange !<br />
+Une fois la transaction terminée, un bouton vous permettra de revenir sur le site.</p>

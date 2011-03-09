@@ -226,8 +226,23 @@ define('BANQUE_ID', 1);
 define('AJAX_LIMITE', 10);
 
 
+/**
+ * Compte paypal d'eDevoir
+ * En test : 'vendeu_1299600229_biz@edevoir.com'
+ * En test (acheteur) : client_1299600199_per@edevoir.com, mdp : test_facile
+ * En production : 'contact@edevoir.com'
+ * 
+ * @var string
+ */
+define('PAYPAL_ACCOUNT', 'contact@edevoir.com');
 
-
+/**
+ * URL de paypal
+ * En test : 'www.sandbox.paypal.com'
+ * En production : 'www.paypal.com'
+ * @var string
+ */
+define('PAYPAL_URL', 'www.paypal.com');
 
 //____________________________________________________________________________
 // CAS PARTICULIERS

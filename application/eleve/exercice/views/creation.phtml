@@ -44,7 +44,13 @@ echo $this->Form_inputLabelBr(
 echo $this->Form_selectLabelBr('type', 'Type de l\'exercice', $this->Types);
 
 //Type de la demande
-echo $this->Form_selectLabelBr('demande', 'Demande', $this->Demandes, 'COMPLET');
+echo 'Demande :<br />';
+$Demandes = array();
+foreach($this->Demandes as $Demande => $Caption)
+{
+	$Demandes[$Demande] = array($Caption, $this->Doc_input('eleve', 'demande_' . strtolower($Demande)));
+}
+echo $this->Form_radio('demande', $Demandes, 'COMPLET');
 ?>
 
 <h2 id="eleve-exercice-creation-date" class="countable">Date</h2>

@@ -15,7 +15,7 @@
  */
 
 /**
- * Contrôleur d'index du module élève.
+ * Contrôleur d'index du module debug.
  * 
  * @category Controller
  * @package  Root
@@ -26,19 +26,6 @@
  */
 class Debug_IndexController extends AbstractController
 {
-	/**
-	 * Constructeur.
-	 * 
-	 * @param string $module nom de module
-	 * @param string $controller nom de contrôleur
-	 * @param string $view nom de vue
-	 * @param string $data données
-	 */
-	public function __construct($module,$controller,$view,$data)
-	{
-		parent::__construct($module, $controller, $view, $data);
-	}
-	
 	/**
 	 * Page d'accueil du module.
 	 * 
@@ -142,6 +129,10 @@ Merci de cliquer sur le lien suivant pour valider votre adresse mail et commence
 		);		
 	}
 	
+	/**
+	 * Lance manuellement le cron.
+	 * À utiliser avec précaution ! Peut déclencher en double certaines actions :\
+	 */
 	public function cronAction()
 	{
 		echo '<pre>';

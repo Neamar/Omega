@@ -84,7 +84,7 @@ function sanitize($Valeur)
 function lock($Reason)
 {
 	file_put_contents(DATA_PATH . '/.lock', $Reason);
-	External::mail('webmaster@edevoir.com', 'Faille critique du site', '<p>eDevoir a été fermé !</p><p>' . $Reason . '</p>');
+	External::report('Faille critique du site ! ' . $Reason, debug_backtrace());
 	exit();
 }
 
@@ -128,9 +128,8 @@ function redirect($Location, $Code = null)
 	//Forcer l'écriture des données de la session maintenant.
 	//En effet, l'envoi d'un mail via register_shutdown_function peut bloquer l'écriture de la session pendant une durée supérieure à la redirection.
 	//Les sessions n'étant pas concurrentes, les potentiels messages peuvent être perdus.
-	//session_write_close ne suffit pas.
-	//@see http://fr2.php.net/manual/en/function.session-write-close.php#86791
-	session_regenerate_id(true);
+	//@see http://fr2.php.net/manual/en/function.session-write-close.php
+	session_write_close();
 	
 	//Terminer l'exécution du script pour éviter de fatiguer le serveur sur une page que personne ne consultera.
 	exit();
