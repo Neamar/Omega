@@ -76,7 +76,12 @@ define('CAPTCHA_PUBLIC', '6LdI48ESAAAAAPyHPYB19hXs7mWxFUtnW4uTEHBp');
  */
 define('CAPTCHA_PRIVATE', '6LdI48ESAAAAAPr31W2_tpx7J3ZTCm5rVwL-pRU3');
 
-
+/**
+ * Clé utilisée pour la compilation LaTeX
+ * 
+ * @var string
+ */
+define('CLSI_TOKEN', 'e3075c67779a0796f550e988e400469b');
 
 //____________________________________________________________________________
 //DONNÉES DITES MÉTIER

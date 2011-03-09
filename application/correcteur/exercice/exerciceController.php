@@ -430,7 +430,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			);
 			Sql::insert('Exercices_Corriges', $ToInsert);
 			$this->View->ID = Sql::lastId();
-			//exit(mysql_error());
+
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = 'preview';
 
@@ -638,28 +638,12 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 * 
 	 * @param string $URL le fichier TeX à compiler.
 	 * 
-	 * @return array un tableau ; la clé output contient la liste des lignes renvoyées, la clé errors la liste des lignes d'erreurs, et la clé ok est un booléen indiquant le résultat de la compilation
+	 * @return array (voir la documentation de Tex::compile())
 	 */
 	protected function compileTex($URL)
 	{
-		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
-		exec('/usr/bin/pdflatex -halt-on-error -interaction=nonstopmode -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
-		
-		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
-		$Erreurs = array();
-		foreach($Return as $Line)
-		{
-			if(isset($Line[0]) && $Line[0] == '!')
-			{
-				$Erreurs[] = substr($Line, 2);
-			}
-		}
-		
-		return array(
-			'errors' => $Erreurs,
-			'output' => $Return,
-			'ok' => empty($Erreurs),
-		);
+		$TexCompiler = new Tex($URL);
+		return $TexCompiler->compile();
 	}
 	
 	/**
