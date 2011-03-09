@@ -139,6 +139,7 @@ abstract class PointsAbstractController extends AbstractController
 			$Zos = 2043;
 			$Pos = $PosListe[$_POST['palier']]['pos'];
 			$URL =  'http://www.monelib.com/accessScript/check.php?ext_frm_online=1&ext_frm_pos=' . $Pos . '&ext_frm_zos=' . $Zos . '&ext_frm_code0=' . $_POST['code'] . '&ext_frm_validateuse=1';
+
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $URL);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

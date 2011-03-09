@@ -1,10 +1,6 @@
 /*********************************************************************************************
 
-Version : Pour l'index !
-Changements récents : Correction des bugs de compatibilités sur ie et chrome
-Testé sur : IE8, chrome 8, Firefox 3.6, Safari 5
-Petit Bug sur IE7
-Affichage Nul sous IE6 et IE5.5
+Version : 1.1 final
 
 /***********************************************************************************************
 
@@ -13,7 +9,7 @@ Affichage Nul sous IE6 et IE5.5
 2. Logo  -------------------------------------  Le logo
 3. Content  ----------------------------------  Le contenu du haut (logo/menu)
 4. Forms  ------------------------------------  Les formulaires (label, input, submit etc..)
-5. Footer  -----------------------------------  HiHa !
+5. Footer  -----------------------------------  Pied de page
 
 **********************************************************************************************/
 
@@ -137,10 +133,11 @@ position:relative;
 #content nav {
 position:absolute;
 top:5px;
-left:375px;
+left:360px;
 z-index:10;
 }
 	#content nav ul{
+
 	position:relative;
 	padding-top:16px;
 	}
@@ -244,7 +241,7 @@ background-position: 0px -1px;
 border:0;
 height:27px;
 margin-bottom:9px;
-width:200px;
+width:195px;
 padding-left:5px;
 line-height:24px;
 }
