@@ -1,15 +1,22 @@
+<p class="important">Attention ! Les transactions téléphoniques sont peu rentables, car elles impliquent la présence de plusieurs intermédiaires qui prennent une marge.<br />
+Acheter des points de cette manière vous coûtera plus cher qu'un virement Paypal (presque du simple au double).</p>
+
+<p>Plusieurs formulaires sont disponibles, en fonction du nombre de points que vous souhaitez ajouter sur votre compte.</p>
+<div id="toc">
+</div>
+
+<h2 id="membre-points-ajout-monelib-25" class="countable">Ajout de 25 points par appel téléphonique <small>(≃ 1.7€)</small></h2>
 <p class="infos">Vous allez ajouter <?php echo $this->Points(25) ?> sur votre compte.<br />
-Attention ! <strong>Vous devez être majeur pour utiliser de service</strong>. Si vous ne l'êtes pas, demandez à vos parents.</p>
+Attention ! <strong>Vous devez être majeur pour utiliser ce service</strong>. Si vous ne l'êtes pas, demandez à vos parents.</p>
 
 <p>Appelez le <strong>08 99 23 01 48</strong>, puis entrez le code indiqué.<br />
 Coûts : 1€34 l'appel, puis 0.34€ la minute. Le temps passé au téléphone ne dépasse normalement pas 2 minutes, sauf si vous demandez à réécouter le code.</p>
 
-<form action="http://www.monelib.com/accessScript/check.php" method="post">
-	<input type="hidden" name="ext_frm_pos" value="626936" />
-	<input type="hidden" name="ext_frm_zos" value="2043" />
+<form id="form_ajout-points-monelib-1" method="post" action="">
+	<input type="hidden" name="palier" value="1" />
 	<?php 
 	echo $this->Form_inputLabelBr(
-		'ext_frm_code0',
+		'code',
 		"Code d'accès",
 		array(
 			'maxlength' => '8',
@@ -19,6 +26,68 @@ Coûts : 1€34 l'appel, puis 0.34€ la minute. Le temps passé au téléphone 
 		)
 	);
 	
-	echo $this->Form_submit('ajout_monelib1', 'Récupérer des points !');
+	echo $this->Form_submit('ajout-monelib-1', 'Récupérer des points !');
 	?>
-</form> 
+</form>
+
+<h2 id="membre-points-ajout-monelib-30" class="countable">Ajout de 30 points par SMS <small>(= 3€)</small></h2>
+<p class="infos">Vous allez ajouter <?php echo $this->Points(30) ?> sur votre compte.<br />
+Attention ! <strong>Vous devez être majeur pour utiliser ce service</strong>. Si vous ne l'êtes pas, demandez à vos parents.</p>
+
+<p>Envoyez <tt>ICODE</tt> au <strong>83767</strong>, puis entrez le code indiqué.<br />
+Coût : 3€.</p>
+
+<form id="form_ajout-points-monelib-2" method="post" action="">
+	<input type="hidden" name="palier" value="2" />
+	<?php 
+	echo $this->Form_inputLabelBr(
+		'code',
+		"Code d'accès",
+		array(
+			'maxlength' => '8',
+			'placeholder' => 'XXXXXXXX',
+			'required' => 'required',
+			'pattern' => '.{8}'
+		)
+	);
+	
+	echo $this->Form_submit('ajout-monelib-2', 'Récupérer des points !');
+	?>
+</form>
+
+<h2 id="membre-points-ajout-monelib-45" class="countable">Ajout de 45 points par SMS <small>(= 4€)</small></h2>
+<p class="infos">Vous allez ajouter <?php echo $this->Points(45) ?> sur votre compte.<br />
+Attention ! <strong>Vous devez être majeur pour utiliser ce service</strong>. Si vous ne l'êtes pas, demandez à vos parents.</p>
+
+<p>Envoyez <tt>CODE</tt> au <strong>83483</strong>, puis entrez le code indiqué.<br />
+Coût : 4€.</p>
+
+<form id="form_ajout-points-monelib-3" method="post" action="">
+	<input type="hidden" name="palier" value="3" />
+	<?php 
+	echo $this->Form_inputLabelBr(
+		'code',
+		"Code d'accès",
+		array(
+			'maxlength' => '8',
+			'placeholder' => 'XXXXXXXX',
+			'required' => 'required',
+			'pattern' => '.{8}'
+		)
+	);
+	
+	echo $this->Form_submit('ajout-monelib-3', 'Récupérer des points !');
+	?>
+</form>
+
+<!-- Ajouté pour prendre de la place quand on clique sur le dernier anchor ;) -->
+<h2>Divers...</h2>
+<p>Toutes les transactions effectuées sur cette page doivent être faites par un majeur ou sous sa supervision directe, comme indiqué dans les <a href="/cgu.htm">CGU</a> acceptées lors de votre inscription.</p>
+
+<p>Le nom du site n'apparaîtra jamais sur votre facture téléphonique, puisque tout se passe via Monelib.</p>
+
+<p>N'oubliez pas que vous pouvez économiser énormément en utilisant le <a href="<?php echo $this->getController()->getModule() ?>/points/ajout_paypal">formulaire Paypal</a>.</p>
+
+<p>Certaines méthodes sont plus rentables que d'autres mais peuvent prendre plus de temps, à vous de choisir celle qui vous convient le mieux.</p>
+
+<p>En cas de problèmes, vous trouverez en bas de page un lien vous permettant de nous contacter. Notez cependant que nous ne sommes pas les fournisseurs du contenu de cette page, et en conséquence ne pouvons garantir la réalisation correcte de l'intégralité des transactions &ndash; même si nous ferons de notre mieux pour vous aider en cas de problème.

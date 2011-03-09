@@ -119,6 +119,7 @@ class Special_IndexController extends AbstractController
 	 */
 	public function from_monelibActionWd()
 	{
+		throw new Exception('Désactivé');
 		$Pos = 626936;
 		
 		$ZosListe = array(
@@ -140,14 +141,14 @@ class Special_IndexController extends AbstractController
 		else
 		{
 			$Zos = $ZosListe[$this->Data['data']];
+			$URL =  'http://www.monelib.com/accessScript/check.php?ext_frm_online=1&ext_frm_pos=' . $Pos . '&ext_frm_zos=' . $Zos . '&ext_frm_code0=' . $_POST['monelib_pincode0'];
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'http://www.monelib.com/accessScript/check.php?ext_frm_online=1&ext_frm_pos=
-			' . $Pos . '&ext_frm_zos=' . $Zos . '&ext_frm_code0=' . $_POST['monelib_pincode0']);
+			curl_setopt($ch, CURLOPT_URL, $URL);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 			$data = curl_exec($ch);
 			curl_close($ch);
-			External::mail('neamar@neamar.fr', 'Monelib', $data);
+			//External::report('Monelib', array('d' => $data, 'u' => $URL));
 			exit();
 		}
 	}
