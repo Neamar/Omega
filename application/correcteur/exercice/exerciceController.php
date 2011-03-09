@@ -303,23 +303,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			
 			$this->texFromTemplate($_POST['corrige'], $CorrigeURL);
 			
-			$Erreurs = $this->compileTex($CorrigeURL);
+			$Retour = $this->compileTex($CorrigeURL);
 			
-			if(!$Erreurs['ok'])
+			if(!$Retour['ok'])
 			{
 				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
-				$this->View->Erreurs = $Erreurs['errors'];
+				$this->View->Erreurs = $Retour['errors'];
 			}
 			else
 			{
 				//Insérer le PDF dans les fichiers constituant l'exercice
-				$CorrigeURLPDF = substr($CorrigeURL, 0, -3) . 'pdf';
 				$ToInsert = array
 				(
 					'Exercice' => $this->Exercice->ID,
 					'Type' => 'CORRIGE',
 					'URL' => '/Corrige/' . $FileName . '.pdf',
-					'ThumbURL' => Thumbnail::create($CorrigeURLPDF),
+					'ThumbURL' => Thumbnail::create($Retour['pdf']),
 					'NomUpload' => $FileName . '.pdf',
 				);
 				
@@ -643,7 +642,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	protected function compileTex($URL)
 	{
 		$TexCompiler = new Tex($URL);
-		return $TexCompiler->compile();
+		return $TexCompiler->compile(true);
 	}
 	
 	/**

@@ -147,7 +147,7 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 	{
 		$Infos[] = "Dates :\n" . ViewHelper_Html_list($Dates);
 	}
-	else
+	else if(count($Dates) == 1)
 	{
 		$Infos[] = $Dates[0];
 	}
@@ -176,11 +176,16 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 {
 	$Dates = array();
 	
-	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
+	if(!$Exercice->isClosed())
+	{
+		$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
+	}
+	
 	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== null)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}
+	
 	if(!is_null($Exercice->TimeoutCorrecteur) && $Exercice->Statut == 'ATTENTE_ELEVE')
 	{
 		$Dates[] = 'Annulation automatique correcteur : ' . ViewHelper_Date_countdown($Exercice->TimeoutCorrecteur);

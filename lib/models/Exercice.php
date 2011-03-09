@@ -281,7 +281,7 @@ WHERE Hash="%ID%"';
 	 */
 	public function isClosed()
 	{
-		$Ended = array('ANNULE','TERMINE','REMBOURSE');
+		$Ended = array('ANNULE', 'TERMINE', 'REMBOURSE');
 		
 		return (in_array($this->Statut, $Ended));
 	}

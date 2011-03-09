@@ -116,6 +116,11 @@ class Correcteur_IndexController extends IndexAbstractController
 			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
 			$this->redirect('/correcteur/');
 		}
+		if(!$this->getMembre()->isAbleToBook())
+		{
+			$this->View->setMessage('warning', 'Vous ne pouvez pas réserver d\'exercice pour l\'instant, finissez déjà ceux que vous avez réservé !');
+			$this->redirect('/correcteur/');
+		}
 		
 		$this->View->setTitle(
 			'Marché aux exercices',

@@ -68,10 +68,10 @@ class Correcteur extends Membre
 		return SQL::singleColumn(
 			'SELECT COUNT(*) AS Nb
 			FROM Exercices
-			WHERE Correcteur=' . $this->getFilteredId() . '
+			WHERE Correcteur = ' . $this->getFilteredId() . '
 			AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")',
 			'Nb'
-		);	
+		);
 	}
 }
 Correcteur::$Props = initProps('Correcteur');

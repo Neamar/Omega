@@ -62,6 +62,12 @@ abstract class AbstractController
 	 * @var bool
 	 */
 	protected $UseTemplate = true;
+	
+	/**
+	 * Le membre actuellement connecté (s'il existe)
+	 * @var Membre
+	 */
+	protected $Membre = null;
 
 	/**
 	 * Contrôleur par défaut, prenant en paramètres les différentes composantes de l'URL.
@@ -157,16 +163,21 @@ abstract class AbstractController
 	 */
 	public function getMembre()
 	{
-		$Cle = $this->getMembreIndex();
-		if(!isset($_SESSION[$Cle]) || !$_SESSION[$Cle] instanceOf Membre)
+		if(is_null($this->Membre))
 		{
-			throw new Exception("Le membre n'est pas disponible !");
-			return null;
+			$Cle = $this->getMembreIndex();
+			if(!isset($_SESSION[$Cle]) || !$_SESSION[$Cle] instanceOf Membre)
+			{
+				throw new Exception("Le membre n'est pas disponible !");
+				return null;
+			}
+			else
+			{
+				$this->Membre = $_SESSION[$Cle];
+			}
 		}
-		else
-		{
-			return $_SESSION[$Cle];
-		}
+		
+		return $this->Membre;
 	}
 	
 	/**
