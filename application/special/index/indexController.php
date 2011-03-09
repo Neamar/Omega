@@ -117,8 +117,38 @@ class Special_IndexController extends AbstractController
 	/**
 	 * Callback-URL pour monelib
 	 */
-	public function from_monelib()
+	public function from_monelibActionWd()
 	{
-		External::report('Monelib ok');
+		$Pos = 626936;
+		
+		$ZosListe = array(
+			'25' => 2043
+		);
+
+		if(!isset($ZosListe[$this->Data['data']]))
+		{
+			throw new Exception('Offre inconnue.');
+		}
+		elseif(!isset($_POST['monelib_pincode0'], $_POST['monelib_result']))
+		{
+			throw new Exception('Pas de POST');
+		}
+		elseif($_POST['monelib_result'] != 'OK')
+		{
+			throw new Exception('Paiement invalide');
+		}
+		else
+		{
+			$Zos = $ZosListe[$this->Data['data']];
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'http://www.monelib.com/accessScript/check.php?ext_frm_online=1&ext_frm_pos=
+			' . $Pos . '&ext_frm_zos=' . $Zos . '&ext_frm_code0=' . $_POST['monelib_pincode0']);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+			$data = curl_exec($ch);
+			curl_close($ch);
+			External::mail('neamar@neamar.fr', 'Monelib', $data);
+			exit();
+		}
 	}
 }
