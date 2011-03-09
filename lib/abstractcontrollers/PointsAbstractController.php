@@ -113,35 +113,85 @@ abstract class PointsAbstractController extends AbstractController
 		);
 		$this->View->addScript('/public/js/membre/points/ajout_paypal.js');
 		
-		$this->View->Membre = $this->getMembre();
-	}
-	
-	/**
-	 * Retour de monelib
-	 */
-	public function ajout_monelibActionWd()
-	{
-		var_dump($_POST);
-		exit();
-		if($this->Data['data'] == 'ok' && isset($_POST['txn_id']))
-		{
-			$Montant = Sql::singleColumn('SELECT Montant FROM Entrees WHERE Membre = ' . $this->getMembre()->getFilteredId() . ' AND Hash = "' . Sql::escape($_POST['txn_id']) . '"', 'Montant');
+		$Membre = $this->getMembre();
+		
+		$PosListe = array(
+			1 => array(
+				//https://www.monelib.com/repaymentViewer.php?ext_frm_access=42
+				'pos' => 626936,
+				'points' => 25
+			),
+			2 => array(
+				//https://www.monelib.com/repaymentViewer.php?ext_frm_access=73
+				'pos' => 162538,
+				'points' => 30
+			),
+			3 => array(
+				//https://www.monelib.com/repaymentViewer.php?ext_frm_access=123
+				'pos' => 2021819,
+				'points' => 45
+			),
+		);
 			
-			if(!is_null($Montant))
+			
+		if(isset($_POST['code'], $_POST['palier']) && isset($PosListe[$_POST['palier']]))
+		{
+			$Zos = 2043;
+			$Pos = $PosListe[$_POST['palier']]['pos'];
+			$URL =  'http://www.monelib.com/accessScript/check.php?ext_frm_online=1&ext_frm_pos=' . $Pos . '&ext_frm_zos=' . $Zos . '&ext_frm_code0=' . $_POST['code'];
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $URL);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+			$data = curl_exec($ch);
+			curl_close($ch);
+			
+			if($data == 'OK')
 			{
-				$this->View->setMessage('ok', "La transaction s'est correctement déroulée ! " . $Montant . ' points ont été ajoutés sur votre compte.');
+				$Points = $PosListe[$_POST['palier']]['points'];
+				
+				//Tout semble en ordre, procéder au paiement
+				Sql::start();
+				
+				//Donner l'argent au membre
+				$Membre->credit((int) $Points, 'Ajout via monelib.');
+				
+				//Et logger l'entrée
+				$ToLog = array(
+					'code' => $_POST['code'],
+					'zos' => $Zos,
+					'pos' => $Pos,
+					'palier' => $_POST['palier']
+				);
+				
+				$ToInsert = array(
+					'Membre' => $Membre->ID,
+					'Montant' => $Points,
+					'_Date' => 'NOW()',
+					'Hash' => 'monelib_' . intval($_POST['palier']) . '_' . $_POST['code'],
+					'Data' => serialize($ToLog)
+				);
+				
+				if(Sql::insert('Entrees', $ToInsert))
+				{
+					Sql::commit();
+					$this->View->setMessage('ok', "Transaction Monelib effectuée avec succès ! Votre compte a été crédité de " . $Points . ' points.');
+					$this->redirect('/' . $this->getModule() . '/points/');
+				}
+				else
+				{
+					Sql::rollback();
+					$this->View->setMessage('error', "Transaction Monelib abandonnée ; ce code a déjà été utilisé.", 'index/contact');
+				}
 			}
 			else
 			{
-				$this->View->setMessage('warning', "La transaction semble s'être correctement terminée, mais nous n'avons pas encore reçu la confirmation de Paypal. Pas de panique, les points arrivent probablement sous peu ; surveillez votre compte !", 'index/contact');
+				$this->View->setMessage('error', "Code Monelib incorrect.");
 			}
 		}
-		else
-		{
-			$this->View->setMessage('error', 'La transaction n\'a pas été effectuée.', 'index/contact');
-		}
 		
-		$this->redirect('/' . $this->getModule() . '/points/');
+		$this->View->Membre = $Membre;
+		$this->View->addScript('/public/js/membre/points/ajout_monelib.js');
 	}
 	
 	/**
