@@ -141,7 +141,7 @@ else
 
 <aside id="social-network">
 <!-- Twitter -->
-<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="#eDevoir, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
+<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="RT @eDevoircom : http://edevoir.com, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
 <!-- Facebook -->

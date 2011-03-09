@@ -1,0 +1,24 @@
+<p class="infos">Vous allez ajouter <?php echo $this->Points(25) ?> sur votre compte.<br />
+Attention ! <strong>Vous devez être majeur pour utiliser de service</strong>. Si vous ne l'êtes pas, demandez à vos parents.</p>
+
+<p>Appelez le <strong>08 99 23 01 48</strong>, puis entrez le code indiqué.<br />
+Coûts : 1€34 l'appel, puis 0.34€ la minute. Le temps passé au téléphone ne dépasse normalement pas 2 minutes, sauf si vous demandez à réécouter le code.</p>
+
+<form action="http://www.monelib.com/accessScript/check.php" method="post">
+	<input type="hidden" name="ext_frm_pos" value="626936" />
+	<input type="hidden" name="ext_frm_zos" value="2043" />
+	<?php 
+	echo $this->Form_inputLabelBr(
+		'ext_frm_code0',
+		"Code d'accès",
+		array(
+			'maxlength' => '8',
+			'placeholder' => 'XXXXXXXX',
+			'required' => 'required',
+			'pattern' => '.{8}'
+		)
+	);
+	
+	echo $this->Form_submit('ajout_monelib1', 'Récupérer des points !');
+	?>
+</form> 

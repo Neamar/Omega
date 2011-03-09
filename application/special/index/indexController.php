@@ -113,4 +113,12 @@ class Special_IndexController extends AbstractController
 		
 		exit();
 	}
+	
+	/**
+	 * Callback-URL pour monelib
+	 */
+	public function from_monelib()
+	{
+		External::report('Monelib ok');
+	}
 }

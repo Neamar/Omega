@@ -68,6 +68,9 @@ abstract class PointsAbstractController extends AbstractController
 		);
 	}
 	
+	/**
+	 * Retour de paypal
+	 */
 	public function ajout_paypalAction()
 	{
 		$this->View->setTitle(
@@ -101,6 +104,46 @@ abstract class PointsAbstractController extends AbstractController
 		
 		$this->redirect('/' . $this->getModule() . '/points/');
 	}
+	
+	public function ajout_monelibAction()
+	{
+		$this->View->setTitle(
+			'Ajout de points par Monelib',
+			'Vous allez ajouter des points sur votre compte eDevoir à partir de Monelib.'
+		);
+		$this->View->addScript('/public/js/membre/points/ajout_paypal.js');
+		
+		$this->View->Membre = $this->getMembre();
+	}
+	
+	/**
+	 * Retour de monelib
+	 */
+	public function ajout_monelibActionWd()
+	{
+		var_dump($_POST);
+		exit();
+		if($this->Data['data'] == 'ok' && isset($_POST['txn_id']))
+		{
+			$Montant = Sql::singleColumn('SELECT Montant FROM Entrees WHERE Membre = ' . $this->getMembre()->getFilteredId() . ' AND Hash = "' . Sql::escape($_POST['txn_id']) . '"', 'Montant');
+			
+			if(!is_null($Montant))
+			{
+				$this->View->setMessage('ok', "La transaction s'est correctement déroulée ! " . $Montant . ' points ont été ajoutés sur votre compte.');
+			}
+			else
+			{
+				$this->View->setMessage('warning', "La transaction semble s'être correctement terminée, mais nous n'avons pas encore reçu la confirmation de Paypal. Pas de panique, les points arrivent probablement sous peu ; surveillez votre compte !", 'index/contact');
+			}
+		}
+		else
+		{
+			$this->View->setMessage('error', 'La transaction n\'a pas été effectuée.', 'index/contact');
+		}
+		
+		$this->redirect('/' . $this->getModule() . '/points/');
+	}
+	
 	/**
 	 * Opération de retrait de points
 	 */
