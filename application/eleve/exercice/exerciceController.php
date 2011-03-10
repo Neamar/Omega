@@ -51,6 +51,97 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	}
 	
 	/**
+	 * Liste les exercices attendant une action de la part de l'élève
+	 */
+	public function en_attenteAction()
+	{
+		$this->View->setTitle(
+			'Exercices en attente',
+			"Cette page liste les exercices attendant une action de votre part."
+		);
+		
+		$Status = array(
+			'ATTENTE_ELEVE' => 'Offre effectuée par un correcteur à accepter ou refuser',
+			'VIERGE' => 'À envoyer aux correcteurs'
+		);
+		
+		$this->genericListe($Status, 'Vous n\'avez aucun exercice en attente.');
+	}
+	
+	/**
+	 * Liste les exercices attendant une action de la part de l'élève
+	 */
+	public function archivesAction()
+	{
+		$Status = array(
+			'TERMINE' => 'Exercices terminés',
+			'REMBOURSE' => 'Exercices remboursés',
+			'ANNULE' => 'Exercices annulés'
+		);
+		
+		$this->View->setTitle(
+			'Exercices archivés',
+			"Cette page liste les exercices terminés."
+		);
+		
+		$this->genericListe($Status, "Vous n'avez pas encore d'archives");
+	}
+	
+	public function en_coursAction()
+	{
+		$Status = array(
+			'ATTENTE_CORRECTEUR' => "Affichés dans le marché aux exercices des correcteurs",
+			'EN_COURS' => 'En cours de rédaction par le correcteur',
+			'ENVOYE' => 'Corrigé disponible !',
+			'REFUSE ' => 'En cours d\'examen par un administrateur'
+		);
+		
+		$this->View->setTitle(
+			'Exercices archivés',
+			"Cette page liste les exercices « en cours » pour lesquels aucune action de votre part n'est requise."
+		);
+		
+		$this->genericListe($Status, "Vous n'avez aucun exercice en cours.");
+	}
+	
+	/**
+	 * Affiche une liste d'exercices.
+	 * La liste est filtrée et contient tous les exercices dont le statut est une des clés du tableau Status.
+	 * 
+	 * @param array $Status tableau des statuts à afficher. En valeur, le message indiquant la correspondance du statut
+	 * @param string $EmptyMessage le message d'erreur à afficher si aucun exercice n'existe dans les statuts indiqués.
+	 */
+	public function genericListe(array $Status, $EmptyMessage)
+	{
+		$StatusListQuoted = array();
+		foreach($Status as $Etat => $Message)
+		{
+			$StatusListQuoted[] = '"' . $Etat . '"';
+		}
+		
+		$this->View->Exercices = Sql::queryAssoc(
+			'SELECT Hash, Titre, Statut
+			FROM Exercices
+			WHERE Createur = ' . $this->getMembre()->getFilteredId() . '
+			AND Statut IN(' . implode(',', $StatusListQuoted) . ')
+			ORDER BY Statut, ID DESC',
+			'Hash'
+		);
+		
+		//Cas du tableau vide : envoyer un warning
+		if(count($this->View->Exercices) == 0)
+		{
+			$this->View->setMessage('warning', $EmptyMessage);
+			$this->redirect('/eleve/exercice/');
+		}
+		
+		$this->View->Messages = $Status;
+		$this->View->Liens = $this->statusAnchor();
+		
+		$this->deflectView(OO2FS::viewPath('generic_liste', null, 'exercice', 'eleve'));
+	}
+	
+	/**
 	 * Page d'accueil d'un exercice.
 	 * (all) =>
 	 */
@@ -912,6 +1003,26 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'TERMINE' => 'Cet exercice est terminé. Vous pouvez encore consulter sujet, corrigé et le chat.', 
 			'REFUSE' => 'Vous avez émis une contestation. Vous serez averti par mail des résultats.', 
 			'REMBOURSE' => is_null($this->Exercice)?'Vous avez été remboursé.':'Vous avez été remboursé à hauteur de <strong>' . $this->Exercice->Remboursement . '%</strong>. Avec toute nos excuses pour le préjudice subi !', 
+		);
+	}
+	
+	/**
+	 * Vue la plus appropriée en fonction du statut
+	 * 
+	 * @return array
+	 */
+	protected function statusAnchor()
+	{
+		return array(
+			'VIERGE' => 'recapitulatif',
+			'ATTENTE_CORRECTEUR' => 'index',
+			'ATTENTE_ELEVE' => 'consultation_offre',
+			'EN_COURS' => 'index',
+			'ENVOYE' => 'corrige',
+			'ANNULE' => 'index',
+			'TERMINE' => 'index',
+			'REFUSE' => 'reclamation', 
+			'REMBOURSE' => 'index'
 		);
 	}
 }

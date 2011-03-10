@@ -48,7 +48,10 @@ class Administrateur_MembreController extends AbstractController
 	public function _searchActionWd()
 	{
 		$Reponses = Sql::queryAssoc(
-			'SELECT ID, Mail AS label, Type AS category
+			'SELECT 
+				ID,
+				Mail AS label,
+				REPLACE(REPLACE(Type, "CORRECTEUR", "Correcteur"), "ELEVE", "Élève") AS category
 			FROM Membres
 			WHERE Mail LIKE "' . SQL::escape($this->Data['data']) . '%"',
 			'ID'
