@@ -486,7 +486,6 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			else
 			{
 				exec('convert -density 250 ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
-
 				$this->View->Img = $FilenameOut;
 			}
 		}
@@ -651,6 +650,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	protected function compileTex($URL)
 	{
 		$TexCompiler = new Tex($URL);
+		$TexCompiler->globResource('Ressources');
 		return $TexCompiler->compile(true);
 	}
 	
@@ -669,7 +669,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$Remplacements = array(
 			'__TITRE__' => $this->Exercice->Titre,
 			'__CONTENU__' => $Texte,
-			'__GRAPHICS__' => PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/Ressources/',
+			'__GRAPHICS__' => 'Ressources/',
 		);
 		
 		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);

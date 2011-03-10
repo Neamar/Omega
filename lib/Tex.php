@@ -63,11 +63,26 @@ class Tex
 	/**
 	 * Ajoute une ressource au projet.
 	 * 
-	 * @param string $Resource l'adresse de la ressource
+	 * @param string $Resource l'adresse absolue de la ressource
 	 */
 	public function addResource($Resource)
 	{
 		$this->Resources[] = $Resource;
+	}
+	
+	/**
+	 * Ajoute toutes les ressources contenues dans le dossier spécifié.
+	 * Le chemin spécifié doit-être relatif au Workspace.
+	 * 
+	 * @param string $Path
+	 */
+	public function globResource($Path)
+	{
+		$Files = glob($this->Workspace . '/' . $Path . '/*');
+		foreach($Files as $File)
+		{
+			$this->Resources[] = $File;
+		}
 	}
 	
 	/**
@@ -121,14 +136,18 @@ class Tex
 	 */
 	protected function compileLocal()
 	{
-		
+		//Sé déplacer dans le bon dossier en enregistrant le dossier actuel
+		$Cwd = getcwd();
+		chdir($this->Workspace);
+		//Compiler
 		exec('/usr/bin/pdflatex -halt-on-error -interaction=nonstopmode -output-directory ' . escapeshellarg($this->Workspace) . ' ' . escapeshellarg($this->MainFile));
-		$LogFile = str_replace('.tex', '.log', $this->MainFile);
-		$PdfFile = str_replace('.tex', '.pdf', $this->MainFile);
+		chdir($Cwd);
+		$Log = str_replace('.tex', '.log', $this->MainFile);
+		$Pdf = str_replace('.tex', '.pdf', $this->MainFile);
 		
 		return array(
-			'log' => $LogFile,
-			'pdf' => $PdfFile
+			'log' => $Log,
+			'pdf' => $Pdf
 		);
 	}
 	
@@ -156,23 +175,84 @@ class Tex
 		
 		foreach($this->Resources as $Resource)
 		{
-	    	$Request .= '<resource url="' . str_replace(PATH, URL, $Resource) . '" path="' . $this->absoluteToRelative($Resource) . '" modified="' . date('D M d H:i:s +0100 Y', filemtime($Resource)) . '"></resource>';
+	    	$Request .= '<resource url="' . str_replace(PATH, URL, $Resource) . '" path="' . $this->absoluteToRelative($Resource) . '" modified="' . date('c', filemtime($Resource)) . '"></resource>';
 	    }
 	    
 	    $Request .= '
 	  </resources>
 	</compile>';
 	    
+	    exit($Request);
+	    $XMLPath = tempnam('/tmp', 'texcompile');
+	    file_put_contents($XMLPath, $Request);
+	    
 	    $ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://clsi.scribtex.com/');
+		curl_setopt($ch, CURLOPT_URL, 'http://clsi.scribtex.com/clsi/compile');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 7);
 		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $Request);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array('file' => '@' . $XMLPath));
 		$data = curl_exec($ch);
 		curl_close($ch);
+		unset($ch);
 		
-		exit($data);
+		if(!substr($data, 0, 5) == '<?xml')
+		{
+			throw new Exception('Retour non XML sur la compilation.');
+		}
+
+		$doc = new DOMDocument();
+		$doc->loadXML($data);
+		$Status = $doc->getElementsByTagName('status')->item(0)->textContent;
+		$RemotePdf = $doc->getElementsByTagName('output')->item(0)->getElementsByTagName('file')->item(0)->getAttribute('url');
+		$RemoteLog = $doc->getElementsByTagName('logs')->item(0)->getElementsByTagName('file')->item(0)->getAttribute('url');
+		
+		//Récupérer les deux fichiers sur le disque
+		$Log = str_replace('.tex', '.log', $this->MainFile);
+		$LogFile = fopen($Log, 'w');
+		$Pdf = str_replace('.tex', '.pdf', $this->MainFile);
+		$PdfFile = fopen($Pdf, 'w');
+		
+		$ch = curl_multi_init();
+
+		$chLog = curl_init();
+		curl_setopt($chLog, CURLOPT_URL, $RemoteLog);
+		curl_setopt($chLog, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($chLog, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($chLog, CURLOPT_FILE, $LogFile);
+		curl_multi_add_handle($ch, $chLog);
+
+		
+		$chPdf = curl_init();
+		curl_setopt($chPdf, CURLOPT_URL, $RemotePdf);
+		curl_setopt($chPdf, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($chPdf, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($chPdf, CURLOPT_FILE, $PdfFile);
+		curl_multi_add_handle($ch, $chPdf);
+		
+		$running = null;
+		do
+		{
+		    usleep(10000);
+		    curl_multi_exec($ch, $running);
+		}
+		while($running > 0);
+		curl_multi_remove_handle($ch, $chLog);
+		curl_multi_remove_handle($ch, $chPdf);
+		curl_multi_close($ch);
+
+		
+		curl_exec($chLog);
+		curl_close($chLog);
+		fclose($LogFile);
+		curl_exec($chPdf);
+		curl_close($chPdf);
+		fclose($PdfFile);
+		
+		return array(
+			'log' => $Log,
+			'pdf' => $Pdf
+		);
 	}
 	
 	/**
