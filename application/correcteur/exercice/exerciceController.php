@@ -485,8 +485,19 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			}
 			else
 			{
+				if(file_exists($FilenameOut))
+				{
+					unlink($FilenameOut);
+				}
 				exec('convert -density 250 ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
-				$this->View->Img = $FilenameOut;
+				if(file_exists($FilenameOut))
+				{
+					$this->View->Img = $FilenameOut;
+				}
+				else
+				{
+					$this->View->Img = PATH . '/public/images/global/error.png';
+				}
 			}
 		}
 	}
@@ -651,7 +662,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	{
 		$TexCompiler = new Tex($URL);
 		$TexCompiler->globResource('Ressources');
-		return $TexCompiler->compile(true);
+		return $TexCompiler->compile();
 	}
 	
 	/**
