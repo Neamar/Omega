@@ -182,7 +182,6 @@ class Tex
 	  </resources>
 	</compile>';
 	    
-	    exit($Request);
 	    $XMLPath = tempnam('/tmp', 'texcompile');
 	    file_put_contents($XMLPath, $Request);
 	    

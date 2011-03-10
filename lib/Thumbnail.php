@@ -158,8 +158,15 @@ class Thumbnail
 		$ThumbFilename = str_replace('.png', '.gif', $ThumbFilename);
 		exec('convert ' . escapeshellarg($Filename) . '[0-5] -delay 100 -thumbnail 150x212! ' . $ThumbFilename . '>> /dev/null');
 
-	
-		return self::getRelativePath($ThumbFilename);
+		if(file_exists($ThumbFilename))
+		{	
+			return self::getRelativePath($ThumbFilename);
+		}
+		else
+		{
+			//Erreur à la génération de l'image
+			return '/../../images/thumbs/pdf.jpg';
+		}
 	}
 	
 	/**
