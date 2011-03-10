@@ -47,6 +47,22 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			'Hash'
 		);
 		
+		$this->View->ExercicesAttente = Sql::singleColumn(
+			'SELECT COUNT(*) AS N
+			FROM Exercices
+			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
+			AND Statut IN("ATTENTE_ELEVE", "VIERGE")',
+			'N'
+		);
+		
+		$this->View->ExercicesArchives = Sql::singleColumn(
+			'SELECT COUNT(*) AS N
+			FROM Exercices
+			WHERE Createur = ' . $_SESSION['Eleve']->getFilteredId() . '
+			AND Statut IN("TERMINE", "REMBOURSE", "ANNULE")',
+			'N'
+		);
+		
 		$this->View->Messages = $this->statusString();
 	}
 	
@@ -90,9 +106,9 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	public function en_coursAction()
 	{
 		$Status = array(
+			'ENVOYE' => 'Corrigé disponible !',
 			'ATTENTE_CORRECTEUR' => "Affichés dans le marché aux exercices des correcteurs",
 			'EN_COURS' => 'En cours de rédaction par le correcteur',
-			'ENVOYE' => 'Corrigé disponible !',
 			'REFUSE ' => 'En cours d\'examen par un administrateur'
 		);
 		
@@ -107,6 +123,7 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 	/**
 	 * Affiche une liste d'exercices.
 	 * La liste est filtrée et contient tous les exercices dont le statut est une des clés du tableau Status.
+	 * Note : l'ordre des clés du tableau $Status conditionne l'ordre d'affichage !
 	 * 
 	 * @param array $Status tableau des statuts à afficher. En valeur, le message indiquant la correspondance du statut
 	 * @param string $EmptyMessage le message d'erreur à afficher si aucun exercice n'existe dans les statuts indiqués.
@@ -119,12 +136,14 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 			$StatusListQuoted[] = '"' . $Etat . '"';
 		}
 		
+		$StatusList = implode(', ', $StatusListQuoted);
+		
 		$this->View->Exercices = Sql::queryAssoc(
 			'SELECT Hash, Titre, Statut
 			FROM Exercices
 			WHERE Createur = ' . $this->getMembre()->getFilteredId() . '
-			AND Statut IN(' . implode(',', $StatusListQuoted) . ')
-			ORDER BY Statut, ID DESC',
+			AND Statut IN(' . $StatusList . ')
+			ORDER BY FIELD(Statut, ' . $StatusList . '), ID DESC',
 			'Hash'
 		);
 		
