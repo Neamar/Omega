@@ -295,6 +295,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['envoi-exercice']))
 		{
+			//Enregistrer avec les autres corrigés la dernière version
+			$ToInsert = array(
+				'Exercice' => $this->Exercice->ID,
+				'_Date' => 'NOW()',
+				'Contenu' => $_POST['corrige'],
+				'Longueur' => mb_strlen($_POST['corrige'], 'utf-8')
+			);
+			Sql::insert('Exercices_Corriges', $ToInsert);
+			
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = $this->Exercice->filterTitle();
 
