@@ -680,7 +680,8 @@ class Eleve_ExerciceController extends ExerciceAbstractController
 						Event::ELEVE_EXERCICE_ACCEPTATION,
 						array(
 							'Exercice' => $this->Exercice,
-							'Correcteur' => $this->Exercice->getCorrecteur()
+							'Correcteur' => $this->Exercice->getCorrecteur(),
+							'Eleve' => $this->getMembre()
 						)
 					);
 

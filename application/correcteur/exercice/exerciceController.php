@@ -218,7 +218,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 							Event::dispatch(
 								Event::ELEVE_EXERCICE_ACCEPTATION_AUTOMATIQUE,
 								array(
-									'Exercice' => $this->Exercice
+									'Exercice' => $this->Exercice,
+									'Correcteur' => $this->getMembre(),
+									'Eleve' => $this->Exercice->getEleve()
 								)
 							);
 							
@@ -617,7 +619,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
-			WHERE Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId()
+			WHERE Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -635,7 +638,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
 				AND
 				Exercices.Hash = "' . $this->Exercice->Hash . '"
-			)'
+			)',
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -678,7 +682,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		//En déduire le contenu par remplacement :
 		$Remplacements = array(
-			'__TITRE__' => $this->Exercice->Titre,
+			'__TITRE__' => str_replace(array('$', '{', '}', '[', ']'), '', $this->Exercice->Titre),
 			'__CONTENU__' => $Texte,
 			'__GRAPHICS__' => 'Ressources/',
 		);

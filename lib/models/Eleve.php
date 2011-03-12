@@ -29,15 +29,20 @@ class Eleve extends Membre
 {
 	const TABLE_NAME = 'Eleves';
 	const SQL_QUERY = 'SELECT * FROM %TABLE%
-	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
-	LEFT JOIN Classes ON Classes.Classe = %TABLE%.Classe
+	JOIN Membres ON Membres.ID = %TABLE%.ID
+	JOIN Classes ON Classes.Classe = %TABLE%.Classe
 	WHERE %TABLE%.ID=%ID%';
 	
 	public static $Props;
+	
+	protected $Foreign = array(
+		'Parrain' => 'Membre'
+	);
 
 	public $Classe;
 	public $DetailsClasse;
 	public $Section;
+	public $Parrain;
 	
 	/**
 	 * Renvoie le pourcentage multiplicateur de suractivité pour l'élève

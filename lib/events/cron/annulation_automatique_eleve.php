@@ -2,7 +2,7 @@
 //Event : déclenchement du cron
 /**
  * Annuler automatiquement tous les exercices dont :
- * - la date d'annulation est dépassée
+ * - la date d'annulation est dépassée (ou la date d'expiration)
  * - le statut est VIERGE, ATTENTE_CORRECTEUR ou ATTENTE_ELEVE.
  */
 
@@ -11,6 +11,7 @@ $Exercices = Sql::query(
 	FROM Exercices
 	LEFT JOIN Membres ON (Membres.ID = Exercices.Createur)
 	WHERE Exercices.TimeoutEleve < NOW()
+	OR Exercices.Expiration < NOW()
 	AND Exercices.Statut IN ("VIERGE", "ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")
 	',
 	'ID'
