@@ -53,7 +53,7 @@ function ViewHelper_Form_input($name, array $args = array())
 	}
 	if(isset($_POST[$name]) && $args['type']!='password')
 	{
-		$args['value'] = $_POST[$name];
+		$args['value'] = htmlentities($_POST[$name]);
 	}
 	
 
@@ -88,7 +88,7 @@ function ViewHelper_Form_textarea($name, array $args = array())
 	}
 	if(isset($_POST[$name]))
 	{
-		$args['value'] = $_POST[$name];
+		$args['value'] = htmlentities($_POST[$name]);
 	}
 
 	$Value = (isset($args['value']))?$args['value']:'';

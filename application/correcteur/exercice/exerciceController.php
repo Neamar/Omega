@@ -121,7 +121,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		if(isset($_POST['reservation-exercice']))
 		{
 			$_POST['prix'] = intval($_POST['prix']);
-			if($_POST['prix'] == 0)
+			if($_POST['prix'] <= 0)
 			{
 				$this->View->setMessage('error', 'Désolé, nous ne faisons pas dans le bénévolat. Indiquez une valeur supérieure à 0.');
 			}
