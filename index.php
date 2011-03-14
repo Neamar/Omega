@@ -136,6 +136,7 @@ else
 	<li><a href="/cgv.htm">CGV</a></li>
 	<li><a href="/legal.htm">Mentions légales</a></li>
 	<li><a href="/confidentialite.htm">Confidentialité</a></li>
+	<li><a href="/presse.htm">Presse</a></li>
 	<li><a href="/contact.htm">Nous contacter</a></li>
 </ul>
 

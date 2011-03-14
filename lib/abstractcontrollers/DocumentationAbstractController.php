@@ -50,6 +50,7 @@ class DocumentationAbstractController extends AbstractController
 			'matieres' => "Liste des matières",
 			'niveaux' => "Liste des classes",
 			'tex' => "Comment insérer des formules mathématiques dans un élément de la FAQ ?",
+			'presse' => 'Images et communiqués',
 		),
 		'eleve' => array
 		(
