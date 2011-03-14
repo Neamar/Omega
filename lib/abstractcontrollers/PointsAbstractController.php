@@ -188,6 +188,7 @@ abstract class PointsAbstractController extends AbstractController
 			else
 			{
 				$this->View->setMessage('error', "Code Monelib incorrect ou déjà utilisé.");
+				unset($_POST['code'], $_POST['palier']);
 			}
 		}
 		
