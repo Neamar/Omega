@@ -144,7 +144,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', "La date d'annulation doit être dans le futur ! Les travaux prémonitoires ne sont pas supportés ici.");
 			}
-			elseif($_POST['annulation_ts'] >= strtotime($this->Exercice->Expiration) - 3600)
+			elseif($_POST['annulation_ts'] >= strtotime($this->Exercice->Expiration))
 			{
 				$this->View->setMessage('error', "La date d'expiration doit dépasser d'au moins une heure la date d'annulation !");
 			}

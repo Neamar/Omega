@@ -222,7 +222,7 @@ class Administrateur_MembreController extends AbstractController
 	public function statutActionWd()
 	{
 		$Membre = $this->exists($this->Data['data'], 'Membre');
-		$this->View->Status = array('OK', 'BLOQUE');
+		$this->View->Status = array('OK', 'BLOQUE', 'DESINSCRIT');
 		$this->View->Default = $Membre->Statut;
 		
 		$this->View->setTitle(
