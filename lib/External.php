@@ -79,7 +79,7 @@ class External
 		}
 		else
 		{
-			register_shutdown_function("mail", $to, $subject, $message, $headers);
+			register_shutdown_function('mail', $to, $subject, $message, $headers);
 		}
 		
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);

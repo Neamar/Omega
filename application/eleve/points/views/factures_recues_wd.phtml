@@ -1,0 +1,86 @@
+<meta charset=utf-8 />
+<style>
+tr
+{
+	border: 1px solid black;
+}
+
+td, th
+{
+	border: 1px solid black;
+	padding:1px 5px;
+}
+</style>
+<hgroup>
+	<h1>Facture eDevoir</h1>
+	<h2>Facture du <?php echo date('d/m/y à H\hm', strtotime($this->Date))?></h2>
+	<h2>Identifiant : <tt><?php echo $this->Hash?></tt></h2>
+</hgroup>
+
+<h2>Expéditeur</h2>
+eDevoir<br />
+144 rue du Dauphiné<br />
+69003 Lyon
+
+
+<h2>Destinataire</h2>
+<?php echo $this->Destinataire;
+?>
+
+<h2>Récapitulatif</h2>
+<table style="border-collapse:collapse; border:1px solid black">
+<thead>
+	<tr>
+		<th>Libellé article</th>
+		<th>Taux TVA</th>
+		<th>Quantité</th>
+		<th>PU HT</th>
+		<th>Montant HT</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>
+			Achat de points eDevoir<br />
+			<small><?php echo date('d/m/y à H\hm', strtotime($this->Date))?></small>
+		</td>
+		<td>&ndash;</td>
+		<td>1</td>
+		<td><?php echo $this->Montant; ?></td>
+		<td><?php echo $this->Montant; ?></td>
+	</tr>
+	<tr style="text-align:right;">
+		<td colspan="5">
+			<em>Si vous êtes un particulier, vous n'êtes pas asujetti à la TVA</em>
+		</td>
+	</tr>
+	<tr style="text-align:right;">
+		<td colspan="4">
+			<strong>Total net HT</strong> (en €)
+		</td>
+		<td><?php echo $this->Montant?></td>
+	</tr>
+	<tr style="text-align:right;">
+		<td colspan="4">
+			<strong>TVA</strong>
+		</td>
+		<td>19.6%</td>
+	</tr>
+	<tr style="text-align:right;">
+		<td colspan="4">
+			<strong>Total TTC</strong>
+		</td>
+		<td>XXX€</td>
+	</tr>
+</tbody>
+</table>
+
+<p>Facture acquittée.</p>
+
+<pre>
+<small>
+	SIREN : 530 684 950
+	Code NAF : 4791B
+	TVA intracommunautaire : EDEVOIR / FR70530684950
+</small>
+</pre>

@@ -34,8 +34,9 @@ class Eleve_PointsController extends PointsAbstractController
 	public function indexAction()
 	{		
 		$this->View->Liens = array(
-			'ajout' => 'true',
-			'retrait' => 'true'
+			'ajout' => true,
+			'retrait' => true,
+			'factures_recues' => true
 		);
 		
 		parent::indexAction();
@@ -191,5 +192,41 @@ class Eleve_PointsController extends PointsAbstractController
 		
 		$this->View->Membre = $Membre;
 		$this->View->addScript('/public/js/membre/points/ajout_monelib.js');
+	}
+	
+	public function factures_recuesAction()
+	{
+		$this->View->setTitle(
+			'Consultation des factures reçues'
+		);
+		
+		$this->View->Entrees = Sql::queryAssoc(
+			'SELECT Hash, CONCAT("Facture du ", DATE_FORMAT(Date,"%d/%m/%y à %Hh"), " pour ", Montant, " points") AS Caption
+			FROM Entrees
+			WHERE Membre = ' . $this->getMembre()->getFilteredId(),
+			'Hash',
+			'Caption'
+		);
+	}
+	
+	public function factures_recuesActionWd()
+	{
+		$this->UseTemplate = false;
+		
+		$Facture = Sql::singleQuery(
+			'SELECT Montant, Hash, Date
+			FROM Entrees
+			WHERE Membre = ' . $this->getMembre()->getFilteredId() . '
+			AND Hash = "' . Sql::escape($this->Data['data']) . '"'
+		);
+		
+		$Facture['Destinataire'] = $this->getMembre()->Mail;
+		
+		foreach($Facture as $Cle => $Info)
+		{
+			$this->View->{$Cle} = $Info;
+		}
+		
+		$this->View->Montant /= EQUIVALENCE_POINT;
 	}
 }
