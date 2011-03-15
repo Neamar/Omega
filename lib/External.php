@@ -62,7 +62,7 @@ class External
 	* @param string $To le destinataire du message
 	* @param string $subject le sujet du mail
 	* @param string $message le message au format HTML.
-	* @param string $from l'expéditeur (no-reply par défaut)
+	* @param string $from l'expéditeur (no-reply par défaut). Attention, gApps n'autorise pas le From Override !
 	*/
 	public static function mail($to, $subject, $message, $from = 'no-reply@edevoir.com')
 	{
