@@ -95,8 +95,12 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
 			$this->redirect('/correcteur/');
 		}
-		
 		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Trop tard ! Vous ne pouvez plus réserver cet exercice !');
+		if(!$this->getMembre()->isAbleToBook())
+		{
+			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercice réservés.', 'correcteur/limite_reservation');
+			$this->redirect('/correcteur/');
+		}
 		
 		//Peut-on accéder à l'exo ?
 		$Deja = Sql::singleQuery(
