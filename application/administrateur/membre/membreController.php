@@ -49,11 +49,14 @@ class Administrateur_MembreController extends AbstractController
 	{
 		$Reponses = Sql::queryAssoc(
 			'SELECT 
-				ID,
+				Membres.ID,
 				Mail AS label,
 				REPLACE(REPLACE(Type, "CORRECTEUR", "Correcteur"), "ELEVE", "Élève") AS category
 			FROM Membres
-			WHERE Mail LIKE "' . SQL::escape($this->Data['data']) . '%"',
+			LEFT JOIN Correcteurs ON (Correcteurs.ID = Membres.ID)
+			WHERE Mail LIKE "' . SQL::escape($this->Data['data']) . '%"
+			OR Correcteurs.Prenom LIKE "' . SQL::escape($this->Data['data']) . '%"
+			OR Correcteurs.Nom LIKE "' . SQL::escape($this->Data['data']) . '%"',
 			'ID'
 		);
 		

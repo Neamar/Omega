@@ -55,7 +55,7 @@ class Correcteur extends Membre
 	 */
 	public function isAbleToBook()
 	{
-		return ($this->getBooked() <= MAX_EXERCICE_RESERVES);
+		return ($this->getBooked() < MAX_EXERCICE_RESERVES);
 	}
 	
 	/**
