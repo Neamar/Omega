@@ -130,12 +130,6 @@ class Correcteur_IndexController extends IndexAbstractController
 		$this->View->addScript();
 		
 		$this->View->NbReserves = $this->getMembre()->getBooked();
-		
-		if($this->View->NbReserves >= MAX_EXERCICE_RESERVES)
-		{
-			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercice réservés.', 'correcteur/limite_reservation');
-			$this->redirect('/correcteur/');
-		}
 	}
 	
 	/**
