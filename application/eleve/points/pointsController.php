@@ -28,6 +28,20 @@
 class Eleve_PointsController extends PointsAbstractController
 {
 	/**
+	 * Détermine les liens à afficher
+	 * @see PointsAbstractController::indexAction()
+	 */
+	public function indexAction()
+	{		
+		$this->View->Liens = array(
+			'ajout' => 'true',
+			'retrait' => 'true'
+		);
+		
+		parent::indexAction();
+	}
+	
+	/**
 	 * Retrait de points
 	 * @see PointsAbstractController::retraitAction()
 	 */
