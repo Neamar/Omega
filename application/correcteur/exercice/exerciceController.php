@@ -98,7 +98,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Trop tard ! Vous ne pouvez plus réserver cet exercice !');
 		if(!$this->getMembre()->isAbleToBook())
 		{
-			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercice réservés.', 'correcteur/limite_reservation');
+			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercices réservés.', 'correcteur/limite_reservation');
 			$this->redirect('/correcteur/');
 		}
 		

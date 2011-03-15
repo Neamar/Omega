@@ -118,7 +118,7 @@ class Correcteur_IndexController extends IndexAbstractController
 		}
 		if(!$this->getMembre()->isAbleToBook())
 		{
-			$this->View->setMessage('warning', 'Vous ne pouvez pas réserver d\'exercice pour l\'instant, finissez déjà ceux que vous avez réservé !');
+			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercices réservés.', 'correcteur/limite_reservation');
 			$this->redirect('/correcteur/');
 		}
 		
