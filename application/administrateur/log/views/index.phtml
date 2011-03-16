@@ -1,0 +1,26 @@
+<?php 
+$Liens = array(
+	'exercice' => array(
+		'Données sur les exercices',
+		'Liste des derniers exercices créés et des dernières actions effectuées ayant entraîné un changement de statut.' 
+	),
+	'membre' => array(
+		'Données sur les membres',
+		'Liste des derniers membres inscrits et des dernières actions effectuées ayant entraîné un changement de solde.' 
+	),
+	'eleve' => array(
+		'Données sur les élèves',
+		'Liste des derniers élèves inscrits et des dernières actions effectuées ayant entraîné un changement de solde.' 
+	),
+	'correcteur' => array(
+		'Données sur les correcteurs',
+		'Liste des derniers correcteurs inscrits et des dernières actions effectuées ayant entraîné un changement de solde.' 
+	),
+	'raw' => array(
+		'Données bas niveau',
+		'Données brutes pour toutes les actions sur le site.' 
+	),
+);
+
+echo $this->Html_listAction($Liens, '/administrateur/log/__URL__');
+?>

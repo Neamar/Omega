@@ -1,0 +1,5 @@
+<p class="infos">Données du <?php echo date('d/m/Y') ?>.</p>
+
+<?php 
+echo $this->Html_ajaxTable('/administrateur/log/_raw', 'Logs bruts', array('Date', 'URL', 'Action'));
+?>
