@@ -260,6 +260,11 @@ class Administrateur_MembreController extends AbstractController
 				{
 					$ToDispatch = Event::CORRECTEUR_VALIDATION;
 				}
+				//Désinscription
+				if($Membre->Statut == 'OK' && $_POST['statut'] == 'DESINSCRIT')
+				{
+					$ToDispatch = Event::MEMBRE_DESINSCRIPTION;
+				}
 				
 				//Enregistrer la modification
 				$Membre->setAndSave(array('Statut' => $_POST['statut']));

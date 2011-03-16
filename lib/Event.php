@@ -52,6 +52,7 @@ class Event
 	const MEMBRE_EXERCICE_DEDOMMAGEMENT = 'membre/exercice/dedommagement';
 	const MEMBRE_BLOQUE = 'membre/index/bloque';
 	const MEMBRE_DEBLOQUE = 'membre/index/debloque';
+	const MEMBRE_DESINSCRIPTION = 'membre/index/desinscription';
 	
 	const CRON = 'cron';
 	
