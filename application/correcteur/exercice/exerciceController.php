@@ -95,8 +95,12 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
 			$this->redirect('/correcteur/');
 		}
-		
 		$this->canAccess(array('ATTENTE_CORRECTEUR'), 'Trop tard ! Vous ne pouvez plus réserver cet exercice !');
+		if(!$this->getMembre()->isAbleToBook())
+		{
+			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercices réservés.', 'correcteur/limite_reservation');
+			$this->redirect('/correcteur/');
+		}
 		
 		//Peut-on accéder à l'exo ?
 		$Deja = Sql::singleQuery(
@@ -121,7 +125,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		if(isset($_POST['reservation-exercice']))
 		{
 			$_POST['prix'] = intval($_POST['prix']);
-			if($_POST['prix'] == 0)
+			if($_POST['prix'] <= 0)
 			{
 				$this->View->setMessage('error', 'Désolé, nous ne faisons pas dans le bénévolat. Indiquez une valeur supérieure à 0.');
 			}
@@ -144,7 +148,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			{
 				$this->View->setMessage('error', "La date d'annulation doit être dans le futur ! Les travaux prémonitoires ne sont pas supportés ici.");
 			}
-			elseif($_POST['annulation_ts'] >= strtotime($this->Exercice->Expiration) - 3600)
+			elseif($_POST['annulation_ts'] >= strtotime($this->Exercice->Expiration))
 			{
 				$this->View->setMessage('error', "La date d'expiration doit dépasser d'au moins une heure la date d'annulation !");
 			}
@@ -218,7 +222,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 							Event::dispatch(
 								Event::ELEVE_EXERCICE_ACCEPTATION_AUTOMATIQUE,
 								array(
-									'Exercice' => $this->Exercice
+									'Exercice' => $this->Exercice,
+									'Correcteur' => $this->getMembre(),
+									'Eleve' => $this->Exercice->getEleve()
 								)
 							);
 							
@@ -295,6 +301,15 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		if(isset($_POST['envoi-exercice']))
 		{
+			//Enregistrer avec les autres corrigés la dernière version
+			$ToInsert = array(
+				'Exercice' => $this->Exercice->ID,
+				'_Date' => 'NOW()',
+				'Contenu' => $_POST['corrige'],
+				'Longueur' => mb_strlen($_POST['corrige'], 'utf-8')
+			);
+			Sql::insert('Exercices_Corriges', $ToInsert);
+			
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = $this->Exercice->filterTitle();
 
@@ -303,23 +318,22 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			
 			$this->texFromTemplate($_POST['corrige'], $CorrigeURL);
 			
-			$Erreurs = $this->compileTex($CorrigeURL);
+			$Retour = $this->compileTex($CorrigeURL);
 			
-			if(!$Erreurs['ok'])
+			if(!$Retour['ok'])
 			{
 				$this->View->setMessage('error', 'Des erreurs se sont produites, empêchant la compilation du document.');
-				$this->View->Erreurs = $Erreurs['errors'];
+				$this->View->Erreurs = $Retour['errors'];
 			}
 			else
 			{
 				//Insérer le PDF dans les fichiers constituant l'exercice
-				$CorrigeURLPDF = substr($CorrigeURL, 0, -3) . 'pdf';
 				$ToInsert = array
 				(
 					'Exercice' => $this->Exercice->ID,
 					'Type' => 'CORRIGE',
 					'URL' => '/Corrige/' . $FileName . '.pdf',
-					'ThumbURL' => Thumbnail::create($CorrigeURLPDF),
+					'ThumbURL' => Thumbnail::create($Retour['pdf']),
 					'NomUpload' => $FileName . '.pdf',
 				);
 				
@@ -430,7 +444,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			);
 			Sql::insert('Exercices_Corriges', $ToInsert);
 			$this->View->ID = Sql::lastId();
-			//exit(mysql_error());
+
 			//Le nom de fichier utilisé pour stocker tex, pdf et autres.
 			$FileName = 'preview';
 
@@ -477,9 +491,19 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			}
 			else
 			{
+				if(file_exists($FilenameOut))
+				{
+					unlink($FilenameOut);
+				}
 				exec('convert -density 250 ' . $Filename . '[' . $Page . '] -resize ' . $Largeur . ' ' . $FilenameOut, $L);
-
-				$this->View->Img = $FilenameOut;
+				if(file_exists($FilenameOut))
+				{
+					$this->View->Img = $FilenameOut;
+				}
+				else
+				{
+					$this->View->Img = PATH . '/public/images/global/error.png';
+				}
 			}
 		}
 	}
@@ -599,7 +623,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			FROM Exercices_Logs
 			LEFT JOIN Exercices ON (Exercices_Logs.Exercice = Exercices.ID)
 			LEFT JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
-			WHERE Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId()
+			WHERE Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId(),
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -617,7 +642,8 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 				Exercices_Logs.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
 				AND
 				Exercices.Hash = "' . $this->Exercice->Hash . '"
-			)'
+			)',
+			'Exercices_Logs.ID DESC'
 		);
 	}
 	
@@ -638,28 +664,13 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 	 * 
 	 * @param string $URL le fichier TeX à compiler.
 	 * 
-	 * @return array un tableau ; la clé output contient la liste des lignes renvoyées, la clé errors la liste des lignes d'erreurs, et la clé ok est un booléen indiquant le résultat de la compilation
+	 * @return array (voir la documentation de Tex::compile())
 	 */
 	protected function compileTex($URL)
 	{
-		$OutputDir = substr($URL, 0, strrpos($URL, '/'));
-		exec('/usr/bin/pdflatex -halt-on-error -interaction=nonstopmode -output-directory ' . escapeshellarg($OutputDir) . ' ' . escapeshellarg($URL));
-		
-		$Return = file(str_replace('.tex', '.log', $URL), FILE_IGNORE_NEW_LINES);
-		$Erreurs = array();
-		foreach($Return as $Line)
-		{
-			if(isset($Line[0]) && $Line[0] == '!')
-			{
-				$Erreurs[] = substr($Line, 2);
-			}
-		}
-		
-		return array(
-			'errors' => $Erreurs,
-			'output' => $Return,
-			'ok' => empty($Erreurs),
-		);
+		$TexCompiler = new Tex($URL);
+		$TexCompiler->globResource('Ressources');
+		return $TexCompiler->compile();
 	}
 	
 	/**
@@ -675,9 +686,9 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 		
 		//En déduire le contenu par remplacement :
 		$Remplacements = array(
-			'__TITRE__' => $this->Exercice->Titre,
+			'__TITRE__' => str_replace(array('$', '{', '}', '[', ']'), '', $this->Exercice->Titre),
 			'__CONTENU__' => $Texte,
-			'__GRAPHICS__' => PATH . '/public/exercices/' . $this->Exercice->LongHash . '/Corrige/Ressources/',
+			'__GRAPHICS__' => 'Ressources/',
 		);
 		
 		$Contenu = str_replace(array_keys($Remplacements), array_values($Remplacements), $Template);

@@ -4,5 +4,10 @@ echo $this->Exercice($this->Exercice);
 ?>
 
 <?php 
+if($this->Exercice->Enchere > 0)
+{
+	echo '<p class="important">En annulant l\'exercice, vous refuserez automatiquement l\'offre.</p>';
+}
+
 echo $this->Form('annulation', 'annulation', "Confirmer l'annulation de l'exercice.");
 ?>

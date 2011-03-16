@@ -1,7 +1,4 @@
-<?php 
-$Module = $this->getController()->getModule();
-?>
-<p class="infos">Vous allez ajouter des points par Paypal. <a href="/<?php echo $Module ?>/points/ajout">Retourner au formulaire du choix de la méthode</a>.
+<p class="infos">Vous allez ajouter des points par Paypal. <a href="/eleve/points/ajout">Retourner au formulaire du choix de la méthode</a>.
 <form action="https://<?php echo PAYPAL_URL ?>/cgi-bin/webscr" method="post" id="form_ajout-points-paypal">
 	<?php
 	$Default = 200;

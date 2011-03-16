@@ -23,6 +23,7 @@
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
+ *
  * @param string view la vue à appeler
  * @param string controller le contrôleur à appeler
  * @param string module le module actuel

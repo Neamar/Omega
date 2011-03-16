@@ -48,9 +48,15 @@ class Administrateur_MembreController extends AbstractController
 	public function _searchActionWd()
 	{
 		$Reponses = Sql::queryAssoc(
-			'SELECT ID, Mail AS label, Type AS category
+			'SELECT 
+				Membres.ID,
+				Mail AS label,
+				REPLACE(REPLACE(Type, "CORRECTEUR", "Correcteur"), "ELEVE", "Élève") AS category
 			FROM Membres
-			WHERE Mail LIKE "' . SQL::escape($this->Data['data']) . '%"',
+			LEFT JOIN Correcteurs ON (Correcteurs.ID = Membres.ID)
+			WHERE Mail LIKE "' . SQL::escape($this->Data['data']) . '%"
+			OR Correcteurs.Prenom LIKE "' . SQL::escape($this->Data['data']) . '%"
+			OR Correcteurs.Nom LIKE "' . SQL::escape($this->Data['data']) . '%"',
 			'ID'
 		);
 		
@@ -219,7 +225,7 @@ class Administrateur_MembreController extends AbstractController
 	public function statutActionWd()
 	{
 		$Membre = $this->exists($this->Data['data'], 'Membre');
-		$this->View->Status = array('OK', 'BLOQUE');
+		$this->View->Status = array('OK', 'BLOQUE', 'DESINSCRIT');
 		$this->View->Default = $Membre->Statut;
 		
 		$this->View->setTitle(

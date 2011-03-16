@@ -101,6 +101,9 @@ function lock($Reason)
 function error($errno, $errstr, $errfile, $errline)
 {
     throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+    
+    //Normalement inutile, mais sait-on jamais :p
+    exit();
 }
 
 /**

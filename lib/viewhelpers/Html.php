@@ -52,7 +52,7 @@ function ViewHelper_Html_list(array $Items, $Type='ul', $Id = '')
  */
 function ViewHelper_Html_listAnchor(array $Items, $Type='ul', $BaseURL = '', array $Attributs = array())
 {
-	if(count($Items)==0)
+	if(count($Items) == 0)
 	{
 		return '';
 	}

@@ -62,6 +62,10 @@ class Correcteur_PointsController extends PointsAbstractController
 			$this->View->Infos = 'Attention ! Vous ne pouvez pas retirer d\'argent tant que vous ne nous avez pas <a href="/correcteur/options/compte">indiqué votre SIRET</a>.';
 		}
 		
+		$this->View->Liens = array(
+			'retrait' => 'true',
+		);
+		
 		parent::indexAction();
 	}
 }

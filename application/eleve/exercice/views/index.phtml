@@ -1,4 +1,13 @@
 <?php
+//Y-a-t-il des exercices en attente ?
+if($this->ExercicesAttente != 0)
+{
+	?>
+	<h2>Mes exercices en attente</h2>
+	<p class="important">Vous avez <?php echo ($this->ExercicesAttente==1?'un exercice':$this->ExercicesAttente . ' exercices') ?> en attente d'une action de votre part.<br />
+	<a href="/eleve/exercice/en_attente">Consulter mes exercices en attente</a></p>
+	<?php
+}
 //Ne pas afficher le lien de création si la variable NoCreate existe.
 //Cette variable est définie lors de l'inclusion de la vue dans une autre vue, par exemple sur /eleve/
 //@see Eleve_IndexController::indexAction()
@@ -6,9 +15,6 @@ if(!isset($this->NoCreate))
 {
 	?>
 	<h2 id="eleve-exercice-index-creation">Créer un nouvel exercice</h2>
-	<?php 
-	echo $this->Points_raiseWarning($this->getController()->getMembre());
-	?>
 	<a href="/eleve/exercice/creation" class="a_creation-exercice">Créer un nouvel exercice</a>
 	
 	<?php
@@ -29,9 +35,17 @@ if(count($this->ExercicesActifs) > 0)
 	<?php 
 	echo $this->Html_listAction($ExercicesActifs, '/eleve/exercice/index/__URL__', 'eleve');
 }
+
+if($this->ExercicesArchives > 0)
+{
+	?>
+	<h2 id="eleve-exercice-index-archives">Mes exercices archivés</h2>
+	<a href="/eleve/exercice/archives">Consulter mes exercices archivés</a>
+	<?php
+}
 ?>
 
-<h2 class="h2_logs" id="eleve-exercice-index-actions">Actions sur vos exercices</h2>
+<h2 class="h2_logs" id="eleve-exercice-index-actions">Actions sur mes exercices</h2>
 <?php 
 echo $this->Html_ajaxTable('/eleve/exercice/_actions', 'Actions sur vos exercices', array('Date', 'Exercice', 'Action'));
 ?>

@@ -247,7 +247,7 @@ class Sql
 		}
 		if(is_null($Type))
 		{
-			return mysql_fetch_array($R);
+			return mysql_fetch_assoc($R);
 		}
 		else
 		{

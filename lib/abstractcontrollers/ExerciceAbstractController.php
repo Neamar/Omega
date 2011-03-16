@@ -58,7 +58,7 @@ abstract class ExerciceAbstractController extends AbstractController
 
 			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
-				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
+				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . htmlentities($Data['data']), 'eleve/acces_impossible');
 
 				$this->redirect('/' . $this->getModule() . '/exercice/');
 			}

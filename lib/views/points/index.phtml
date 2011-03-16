@@ -20,12 +20,19 @@ $Actions = array(
 		'Récupérer des points depuis mon compte ' . $this->Html_eDevoir() . ' pour un compte bancaire ou paypal externe',
 		'retrait',
 	),
+	'factures_recues' => array(
+		'Liste des factures reçues',
+		'Consulter la liste des factures émises par le site en réception de mes paiements'
+	),
+	'factures_emises' => array(
+		'Liste des factures émises',
+		'Consulter la liste des factures reçues par le site'
+	),	
+	
 );
 
-if($Module == 'correcteur')
-{
-	unset($Actions['ajout']);
-}
+//Filtrer les liens affichés en fonction du module
+$Actions = array_intersect_key($Actions, $this->Liens);
 
 echo $this->Html_listAction($Actions, '/' . $Module . '/points/__URL__', $Module);
 ?>
