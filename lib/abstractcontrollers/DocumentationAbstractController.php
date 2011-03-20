@@ -50,12 +50,14 @@ class DocumentationAbstractController extends AbstractController
 			'matieres' => "Liste des matières",
 			'niveaux' => "Liste des classes",
 			'tex' => "Comment insérer des formules mathématiques dans un élément de la FAQ ?",
+			'presse' => 'Images et communiqués',
 		),
 		'eleve' => array
 		(
 			'index' => "Aide des élèves",
 			'fonctionnement' => "Comment faire corriger mon devoir ?",
 			'inscription' => "Comment m'inscrire en tant qu'élève ?",
+			'parrain' => "Qu'est-ce qu'un compte parrain ?",
 			'validation' => "Comment valider mon compte ?",
 			'probleme_connexion' => "Pourquoi ne puis-je pas me connecter ?",
 			'deconnexion' => "Pourquoi ai-je été déconnecté ?",

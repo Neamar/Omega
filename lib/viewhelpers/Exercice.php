@@ -147,14 +147,19 @@ function ViewHeper_Exercice_props(Exercice $Exercice)
 	{
 		$Infos[] = "Dates :\n" . ViewHelper_Html_list($Dates);
 	}
-	else
+	else if(count($Dates) == 1)
 	{
 		$Infos[] = $Dates[0];
 	}
 
 	if($Exercice->Note !== null)
 	{
-		$Infos[] = "Note : " . ($Exercice->Note == 0?'<span style="color:red">&empty;</span>':str_repeat('✭', $Exercice->Note));
+		$IntensiteHexa = 255 * $Exercice->Note / 5; // Renvoie une valeur entre 0 et 255 en fonction de la note
+		$CouleurR = strtoupper(str_pad(dechex(255 - $IntensiteHexa), 2, '0', STR_PAD_LEFT));
+		$CouleurG = strtoupper(str_pad(dechex($IntensiteHexa), 2, '0', STR_PAD_LEFT));
+		$CouleurB = '00';
+		$Couleur = $CouleurR . $CouleurG . $CouleurB;
+		$Infos[] = 'Note : <span style="color:#' . $Couleur . '">' . str_repeat('✭', $Exercice->Note) . str_repeat('✩', 5 - $Exercice->Note) . '</span>';
 	}
 	return $Infos;
 }
@@ -171,11 +176,16 @@ function ViewHelper_Exercice_date(Exercice $Exercice)
 {
 	$Dates = array();
 	
-	$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
+	if(!$Exercice->isClosed())
+	{
+		$Dates[] = 'Expiration : ' . ViewHelper_Date_countdown($Exercice->Expiration);
+	}
+	
 	if($Exercice->isCancellable() && $Exercice->TimeoutEleve !== null)
 	{
 		$Dates[] = 'Annulation automatique élève : ' . ViewHelper_Date_countdown($Exercice->TimeoutEleve);
 	}
+	
 	if(!is_null($Exercice->TimeoutCorrecteur) && $Exercice->Statut == 'ATTENTE_ELEVE')
 	{
 		$Dates[] = 'Annulation automatique correcteur : ' . ViewHelper_Date_countdown($Exercice->TimeoutCorrecteur);

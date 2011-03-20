@@ -86,5 +86,5 @@ var LatexParser = Editor.Parser = (function() {
     return iter;
   }
 
-  return {make: parseLatex, electricChars: "}"};
+  return {make: parseLatex};
 })();

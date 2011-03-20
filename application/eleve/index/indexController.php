@@ -211,10 +211,19 @@ class Eleve_IndexController extends IndexAbstractController
 	protected function createAccountSpecial(array $Datas)
 	{
 		$ToInsert = array(
-			'ID'=>Sql::lastId(),
-			'Classe'=>intval($Datas['classe']),
-			'Section'=>$Datas['section']
+			'ID' => Sql::lastId(),
+			'Classe' => intval($Datas['classe']),
+			'Section' => $Datas['section']
 		);
+		
+		if(isset($Datas['parrain']))
+		{
+			$IDParrain = Sql::singleColumn('SELECT ID FROM Membres WHERE Mail="' . Sql::escape($Datas['parrain']) . '"', 'ID');
+			if(!is_null($IDParrain))
+			{
+				$ToInsert['Parrain'] = $IDParrain;
+			}
+		}
 		
 		return Sql::insert('Eleves', $ToInsert);
 	}

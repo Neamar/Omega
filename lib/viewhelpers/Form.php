@@ -53,7 +53,7 @@ function ViewHelper_Form_input($name, array $args = array())
 	}
 	if(isset($_POST[$name]) && $args['type']!='password')
 	{
-		$args['value'] = $_POST[$name];
+		$args['value'] = htmlentities($_POST[$name]);
 	}
 	
 
@@ -88,7 +88,7 @@ function ViewHelper_Form_textarea($name, array $args = array())
 	}
 	if(isset($_POST[$name]))
 	{
-		$args['value'] = $_POST[$name];
+		$args['value'] = htmlentities($_POST[$name]);
 	}
 
 	$Value = (isset($args['value']))?$args['value']:'';
@@ -183,13 +183,14 @@ function ViewHelper_Form_rib($name)
  */
 function ViewHelper_Form_points($name, $max = MAX_SOMME, $args = array())
 {
-	$args['type'] = 'number';
-	$args['min'] = 0;
-	$args['value'] = 0;
-	$args['max'] = $max;
-	$args['step'] = 25;
-	$args['class'] = (isset($args['class'])?$args['class'] . ' ':'') . 'pts';
-	
+	$_args = array();
+	$_args['type'] = 'number';
+	$_args['min'] = 0;
+	$_args['value'] = 0;
+	$_args['max'] = $max;
+	$_args['step'] = 25;
+	$_args['class'] = (isset($args['class'])?$args['class'] . ' ':'') . 'pts';
+	$args = array_merge($_args, $args);
 	return ViewHelper_Form_input($name, $args);
 }
 
@@ -232,7 +233,7 @@ function ViewHelper_Form_select($name, array $values, $selected=null, array $arg
  * Génère un radio avec les arguments et valeurs spécifiés.
  * 
  * @param string $name Nom / id du composant
- * @param array $values Un tableau associatif : la valeur, l'étiquette.Si l'étiquette est un tableau, la première valeur est considérée comme le label, la seconde comme la suite.
+ * @param array $values Un tableau associatif : la valeur, l'étiquette. Si l'étiquette est un tableau, la première valeur est considérée comme le label, la seconde comme la suite.
  * @param string selected la valeur sélectionnée par défaut
  * 
  * @return string le code HTML demandé.

@@ -1,0 +1,21 @@
+<?php 
+echo $this->Doc_box(
+	'index',
+	'points',
+	"Vous allez ajouter des points sur votre compte, que vous pourrez ensuite utiliser pour payer des exercices.<br />
+Les points sont donc la monnaie virtuelle du site."
+);
+
+$Actions = array(
+	'paypal' => array(
+		'Ajouter des points avec mon compte Paypal',
+		"Fiable et sécurisé, Paypal est reconnu comme le meilleur intermédiaire pour tout ce qui concerne les transactions virtuelles.<br />
+		En utilisant ce service, vous restez maîtres de l'intégralité de l'échange et vos données bancaires ne sont jamais transmises à " . $this->Html_eDevoir()
+	),
+	'monelib' => array(
+		'Ajouter des points avec MoneLib (SMS et appels surtaxés)',
+		"Cet outil fonctionne sans aucune configuration : il vous suffit d'appeler un numéro de téléphone, puis de taper un code... c'est tout !"
+	)
+);
+
+echo $this->Html_listAction($Actions, '/eleve/points/ajout___URL__');

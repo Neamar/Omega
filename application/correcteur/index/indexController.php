@@ -116,6 +116,11 @@ class Correcteur_IndexController extends IndexAbstractController
 			$this->View->setMessage('warning', 'Votre compte est bloqué. En conséquence, vous ne pouvez pas réserver de nouvel exercice.', 'correcteur/bloque');
 			$this->redirect('/correcteur/');
 		}
+		if(!$this->getMembre()->isAbleToBook())
+		{
+			$this->View->setMessage('warning', 'Ne soyez pas trop gourmand... vous avez déjà beaucoup d\'exercices réservés.', 'correcteur/limite_reservation');
+			$this->redirect('/correcteur/');
+		}
 		
 		$this->View->setTitle(
 			'Marché aux exercices',
@@ -279,6 +284,29 @@ ORDER BY Exercices.Expiration
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Vérifie que le correcteur peut se désinscrire
+	 * @see IndexAbstractController::desinscriptionAction()
+	 */
+	public function desinscriptionAction()
+	{
+		$ExercicesActifs = Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Exercices
+			WHERE Statut IN ("ATTENTE_ELEVE", "EN_COURS")
+			AND Correcteur = ' . $this->getMEmbre()->getFilteredId(),
+			'S'
+		);
+		
+		if($ExercicesActifs > 0)
+		{
+			$this->View->setMessage('warning', 'Impossible de vous désinscrire pour l\'instant, vous devez d\'abord terminer vos exercices. Merci !');
+			$this->redirect('/correcteur/');
+		}
+		
+		parent::desinscriptionAction();
 	}
 	
 	/**

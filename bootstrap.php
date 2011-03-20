@@ -23,6 +23,7 @@
  * @copyright 2010 Matthieu Bacconnier
  * @license   Copyright http://fr.wikipedia.org/wiki/Copyright
  * @link      http://edevoir.com
+ *
  * @param string view la vue à appeler
  * @param string controller le contrôleur à appeler
  * @param string module le module actuel
@@ -150,7 +151,6 @@ if(!method_exists($ControllerName, $ViewName) && !method_exists($ControllerName,
 
 
 
-
 /**
  * Exploitation.
  */
@@ -165,26 +165,6 @@ try
 	$Controller->renderView();
 } catch (Exception $e) //Gestion des problèmes
 {
-	//Récupérer les infos utiles
-	ob_start();
-	print_r($_SESSION);
-	$DumpSession = ob_get_clean();
-	
-	ob_start();
-	print_r($_SERVER);
-	$DumpServer = ob_get_clean();
-	
-	$Dump = '
-	<h2>Erreur</h2>
-		<p>Erreur : <strong>' . $e->getMessage() . '</strong><br />
-		Sur : <strong>' . $_SERVER['REQUEST_URI'] . '</strong></p>
-	<h2>Pile d\'appel</h2>
-		<pre>' . $e->getTraceAsString() . '</pre>
-	<h2>Session</h2>
-		<pre>' . $DumpSession . '</pre>
-	<h2>Serveur</h2>
-		<pre>' . $DumpServer . '</pre>';
-	
-	External::mail('matthieu@bacconnier.fr', 'Erreur eDevoir : ' . $e->getMessage(), $Dump);
+	External::report($e->getMessage(), $e->getTrace());
 	go404('Une erreur vient de se produire. Les données ont d\'ores et déjà été soumises à notre équipe de correction de bugs. Nous nous excusons pour le dérangement...');
 }

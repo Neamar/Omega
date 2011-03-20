@@ -135,8 +135,7 @@ class Documentation_IndexController extends DocumentationAbstractController
 				External::mail(
 					($_POST['categorie'] == 'Problème technique'?'webmaster@edevoir.com':'contact@edevoir.com'),
 					$_POST['categorie'] . ' : ' . $_POST['sujet'],
-					$_POST['message'],
-					$_POST['mail']
+					'<p>De : <strong>' . $_POST['mail'] . '</strong></p> <hr />' . '<p>' . nl2br($_POST['message']) . '</p>'
 				);
 				$this->View->MessageEnvoye = true;
 				$this->View->setMessage('ok', 'Message envoyé ! Vous devriez recevoir une réponse dans les 48h ouvrées.');

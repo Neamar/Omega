@@ -43,8 +43,6 @@ abstract class PointsAbstractController extends AbstractController
 	public function __construct($Module, $Controller, $View, $Data)
 	{
 		parent::__construct($Module, $Controller, $View, $Data);
-
-		$this->deflectView(OO2FS::genericViewPath('points/' . str_replace('.', '', $View)));
 	}
 	/**
 	 * Index du contrôleur de points
@@ -55,37 +53,10 @@ abstract class PointsAbstractController extends AbstractController
 			'Informations solde',
 			'Cette page liste les différentes informations disponibles concernant vos points.'
 		);
+		
+		$this->deflectView(OO2FS::genericViewPath('points/index'));
 	}
-
-	/**
-	 * Opération d'ajouts de points
-	 */
-	public function ajoutAction()
-	{
-		$this->View->setTitle(
-			'Ajout de points',
-			'Sélectionnez la méthode avec laquelle vous souhaitez procéder à l\'ajout de points.'
-		);
-
-		if(isset($_POST['ajout']) && intval($_POST['ajout']) != 0)
-		{
-			$_POST['ajout'] = intval($_POST['ajout']);
-			
-			Sql::start();
-			$this->getMembre()->credit((int) $_POST['ajout'], 'Ajout TRICHE.');
-			Sql::insert(
-				'Entrees',
-				array(
-					'Membre' => $this->getMembre()->getFilteredId(),
-					'Montant' => $_POST['ajout'],
-					'_Date' => 'NOW()'
-				)
-			);
-			
-			Sql::commit();
-			$this->View->setMessage('ok', 'Argent ajouté !');
-		}
-	}
+	
 	/**
 	 * Opération de retrait de points
 	 */
@@ -215,6 +186,8 @@ abstract class PointsAbstractController extends AbstractController
 				}
 			}
 		}//Fin test $_POST
+		
+		$this->deflectView(OO2FS::genericViewPath('points/retrait'));
 	}
 
 	/**

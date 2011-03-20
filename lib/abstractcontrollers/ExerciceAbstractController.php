@@ -58,7 +58,7 @@ abstract class ExerciceAbstractController extends AbstractController
 
 			if(is_null($this->Exercice) || !$this->hasAccess($this->Exercice))
 			{
-				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . $Data['data'], 'eleve/acces_impossible');
+				$this->View->setMessage('warning', "Impossible d'accéder à l'exercice " . htmlentities($Data['data']), 'eleve/acces_impossible');
 
 				$this->redirect('/' . $this->getModule() . '/exercice/');
 			}
@@ -170,7 +170,7 @@ abstract class ExerciceAbstractController extends AbstractController
 			$this->redirectExercice();
 		}
 		
-		if($this->Exercice->Statut == "REMBOURSE" || strtotime($this->Exercice->Expiration) < time() - DELAI_FAQ * 24 * 3600)
+		if($this->Exercice->Statut == "REMBOURSE" || strtotime($this->Exercice->Expiration) < time() - DELAI_FAQ * 24 * 3600 && $this->getModule() != 'administrateur')
 		{
 			$this->View->setMessage('warning', 'La FAQ est fermée, vous ne pouvez plus poster de question.');
 			$this->View->Ouvert = false;

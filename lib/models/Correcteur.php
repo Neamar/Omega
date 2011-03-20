@@ -29,7 +29,7 @@ class Correcteur extends Membre
 {
 	const TABLE_NAME = 'Correcteurs';
 	const SQL_QUERY = 'SELECT * FROM %TABLE%
-	LEFT JOIN Membres ON Membres.ID = %TABLE%.ID
+	JOIN Membres ON Membres.ID = %TABLE%.ID
 	WHERE %TABLE%.ID=%ID%';
 	
 	public static $Props;
@@ -55,7 +55,7 @@ class Correcteur extends Membre
 	 */
 	public function isAbleToBook()
 	{
-		return ($this->getBooked() <= MAX_EXERCICE_RESERVES);
+		return ($this->getBooked() < MAX_EXERCICE_RESERVES);
 	}
 	
 	/**
@@ -68,10 +68,10 @@ class Correcteur extends Membre
 		return SQL::singleColumn(
 			'SELECT COUNT(*) AS Nb
 			FROM Exercices
-			WHERE Correcteur=' . $this->getFilteredId() . '
+			WHERE Correcteur = ' . $this->getFilteredId() . '
 			AND Statut IN ("ATTENTE_ELEVE", "EN_COURS")',
 			'Nb'
-		);	
+		);
 	}
 }
 Correcteur::$Props = initProps('Correcteur');

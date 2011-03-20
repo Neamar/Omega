@@ -1,5 +1,10 @@
 <?php 
-echo $this->Doc_box($this->getController()->getModule(), 'faq', 'Besoin d\'aide sur cette page ?');
+$Module = $this->getController()->getModule();
+
+if($Module != 'administrateur')
+{
+	echo $this->Doc_box($this->getController()->getModule(), 'faq', 'Besoin d\'aide sur cette page ?');
+}
 
 $AddReply = '<p class="faq-ajout-reponse"><a href="#" data-question-id="__data__">Ajouter une réponse</a></p>';
 ?>

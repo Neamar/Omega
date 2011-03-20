@@ -27,7 +27,8 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	$Eleve = $Exercice->getEleve();
 	$Correcteur = $Exercice->getCorrecteur();
 	
-	$Remboursement = min(POURCENTAGE_RETARD / 100 * $Exercice->pricePaid(), MAX_REMBOURSEMENT * EQUIVALENCE_POINT);
+	$PrixBase = $Exercice->pricePaid();
+	$Remboursement = min(POURCENTAGE_RETARD / 100 * $PrixBase, $PrixBase + MAX_REMBOURSEMENT * EQUIVALENCE_POINT);
 
 	//Rembourser l'élève
 	Sql::start();

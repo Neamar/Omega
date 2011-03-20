@@ -71,9 +71,9 @@ if(!isset($_SESSION['Eleve']))
 	<h1>Connexion élève</h1>
 	<form method="post" action="/eleve/connexion" id="connexion-eleve">
 		<label for="eleve_email">E-mail :</label>
-		<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" /><br />
+		<input type="email" name="email" id="eleve_email" placeholder="nom@fai.fr" required="required" /><br />
 		<label for="eleve_password">Mot de passe :</label>
-		<input type="password" name="password" id="eleve_password" /><br />
+		<input type="password" name="password" id="eleve_password" required="required" /><br />
 		<input type="submit" name="connexion-eleve" value="Connexion" />
 	</form>
 	<p><a href="/eleve/inscription">Pas encore inscrit ?</a></p>
@@ -102,9 +102,9 @@ if(!isset($_SESSION['Correcteur']))
 	<h1>Connexion correcteur</h1>
 	<form method="post" action="/correcteur/connexion" id="connexion-correcteur">
 		<label for="correcteur_email">E-mail :</label>
-		<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" /><br />
+		<input type="email" name="email" id="correcteur_email" placeholder="nom@fai.fr" required="required" /><br />
 		<label for="correcteur_password">Mot de passe :</label>
-		<input type="password" name="password" id="correcteur_password" /><br />
+		<input type="password" name="password" id="correcteur_password" required="required" /><br />
 		<input type="submit" name="connexion-correcteur" value="Connexion" />
 	</form>
 	<p><a href="/correcteur/inscription">Pas encore inscrit ?</a></p>
@@ -126,7 +126,7 @@ else
 </div><!-- /content-form -->
 
 <section id="ouverture">
-<p><a href="/blog/article/consulter/2">Le site ouvrira officiellement le 16 mars 2011 à 13h</a>. N'hésitez pas à vous inscrire en attendant !</p>
+	<p>Offre parrainage ! <a href="/blog/article/consulter/4">Parrainez un élève et gagnez 10% du prix de son premier exercice</a> !</p>
 </section>
 <!-- Liens "légaux" -->
 <footer>
@@ -136,16 +136,18 @@ else
 	<li><a href="/cgv.htm">CGV</a></li>
 	<li><a href="/legal.htm">Mentions légales</a></li>
 	<li><a href="/confidentialite.htm">Confidentialité</a></li>
+	<li><a href="/presse.htm">Presse</a></li>
 	<li><a href="/contact.htm">Nous contacter</a></li>
 </ul>
 
 <aside id="social-network">
 <!-- Twitter -->
-<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="#eDevoir, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
+<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="RT @eDevoircom : http://edevoir.com, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
 <!-- Facebook -->
-<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2FeDevoir.com&amp;layout=box_count&amp;show_faces=false&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" style="border:none; overflow:hidden; width:65px; height:65px;"></iframe>
+<!--<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2FeDevoir.com&amp;layout=box_count&amp;show_faces=false&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" style="border:none; overflow:hidden; width:65px; height:65px;"></iframe>-->
+<iframe src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FEDevoir%2F194459280586020&amp;layout=box_count&amp;show_faces=true&amp;width=65&amp;action=like&amp;colorscheme=light&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:65px; height:65px;" allowTransparency="true"></iframe>
 </aside>
 </footer>
     </div><!-- /content-top -->

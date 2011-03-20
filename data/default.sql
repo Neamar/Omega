@@ -9,10 +9,6 @@
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
---
--- Base de données: `work`
---
-
 -- --------------------------------------------------------
 
 --
@@ -193,8 +189,10 @@ CREATE TABLE IF NOT EXISTS `Eleves` (
   `ID` int(11) NOT NULL,
   `Classe` int(11) NOT NULL,
   `Section` varchar(20) DEFAULT NULL,
+  `Parrain` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `Classe` (`Classe`)
+  KEY `Classe` (`Classe`),
+  KEY `Parrain` (`Parrain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liste des élèves inscrits';
 
 --
@@ -588,7 +586,10 @@ CREATE TABLE IF NOT EXISTS `Entrees` (
   `Membre` int(11) NOT NULL,
   `Montant` int(11) NOT NULL,
   `Date` datetime NOT NULL,
+  `Hash` varchar(20) NOT NULL COMMENT 'Identifiant unique de la transaction',
+  `Data` mediumtext NOT NULL,
   PRIMARY KEY (`ID`),
+  UNIQUE KEY `Hash` (`Hash`),
   KEY `Membre` (`Membre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des entrées d''argent' AUTO_INCREMENT=1 ;
 
@@ -648,6 +649,7 @@ ALTER TABLE `Correcteurs_Capacites`
 -- Contraintes pour la table `Eleves`
 --
 ALTER TABLE `Eleves`
+  ADD CONSTRAINT `Eleves_ibfk_5` FOREIGN KEY (`Parrain`) REFERENCES `Membres` (`ID`),
   ADD CONSTRAINT `Eleves_ibfk_4` FOREIGN KEY (`Classe`) REFERENCES `Classes` (`Classe`),
   ADD CONSTRAINT `Eleves_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `Membres` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -748,6 +750,7 @@ INSERT INTO `Administrateurs` (`ID`) VALUES (5);
 -- Remplir la banque
 INSERT INTO `Logs` (`ID`, `Date`, `Membre`, `Exercice`, `Action`, `Delta`) VALUES
 (1, '2011-03-05 14:57:55', 1, NULL, 'Pré-remplissage de la banque.', 10000);
+INSERT INTO `Entrees` (`ID` ,`Membre` ,`Montant` ,`Date` ,`Hash` ,`Data`) VALUES (NULL , '1', '10000', NOW( ) , '', 'Pré-remplissage de la banque');
 
 -- Articles de blog
 INSERT INTO `Blog_Articles` (`ID`, `Auteur`, `Creation`, `Titre`, `Abstract`, `Article`) VALUES

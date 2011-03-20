@@ -76,7 +76,12 @@ define('CAPTCHA_PUBLIC', '6LdI48ESAAAAAPyHPYB19hXs7mWxFUtnW4uTEHBp');
  */
 define('CAPTCHA_PRIVATE', '6LdI48ESAAAAAPr31W2_tpx7J3ZTCm5rVwL-pRU3');
 
-
+/**
+ * Clé utilisée pour la compilation LaTeX
+ * 
+ * @var string
+ */
+define('CLSI_TOKEN', 'e3075c67779a0796f550e988e400469b');
 
 //____________________________________________________________________________
 //DONNÉES DITES MÉTIER
@@ -105,7 +110,7 @@ define('HASH_LENGTH', 6);
  * Pourcentage de multiplication de la somme correcteur (dont TVA)
  * @var float
  */
-define('MARGE', 1.5);
+define('MARGE', 1.25);
 
 /**
  * Borne supérieure maximale (en pourcentage) pour un remboursement
@@ -226,8 +231,23 @@ define('BANQUE_ID', 1);
 define('AJAX_LIMITE', 10);
 
 
+/**
+ * Compte paypal d'eDevoir
+ * En test : 'vendeu_1299600229_biz@edevoir.com'
+ * En test (acheteur) : client_1299600199_per@edevoir.com, mdp : test_facile
+ * En production : 'contact@edevoir.com'
+ * 
+ * @var string
+ */
+define('PAYPAL_ACCOUNT', 'contact@edevoir.com');
 
-
+/**
+ * URL de paypal
+ * En test : 'www.sandbox.paypal.com'
+ * En production : 'www.paypal.com'
+ * @var string
+ */
+define('PAYPAL_URL', 'www.paypal.com');
 
 //____________________________________________________________________________
 // CAS PARTICULIERS

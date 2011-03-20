@@ -32,13 +32,25 @@ class Membre extends DbObject
 	public static $Props;
 	
 	/**
+	 * La banque.
+	 * 
+	 * @var Membre
+	 */
+	protected static $Banque = null;
+	
+	/**
 	 * Récupérer le banquier.
 	 * 
 	 * @return Membre
 	 */
 	public static function getBanque()
 	{
-		return Membre::load(BANQUE_ID);
+		if(is_null(self::$Banque))
+		{
+			self::$Banque = Membre::load(BANQUE_ID);
+		}
+		
+		return self::$Banque;
 	}
 	
 	protected $Foreign = array(

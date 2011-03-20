@@ -223,13 +223,15 @@ $(function()
 		}
 	};
 	
-	$('input[type=number]').change(Number);
-	$('input[type=number]').keyup(Number);
-	$('input[type=number]').keydown(Number);
+	$('input[type=number]')
+		.change(Number)
+		.keyup(Number)
+		.keydown(Number);
 	
-	$('input[type=numeric]').change(Numeric);
-	$('input[type=numeric]').keyup(Numeric);
-	$('input[type=numeric]').keydown(Numeric);
+	$('input[type=numeric]')
+		.change(Numeric)
+		.keyup(Numeric)
+		.keydown(Numeric);
 });
 
 /**
@@ -315,5 +317,15 @@ $(function() {
 		{
 			jThis.find('a.a_h2-anchor').hide();
 		}); 
+	});
+});
+
+
+/**
+ * Étoiles rouges sur les contenus obligatoires dans les formulaires
+ */
+$(function(){
+	$('form input[required="required"]').each(function(){
+		$('label[for="' + this.id + '"]').addClass('label_required');
 	});
 });

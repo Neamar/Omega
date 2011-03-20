@@ -1,0 +1,33 @@
+<p>Une fois les données consultées, vous pouvez <a href="/eleve/exercice">retourner à l'accueil des exercices</a>.</p>
+
+<?php
+$Exercices = array();
+$StatutActuel = -1;
+
+$ListeExercices = $this->Exercices;
+$ListeExercices[] = 'STOP';
+
+foreach($ListeExercices as $Hash => $Datas)
+{
+	if($Datas['Statut'] != $StatutActuel)
+	{
+		if(count($Exercices) > 0)
+		{
+			echo '<h2 class="countable">' . $this->Messages[$StatutActuel] . '</h2>';
+			echo $this->Html_listAction($Exercices, '/eleve/exercice/__URL__', 'eleve');
+			$Exercices = array();
+		}
+		
+		$StatutActuel = $Datas['Statut'];
+	}
+	
+	if($Datas == 'STOP')
+	{
+		break;
+	}
+	
+	$URL = $this->Liens[$Datas['Statut']] . '/' . $Hash;
+	
+	$Exercices[$URL] = $Datas['Titre'];
+}
+

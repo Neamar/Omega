@@ -62,7 +62,7 @@ class External
 	* @param string $To le destinataire du message
 	* @param string $subject le sujet du mail
 	* @param string $message le message au format HTML.
-	* @param string $from l'expéditeur (no-reply par défaut)
+	* @param string $from l'expéditeur (no-reply par défaut). Attention, gApps n'autorise pas le From Override !
 	*/
 	public static function mail($to, $subject, $message, $from = 'no-reply@edevoir.com')
 	{
@@ -79,7 +79,7 @@ class External
 		}
 		else
 		{
-			register_shutdown_function("mail", $to, $subject, $message, $headers);
+			mail($to, $subject, $message, $headers);
 		}
 		
 		Event::log('Envoi de mail à ' . $to . ' : ' . $subject);
@@ -160,6 +160,46 @@ class External
 		self::templateMail($to->Mail, $template, $Datas);
 	}
 	
+	/**
+	 * Rapporte une erreur importante par mail.
+	 * 
+	 * @param string $Message le message expliquant la cause du rapport
+	 * @param array $ToLog informations à logger
+	 */
+	public static function report($Message, array $ToLog = array())
+	{    
+		ob_start();
+		print_r($ToLog);
+		$DumpLog = ob_get_clean();
+		
+		ob_start();
+		print_r($_SESSION);
+		$DumpSession = ob_get_clean();
+		
+		ob_start();
+		print_r($_SERVER);
+		$DumpServer = ob_get_clean();
+		
+		ob_start();
+		print_r($_POST);
+		$DumpPost = ob_get_clean();
+		
+		$Dump = '
+		<h2>Erreur</h2>
+			<p>Erreur : <strong>' . $Message . '</strong><br />
+			Sur : <strong>' . $_SERVER['REQUEST_URI'] . '</strong></p>
+		<h2>Informations utiles</h2>
+			<pre>' . $DumpLog . '</pre>
+		<h2>Session</h2>
+			<pre>' . $DumpSession . '</pre>
+		<h2>Serveur</h2>
+			<pre>' . $DumpServer . '</pre>
+		<h2>POST-data</h2>
+			<pre>' . $DumpPost . '</pre>';
+		
+		External::mail($_SERVER['SERVER_ADMIN'], 'eDevoir : ' . $Message, $Dump);
+		Event::log('Rapport erreur : ' . $Message);
+	}
 	private static function _templateReplace($Matches)
 	{
 		if(isset(External::$_Datas[$Matches[1]]))
