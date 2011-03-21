@@ -8,7 +8,7 @@ echo $this->View_render($this->Membre);
 <?php
 $Infos = array(
 	'Identité' => $this->Correcteur->identite(),
-	'SIRET' => $this->Correcteur->Siret . '(' . ($this->Correcteur->SiretOK?'<span style="color:green">valide</span>':'<span style="color:red;">non validé</span>') . ')',
+	'SIRET' => $this->Correcteur->Siret . ' (' . ($this->Correcteur->SiretOK?'<span style="color:green">valide</span>':'<span style="color:red;">non validé</span>') . ')',
 	'Exercices attitrés' => $this->NbExos,
 	'Note moyenne' => $this->Note,
 );

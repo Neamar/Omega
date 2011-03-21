@@ -98,15 +98,15 @@ function ViewHelper_exercice(Exercice $Exercice, $Tab = 'Sujet')
 			<p><a href="/' . $_GET['module'] . '/exercice/zip/' . $Exercice->Hash . '" class="zip-download">Télécharger dans un zip toutes les données de l\'exercice</a></p>
 		</div>
 		<div class="exercice-tab exercice-sujet" id="sujet-' . $Exercice->Hash . '">
-			<p>Fichiers composant <a href="/eleve/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
+			<p>Fichiers composant <a href="/' . $_GET['module'] . '/exercice/sujet/' . $Exercice->Hash . '">le sujet</a> :</p>
 			<p>' . (isset($Content['SUJET'])?$Content['SUJET']:'Sujet non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-corrige" id="corrige-' . $Exercice->Hash . '">
-			<p>Fichiers composant <a href="/eleve/exercice/corrige/' . $Exercice->Hash . '">le corrigé</a> :</p>
+			<p>Fichiers composant <a href="/' . $_GET['module'] . '/exercice/corrige/' . $Exercice->Hash . '">le corrigé</a> :</p>
 			<p>' . (isset($Content['CORRIGE'])?$Content['CORRIGE']:'Corrigé non disponible.') . '</p>
 		</div>
 		<div class="exercice-tab exercice-reclamation" id="reclamation-' . $Exercice->Hash . '">
-			<p>Fichiers composant <a href="/eleve/exercice/reclamation/' . $Exercice->Hash . '">la réclamation</a> :</p>
+			<p>Fichiers composant <a href="/' . $_GET['module'] . '/exercice/reclamation/' . $Exercice->Hash . '">la réclamation</a> :</p>
 			<p>' . (isset($Content['RECLAMATION'])?$Content['RECLAMATION']:'Réclamation non disponible.') . '</p>
 		</div>
 	</div>

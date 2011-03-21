@@ -1,3 +1,16 @@
-<?php 
+<?php
+$MailEleve = $this->Exercice->getEleve()->Mail;
+$Liste = array(
+	'eleve/' . $MailEleve => 'Élève créateur : ' .$MailEleve
+);
+
+if(!empty($this->Exercice->Correcteur))
+{
+	$MailCorrecteur = $this->Exercice->getCorrecteur()->Mail;
+	$Liste['correcteur/' . $MailCorrecteur] = 'Correcteur actuellement associé : ' . $MailCorrecteur;
+}
+
+echo $this->Html_listAnchor($Liste, 'ul', '/administrateur/membre/');
+
 echo $this->Exercice($this->Exercice);
 ?>

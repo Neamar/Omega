@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `Correcteurs` (
 
 CREATE TABLE IF NOT EXISTS `Correcteurs_Capacites` (
   `Correcteur` int(11) NOT NULL,
-  `Matiere` varchar(15) NOT NULL,
+  `Matiere` varchar(35) NOT NULL,
   `Commence` int(11) NOT NULL,
   `Finit` int(11) NOT NULL,
   PRIMARY KEY (`Correcteur`,`Matiere`),
