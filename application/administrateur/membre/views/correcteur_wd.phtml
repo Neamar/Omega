@@ -9,6 +9,8 @@ echo $this->View_render($this->Membre);
 $Infos = array(
 	'Identité' => $this->Correcteur->identite(),
 	'SIRET' => $this->Correcteur->Siret . ' (' . ($this->Correcteur->SiretOK?'<span style="color:green">valide</span>':'<span style="color:red;">non validé</span>') . ')',
+	'CV' => '<a href="/administrateur/membre/correcteur_cv/' . $this->Correcteur->Mail . '">Voir</a>',
+	'CI' => '<a href="/administrateur/membre/correcteur_ci/' . $this->Correcteur->Mail . '">Voir</a>',
 	'Exercices attitrés' => $this->NbExos,
 	'Note moyenne' => $this->Note,
 );
