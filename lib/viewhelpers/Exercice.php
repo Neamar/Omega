@@ -304,6 +304,10 @@ function ViewHelper_Exercice_lightbox($URL, $GalleryID, $Content)
 	{
 		$URL = 'http://docs.google.com/viewer?embedded=true&amp;url=' . urlencode($URL) . '&amp;iframe=true&amp;width=90%25&amp;height=90%25';
 	}
+	elseif($Extension == 'txt')
+	{
+		$URL = $URL . '?1&amp;iframe=true&amp;width=90%25&amp;height=90%25';
+	}
 	
 	return '<a href="' . $URL . '" rel="prettyPhoto[' . $GalleryID . ']">' . $Content . '</a>';
 }
