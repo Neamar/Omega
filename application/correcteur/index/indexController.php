@@ -287,6 +287,29 @@ ORDER BY Exercices.Expiration
 	}
 	
 	/**
+	 * Vérifie que le correcteur peut se désinscrire
+	 * @see IndexAbstractController::desinscriptionAction()
+	 */
+	public function desinscriptionAction()
+	{
+		$ExercicesActifs = Sql::singleColumn(
+			'SELECT COUNT(*) AS S
+			FROM Exercices
+			WHERE Statut IN ("ATTENTE_ELEVE", "EN_COURS")
+			AND Correcteur = ' . $this->getMEmbre()->getFilteredId(),
+			'S'
+		);
+		
+		if($ExercicesActifs > 0)
+		{
+			$this->View->setMessage('warning', 'Impossible de vous désinscrire pour l\'instant, vous devez d\'abord terminer vos exercices. Merci !');
+			$this->redirect('/correcteur/');
+		}
+		
+		parent::desinscriptionAction();
+	}
+	
+	/**
 	 * Gère l'enregistrement dans la table Correcteur en particulier.
 	 * 
 	 * @see IndexAbstractController::createAccountSpecial()

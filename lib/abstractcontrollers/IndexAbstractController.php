@@ -60,8 +60,8 @@ abstract class IndexAbstractController extends AbstractController
 			}
 			else
 			{
-				//Envoyer un mail de confirmation de désinscription (et le faire avant d'unset la $_SESSION ^^)
-				External::templateMailFast($this->getMembre(), '/membre/compte/desinscription');
+				//Enregistrer le membre avant de le supprimer pour pouvoir l'utiliser lros du dispatch
+				$Membre = $this->getMembre();
 				
 				unset($_SESSION[$this->getMembreIndex()]);
 				
@@ -74,6 +74,8 @@ abstract class IndexAbstractController extends AbstractController
 					Membre::getBanque()->credit($Points, 'Réception du virement de désinscription');
 					Sql::commit();
 				}
+				
+				Event::dispatch(Event::MEMBRE_DESINSCRIPTION, array('Membre' => $Membre));
 				
 				//Puis rediriger vers la page de connexion
 				$this->View->setMessage(

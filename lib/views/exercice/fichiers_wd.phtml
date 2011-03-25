@@ -26,6 +26,12 @@ foreach($this->Fichiers as $URL => $Infos)
 	{
 		echo '<iframe src="http://docs.google.com/viewer?url=' . urlencode($LongURL) . '&amp;embedded=true" style="border: none; width:96%; height:780px; margin-left:2%;"></iframe>';
 	}
+	elseif($Extension == 'txt')
+	{
+		echo '<p style="font-family:sans-serif; height:500px; width:95%; overflow:scroll; background: white;">';
+		echo nl2br(htmlentities(file_get_contents(PATH . '/public/exercices/' . $this->Exercice->LongHash . $URL)));
+		echo '</p>';
+	}
 	else
 	{
 		echo '<a href="' . $URL . '">Télécharger</a>.';

@@ -29,8 +29,10 @@ class Administrateur_LogController extends AbstractController
 {
 	public function indexAction()
 	{
-		//TODO : faire un index
-		exit('TODO');
+		$this->View->setTitle(
+			"Données du site",
+			"Cette section du site permet de consulter en quasi temps réel les informations enregistrées par le site."
+		);
 	}
 	
 	/**
@@ -205,6 +207,51 @@ class Administrateur_LogController extends AbstractController
 			FROM Logs
 			JOIN Membres ON (Membres.ID = Logs.Membre)'
 		);
+	}
+	
+	public function rawAction()
+	{
+		$this->View->setTitle(
+			'Données brutes',
+			'Cette page affiche les différentes données de bas niveau disponible.'
+		);
+	}
+	
+	public function _rawAction()
+	{
+		$Logs = array_reverse(file(DATA_PATH . '/logs/' . date('Y-m-d') . '.log'));
+		$Limit = isset($_POST['limit'])?intval($_POST['limit']):AJAX_LIMITE;
+		$Total = count($Logs);
+		$Logs = array_slice($Logs, 0, $Limit);
+		
+		$R = array();
+		foreach($Logs as $Log)
+		{
+			$Data = explode('	', $Log);
+			
+			//Mettre en couleur les URLs
+			$Data[1] = str_replace(
+				array(
+					'/administrateur',
+					'/eleve',
+					'/correcteur'
+				),
+				array(
+					'<span style="color:#F16C7C">A</span>',
+					'<span style="color:#E06C0E">E</span>',
+					'<span style="color:#006699">C</span>',
+				),
+				$Data[1]
+			);
+			$R[] = array($Data[0], $Data[1], $Data[4]);
+		}
+		
+		if($Total > $Limit)
+		{
+			$R[] = '+';
+		}
+		
+		$this->json($R);		
 	}
 
 	

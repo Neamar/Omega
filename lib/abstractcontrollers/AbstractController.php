@@ -232,7 +232,7 @@ abstract class AbstractController
 		
 		//Mise en forme automatique de la requête.
 		//Ajouter un SQL_CALC_FOUND_ROWS, l'order By et la limite.
-		$Query = str_replace('SELECT ', 'SELECT SQL_CALC_FOUND_ROWS ', $Query) . '
+		$Query = str_replace(array('SELECT ', "SELECT\n"), 'SELECT SQL_CALC_FOUND_ROWS ', $Query) . '
 		ORDER BY ' . $OrderBy . '
 		LIMIT ' . $Limit;
 		
