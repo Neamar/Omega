@@ -58,8 +58,7 @@ $(function()
 		  indentUnit: 4,
 		  tabMode: 'shift',
 		  indent: 'flat',
-		  electricChars: false,
-		  
+		  electricChars: false
 	});
 });
 
@@ -194,8 +193,8 @@ $(function()
 						$('a[href=#envoi-log]').css('color', 'green');
 						
 						//Récupérer le nombre de pages.
-						NbPages = data.match(/pdf \(([0-9]+) pages?,/)[1];
-						Pages = []
+						NbPages = data.match(/pdf \(([0-9]+) pages?/)[1];
+						Pages = [];
 						for(var i = 1; i <= NbPages; i++)
 						{
 							Pages[i - 1] = '<a href="#" data-page="' + i + '">' + i + '</a> ';
