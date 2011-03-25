@@ -55,6 +55,10 @@ class Thumbnail
 		{
 			return self::createOdt($Filename);
 		}
+		elseif($Extension == 'txt')
+		{
+			return self::createTxt($Filename);
+		}
 		elseif($Extension == 'pdf')
 		{
 			return self::createPdf($Filename);
@@ -193,6 +197,19 @@ class Thumbnail
 	public static function createOdt($Filename)
 	{
 		return '/../../images/thumbs/odt.jpg';
+	}
+	
+	/**
+	 * Fichier Texte
+	 * Renvoie une image générique.
+	 * 
+	 * @param string $Filename
+	 * 
+	 * @return string l'URL (HTTP) de la nouvelle image
+	 */
+	public static function createTxt($Filename)
+	{
+		return '/../../images/thumbs/txt.jpg';
 	}
 	
 	/**
