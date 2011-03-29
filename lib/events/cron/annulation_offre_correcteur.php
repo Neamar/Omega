@@ -26,7 +26,7 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 	//Récupérer le correcteur actuel. À faire maintenant, puisqu'on le supprime après.
 	$Correcteur = $Exercice->getCorrecteur();
 	
-	$Exercice->cancelOffer($_SESSION['Eleve'], "Refus automatique de l'offre");
+	$Exercice->cancelOffer($Banque, "Refus automatique de l'offre");
 	
 	//Dispatch de l'évènement REFUS
 	Event::dispatch(

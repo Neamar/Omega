@@ -41,6 +41,16 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 			'Exercice «&nbsp;' . $this->Exercice->Titre . '&nbsp;»',
 			"Informations sur l'exercice."
 		);
+		
+		$this->View->OldCorrecteurs = Sql::queryAssoc(
+			'SELECT EC.ID, Membres.Mail, EC.Offre
+			FROM Exercices_Correcteurs EC
+			JOIN Membres ON (Membres.ID = EC.Correcteur)
+			WHERE EC.Exercice = ' . DbObject::filterID($this->Exercice->ID) . '
+			AND EC.Action = "ENCHERE"
+			AND EC.Correcteur <> "' . $this->Exercice->Correcteur . '"',
+			'ID'
+		);
 	}
 	
 	/**
@@ -208,6 +218,20 @@ class Administrateur_ExerciceController extends ExerciceAbstractController
 		$this->View->Sujet = $this->concat('/administrateur/exercice/sujet/' . $this->Exercice->Hash);
 		$this->View->Corrige = $this->concat('/administrateur/exercice/corrige/' . $this->Exercice->Hash);
 		$this->View->Reclamation = $this->concat('/administrateur/exercice/reclamation/' . $this->Exercice->Hash);
+	}
+	
+	/**
+	 * Liste les actions effectuées sur un exercice
+	 */
+	public function _actionsActionWd()
+	{
+		$this->ajax(
+			'SELECT DATE_FORMAT(Date,"%d/%m/%y à %Hh"), CONCAT("<a href=\'/administrateur/membre/recherche/", Membres.Mail, "\'>", SUBSTR(Membres.Mail, 1, 20), "</a>"), Action
+			FROM Exercices_Logs
+			JOIN Membres ON (Membres.ID = Exercices_Logs.Membre)
+			WHERE Exercice = ' . DbObject::filterID($this->Exercice->ID),
+			'Exercices_Logs.ID DESC'
+		);
 	}
 	
 	/**

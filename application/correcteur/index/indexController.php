@@ -241,7 +241,7 @@ ORDER BY Exercices.Expiration
 			}
 			elseif($_FILES['ci']['name'] == '')
 			{
-				$this->View->setMessage('error', "Vous n'avez pas fourni votre scan de carte d\'identité.", 'correcteur/pourquoi_carte');
+				$this->View->setMessage('error', "Vous n'avez pas fourni votre scan de carte d\'identité.", 'correcteur/pourquoi_ci');
 			}
 			elseif($_FILES['ci']['error'] > 0)
 			{

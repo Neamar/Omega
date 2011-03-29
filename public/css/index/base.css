@@ -33,7 +33,7 @@ strong { font-weight: bold; }
 /*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /* ------------------------------------- Conteneur de départ --*/
 #main-top-r {
-background: url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
+background: #cacaca url('/public/images/index/main-top-r.jpg') top left scroll repeat-x; /*image*/
 height:558px;
 }
 #content-top {position:relative;width:930px;margin:auto;} /*délimiteur*/

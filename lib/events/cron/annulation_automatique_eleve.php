@@ -33,6 +33,4 @@ while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
 		'hash' => $Exercice->Hash,
 		'mail' => $MailEleve
 	);
-	
-	External::templateMail($MailEleve, '/eleve/exercice/annulation_automatique', $Datas);
 }

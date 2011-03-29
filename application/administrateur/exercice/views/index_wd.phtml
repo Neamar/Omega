@@ -1,3 +1,30 @@
-<?php 
+<h2>Membres liés à l'exercice</h2>
+<?php
+$MailEleve = $this->Exercice->getEleve()->Mail;
+$Liste = array(
+	'Élève créateur : <a href="/administrateur/membre/eleve/' . $MailEleve . '">' . $MailEleve . '</a>'
+);
+
+if(!empty($this->Exercice->Correcteur))
+{
+	$MailCorrecteur = $this->Exercice->getCorrecteur()->Mail;
+	$Liste[] = 'Correcteur actuellement associé : <a href="/administrateur/membre/correcteur/' . $MailCorrecteur . '">' . $MailCorrecteur . '</a>';
+}
+
+foreach($this->OldCorrecteurs as $OldCorrecteur)
+{
+	$Liste[] = 'Correcteur refusé : <a href="/administrateur/membre/correcteur/' . $OldCorrecteur['Mail'] . '">' . $OldCorrecteur['Mail'] . '</a> <small>(offre : ' . $this->Points($OldCorrecteur['Offre']) . ')</small>';
+}
+
+echo $this->Html_list($Liste);
+?>
+
+<h2>Exercice</h2>
+<?php
 echo $this->Exercice($this->Exercice);
+?>
+
+<h2 class="h2_logs" id="administrateur-exercice-index-actions">Actions sur l'exercice</h2>
+<?php 
+echo $this->Html_ajaxTable('/administrateur/exercice/_actions/' . $this->Exercice->Hash, 'Actions sur l\'exercice', array('Date', 'Membre', 'Action'));
 ?>
