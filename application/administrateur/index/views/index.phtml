@@ -1,11 +1,11 @@
 <h2 id="administrateur-index-index-dashboard">Tableau de bord administrateur</h2>
-<p>D'abord, on flâne un peu en consultant ces statistiques inutiles. <a href="/admin/log/">Plus de stats ?</a></p>
-<?php 
+<p>D'abord, on flâne un peu en consultant ces statistiques inutiles. <a href="/administrateur/log/">Plus de stats ?</a></p>
+<?php
 echo $this->Html_ajaxTable('/administrateur/log/_global', 'Statistiques globales', array('Action', '24h', '48h', '7j'));
 ?>
 
 <h2 class="h2_actions" id="administrateur-index-index-attente">En attente</h2>
-<?php 
+<?php
 $Attentes = array();
 
 if($this->Virements != 0)
@@ -44,19 +44,19 @@ if(empty($Attentes))
 {
 	?>
 	<p>Rien n'est en attente. Pourquoi ne pas ouvrir une bouteille de champagne en attendant que du travail arrive ?</p>
-	<?php 
+	<?php
 }
 else
 {
 	?>
 	<p>Maintenant au boulot ! Les catégories ci-dessous attendent une action de votre part.</p>
-	<?php 
+	<?php
 	echo $this->Html_listAction($Attentes, '/administrateur/__URL__', '');
 }
 ?>
 
 <h2 class="h2_actions" id="administrateur-index-index-liens">Liens</h2>
-<?php 
+<?php
 $Actions = array(
 	'membre/' => 'Rechercher un membre',
 	'log/' => 'Index des logs',

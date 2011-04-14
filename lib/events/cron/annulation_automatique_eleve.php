@@ -10,8 +10,10 @@ $Exercices = Sql::query(
 	'SELECT Exercices.ID, Exercices.Hash, Exercices.LongHash, Exercices.Statut, Exercices.Titre, Membres.Mail AS Createur, Exercices.NbRefus
 	FROM Exercices
 	LEFT JOIN Membres ON (Membres.ID = Exercices.Createur)
-	WHERE Exercices.TimeoutEleve < NOW()
-	OR Exercices.Expiration < NOW()
+	WHERE (
+		Exercices.TimeoutEleve < NOW()
+		OR Exercices.Expiration < NOW()
+	)
 	AND Exercices.Statut IN ("VIERGE", "ATTENTE_CORRECTEUR", "ATTENTE_ELEVE")
 	',
 	'ID'
@@ -24,10 +26,10 @@ $Banque = $Params['Membre'];
 //La plupart de ses propriétés ne sont pas définies, et Createur ne correspond pas à l'id du membre, mais à son mail.
 //En conséquence, la plupart des fonctions sur Exercice ne sont pas correctes ET NE DOIVENT PAS ÊTRE APPELÉES
 while($Exercice = mysql_fetch_object($Exercices, 'Exercice'))
-{	
+{
 	$MailEleve = $Exercice->Createur;
 	$Exercice->cancelExercice($Banque, 'Annulation automatique de l\'exercice.');
-	
+
 	$Datas = array(
 		'titre' => $Exercice->Titre,
 		'hash' => $Exercice->Hash,
