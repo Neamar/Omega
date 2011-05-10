@@ -8,7 +8,7 @@ $Liste = array(
 if(!empty($this->Exercice->Correcteur))
 {
 	$MailCorrecteur = $this->Exercice->getCorrecteur()->Mail;
-	$Liste[] = 'Correcteur actuellement associé : <a href="/administrateur/membre/correcteur/' . $MailCorrecteur . '">' . $MailCorrecteur . '</a>';
+	$Liste[] = 'Correcteur actuellement associé : <a href="/administrateur/membre/correcteur/' . $MailCorrecteur . '">' . $MailCorrecteur . '</a> <small>(offre : ' . $this->Points($this->Exercice->Enchere) . ')</small>';
 }
 
 foreach($this->OldCorrecteurs as $OldCorrecteur)
