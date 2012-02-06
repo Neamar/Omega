@@ -2,4 +2,4 @@
 /**
  * Envoyer un mail informant le correcteur que son offre a été refusée.
  */
-External::templateMailFast($Params['Correcteur'], '/correcteur/exercice/offre_refusee', array('prix_correcteur' => $Params['prix_correcteur']), $Params['Exercice']);
+External::templateMailFast($Params['Correcteur'], '/correcteur/exercice/offre_refusee', array(, $Params['Exercice']);
