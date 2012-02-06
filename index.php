@@ -126,7 +126,7 @@ else
 </div><!-- /content-form -->
 
 <section id="ouverture">
-	<p>Offre parrainage ! <a href="/blog/article/consulter/4">Parrainez un élève et gagnez 10% du prix de son premier exercice</a> !</p>
+	<p>[Nouveau] Offre parrainage ! <a href="/blog/article/consulter/4">Parrainez un élève et gagnez 10% du prix de son premier exercice</a> !</p>
 </section>
 <!-- Liens "légaux" -->
 <footer>
