@@ -40,7 +40,7 @@ echo $this->Exercice($this->Exercice);
 			array(
 				'required' => 'required',
 				'style' => 'height:500px;',
-				'value' => (empty($this->Head)?'Entrez votre texte ici au format \LaTeX.':htmlspecialchars($this->Head)),
+				'value' => (empty($this->Head)?'Entrez votre texte ici au format \LaTeX.':htmlspecialchars($this->Head, ENT_COMPAT,"UTF-8", false)),
 			)
 		);
 		echo $this->Doc_inputBr('correcteur', 'aide_tex');
