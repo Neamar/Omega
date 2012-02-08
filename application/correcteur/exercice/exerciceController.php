@@ -50,6 +50,7 @@ class Correcteur_ExerciceController extends ExerciceAbstractController
 			FROM Exercices_FAQ FAQ
 			JOIN Exercices ON (Exercices.ID = FAQ.Exercice)
 			WHERE ISNULL(Parent)
+			AND Exercices.Correcteur = ' . $_SESSION['Correcteur']->getFilteredId() . '
 			AND Membre <> ' . $this->getMembre()->getFilteredId() . '
 			AND Exercices.Statut IN ("EN_COURS", "ENVOYE", "TERMINE", "REFUSE")
 			AND (SELECT COUNT(*) FROM Exercices_FAQ Reponses WHERE Parent = FAQ.ID) = 0
