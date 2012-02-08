@@ -140,6 +140,15 @@ else
 	<li><a href="/contact.htm">Nous contacter</a></li>
 </ul>
 
+
+<div style="text-align:center;">
+<object type="application/x-shockwave-flash" data="/ad.swf" width="982" height="120" >
+	<param name="movie" value="/ad.swf" />
+	<param name="quality" value="high" />
+	<param name="wmode" value="transparent" />
+</object>
+</div>
+
 <aside id="social-network">
 <!-- Twitter -->
 <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://edevoir.com" data-text="RT @eDevoircom : http://edevoir.com, le site qui fait vos devoirs !" data-count="vertical" data-lang="fr">Tweet</a>
